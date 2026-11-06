@@ -1,0 +1,77 @@
+<Lead>
+“Tuning” é a palavra que a comunidade usa para o som de um fone: “gostei do tuning”, “o tuning é em V”. Mas tuning é, antes de tudo, um processo de engenharia — a sequência de decisões e iterações pela qual uma curva-alvo, escolhida no papel, vira um objeto físico que a reproduz, e depois milhares de objetos que a reproduzem do mesmo jeito.
+</Lead>
+
+## O que é tuning
+
+**Tuning** é o processo de definir a resposta (e o caráter) final de um fone escolhendo e ajustando todos os elementos que a determinam: drivers, câmaras, tubos, filtros acústicos, ventilação, crossover e, em fones com processamento digital, o DSP. O resultado do tuning é a curva que você vê numa medição — e o som que você ouve.
+
+Ele começa com uma pergunta de design (que som queremos?) e termina com uma pergunta de fabricação (como garantir que cada unidade soe assim?).
+
+## 1. O alvo
+
+Todo projeto parte de um **alvo**. Muitos fabricantes têm um alvo próprio — a sua “assinatura da casa” —, frequentemente derivado de referências conhecidas, como o [Harman IE](/resposta/targets-e-harman) ou o campo difuso, com ajustes de gosto: um pouco mais de grave, presença mais suave, mais ou menos “ar”. Às vezes o alvo é definido por um público (músicos de palco, consumidores de música eletrônica), às vezes por um produto anterior de sucesso.
+
+O alvo é definido **no domínio do equipamento de medição** que a equipe usa — quase sempre um acoplador IEC 60318-4 (711), às vezes um B&K 5128. Isso é importante: o alvo é uma curva no acoplador, não “no ouvido”.
+
+## 2. A arquitetura
+
+Com o alvo definido, a equipe escolhe a arquitetura:
+
+- **Drivers.** Um dinâmico de 10 mm? Um planar? Um dinâmico para graves com BAs para médios e agudos? Os fabricantes de BAs oferecem catálogos com respostas, sensibilidades e impedâncias de cada modelo.
+- **Disposição.** Onde cada driver fica, como o som de cada um chega ao bocal (tubos separados, um tubo comum, driver direto no bocal), que câmaras existem atrás e na frente de cada driver.
+- **Crossover.** Se haverá filtros elétricos (capacitores, resistores, indutores) e/ou acústicos.
+
+Nesta fase, engenheiros usam **simulação**. Sistemas acústicos pequenos podem ser modelados por **circuitos equivalentes**: cavidades se comportam como capacitores (compliância), tubos estreitos como indutores (inertância) em série com resistências (perdas), dampers como resistores. Fabricantes de BAs fornecem modelos elétricos equivalentes dos seus drivers. Para geometrias complexas, usam-se simulações por elementos finitos. A simulação não substitui o protótipo, mas reduz o número de tentativas.
+
+## 3. O protótipo e as ferramentas de tuning
+
+Protótipos — hoje frequentemente com carcaças impressas em 3D — são medidos no acoplador, comparados ao alvo e modificados. As ferramentas são as que vimos em [construção acústica](/drivers/construcao-acustica):
+
+- **Ventilação** (furos e seus filtros de malha) para ajustar graves e alívio de pressão;
+- **Dampers** (resistências acústicas) para domar ressonâncias;
+- **Comprimento e diâmetro de tubos** para posicionar picos de presença e agudos;
+- **Valores de capacitores e resistores** do crossover para definir onde cada driver entra e com que nível;
+- **Volume de câmaras** e **filtros de bocal** para os ajustes finais.
+
+Cada mudança exige uma nova medição. O laboratório abaixo simplifica esse processo: um IEM híbrido com seis “botões” de engenharia. Tente aproximar o protótipo do alvo e, depois, aprove-o como amostra de referência para ver o controle de qualidade.
+
+<Lab id="tuning" />
+
+Além da medição, há a **escuta**. Engenheiros de tuning (os *tuners*) avaliam protótipos com repertório de referência, às vezes em comparações cegas, e decidem entre versões que medem de forma parecida. Pequenos detalhes — o formato exato da transição entre graves e médios, a suavidade da região de 5 a 8 kHz — são frequentemente decididos de ouvido. Por isso dois fabricantes com “o mesmo alvo” produzem fones diferentes.
+
+## 4. Validação
+
+Uma curva bonita numa unidade não basta. Antes de liberar o produto, verifica-se:
+
+- várias unidades e várias **inserções** (o tuning precisa ser robusto a pequenas variações de uso);
+- vários **tamanhos de ponteira**;
+- **distorção** em níveis altos, especialmente nos graves;
+- **impedância** e comportamento com fontes diferentes;
+- **casamento entre canais**;
+- às vezes, medições em **ouvidos reais** com microfones-sonda, para verificar o que acontece além do acoplador.
+
+## 5. Produção: como uma curva é “aplicada” na fábrica
+
+Fabricar é repetir. As tolerâncias de cada peça — sensibilidade de BAs (tipicamente ±2–3 dB), variação de diafragmas, posicionamento de tubos, quantidade de cola, filtros — fazem cada unidade sair ligeiramente diferente. Para manter a consistência, a fábrica:
+
+1. **Especifica componentes com tolerâncias** e, muitas vezes, **classifica drivers por lotes** de sensibilidade (*binning*), montando pares com drivers do mesmo lote.
+2. **Mede cada unidade** (ou cada driver, antes da montagem) num dispositivo de teste automatizado, com acoplador e um sinal curto. O software compara a curva com a da **amostra de referência** aprovada, dentro de uma **janela de tolerância** (por exemplo, ±2 dB entre 100 Hz e 8 kHz).
+3. **Verifica o casamento entre esquerdo e direito**, com limites como 1–2 dB nas faixas importantes.
+4. **Reprova ou retrabalha** as unidades fora da janela. Tolerâncias mais apertadas aumentam a consistência — e o custo, porque mais unidades são reprovadas.
+
+Em fones com **DSP** (praticamente todos os sem fio), parte do tuning é digital: um EQ no firmware molda a resposta final. Isso permite corrigir variações de produção com **calibração individual** (um EQ por unidade, gravado na fábrica) e atualizar o som por software depois do lançamento.
+
+## O que isso significa para quem compra
+
+- **A medição de um review é de uma unidade.** A sua pode diferir dentro da tolerância do fabricante — por isso diferenças de 1–2 dB entre gráficos de unidades diferentes são normais.
+- **Revisões silenciosas acontecem.** Fabricantes mudam fornecedores e componentes ao longo da vida de um produto; o som pode mudar sem mudança de nome.
+- **Filtros intercambiáveis e chaves de ajuste** (*tuning switches*) são ferramentas de tuning entregues ao usuário: dampers ou resistores alternativos. Eles produzem mudanças reais e mensuráveis, geralmente de poucos decibéis.
+- **Tuning não é mágica nem segredo**: é engenharia acústica e escolha de gosto. O resultado aparece na medição — e, dentro dos limites discutidos neste site, também no que você ouve.
+
+<References>
+  <Ref>Beranek, L. L.; Mellow, T. J. <em>Acoustics: Sound Fields and Transducers</em>. Academic Press, 2012. Circuitos acústicos equivalentes.</Ref>
+  <Ref>Knowles Corporation. <em>Balanced armature receivers — application notes, acoustic dampers and equivalent circuits</em>.</Ref>
+  <Ref>IEC 60318-4:2010. Simulador de ouvido ocluído.</Ref>
+  <Ref>Borwick, J. (org.). <em>Loudspeaker and Headphone Handbook</em>. 3ª ed. Focal Press, 2001. Capítulo sobre fones e controle de produção.</Ref>
+</References>

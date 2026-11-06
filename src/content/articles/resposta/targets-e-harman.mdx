@@ -1,0 +1,111 @@
+<Lead>
+Para julgar se um fone tem “grave demais” ou “agudo de menos”, é preciso uma referência. Com caixas de som, a resposta é relativamente simples: plano numa câmara anecoica. Com fones, não existe uma resposta óbvia — e a busca por ela levou a décadas de pesquisa, de normas alemãs dos anos 1980 aos testes cegos da Harman nos anos 2010. Este artigo conta essa história, explica o que a curva Harman é (e o que não é) e mostra suas versões lado a lado.
+</Lead>
+
+## O problema: plano onde?
+
+Uma caixa de som de referência deve ter resposta **plana em campo livre**: medida de frente, numa câmara sem reflexões, ela deve produzir a mesma pressão em todas as frequências. Isso faz sentido porque a caixa é uma *fonte* no espaço: o som que ela emite ainda vai interagir com a sala, a cabeça e as orelhas do ouvinte, como qualquer som natural. Se a caixa é neutra, o que chega ao tímpano é o que chegaria de um instrumento naquela posição.
+
+Um fone não é uma fonte no espaço. Ele injeta som diretamente na orelha (ou no canal), pulando a sala, a cabeça e, no caso de IEMs, a pina e a concha. Como vimos em [pinna gain](/percepcao/pinna-gain), uma resposta plana no tímpano soaria escura e distante, porque não teria o ganho que a orelha sempre aplica. Então a pergunta precisa ser outra: **que pressão o fone deve produzir no tímpano para soar natural?** E isso depende de qual “som natural” tomamos como referência.
+
+## Primeira resposta: campo livre
+
+A ideia mais direta é que o fone reproduza no tímpano o que uma caixa plana, à frente do ouvinte numa câmara anecoica, produziria. Ou seja: a resposta do fone medida no tímpano deveria ser igual à **transformação de campo livre frontal** da cabeça e da orelha — a curva de Shaw para incidência a 0°.
+
+O problema é que ninguém ouve música numa câmara anecoica, com uma única fonte exatamente à frente. Fones equalizados para campo livre frontal tendem a soar brilhantes e projetados, porque a transformação frontal tem um pico de presença acentuado e direcional. Além disso, a imagem de uma fonte única à frente não corresponde à mixagem estéreo, que foi feita ouvindo duas caixas a ±30° numa sala.
+
+## Segunda resposta: campo difuso
+
+Em 1986, Günther Theile, do Institut für Rundfunktechnik (IRT), publicou um argumento influente. Segundo seu modelo de associação, o cérebro separa duas informações num som: a **direção** (codificada nas variações da HRTF) e o **timbre** da fonte. Para um fone, que não consegue reproduzir corretamente as pistas de direção, a referência mais neutra para o timbre seria a média de todas as direções: a resposta de **campo difuso**, em que o som chega igualmente de todos os lados.
+
+O campo difuso virou norma para fones de estúdio na radiodifusão alemã, e muitos fones de referência — incluindo IEMs como a linha ER-4 da Etymotic — foram afinados com ele como alvo. A curva de campo difuso ainda tem pinna gain (um pico largo em ~2,5–3 kHz), mas é mais suave e menos direcional que a de campo livre.
+
+Na prática, porém, muitos ouvintes descrevem fones de campo difuso como um pouco **magros e brilhantes**: falta grave e sobra agudo em comparação com o que estão acostumados a ouvir em caixas de som numa sala. Por quê?
+
+## A pista das salas
+
+Uma boa caixa de som tem resposta plana de frente, mas o que você ouve numa sala é a soma do som direto com as reflexões. Duas coisas acontecem com essa soma:
+
+- **Os graves sobem**, porque em baixas frequências a caixa irradia em todas as direções e a sala devolve essa energia (modos e reflexões de baixa frequência), e porque ouvimos perto de superfícies.
+- **Os agudos caem**, porque em altas frequências a caixa se torna direcional: irradia menos energia para os lados, e as reflexões que chegam ao ouvinte têm menos agudos.
+
+O resultado é que a resposta em regime estacionário de uma caixa excelente numa boa sala, medida na posição de escuta, é **inclinada**: desce suavemente dos graves aos agudos. É isso que nos acostumamos a ouvir como “som de referência” — e é isso que um fone de campo difuso não reproduz.
+
+## A pesquisa da Harman
+
+No início dos anos 2010, Sean Olive, Todd Welti e colegas da Harman International começaram um programa de pesquisa para descobrir, experimentalmente, que resposta os ouvintes preferem em fones. Duas inovações metodológicas tornaram o trabalho convincente.
+
+**Testes cegos de verdade.** Fones são difíceis de testar às cegas: o ouvinte sente o peso, a pressão, o encaixe. A equipe desenvolveu o **método do fone virtual**: um único fone de referência é equalizado para reproduzir, no ouvido, a resposta de cada fone avaliado. O ouvinte compara as respostas sem saber qual é qual, sem pistas de conforto ou marca. Estudos de validação mostraram que os resultados com fones virtuais concordam bem com os de fones reais.
+
+**Ouvintes treinados e programas variados.** Os testes usaram muitos ouvintes (treinados e não treinados), vários trechos musicais e procedimentos estatísticos para medir a confiabilidade de cada ouvinte.
+
+### A sequência de resultados
+
+1. **2012–2013: o ponto de partida.** Os ouvintes preferiram, entre várias curvas candidatas, uma curva derivada da **resposta de caixas acústicas de referência numa sala**, medida com um simulador de cabeça com orelhas. Essa curva tem mais grave e menos agudo que o campo difuso — exatamente a inclinação de sala descrita acima. Ela foi refinada nos alvos **Harman Over-Ear 2013, 2015 e 2018**.
+2. **2016–2017: IEMs.** Testes com dezenas de IEMs comerciais (reproduzidos virtualmente) levaram a um alvo intra-auricular, referenciado ao acoplador IEC 60318-4. A equipe também desenvolveu um **modelo estatístico** que prevê a nota de preferência de um IEM a partir de sua medição: quanto menor e mais suave o desvio em relação ao alvo (e menor a inclinação desse desvio), maior a preferência prevista. O modelo explicou a grande maioria da variação nas notas médias.
+3. **2019: o grave dos IEMs.** Um estudo dedicado à resposta de graves refinou o shelf de baixa frequência, gerando o alvo **Harman In-Ear 2019** (às vezes chamado de “v2”), hoje o mais citado.
+
+### Preferência média e grupos de ouvintes
+
+Um dos resultados mais importantes — e menos citados — é que a preferência média esconde **grupos**. Análises de segmentação mostraram que a maior parte dos ouvintes (cerca de dois terços) prefere algo próximo do alvo; um grupo menor (em torno de um quinto) prefere mais graves; e uma minoria prefere menos. Fatores como idade, gênero e experiência foram associados a essas preferências: em média, ouvintes mais jovens e homens preferiram mais graves e agudos; ouvintes treinados, um pouco menos de ambos. Isso não determina o gosto de nenhuma pessoa — mas mostra que **o alvo Harman é uma tendência central, não uma regra universal**.
+
+## As curvas lado a lado
+
+O laboratório abaixo mostra os dados publicados das curvas (via projeto AutoEq). Compare as versões, veja o que muda entre o alvo para IEMs e o de headphones, e use a aba “Variar o Harman” para mexer nas duas alavancas em que as preferências mais variam: o shelf de graves e a inclinação de agudos.
+
+<Lab id="targets" />
+
+Alguns pontos para observar:
+
+- **O shelf de graves do Harman IE 2019** acrescenta cerca de 9 dB em 20 Hz em relação à versão sem shelf, com transição por volta de 100–200 Hz. Acima de ~300 Hz, as duas versões são idênticas.
+- **O morro de presença** atinge ~+9 dB entre 2,5 e 3 kHz (relativo a 1 kHz). É o pinna gain artificial que um IEM precisa produzir, medido no domínio do acoplador 711.
+- **A versão 2017** tinha mais energia em 8–10 kHz e uma queda muito mais abrupta no extremo agudo; a 2019 é mais suave em cima.
+- **O alvo over-ear** tem menos grave relativo e um formato de presença diferente — em parte porque é medido num equipamento diferente (cabeça com orelha), em parte porque a interação acústica de um headphone com a orelha é outra.
+
+<Callout type="atencao" title="Curvas de equipamentos diferentes não se comparam ponto a ponto">
+O alvo para IEMs está no domínio do acoplador 711; o over-ear, num simulador de cabeça com orelha; as curvas de campo difuso 5128 e ISO 11904, em referências próximas do tímpano real. As diferenças acima de ~1 kHz entre esses grupos refletem em boa parte o **equipamento**, não apenas a preferência. Compare alvos e fones sempre no mesmo domínio.
+</Callout>
+
+## Neutro, equilibrado, plano e preferido
+
+Vale separar quatro ideias que se misturam em discussões sobre alvos:
+
+- **Plano medido**: resposta plana no acoplador ou no tímpano. Soa escuro; não é neutro.
+- **Neutro**: reproduz no tímpano o que uma referência definida (campo difuso, campo livre, caixas numa sala) produziria. É uma definição técnica que depende da referência escolhida.
+- **Equilibrado**: uma impressão perceptiva — nenhuma região chama mais atenção que as outras. Depende do ouvinte, do volume e da música.
+- **Preferido**: o que os ouvintes, de fato, escolhem em testes. A curva Harman pertence a esta categoria: é um alvo de preferência que se mostrou próximo de uma ideia de “neutro com graves de sala”.
+
+Dizer que um fone “segue o Harman” significa, portanto, que ele tende a ser preferido pela maioria dos ouvintes de um teste cego — não que seja “o som correto”.
+
+## Limitações e debates
+
+**A região acima de ~8 kHz é incerta.** O acoplador 711 é validado até ~10 kHz e sua ressonância varia com a inserção. As diferenças entre pessoas também são grandes ali. O formato do alvo no extremo agudo é o menos confiável.
+
+**As médias apagam indivíduos.** O alvo foi derivado de médias de ouvintes e de medições num ouvido artificial médio. A sua anatomia transforma o que chega ao seu tímpano (veja [percepção individual](/percepcao/percepcao-individual)).
+
+**Volume e programa.** Os testes foram feitos com níveis e músicas específicos. Como vimos em [sonoridade e volume](/percepcao/sonoridade-e-volume), o equilíbrio preferido de graves depende do volume.
+
+**Novos equipamentos, novos alvos.** Com a popularização do B&K 5128 — que tem canal auditivo mais realista e resposta válida até frequências mais altas —, avaliadores e comunidades passaram a propor alvos no domínio do 5128, frequentemente baseados no campo difuso com uma inclinação (por exemplo, −1 dB por oitava) e um shelf de graves ajustável. A lógica é a mesma da pesquisa da Harman — campo difuso inclinado como em uma sala, mais grave a gosto —, com outra referência de medição. Esses alvos são propostas razoáveis, mas nem todos foram validados com testes de preferência do mesmo porte.
+
+<Callout type="evidencia">
+O que é bem estabelecido: (1) fones com resposta próxima de um alvo de campo difuso inclinado com shelf de graves tendem a ser preferidos pela maioria dos ouvintes em testes cegos; (2) desvios suaves e pequenos em relação ao alvo predizem boa parte da preferência; (3) existe variação individual real, sobretudo na quantidade de graves e agudos. O que é incerto: a forma exata do alvo acima de ~8 kHz, a melhor forma de traduzir alvos entre equipamentos e quanto as diferenças anatômicas de cada pessoa deslocam o seu alvo ideal.
+</Callout>
+
+## Como usar alvos na prática
+
+1. Use o alvo como **régua**, não como juiz. Um fone 3 dB acima do alvo nos graves não é “errado”; é um fone com mais grave que a média preferida.
+2. Leia a **vista de diferença** (fone − alvo): ela mostra imediatamente onde o fone se afasta, e em que direção.
+3. Dê mais peso a desvios **largos** que a picos estreitos, e mais peso à faixa de 100 Hz a 5 kHz, onde as medições são confiáveis.
+4. Descubra o **seu** alvo: comece pelo Harman e ajuste graves e agudos até ficar bom para você. O método está em [como descobrir a sua curva de preferência](/resposta/sua-curva).
+
+<References>
+  <Ref>Theile, G. “On the standardization of the frequency response of high-quality studio headphones.” <em>Journal of the Audio Engineering Society</em>, 34(12), 956–969, 1986.</Ref>
+  <Ref>Olive, S. E.; Welti, T. “The relationship between perception and measurement of headphone sound quality.” AES 133rd Convention, paper 8744, 2012.</Ref>
+  <Ref>Olive, S. E.; Welti, T.; McMullin, E. “Listener preference for different headphone target response curves.” AES 134th Convention, paper 8867, 2013.</Ref>
+  <Ref>Olive, S. E.; Welti, T.; McMullin, E. “Listener preferences for in-room loudspeaker and headphone target responses.” AES 135th Convention, paper 8994, 2013.</Ref>
+  <Ref>Olive, S. E.; Welti, T.; Khonsaripour, O. “A statistical model that predicts listeners’ preference ratings of in-ear headphones: Part 1 — listening test results and acoustic measurements.” AES 143rd Convention, paper 9840, 2017. Part 2 — development and validation of the model, paper 9878.</Ref>
+  <Ref>Olive, S. E.; Welti, T.; Khonsaripour, O. “The preferred low frequency response of in-ear headphones.” AES International Conference on Headphone Technology, 2019.</Ref>
+  <Ref>Olive, S.; Welti, T.; Khonsaripour, O. “Factors that influence listeners’ preferred bass and treble balance in headphones.” AES 145th Convention, 2018.</Ref>
+  <Ref>Møller, H.; Hammershøi, D.; Jensen, C. B.; Sørensen, M. F. “Transfer characteristics of headphones measured on human ears.” <em>Journal of the Audio Engineering Society</em>, 43(4), 203–217, 1995.</Ref>
+  <Ref>Pasanen, J. <em>AutoEq</em> — projeto de código aberto com dados de curvas-alvo e medições. github.com/jaakkopasanen/AutoEq (licença MIT).</Ref>
+</References>

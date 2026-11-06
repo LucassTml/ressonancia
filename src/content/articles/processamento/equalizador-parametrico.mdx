@@ -1,0 +1,58 @@
+<Lead>
+Um equalizador paramétrico é a ferramenta mais poderosa e mais barata da audiofilia: com quatro ou cinco filtros bem escolhidos, ele transforma o equilíbrio de um fone. Para usá-lo bem, é preciso entender não só os filtros, mas também o que acontece com o nível do sinal quando se reforça alguma coisa — e por que todo reforço exige um preamp negativo.
+</Lead>
+
+## O laboratório
+
+O equalizador abaixo funciona de verdade: os filtros são aplicados ao áudio em tempo real, no seu navegador. Abra um arquivo seu (WAV, FLAC, MP3, AAC…) — ele é decodificado e processado localmente, sem sair do seu computador. Arraste os pontos coloridos no gráfico para mudar frequência e ganho, ou use os controles de cada filtro. As linhas finas ao vivo mostram o espectro da música antes e depois da EQ.
+
+<Lab id="peq" />
+
+## Um método de trabalho
+
+1. **Comece pelo diagnóstico**, não pelo EQ. Compare a medição do seu fone com um alvo (veja [lendo gráficos](/resposta/lendo-graficos)) ou identifique de ouvido o que incomoda (graves embolados, sibilância). Ajuste com propósito.
+2. **Ajuste o equilíbrio largo primeiro**: um low shelf para graves, um high shelf ou um peak largo para presença/agudos. Isso resolve a maior parte da diferença entre fones.
+3. **Depois, trate ressonâncias** específicas com peaks mais estreitos — de preferência **cortando** picos, não reforçando vales.
+4. **Use poucos filtros.** Cada filtro adicional tem que justificar sua existência. Muitos filtros estreitos geralmente corrigem detalhes de uma medição que não existem no seu ouvido.
+5. **Compare com o mesmo nível** (o laboratório faz isso) e por tempo suficiente.
+
+## Preamp e headroom digital
+
+Num sistema digital, o maior valor representável é **0 dBFS**. Uma música masterizada com picos em −0,5 dBFS (comum) tem apenas meio decibel de folga. Se um filtro reforça uma região em +6 dB, qualquer pico que contenha energia naquela região passa de 0 dBFS. Na conversão para o formato de saída — em algum ponto, sempre existe uma conversão em ponto fixo, no máximo no DAC —, os valores acima do teto são cortados: é o **clipping digital**. Ele soa como estalos, aspereza ou uma “compressão” estranha nos picos.
+
+A solução é o **preamp**: um ganho negativo aplicado antes (ou depois) da EQ, igual ou maior que o maior reforço da curva. Com um shelf de +6 dB, o preamp deve ser de pelo menos −6 dB. No laboratório, desligue o preamp automático, aplique um reforço grande e veja o indicador de clipping.
+
+Três observações práticas:
+
+- **O preamp reduz o volume.** É preciso compensar aumentando o volume no amplificador — o que exige que a fonte tenha tensão de sobra. Com IEMs sensíveis, isso nunca é problema; com fones difíceis, pode ser.
+- **Cortar é melhor que reforçar.** Em vez de +4 dB nos graves e nos agudos, considere −4 dB nos médios e compensar no volume: a curva resultante é a mesma, sem precisar de preamp.
+- **Sistemas em ponto flutuante** (como o Equalizer APO e a Web Audio) têm margem interna, mas ainda cortam na saída. O preamp continua necessário.
+
+<Callout type="chave">
+**Regra de ouro:** preamp ≤ −(maior reforço da curva). O Equalizer APO, por exemplo, mostra a curva total e permite ajustar o preamp; muitos aplicativos fazem isso automaticamente. Inter-sample peaks (ver [loudness](/digital/loudness-e-resampling)) podem exigir até 1 dB extra de folga em músicas muito altas.
+</Callout>
+
+## Onde aplicar a EQ
+
+- **No sistema operacional**: Equalizer APO no Windows (afeta todo o áudio), eqMac ou SoundSource no macOS, Wavelet e outros no Android.
+- **No reprodutor**: muitos tocadores (foobar2000, Roon, Poweramp) têm EQ paramétrico.
+- **No hardware**: dongles e DAC/amps com DSP interno guardam o EQ no aparelho, útil para usar com qualquer fonte.
+- **Em fones sem fio**: muitos têm EQ no aplicativo do fabricante, aplicado pelo DSP interno.
+
+O laboratório exporta os filtros no formato de texto do Equalizer APO, que também é aceito (ou facilmente convertido) por várias outras ferramentas.
+
+## Erros comuns
+
+- **Equalizar para uma medição e não para o próprio ouvido**, sobretudo acima de 6 kHz, onde a sua anatomia muda tudo.
+- **Corrigir vales estreitos** com reforços grandes: gasta headroom e excursão, e o vale muitas vezes é de cancelamento, que a EQ não preenche.
+- **Ignorar o volume** ao comparar: a versão mais alta parece melhor.
+- **Esquecer o preamp** e atribuir a aspereza do clipping ao fone.
+
+O que a EQ consegue — e o que ela fundamentalmente não consegue — é o assunto do próximo artigo: [os limites da EQ](/processamento/limites-da-eq).
+
+<References>
+  <Ref>Equalizer APO — documentação (equalizerapo.sourceforge.io).</Ref>
+  <Ref>Bristow-Johnson, R. <em>Cookbook formulae for audio EQ biquad filter coefficients</em>.</Ref>
+  <Ref>Katz, B. <em>Mastering Audio: The Art and the Science</em>. 3ª ed. Focal Press, 2015. Headroom, clipping e inter-sample peaks.</Ref>
+  <Ref>Pasanen, J. <em>AutoEq</em> — github.com/jaakkopasanen/AutoEq.</Ref>
+</References>

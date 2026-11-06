@@ -1,0 +1,70 @@
+<Lead>
+Quando duas coisas soam diferentes para você, há duas perguntas distintas: existe uma diferença audível? E, se existe, qual você prefere? Testes cegos respondem à primeira com uma precisão que nenhuma escuta casual alcança. Este artigo explica como funcionam, por que são necessários e como interpretar o resultado — com um ABX funcional para você experimentar.
+</Lead>
+
+## Por que “cego”
+
+Em escuta não controlada, o que você **sabe** sobre o que está ouvindo influencia o que você **ouve**. Floyd Toole e Sean Olive mostraram isso de forma clássica com caixas acústicas: as preferências de ouvintes mudavam drasticamente quando eles viam as marcas e as caixas, e convergiam para as caixas com melhores medições quando a escuta era cega. Expectativa, preço, aparência, opinião de terceiros e o próprio desejo de que um investimento tenha valido a pena são forças poderosas — e operam em qualquer pessoa, inclusive em especialistas. Ver [viés e expectativa](/ciencia/vies-e-placebo).
+
+Um teste **cego** remove essa informação: o ouvinte não sabe qual opção está ouvindo. Um teste **duplo-cego** garante que nem quem conduz o teste sabe, para não influenciar o ouvinte sem querer. Num teste por software, o computador cumpre os dois papéis.
+
+## O teste ABX
+
+O ABX, cuja forma moderna foi popularizada por David Clark nos anos 1980, é a ferramenta padrão para a pergunta “existe diferença audível?”:
+
+- **A** e **B** são as duas versões, conhecidas e identificadas.
+- **X** é, a cada tentativa, A ou B, sorteado ao acaso.
+- O ouvinte pode ouvir A, B e X quantas vezes quiser, trocando livremente, e responde se X é A ou B.
+- Repetem-se várias tentativas.
+
+Se não houver diferença audível, o ouvinte acerta, em média, metade das vezes — está chutando. Se houver, acerta consistentemente mais.
+
+<Lab id="abx" />
+
+## Estatística: quando o resultado não é sorte
+
+Acertar 7 de 10 parece bom, mas é sorte com relativa frequência: a probabilidade de acertar 7 ou mais chutando é de cerca de 17%. A distribuição relevante é a **binomial**: com $n$ tentativas e probabilidade 1/2 de acerto em cada uma (se não houver diferença), a chance de acertar $k$ ou mais é
+
+$$
+P(X \geq k) = \sum_{i=k}^{n} \binom{n}{i}\left(\tfrac{1}{2}\right)^{n}
+$$
+
+Esse é o **valor p** do teste. Por convenção, um p abaixo de 0,05 é considerado evidência de que o ouvinte distingue as versões. Alguns pontos de referência:
+
+| Tentativas | Acertos necessários para p &lt; 0,05 |
+| --- | --- |
+| 10 | 9 |
+| 12 | 10 |
+| 16 | 12 |
+| 20 | 15 |
+| 25 | 18 |
+
+### O que o resultado significa — e o que não significa
+
+**Um resultado positivo** (p &lt; 0,05) indica que, **nessas condições** (aquele ouvinte, aquele equipamento, aquele trecho), há uma diferença audível. Não diz qual versão é melhor.
+
+**Um resultado negativo** não prova que a diferença é inaudível para todos. Ele indica que **não há evidência** de diferença audível naquelas condições. Pode ser que o ouvinte não seja sensível àquela diferença, que o trecho não a revele, que o teste tenha poucas tentativas para detectar um efeito pequeno (baixo **poder estatístico**) ou que o cansaço tenha atrapalhado. Mas, se muitas pessoas, com bons equipamentos e trechos escolhidos por elas, não conseguem passar num ABX, isso é forte evidência de que a diferença, se existir, é muito pequena.
+
+**Cuidado com a repetição seletiva:** fazer vários testes e reportar só o que deu certo infla a taxa de falsos positivos. Com 20 testes independentes, um deles dará p &lt; 0,05 por puro acaso, em média.
+
+## Volume: o requisito número um
+
+Qualquer diferença de nível entre A e B pode ser detectada — e, como vimos em [sonoridade e volume](/percepcao/sonoridade-e-volume), ela também enviesa preferências. Comparações entre equipamentos devem igualar o volume com precisão de ~0,1–0,2 dB. No laboratório, a categoria “Volume” permite descobrir o seu próprio limiar para diferenças de nível.
+
+## Preferência: outro tipo de teste
+
+O ABX responde “há diferença?”. Para “qual é melhor?”, usam-se testes de **preferência** cegos: comparações pareadas (A ou B, qual você prefere?), notas em escalas, ou métodos como o **MUSHRA** (ITU-R BS.1534), em que vários sistemas são avaliados contra uma referência e uma âncora. Para diferenças muito pequenas, a recomendação **ITU-R BS.1116** define métodos com referência oculta. A pesquisa da Harman sobre fones usou testes cegos de preferência com ouvintes treinados e fones virtuais.
+
+<Callout type="chave" title="Como usar isso na prática">
+- Para saber se dois cabos, DACs ou formatos soam diferentes **para você**, faça um ABX com volume igualado. Se você passar consistentemente, a diferença é real para você.
+- Para escolher entre dois fones, faça comparações cegas de preferência, com volume igualado e encaixe garantido.
+- Desconfie de conclusões baseadas em escutas casuais — inclusive as suas.
+</Callout>
+
+<References>
+  <Ref>Clark, D. “High-resolution subjective testing using a double-blind comparator.” <em>Journal of the Audio Engineering Society</em>, 30(5), 330–338, 1982.</Ref>
+  <Ref>Toole, F. E.; Olive, S. E. “Hearing is believing vs. believing is hearing: blind vs. sighted listening tests, and other interesting things.” AES 97th Convention, 1994.</Ref>
+  <Ref>Leventhal, L. “Type 1 and type 2 errors in the statistical analysis of listening tests.” <em>Journal of the Audio Engineering Society</em>, 34(6), 437–453, 1986.</Ref>
+  <Ref>ITU-R BS.1116-3 (2015) e ITU-R BS.1534-3 (2015).</Ref>
+  <Ref>Bech, S.; Zacharov, N. <em>Perceptual Audio Evaluation: Theory, Method and Application</em>. Wiley, 2006.</Ref>
+</References>

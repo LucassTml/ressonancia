@@ -1,0 +1,77 @@
+<Lead>
+Amplificadores valvulados brilham, aquecem e custam caro — e muita gente jura que soam mais “quentes”, “musicais”, “tridimensionais”. Há física real por trás de parte dessas impressões, e há também mitos. A diferença entre um amplificador valvulado e um transistorizado está em três lugares: como cada dispositivo amplifica, como os circuitos costumam ser projetados em volta deles e como o resultado interage com o fone.
+</Lead>
+
+## Como funciona uma válvula
+
+Uma **válvula termiônica** (ou tubo de vácuo) é um bulbo de vidro sem ar contendo, no caso mais simples (o **triodo**), três elementos:
+
+- um **cátodo**, aquecido por um filamento até emitir elétrons (efeito termiônico — daí o brilho);
+- uma **placa** (ânodo), mantida numa tensão alta e positiva (tipicamente 100 a 400 V), que atrai os elétrons;
+- uma **grade** de fios finos entre os dois.
+
+A tensão na grade controla quantos elétrons conseguem chegar à placa: um pouco mais negativa, menos corrente; um pouco menos negativa, mais corrente. Como uma pequena variação de tensão na grade produz uma grande variação de corrente na placa, a válvula **amplifica**. Válvulas com mais grades (tetrodos, pentodos) têm mais ganho e outras características.
+
+## Como funciona um transistor
+
+Um **transistor** faz a mesma coisa conceitualmente — uma pequena grandeza de controle regula uma corrente maior —, mas em estado sólido. No **transistor bipolar** (BJT), uma pequena corrente na base controla a corrente entre coletor e emissor; no **MOSFET**, uma tensão no gate controla a corrente entre dreno e fonte, por meio de um campo elétrico num canal de semicondutor. Não há filamento, vácuo nem alta tensão; transistores são minúsculos, baratos, robustos e se integram aos milhares num chip.
+
+## Onde as diferenças realmente aparecem
+
+### 1. Curvas de transferência e perfil de distorção
+
+Nenhum dispositivo é perfeitamente linear. A forma como a saída se afasta da linha reta define o **perfil de distorção**:
+
+- Um **triodo** operando num único lado do sinal (**single-ended**) tem uma curva suave e **assimétrica**: comprime um semiciclo mais do que o outro. Isso gera principalmente **segundo harmônico** (uma oitava acima), que cresce de forma gradual com o nível. Em níveis moderados, a distorção de um amplificador valvulado single-ended sem realimentação pode ficar entre 0,5% e vários por cento — ordens de grandeza acima de um bom transistorizado.
+- Em **push-pull** (duas válvulas em contrafase), os harmônicos pares se cancelam e predomina o **terceiro harmônico**, com uma compressão suave e simétrica.
+- **Transistores com muita realimentação negativa** são extremamente lineares até o limite da alimentação; ali, cortam de forma abrupta (**clipping duro**), gerando harmônicos ímpares de ordem alta. Abaixo do limite, a distorção é tipicamente de 0,001% a 0,01%.
+- Circuitos **classe B** mal polarizados geram **distorção de cruzamento**, que piora em volume baixo — um dos motivos da má fama de alguns transistorizados antigos.
+
+<Lab id="distortion" />
+
+A **saturação suave** das válvulas também importa nos limites: quando um valvulado é levado além da sua capacidade, ele comprime gradualmente em vez de cortar de repente. Para guitarras elétricas, onde o amplificador é levado à saturação de propósito, essa é uma diferença enorme e desejada. Para reprodução em níveis normais, ela só aparece se o amplificador estiver trabalhando perto do limite.
+
+### 2. Impedância de saída e transformadores
+
+Válvulas trabalham com tensões altas e correntes baixas, ou seja, têm **impedância alta**. Fones (e alto-falantes) precisam de tensões baixas e correntes maiores. Para casar as duas coisas, amplificadores valvulados usam frequentemente **transformadores de saída**, ou estágios **OTL** (*output transformerless*), que ligam a válvula diretamente ao fone com impedância de saída alta — muitas vezes 10, 50, ou mais de 100 Ω.
+
+Essa impedância de saída alta é, muito provavelmente, a **maior fonte de diferenças audíveis** entre valvulados e transistorizados com fones. Como vimos em [impedância de saída](/eletronica/potencia-e-sensibilidade), ela forma um divisor de tensão com a impedância do fone. Com um headphone dinâmico de 300 Ω com pico de impedância nos graves, isso eleva os graves por volta da ressonância e reduz o amortecimento elétrico do driver — um efeito descrito como “calor” e graves mais “soltos”. Com IEMs multi-BA, a mudança pode ser drástica e imprevisível. Com planares de impedância plana, quase nada muda.
+
+Transformadores, por sua vez, têm sua própria resposta em frequência e distorção nos graves em níveis altos, que dependem muito da qualidade.
+
+### 3. Ruído, microfonia e manutenção
+
+Válvulas exigem alimentação de alta tensão (perigosa), aquecem, envelhecem e precisam ser trocadas. Algumas são **microfônicas**: vibrações mecânicas modulam sua corrente, gerando ruído quando o aparelho é tocado. Circuitos valvulados também tendem a ter mais ruído de fundo e zumbido de alimentação, o que pode ser audível com IEMs sensíveis.
+
+## Por que muitas pessoas gostam do som valvulado
+
+Juntando as peças, há razões físicas plausíveis para a preferência:
+
+- **Segundo harmônico em níveis baixos a moderados** é percebido como “riqueza” ou “calor”, em vez de aspereza. Ele reforça a oitava e o timbre da fundamental de modo consonante. Em doses pequenas, pode ser agradável — embora seja, objetivamente, uma alteração do sinal.
+- **Interação com a impedância** dos fones altera a resposta em frequência, muitas vezes elevando graves e suavizando agudos — uma assinatura mais quente.
+- **Compressão suave** perto do limite deixa picos menos agressivos.
+- **Expectativa, estética e ritual:** o brilho das válvulas, o peso do equipamento, o preço e a história influenciam a percepção. Esse componente é real e não deve ser desprezado nem tratado como único fator. Veja [viés e expectativa](/ciencia/vies-e-placebo).
+
+<Callout type="preferencia">
+Preferir o som de um valvulado é uma escolha legítima — da mesma forma que preferir um fone mais quente. O que não se sustenta é dizer que um valvulado é **mais fiel** ao sinal. Na maioria das medições, um bom amplificador transistorizado altera menos o sinal do que um bom valvulado. Se o objetivo é transparência, transistores ganham com folga; se o objetivo é uma coloração específica, válvulas são uma das ferramentas — e um equalizador e um processador de saturação suave são outras, mais baratas e reversíveis.
+</Callout>
+
+## Resumo prático
+
+| Aspecto | Valvulado típico | Transistorizado típico |
+| --- | --- | --- |
+| Distorção em nível normal | 0,1% a alguns %, predominando 2º/3º harmônico | 0,001%–0,01% |
+| Comportamento no limite | Compressão suave | Corte abrupto |
+| Impedância de saída | Frequentemente alta (10–100+ Ω) | Geralmente baixa (&lt; 1–2 Ω) |
+| Interação com IEMs multi-BA | Forte, muda a resposta | Desprezível |
+| Ruído com IEMs sensíveis | Frequentemente audível | Geralmente inaudível |
+| Manutenção | Válvulas envelhecem | Mínima |
+
+Existem também **híbridos** (estágio de entrada valvulado, saída transistorizada), que combinam a coloração de uma válvula com a baixa impedância de saída de transistores.
+
+<References>
+  <Ref>Jones, M. <em>Valve Amplifiers</em>. 4ª ed. Newnes, 2012.</Ref>
+  <Ref>Self, D. <em>Audio Power Amplifier Design</em>. 6ª ed. Focal Press, 2013.</Ref>
+  <Ref>Hamm, R. O. “Tubes versus transistors — is there an audible difference?” <em>Journal of the Audio Engineering Society</em>, 21(4), 267–273, 1973.</Ref>
+  <Ref>Bussey, W. S.; Haigler, R. M. “Tubes versus transistors in electric guitar amplifiers.” <em>IEEE ICASSP</em>, 1981.</Ref>
+</References>

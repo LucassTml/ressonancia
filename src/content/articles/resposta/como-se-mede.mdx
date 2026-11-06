@@ -1,0 +1,77 @@
+<Lead>
+Todo gráfico de resposta em frequência é o resultado de uma cadeia de decisões: qual simulador de ouvido, qual microfone, qual sinal, como posicionar o fone, quantas medições, que suavização, onde normalizar. Mudar qualquer uma delas muda o gráfico. Entender essa cadeia é o que separa quem lê gráficos de quem é enganado por eles.
+</Lead>
+
+## O que se mede
+
+Medir a resposta em frequência de um fone é medir a **pressão sonora** que ele produz num ponto que represente o tímpano, em função da frequência, para um sinal elétrico de entrada conhecido. Como não se pode colocar um microfone no tímpano de cada comprador, usa-se um **simulador**: uma estrutura que imita a acústica de um ouvido médio — o volume do canal, a impedância do tímpano e, conforme o caso, a orelha e a cabeça.
+
+O ponto crucial é que o fone e o ouvido formam um **sistema acoplado**. Um IEM empurra o ar de uma cavidade fechada; a pressão resultante depende tanto do IEM quanto da “carga” que o ouvido oferece. Medir no ar livre, ou numa cavidade rígida qualquer, daria um resultado sem relação com o que você ouve. O simulador precisa reproduzir essa carga.
+
+## Os equipamentos
+
+### Acoplador IEC 60318-4 (o “711”)
+
+O equipamento mais usado para IEMs é o **simulador de ouvido ocluído** definido na norma **IEC 60318-4** (herdeira da antiga IEC 711, daí o apelido). Ele consiste num microfone de precisão no fundo de uma pequena cavidade, com um volume equivalente ao de um canal auditivo residual, ligada a pequenas cavidades laterais e passagens estreitas que formam uma rede acústica. Essa rede imita a impedância do tímpano e do ouvido médio — como o tímpano “cede” e absorve energia em cada frequência.
+
+O 711 foi desenhado para ser válido, segundo a norma, entre ~100 Hz e 10 kHz. Abaixo disso funciona bem na prática; acima de 10 kHz, as diferenças entre o acoplador e ouvidos reais crescem, e o próprio acoplador tem ressonâncias que dependem de quão fundo o IEM está inserido. Existem também muitos “clones” mais baratos do 711, com diferenças relevantes acima de alguns quilohertz entre si e em relação ao original.
+
+### Simuladores de cabeça e orelha (KEMAR, GRAS, HMS)
+
+Para headphones, o acoplador sozinho não basta: é preciso uma orelha (pina) e uma superfície de cabeça para apoiar as almofadas. Manequins como o **KEMAR** (GRAS 45BB), os dispositivos de teste de fones da GRAS (43AG e 45CA) e cabeças da HEAD acoustics combinam pinas de silicone com canais e acopladores do tipo 711.
+
+### B&K 5128
+
+O **Brüel & Kjær Type 5128**, lançado no fim dos anos 2010, é um simulador de cabeça e tronco (HATS) com **canal auditivo anatômico** — baseado em medições de canais reais — e uma impedância de tímpano modelada até frequências altas, com microfone no ponto de referência do tímpano (DRP). Ele representa melhor um ouvido humano médio acima de ~5 kHz e é cada vez mais usado por avaliadores e fabricantes. A contrapartida é que **as curvas obtidas no 5128 não são comparáveis diretamente às obtidas no 711**: o mesmo IEM tem formas diferentes nos dois, e os alvos também precisam estar no domínio certo.
+
+## Como uma medição é feita
+
+1. **Calibração.** O microfone é calibrado com uma fonte de referência (um calibrador acústico que gera 94 dB SPL em 1 kHz, por exemplo). Interface de áudio e amplificador também têm sua resposta medida e compensada.
+2. **Nível de excitação.** Define-se a tensão aplicada ao fone — por exemplo, a necessária para 94 dB SPL em 1 kHz, ou um valor fixo como 0,1 V. Isso permite também calcular a **sensibilidade** em dB/V.
+3. **Montagem.** O IEM é encaixado no acoplador com uma ponteira (normalmente a padrão, de silicone, do tamanho adequado) e numa profundidade definida. A vedação é verificada: se os graves caem de forma inesperada, há vazamento.
+4. **Sinal de teste.** O mais comum é uma **varredura senoidal logarítmica** (*log sweep*): uma senoide cuja frequência sobe exponencialmente de 20 Hz a 20 kHz em alguns segundos. A técnica descrita por Angelo Farina (2000) permite, por deconvolução, obter a resposta ao impulso do sistema e, de quebra, separar os produtos de distorção harmônica, que aparecem “antes” no tempo. Ruído rosa com análise FFT e senoides em degraus também são usados.
+5. **Repetição.** O IEM é retirado e recolocado várias vezes (5 a 10 é comum) e as medições são médias, para reduzir a influência de um posicionamento específico. Os dois canais são medidos separadamente.
+6. **Pós-processamento.** A resposta é suavizada (com uma fração de oitava declarada), normalizada (em 500 Hz, 1 kHz ou por média) e, às vezes, **compensada** — subtraída de uma curva de referência para mostrar só o desvio.
+
+## Por que o gráfico de dois sites é diferente
+
+Mesmo com tudo bem-feito, dois avaliadores sérios medindo o mesmo modelo de IEM obtêm gráficos diferentes. As causas, em ordem aproximada de impacto:
+
+- **Equipamento.** 711 original, clone de 711 ou 5128: formas diferentes acima de ~1–2 kHz.
+- **Profundidade de inserção.** Desloca a ressonância de 7–10 kHz e altera os agudos em vários decibéis.
+- **Ponteira.** Material e diâmetro do furo mudam agudos e, às vezes, a vedação.
+- **Unidade.** Duas unidades do mesmo modelo diferem dentro de tolerâncias de fabricação — com drivers balanced armature, ±2–3 dB em algumas regiões não é raro.
+- **Suavização e normalização.** Mudam a aparência sem mudar o fone.
+- **Compensação.** Um gráfico “compensado” por uma curva de referência mostra o fone relativo àquela curva; trocar a referência muda o desenho inteiro.
+
+O laboratório abaixo usa uma medição sintética para mostrar o efeito de cada escolha de apresentação.
+
+<Lab id="rig-compare" />
+
+<Callout type="chave" title="Regras para comparar gráficos">
+- Compare fones **medidos pelo mesmo avaliador, no mesmo equipamento**, com o mesmo método.
+- Nunca compare um gráfico de 711 com um de 5128, nem um alvo de um domínio com um fone medido no outro.
+- Confie mais na faixa de **~100 Hz a ~5 kHz**; trate a região acima de 6 kHz como indicativa.
+- Verifique a **suavização** e o **ponto de normalização** antes de concluir que “um tem mais grave que o outro”.
+- Diferenças de 1–2 dB entre gráficos de fontes diferentes não significam nada por si só.
+</Callout>
+
+## Medição na fábrica
+
+As mesmas ferramentas aparecem na linha de produção, com outro objetivo: garantir que cada unidade se pareça com o protótipo aprovado.
+
+Durante o **desenvolvimento**, engenheiros medem protótipos repetidamente num acoplador (às vezes também num 5128 e em ouvidos reais), comparam com o alvo da empresa e ajustam drivers, filtros e tubos até a curva convergir — o processo descrito em [tuning](/iems/tuning). A curva final aprovada vira a **referência de ouro** (*golden sample*).
+
+Na **produção**, cada unidade (ou cada driver, antes da montagem) passa por um teste automatizado e rápido: um dispositivo de teste com acoplador, um sinal curto (varredura ou multitom de alguns segundos) e um software que compara o resultado com a referência dentro de uma **janela de tolerância** — por exemplo, ±2 ou ±3 dB numa faixa de frequências. Também se verifica o **casamento entre canais**: a diferença entre o fone esquerdo e o direito precisa ficar dentro de um limite, frequentemente 1 a 2 dB nas faixas mais importantes. Alguns fabricantes classificam drivers em lotes de sensibilidade e montam pares a partir do mesmo lote; outros publicam a medição individual de cada unidade vendida.
+
+Esse controle não elimina a variação — apenas a mantém dentro de limites definidos pelo fabricante. Por isso o gráfico de um avaliador representa *uma* unidade (ou a média de poucas), e a sua pode diferir dele dentro da tolerância. O tema de variação entre unidades é desenvolvido em [o que medições mostram](/ciencia/o-que-medicoes-mostram).
+
+<References>
+  <Ref>IEC 60318-4:2010. <em>Electroacoustics — Simulators of human head and ear — Part 4: Occluded-ear simulator for the measurement of earphones coupled to the ear by means of ear inserts</em>.</Ref>
+  <Ref>ANSI/ASA S3.25-2009 (R2019). <em>American National Standard for an Occluded Ear Simulator</em>.</Ref>
+  <Ref>ITU-T P.57 (2021). <em>Artificial ears</em>.</Ref>
+  <Ref>IEC 60268-7:2010. <em>Sound system equipment — Part 7: Headphones and earphones</em>.</Ref>
+  <Ref>Farina, A. “Simultaneous measurement of impulse response and distortion with a swept-sine technique.” AES 108th Convention, preprint 5093, 2000.</Ref>
+  <Ref>Brüel &amp; Kjær. <em>Head and Torso Simulator Type 5128</em> — documentação técnica do produto.</Ref>
+  <Ref>Hammershøi, D.; Møller, H. “Sound transmission to and within the human ear canal.” <em>JASA</em>, 100(1), 408–427, 1996.</Ref>
+</References>

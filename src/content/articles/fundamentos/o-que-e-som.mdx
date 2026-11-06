@@ -1,0 +1,139 @@
+<Lead>
+Antes de existir música, fone ou ouvido, existe uma perturbação mecânica: algo empurra o ar, o ar empurra o ar vizinho, e essa sequência de empurrões atravessa o espaço. Tudo o que você vai ler nesta enciclopédia — da curva Harman ao funcionamento de um DAC — é, no fim, uma forma de controlar, medir ou interpretar essa perturbação.
+</Lead>
+
+## Uma perturbação que viaja, não ar que viaja
+
+O ar ao seu redor é um gás: cerca de 25 bilhões de bilhões de moléculas (2,5 × 10²⁵) em cada metro cúbico, movendo-se em todas as direções a velocidades térmicas da ordem de 500 m/s e colidindo entre si bilhões de vezes por segundo. Uma molécula percorre em média apenas uns 70 nanômetros entre uma colisão e outra. Esse caos é o estado de repouso do ar — e, curiosamente, é ele que torna o som possível.
+
+Imagine a membrana de um alto-falante avançando alguns micrômetros. Ela empurra a camada de ar imediatamente à sua frente, que fica levemente mais densa. Moléculas mais próximas colidem com mais frequência, o que significa **pressão maior**. Essa camada mais pressionada empurra a seguinte, que empurra a seguinte, e assim por diante. Quando a membrana recua, ocorre o oposto: uma região com moléculas um pouco mais espaçadas, de pressão ligeiramente menor, passa a se propagar da mesma maneira.
+
+Duas propriedades do meio tornam isso uma onda, e não apenas um empurrão que se dissipa:
+
+- **Elasticidade (compressibilidade):** o ar comprimido “quer” voltar ao volume original. Essa é a força restauradora — o ar se comporta como uma mola.
+- **Inércia (massa):** o ar que foi posto em movimento tende a continuar em movimento e ultrapassa a posição de equilíbrio, comprimindo a camada seguinte.
+
+Mola e massa, alternando energia potencial (compressão) e cinética (movimento): é o mesmo par de ingredientes de um pêndulo ou de uma corda de violão. Num meio contínuo, essa troca não fica num lugar só — ela se transmite de camada em camada. O que viaja é o **padrão** de compressões e rarefações, não o ar. Cada porção de ar apenas oscila em torno de onde já estava.
+
+<Callout type="mito" title="“O fone empurra ar até o seu ouvido”">
+Não há um fluxo de ar saindo do fone em direção ao tímpano. Num tom de 1 kHz a 94 dB SPL (alto, mas comum em escuta), as moléculas oscilam cerca de meio micrômetro para frente e para trás, mil vezes por segundo, e terminam onde começaram. Grave forte também não “empurra mais ar” no sentido de um vento: ele exige deslocamentos maiores da membrana para gerar a mesma pressão, mas o ar continua apenas oscilando.
+</Callout>
+
+## Compressões e rarefações
+
+O simulador abaixo mostra uma janela de dois metros de ar em câmera lenta. Os pontos representam moléculas (na verdade, pequenas porções de ar — desenhar 10²⁵ pontos não seria prático). Acompanhe os pontos vermelhos: eles vão e voltam sem sair do lugar, enquanto a região escura — a compressão — atravessa a tela.
+
+<Lab id="wave" />
+
+Repare em três detalhes que costumam passar despercebidos:
+
+**A pressão e o deslocamento não estão “em fase”.** Ative as duas curvas. A pressão é máxima onde as moléculas estão mais aglomeradas, e isso acontece justamente nos pontos onde o deslocamento é *zero* — as moléculas à esquerda foram empurradas para a direita e as da direita para a esquerda, encontrando-se ali. A curva de pressão é a derivada espacial do deslocamento (com sinal trocado), e por isso aparece adiantada em um quarto de ciclo, 90°. Microfones e o tímpano respondem à pressão; é ela que costuma aparecer nos gráficos.
+
+**As variações de pressão são minúsculas.** A pressão atmosférica ao nível do mar é de cerca de 101 325 Pa. Um som de 94 dB SPL — o nível usado para calibrar microfones, comparável a um grito a curta distância — corresponde a uma variação de apenas 1 Pa RMS, ou um centésimo de milésimo da pressão atmosférica. O ouvido detecta variações ainda 50 mil vezes menores.
+
+**O movimento das moléculas é mais microscópico do que parece.** Ajuste o nível para 0 dB SPL e a frequência para 1 kHz: o deslocamento calculado cai para cerca de 10⁻¹¹ m, um décimo do diâmetro de um átomo. O limiar da audição humana corresponde, literalmente, a movimentos de ar menores que um átomo. É um dos sensores mecânicos mais sensíveis da natureza, e entender como ele funciona é o assunto do [módulo de percepção](/percepcao/anatomia-do-ouvido).
+
+## Ondas longitudinais e transversais
+
+Uma onda é chamada de **longitudinal** quando o meio oscila na mesma direção em que a onda se propaga, e de **transversal** quando oscila perpendicularmente. O som no ar é longitudinal, e não por acaso: um fluido não resiste a deformações de cisalhamento. Você pode empurrar o ar (comprimi-lo), mas não pode “torcê-lo” e esperar que ele volte, porque camadas de gás deslizam livremente umas sobre as outras. Sem força restauradora lateral, não existe onda transversal.
+
+Sólidos são diferentes: resistem tanto à compressão quanto ao cisalhamento e por isso transportam os dois tipos. Terremotos geram ondas P (primárias, longitudinais) e S (secundárias, transversais); as P chegam primeiro porque a rigidez à compressão das rochas é maior. Uma corda de violão vibra transversalmente, mas quase não move ar sozinha — é fina demais. A vibração é transmitida pelo cavalete ao tampo de madeira, uma superfície grande que empurra o ar e gera, enfim, ondas longitudinais. Use o seletor do simulador para comparar as duas geometrias.
+
+<Callout type="simplificacao">
+Desenhar o som como uma senoide subindo e descendo é extremamente útil, mas pode criar a impressão de que o ar “sobe e desce”. O eixo vertical desses gráficos representa **pressão** (ou tensão elétrica, ou valor digital), não posição no espaço. Sempre que você vir uma forma de onda neste site, lembre que é um gráfico de uma grandeza contra o tempo ou contra a posição — não uma fotografia do ar.
+</Callout>
+
+## De onde vem a velocidade do som
+
+Se o som é uma cadeia de empurrões, sua velocidade depende de quão “dura” é a mola (o quanto o meio resiste à compressão) e de quão pesada é a massa (sua densidade). Para qualquer fluido:
+
+$$
+c = \sqrt{\frac{K}{\rho}}
+$$
+
+<Vars
+  items={[
+    ['c', 'velocidade de propagação do som, em m/s'],
+    ['K', 'módulo de compressibilidade volumétrica (bulk modulus), em Pa: quanta pressão é necessária para reduzir o volume numa dada fração'],
+    ['ρ', 'densidade do meio, em kg/m³'],
+  ]}
+/>
+
+Meios mais rígidos transmitem mais rápido; meios mais densos, mais devagar. É por isso que o som viaja a cerca de 1 480 m/s na água e a quase 6 000 m/s no aço: a densidade aumenta muito, mas a rigidez aumenta muito mais.
+
+Para um gás, há uma sutileza histórica. Isaac Newton calculou a velocidade do som supondo que a temperatura do ar permanece constante durante as compressões e obteve cerca de 280 m/s — quase 20% abaixo do valor medido. A correção veio de Pierre-Simon Laplace no início do século XIX: as compressões e rarefações são rápidas demais e espaçadas demais para que o calor flua entre elas. O ar comprimido esquenta um pouco, o rarefeito esfria um pouco, e esse aquecimento torna a mola mais rígida. O processo é **adiabático**, e o módulo de compressibilidade efetivo é $K = \gamma P$:
+
+$$
+c = \sqrt{\frac{\gamma P}{\rho}} = \sqrt{\frac{\gamma R T}{M}}
+$$
+
+<Vars
+  items={[
+    ['γ', 'razão entre calores específicos do gás (≈ 1,40 para o ar seco)'],
+    ['P', 'pressão estática do gás, em Pa'],
+    ['R', 'constante universal dos gases, 8,314 J/(mol·K)'],
+    ['T', 'temperatura absoluta, em kelvin'],
+    ['M', 'massa molar do ar, ≈ 0,02897 kg/mol'],
+  ]}
+/>
+
+Com T = 293,15 K (20 °C), o resultado é **343 m/s**. A segunda forma da equação revela algo contraintuitivo: a velocidade do som num gás ideal **não depende da pressão**. Se você aumentar a pressão, a densidade aumenta na mesma proporção e os efeitos se cancelam. O que importa é a temperatura — ela governa a velocidade média das moléculas, e o som não pode viajar mais rápido do que as moléculas conseguem “passar o recado” adiante. Uma aproximação prática é $c \approx 331{,}3 + 0{,}606\,T$ (com T em °C). A umidade aumenta ligeiramente a velocidade, porque o vapor d’água é mais leve que o ar seco que ele substitui.
+
+### Por que isso importa para fones
+
+A velocidade do som transforma tempo em distância e vice-versa. Um milissegundo de atraso equivale a 34 cm de percurso. A diferença de chegada de um som entre seus dois ouvidos é de no máximo uns 0,7 ms, e o cérebro usa diferenças de poucos microssegundos para localizar fontes, como veremos em [localização espacial](/percepcao/localizacao-espacial). Dentro de um IEM, tubos de poucos milímetros e o próprio canal auditivo (cerca de 25 mm) têm dimensões comparáveis ao comprimento de onda dos agudos — e é exatamente nessa faixa que surgem as ressonâncias que dominam as medições, assunto de [pinna gain](/percepcao/pinna-gain).
+
+## Pressão, velocidade de partícula e impedância acústica
+
+Numa onda plana (frentes de onda paralelas, longe da fonte), a pressão acústica $p$ e a velocidade com que as partículas oscilam, $u$, são proporcionais:
+
+$$
+p = \rho\, c \; u
+$$
+
+O produto $\rho c$ é a **impedância acústica característica** do meio — cerca de 413 Pa·s/m para o ar a 20 °C. Ela diz quanta pressão é necessária para pôr o meio em movimento a uma dada velocidade. O conceito de impedância, que reaparecerá na [eletrônica](/eletronica/corrente-alternada-e-impedancia) e na física do [ouvido médio](/percepcao/anatomia-do-ouvido), é central para entender transferência de energia: quando uma onda passa de um meio para outro com impedância muito diferente, quase toda a energia é refletida. A impedância da água é cerca de 3 600 vezes a do ar, e por isso você mal ouve vozes da superfície quando mergulha — e por isso o ouvido médio precisa de um mecanismo de casamento de impedância entre o ar e o líquido da cóclea.
+
+A energia transportada por unidade de área e de tempo é a **intensidade**:
+
+$$
+I = \frac{p_{\text{rms}}^2}{\rho\, c}
+$$
+
+Ela cresce com o **quadrado** da pressão. Dobrar a pressão quadruplica a intensidade. Essa relação é o motivo pelo qual decibéis de pressão usam o fator 20, e decibéis de potência usam o fator 10 — o que veremos em detalhe no artigo sobre [decibéis](/fundamentos/decibeis).
+
+<KeyNumbers
+  items={[
+    { value: '343 m/s', label: 'velocidade do som no ar a 20 °C' },
+    { value: '20 µPa', label: 'pressão de referência, perto do limiar da audição a 1 kHz' },
+    { value: '1 Pa', label: '94 dB SPL — nível de calibração de microfones' },
+    { value: '~10⁻¹¹ m', label: 'deslocamento das moléculas no limiar da audição a 1 kHz' },
+  ]}
+/>
+
+## Como o som se espalha
+
+Uma fonte pequena irradiando livremente gera frentes de onda aproximadamente esféricas. A mesma potência acústica se distribui sobre uma esfera cuja área cresce com o quadrado do raio, então a intensidade cai com $1/r^2$ e a pressão cai com $1/r$. Em decibéis: **−6 dB a cada vez que a distância dobra**. É a lei do inverso do quadrado, válida em campo livre e a distâncias grandes comparadas ao tamanho da fonte e ao comprimento de onda.
+
+Na prática, quase nunca ouvimos só o som direto. Em uma sala, o som reflete em paredes, teto e móveis, e o que chega aos ouvidos é a soma do som direto com dezenas de reflexões atrasadas. Superfícies e objetos interagem com o som de acordo com seu tamanho relativo ao comprimento de onda: objetos muito menores que λ praticamente não o perturbam (o som os contorna, ou **difrata**), enquanto objetos maiores o refletem e projetam “sombras”. A sua cabeça, com uns 18 cm de largura, é invisível para um grave de 100 Hz (λ ≈ 3,4 m), mas faz sombra para um agudo de 5 kHz (λ ≈ 7 cm). Essa diferença é uma das pistas que o cérebro usa para localizar sons.
+
+E aqui está uma diferença profunda entre caixas de som e IEMs. Um alto-falante irradia para o espaço; o som se espalha, reflete e interage com sua cabeça e suas orelhas antes de chegar ao tímpano. Um IEM veda o canal auditivo e forma com ele uma pequena cavidade fechada de cerca de 1 a 2 cm³. Para frequências baixas — cujo comprimento de onda é muito maior que essa cavidade — não existe “propagação” no sentido usual: a pressão sobe e desce quase uniformemente dentro da câmara, como num pistão comprimindo uma seringa fechada. Isso muda completamente a física dos graves, como veremos em [transdutores](/drivers/transdutores), e explica por que IEMs pequeninos conseguem reproduzir 20 Hz com facilidade.
+
+## Absorção: por que agudos não viajam tão longe
+
+O ar não é um meio perfeitamente elástico. Parte da energia da onda é convertida em calor por viscosidade, condução térmica e, principalmente, por processos de relaxação molecular do oxigênio e do nitrogênio (influenciados pela umidade). Essa absorção cresce fortemente com a frequência: em condições típicas, a 10 kHz ela fica na ordem de 0,1 a 0,2 dB por metro, enquanto a 100 Hz é desprezível. Por isso trovões distantes chegam como um ronco grave, e uma banda tocando ao longe perde primeiro os pratos. A norma ISO 9613-1 tabela esses coeficientes. Dentro de um fone, as distâncias são tão pequenas que essa absorção não importa — o que importa são os materiais e as cavidades.
+
+## Do ar ao ouvido
+
+Tudo o que vimos converge para um ponto: o tímpano é um sensor de **pressão**. Ele não “vê” as moléculas, nem sabe de onde vieram; ele responde à diferença entre a pressão que chega pelo canal auditivo e a pressão do ouvido médio. Toda a informação que você percebe — altura, timbre, direção, espaço — precisa estar codificada na forma como essa pressão varia no tempo, em cada ouvido.
+
+Isso tem uma consequência importante para a audiofilia: **dois sistemas que produzem a mesma pressão no tímpano, ao longo do tempo, soam idênticos**, não importa se a pressão veio de uma caixa de som de três vias, de um planar magnético ou de um único balanced armature. Diferenças audíveis precisam ser diferenças nessa pressão — de nível, de distribuição entre frequências, de distorção, de ruído, de diferença entre os ouvidos. É por isso que a [resposta em frequência](/resposta/lendo-graficos) medida num simulador de ouvido é tão informativa, e é por isso que este site insiste em perguntar, diante de cada afirmação, *o que muda na pressão que chega ao tímpano?*
+
+O próximo passo é descrever essas variações com precisão: [frequência, período, amplitude e comprimento de onda](/fundamentos/frequencia-e-amplitude).
+
+<References>
+  <Ref>Kinsler, L. E.; Frey, A. R.; Coppens, A. B.; Sanders, J. V. <em>Fundamentals of Acoustics</em>. 4ª ed. Wiley, 2000. Caps. 1–5: equação de onda, velocidade do som e impedância acústica.</Ref>
+  <Ref>Beranek, L. L.; Mellow, T. J. <em>Acoustics: Sound Fields and Transducers</em>. Academic Press, 2012.</Ref>
+  <Ref>Cramer, O. “The variation of the specific heat ratio and the speed of sound in air with temperature, pressure, humidity, and CO₂ concentration.” <em>Journal of the Acoustical Society of America</em>, 93(5), 2510–2516, 1993.</Ref>
+  <Ref>ISO 9613-1:1993. <em>Acoustics — Attenuation of sound during propagation outdoors — Part 1: Calculation of the absorption of sound by the atmosphere</em>.</Ref>
+  <Ref>Everest, F. A.; Pohlmann, K. C. <em>Master Handbook of Acoustics</em>. 7ª ed. McGraw-Hill, 2021.</Ref>
+</References>

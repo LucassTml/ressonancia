@@ -1,0 +1,67 @@
+<Lead>
+Como é possível que 44 100 números por segundo representem perfeitamente uma onda contínua, com infinitos valores entre eles? A intuição diz que algo se perde entre as amostras. A matemática diz que não — desde que uma condição precisa seja respeitada. Este artigo mostra qual é essa condição, por que ela funciona e o que acontece quando é violada.
+</Lead>
+
+## Amostrar é medir em instantes regulares
+
+**Amostrar** um sinal contínuo $x(t)$ é registrar seus valores em instantes espaçados de $T_s$ segundos: $x[n] = x(nT_s)$. A **taxa de amostragem** é $f_s = 1/T_s$. No CD, $f_s$ = 44,1 kHz: uma medida a cada 22,7 µs.
+
+A pergunta central é se essas medidas, sozinhas, determinam univocamente o sinal original. Em geral, não: infinitas curvas passam pelos mesmos pontos. Mas, se restringirmos a família de curvas possíveis, a resposta muda.
+
+## O teorema de Nyquist-Shannon
+
+O **teorema da amostragem**, formulado por Harry Nyquist (1928), Vladimir Kotelnikov (1933) e Claude Shannon (1949), afirma:
+
+> Se um sinal não contém nenhuma componente de frequência igual ou superior a $f_s/2$, ele é **completamente determinado** por suas amostras tomadas a uma taxa $f_s$, e pode ser reconstruído **exatamente**.
+
+A frequência $f_s/2$ é a **frequência de Nyquist**. Com 44,1 kHz, ela é 22,05 kHz — acima do limite da audição humana.
+
+A palavra-chave é **exatamente**. Não se trata de uma boa aproximação: para sinais limitados em banda, a reconstrução é matematicamente perfeita. A intuição de que “algo se perde entre as amostras” falha porque um sinal limitado em banda **não pode** fazer nada arbitrário entre amostras: para mudar rapidamente entre dois instantes, ele precisaria conter frequências altas, que por hipótese não existem.
+
+## A reconstrução: somando funções sinc
+
+A fórmula de reconstrução de Whittaker-Shannon diz como recuperar o sinal:
+
+$$
+x(t) = \sum_{n=-\infty}^{\infty} x[n]\;\text{sinc}\!\left(\frac{t - nT_s}{T_s}\right), \qquad \text{sinc}(u) = \frac{\sin(\pi u)}{\pi u}
+$$
+
+<Vars
+  items={[
+    ['x[n]', 'valor da n-ésima amostra'],
+    ['T_s', 'intervalo entre amostras (1/fs)'],
+    ['sinc', 'função que vale 1 no instante da sua amostra, 0 nos instantes de todas as outras amostras, e oscila suavemente entre eles'],
+  ]}
+/>
+
+Cada amostra contribui com uma função sinc centrada no seu instante, com altura igual ao seu valor. Como cada sinc é zero nos instantes das outras amostras, a soma passa exatamente por todos os pontos; e, entre eles, a soma das contribuições produz a única curva limitada em banda compatível com aquelas amostras. Ative “Mostrar funções sinc” no laboratório para ver as contribuições individuais.
+
+<Lab id="sampling" />
+
+Num DAC real, essa soma é implementada por um **filtro de reconstrução** passa-baixas — a resposta ao impulso de um filtro passa-baixas ideal é justamente uma sinc. A sobreamostragem e os filtros digitais de DACs modernos são formas práticas e muito precisas de aproximar essa operação (veja [DACs e ADCs](/eletronica/dac-e-adc)).
+
+## Aliasing: quando a condição é violada
+
+E se o sinal tiver componentes acima de $f_s/2$? Então as amostras não conseguem distinguir essa componente de outra, abaixo de $f_s/2$, que passa pelos mesmos pontos. Uma senoide de frequência $f$ amostrada a $f_s$ produz exatamente as mesmas amostras que senoides em $|f - k f_s|$ para qualquer inteiro $k$. Na reconstrução, aparece a de menor frequência: o **alias**.
+
+Com $f_s$ = 8 kHz, um tom de 5 kHz vira um tom de 3 kHz; um de 7 kHz vira 1 kHz. Na varredura do laboratório, a frequência reconstruída sobe até 4 kHz e depois **desce** enquanto a original continua subindo — é o espectro se “dobrando” em torno da frequência de Nyquist.
+
+O aliasing é **irreversível**: depois de amostrado, não há como saber se aquele 1 kHz era um 1 kHz verdadeiro ou um 7 kHz disfarçado. Por isso todo ADC tem um **filtro antialiasing** antes do amostrador, que remove tudo acima da frequência de Nyquist. Em conversores modernos, isso também é feito com sobreamostragem e filtros digitais.
+
+<Callout type="mito" title="“Com só duas amostras por ciclo, um agudo vira um triângulo”">
+Um tom de 20 kHz amostrado a 44,1 kHz tem ~2,2 amostras por ciclo. Ligando os pontos com retas, o desenho parece grosseiro. Mas ninguém reconstrói ligando pontos com retas: o filtro de reconstrução produz a única senoide de 20 kHz compatível com aquelas amostras — perfeitamente suave. O laboratório mostra isso: aproxime a frequência de fs/2 e veja a curva reconstruída coincidir com a original.
+</Callout>
+
+## Por que 44,1 e 48 kHz, e o que fazem taxas maiores
+
+A escolha de 44,1 kHz para o CD combina a necessidade de cobrir até 20 kHz com uma margem para o filtro antialiasing (de 20 a 22,05 kHz) e razões históricas ligadas aos gravadores de vídeo usados para armazenar áudio digital nos anos 1970. 48 kHz tornou-se o padrão de vídeo e de muitos sistemas profissionais.
+
+Taxas de **96 e 192 kHz** estendem a faixa representável para 48 e 96 kHz. Na produção, elas têm vantagens práticas: filtros antialiasing mais suaves, margem para processamentos não lineares (que geram harmônicos que, numa taxa baixa, poderiam sofrer aliasing) e latência menor em alguns sistemas. Na **reprodução**, a questão é se o conteúdo acima de 20 kHz e as diferenças de filtragem são audíveis — tema de [mensurável vs audível](/ciencia/mensuravel-vs-audivel). A evidência controlada indica que, se existe alguma diferença audível, ela é pequena e difícil de detectar.
+
+<References>
+  <Ref>Nyquist, H. “Certain topics in telegraph transmission theory.” <em>Transactions of the AIEE</em>, 47(2), 617–644, 1928.</Ref>
+  <Ref>Shannon, C. E. “Communication in the presence of noise.” <em>Proceedings of the IRE</em>, 37(1), 10–21, 1949.</Ref>
+  <Ref>Kotelnikov, V. A. “On the transmission capacity of ‘ether’ and wire in electrocommunications.” 1933 (tradução em inglês em <em>Physics-Uspekhi</em>, 49(7), 2006).</Ref>
+  <Ref>Oppenheim, A. V.; Schafer, R. W. <em>Discrete-Time Signal Processing</em>. 3ª ed. Pearson, 2010. Capítulo 4.</Ref>
+  <Ref>Pohlmann, K. C. <em>Principles of Digital Audio</em>. 6ª ed. McGraw-Hill, 2010.</Ref>
+</References>

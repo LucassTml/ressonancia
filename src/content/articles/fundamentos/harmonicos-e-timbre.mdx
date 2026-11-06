@@ -1,0 +1,113 @@
+<Lead>
+Um violino, uma flauta e uma voz cantando a mesma nota, no mesmo volume, são inconfundíveis. A diferença não está na frequência da nota nem na intensidade: está na maneira como a energia se distribui entre muitas frequências e em como essa distribuição evolui no tempo. Esse é o território do timbre — e é exatamente o que um fone altera quando muda a resposta em frequência.
+</Lead>
+
+## Fourier: todo som é uma soma de senoides
+
+Em 1807, Joseph Fourier propôs, estudando a condução de calor, uma ideia que se tornaria uma das mais poderosas da ciência: qualquer função periódica pode ser escrita como uma soma de senoides cujas frequências são múltiplos inteiros da frequência de repetição. Para um sinal de período $T$ (frequência fundamental $f_0 = 1/T$):
+
+$$
+x(t) = \sum_{n=1}^{\infty} A_n \sin(2\pi n f_0 t + \varphi_n)
+$$
+
+<Vars
+  items={[
+    ['n', 'número do harmônico (1 = fundamental, 2 = segundo harmônico…)'],
+    ['n·f₀', 'frequência do n-ésimo harmônico'],
+    ['Aₙ', 'amplitude do harmônico n'],
+    ['φₙ', 'fase do harmônico n'],
+  ]}
+/>
+
+O conjunto das amplitudes $A_n$ é o **espectro** do som. Para sinais que não se repetem — um estalo, uma fala, uma música inteira — a mesma ideia se generaliza na transformada de Fourier, em que as frequências deixam de ser discretas e passam a formar um contínuo. Em computadores, calculamos espectros de trechos curtos de áudio digital com a **FFT** (*Fast Fourier Transform*), o algoritmo que alimenta os analisadores de espectro deste site.
+
+A ideia de Fourier não é só uma ferramenta matemática; ela corresponde a algo que a cóclea faz fisicamente. A membrana basilar responde a frequências diferentes em lugares diferentes — ela própria é um analisador de espectro mecânico, como veremos em [anatomia do ouvido](/percepcao/anatomia-do-ouvido).
+
+## Por que instrumentos produzem harmônicos
+
+Uma corda presa nas duas pontas só pode vibrar em padrões que têm “nós” (pontos parados) nas extremidades. Os padrões possíveis são aqueles em que cabe um número inteiro de meios comprimentos de onda no comprimento da corda: meia onda (a fundamental), uma onda inteira (o dobro da frequência), uma onda e meia (o triplo)… Ao ser dedilhada ou friccionada, a corda vibra em todos esses modos simultaneamente, com intensidades que dependem de onde e como foi excitada. O resultado é a **série harmônica**: $f_0, 2f_0, 3f_0, 4f_0\ldots$
+
+O mesmo vale para a coluna de ar de uma flauta (tubo aberto nas duas pontas: todos os harmônicos) e de um clarinete (tubo cilíndrico fechado numa ponta: predominam os harmônicos ímpares no registro grave, o que dá ao clarinete seu som característico “oco”).
+
+Alguns termos se confundem com frequência:
+
+- **Harmônico:** componente de frequência múltipla inteira da fundamental. A fundamental é o 1º harmônico.
+- **Sobretom (overtone):** qualquer componente acima da fundamental. O 1º sobretom é o 2º harmônico.
+- **Parcial:** qualquer componente senoidal de um som, harmônico ou não.
+
+Nem todo som tem parciais harmônicos. Num piano, a rigidez das cordas faz os parciais superiores ficarem ligeiramente acima dos múltiplos exatos (**inarmonicidade**) — por isso afinadores “esticam” as oitavas. Sinos, pratos e tambores têm modos de vibração inarmônicos, e é isso que lhes dá altura indefinida ou ambígua.
+
+## Formas de onda clássicas
+
+Algumas formas de onda simples correspondem a receitas espectrais simples, e ajudam a criar intuição:
+
+| Forma de onda | Harmônicos presentes | Amplitude do n-ésimo | Caráter |
+| --- | --- | --- | --- |
+| Senoide | só a fundamental | — | puro, “apito” |
+| Quadrada | ímpares | 1/n | oca, eletrônica |
+| Dente de serra | todos | 1/n | brilhante, áspera |
+| Triangular | ímpares (sinais alternados) | 1/n² | suave, quase senoidal |
+
+Experimente no sintetizador abaixo: os presets aplicam essas receitas, e você pode arrastar as barras para criar outras. O som que você ouve é gerado exatamente a partir do espectro desenhado.
+
+<Lab id="harmonics" />
+
+Algo surpreendente que o laboratório permite verificar: a **forma de onda** depende muito das fases dos harmônicos, mas, para sons sustentados, o **timbre** depende quase só das amplitudes. Duas ondas de formatos completamente diferentes no osciloscópio podem soar praticamente iguais se tiverem o mesmo espectro de amplitudes. Esta observação, formulada por Georg Ohm e estudada por Hermann von Helmholtz no século XIX, é uma aproximação (a fase tem efeitos audíveis em certas condições), mas é boa o bastante para explicar por que a **resposta de magnitude** é o aspecto mais importante de um fone.
+
+<Callout type="mito" title="“O formato da onda no osciloscópio mostra a qualidade do som”">
+Um sinal de dente de serra que passa por um filtro passa-tudo (que altera só as fases) fica com uma forma de onda irreconhecível, sem mudar quase nada no som. Por outro lado, uma forma de onda que parece “perfeita” pode esconder uma diferença de espectro audível. Formas de onda são úteis para ver clipping, assimetrias e transientes; para avaliar timbre, olhe o espectro.
+</Callout>
+
+## O que forma o timbre
+
+O espectro de um som sustentado é só parte da história. O timbre — a “cor” que identifica uma fonte — depende de pelo menos quatro coisas.
+
+### 1. O envelope espectral e os formantes
+
+Mais do que a amplitude de cada harmônico isoladamente, importa o **contorno** que as amplitudes formam ao longo da frequência. A voz humana é o exemplo perfeito do modelo **fonte-filtro**: as pregas vocais geram um sinal periódico rico em harmônicos (a fonte), e o trato vocal — garganta, boca, lábios, cavidade nasal — atua como um conjunto de ressonadores que reforçam algumas regiões do espectro (o filtro). Essas regiões reforçadas são os **formantes**.
+
+Quando você muda a vogal de “a” para “i” sem mudar a nota, a fundamental e os harmônicos continuam nas mesmas frequências; o que se move são os formantes. Um “a” tem os dois primeiros formantes por volta de 800 e 1 200 Hz; um “i”, por volta de 300 e 2 300 Hz. Instrumentos também têm formantes fixos dados pelo corpo: a caixa de um violino ressoa em regiões específicas, e é isso, em parte, que distingue um instrumento excepcional de um mediano.
+
+Essa é a ponte direta com os fones: **uma resposta em frequência é, para o ouvinte, um formante adicional aplicado a tudo**. Um pico de 5 dB em 3 kHz reforça os harmônicos de todas as vozes e instrumentos que caem ali, mudando o timbre de todos ao mesmo tempo. Um vale largo em 1–2 kHz recua o “nasal” e a presença de vozes. O fone não sabe o que é um violino; ele apenas aplica sua curva a todos os harmônicos que passam por ele.
+
+### 2. O envelope temporal
+
+O som de um instrumento nasce, se sustenta e morre, e cada fase tem sua assinatura. É comum descrever o envelope de amplitude em quatro estágios: **ataque**, **decaimento**, **sustentação** e **liberação** (ADSR). Um piano tem ataque quase instantâneo e decaimento longo; um violino friccionado cresce gradualmente; um órgão começa e termina abruptamente.
+
+O ataque é surpreendentemente importante. Experimentos clássicos, como o de Saldanha e Corso (1964), mostraram que remover os primeiros instantes de gravações de instrumentos torna-os muito mais difíceis de identificar — um trompete sem ataque pode ser confundido com outros sopros. Use o botão “Tocar nota” do laboratório com envelopes diferentes e o mesmo espectro: a mudança de identidade é evidente.
+
+### 3. A evolução do espectro
+
+Em instrumentos reais, harmônicos diferentes nascem e morrem em momentos diferentes. Num piano, os harmônicos altos decaem muito mais rápido que a fundamental; num metal, os agudos crescem à medida que o músico sopra mais forte, o que faz o som ficar mais brilhante quando mais alto. Essa coerência entre intensidade e brilho é uma pista que o cérebro usa para estimar o esforço do músico — e é por isso que simplesmente aumentar o volume de um piano gravado baixo não soa como um piano tocado forte.
+
+### 4. Ruído e irregularidades
+
+O sopro numa flauta, o atrito do arco no violino, o “chiado” inicial de uma consoante, as pequenas flutuações de altura do vibrato: componentes não periódicos são parte essencial da identidade sonora. Muitas vezes, são justamente eles que nos fazem sentir que um instrumento é “real”.
+
+## Lendo um espectro na prática
+
+Analisadores de espectro baseados em FFT dividem o eixo de frequência em faixas (*bins*) de largura fixa. Para um bloco de $N$ amostras a uma taxa de amostragem $f_s$, a resolução é
+
+$$
+\Delta f = \frac{f_s}{N}
+$$
+
+Com $f_s$ = 48 kHz e N = 8 192 amostras, cada bin tem ~5,9 Hz, e o bloco dura 171 ms. Há um compromisso inevitável (a mesma relação tempo-frequência vista em [frequência e amplitude](/fundamentos/frequencia-e-amplitude)): mais resolução em frequência exige blocos mais longos e, portanto, pior resolução no tempo. Por isso analisadores usam janelas (Hann, Blackman…) e escalas logarítmicas que agrupam bins em frações de oitava.
+
+## Por que isso importa para fones
+
+Três conexões merecem ser guardadas:
+
+1. **Resposta em frequência é transformação de timbre.** Não existe “mudança de graves” sem mudança no timbre de todos os instrumentos cujos harmônicos estão nos graves. Um fone com médios-graves excessivos “engrossa” vozes e violões, embaçando a percepção dos harmônicos que os distinguem (veja [regiões e defeitos](/resposta/regioes-e-defeitos)).
+2. **Distorção é a criação de harmônicos que não estavam lá.** Um sistema não linear transforma uma senoide pura em fundamental mais harmônicos. A [distorção harmônica total](/eletronica/medidas-de-desempenho) mede justamente quanto desses harmônicos novos aparece, e o tipo (pares, ímpares, de ordem alta) muda muito o quanto são audíveis e incômodos.
+3. **Distinguir instrumentos é distinguir padrões espectrais e temporais.** O cérebro agrupa harmônicos que começam juntos, que mantêm relações de frequência inteiras e que variam juntos. Um fone que preserva esses padrões — com resposta equilibrada e pouca distorção — facilita esse trabalho. Esse é o assunto de [separação e resolução](/iems/separacao-e-resolucao).
+
+No próximo artigo, olhamos para o espectro audível inteiro como um mapa: [dos subgraves ao “ar”](/fundamentos/espectro-audivel).
+
+<References>
+  <Ref>Helmholtz, H. von. <em>On the Sensations of Tone</em> (trad. A. J. Ellis). Dover, 1954 (original de 1863).</Ref>
+  <Ref>Saldanha, E. L.; Corso, J. F. “Timbre cues and the identification of musical instruments.” <em>Journal of the Acoustical Society of America</em>, 36(11), 2021–2026, 1964.</Ref>
+  <Ref>Fletcher, N. H.; Rossing, T. D. <em>The Physics of Musical Instruments</em>. 2ª ed. Springer, 1998.</Ref>
+  <Ref>Fant, G. <em>Acoustic Theory of Speech Production</em>. Mouton, 1960. O modelo fonte-filtro da voz.</Ref>
+  <Ref>Peterson, G. E.; Barney, H. L. “Control methods used in a study of the vowels.” <em>Journal of the Acoustical Society of America</em>, 24(2), 175–184, 1952. Frequências de formantes das vogais.</Ref>
+</References>

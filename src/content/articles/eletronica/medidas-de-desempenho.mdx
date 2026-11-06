@@ -1,0 +1,75 @@
+<Lead>
+Fichas técnicas de DACs e amplificadores trazem números impressionantes: THD+N de 0,0003%, SNR de 125 dB, faixa dinâmica de 130 dB. O que exatamente cada um mede? Quando a diferença entre dois números se traduz em algo que você ouve? E por que, com IEMs sensíveis, um número aparentemente bom pode significar chiado?
+</Lead>
+
+## Distorção harmônica total (THD)
+
+Um sistema perfeitamente linear devolve uma senoide pura como senoide pura. Um sistema real adiciona **harmônicos**: componentes nas frequências 2f, 3f, 4f… que não estavam no sinal. A **distorção harmônica total** é a soma (em potência) desses harmônicos, relativa à fundamental:
+
+$$
+\text{THD} = \frac{\sqrt{V_2^2 + V_3^2 + V_4^2 + \cdots}}{V_1}
+$$
+
+Expressa em porcentagem ou em decibéis: 1% = −40 dB, 0,1% = −60 dB, 0,01% = −80 dB, 0,001% = −100 dB.
+
+**THD+N** inclui, além dos harmônicos, todo o **ruído** na faixa medida: filtra-se a fundamental e mede-se tudo o que sobra. Em equipamentos muito bons, o ruído domina, e THD+N piora em níveis baixos (o ruído não diminui junto com o sinal).
+
+### O que o número não diz
+
+THD é uma medida útil, mas grosseira, por três razões:
+
+1. **O tipo de harmônico importa.** Harmônicos baixos (2º, 3º) caem perto da fundamental e são parcialmente [mascarados](/percepcao/mascaramento) por ela. Harmônicos de ordem alta (7º, 9º, 11º…) caem longe, em regiões “vazias”, e são muito mais audíveis — e desagradáveis — para o mesmo percentual. Geddes e Lee (2003) mostraram que o THD tradicional se correlaciona mal com a percepção de distorção.
+2. **Depende do nível e da frequência.** Um amplificador pode ter 0,001% a 1 kHz e 1 V e 0,5% a 20 Hz perto do clipping. Um número único esconde a curva.
+3. **Não mostra intermodulação.** Com dois tons simultâneos, sistemas não lineares geram produtos nas somas e diferenças (f₁ ± f₂, 2f₁ − f₂…): a **distorção por intermodulação** (IMD). Esses produtos não têm relação harmônica com a música e são mais audíveis que harmônicos simples. Medidas como SMPTE IMD e CCIF (19 + 20 kHz) capturam esse comportamento.
+
+<Lab id="distortion" />
+
+## Relação sinal-ruído e faixa dinâmica
+
+Todo circuito tem **ruído** intrínseco — térmico, de semicondutores, de alimentação. A **relação sinal-ruído** (SNR) compara o nível de um sinal de referência (geralmente o máximo, ou um nível nominal) com o ruído de fundo, em dB. A **faixa dinâmica** compara o maior sinal sem distorção relevante com o ruído medido na presença de um sinal muito baixo (−60 dBFS, por exemplo); na prática, para DACs, os dois números são parecidos.
+
+Ao ler esses números, pergunte:
+
+- **Relativo a qual nível?** Uma SNR “de 120 dB” relativa à saída máxima de 4 V é muito diferente da mesma SNR relativa a 0,5 V.
+- **Com ponderação A?** A ponderação reduz a importância dos graves e agudos extremos e geralmente melhora o número em 2–3 dB.
+- **Em qual faixa de frequências?** 20 Hz–20 kHz é o padrão; faixas maiores incluem mais ruído.
+
+Normas como a **AES17** padronizam esses procedimentos para áudio digital.
+
+## O que importa com IEMs: ruído absoluto
+
+Para headphones pouco sensíveis, a SNR relativa ao máximo da fonte é o número relevante. Para **IEMs sensíveis**, ele engana. O que importa é o **ruído absoluto na saída**, em microvolts, porque o IEM transforma esses microvolts em pressão sonora de acordo com a sua sensibilidade:
+
+$$
+L_{\text{ruído}} = S_{\text{dB/V}} + 20 \log_{10}(V_{\text{ruído}})
+$$
+
+Um IEM de 120 dB/V (comum em multi-BA) numa fonte com 5 µV de ruído produz $120 + 20\log_{10}(5\times10^{-6}) \approx 14$ dB SPL de chiado — audível num quarto silencioso, entre faixas ou em passagens baixas. A mesma fonte num headphone de 100 dB/V produz −6 dB SPL: inaudível.
+
+Duas fontes com SNR idênticas podem ter ruídos absolutos muito diferentes se tiverem tensões máximas diferentes: uma fonte de 4 V com 120 dB de SNR tem 4 µV de ruído; uma de 1 V com 120 dB, 1 µV. Para IEMs, a segunda é mais silenciosa. É por isso que fontes voltadas a IEMs oferecem **modos de ganho baixo**, que reduzem tensão máxima e ruído juntos.
+
+<Lab id="hiss" />
+
+## Resposta em frequência e diafonia
+
+**Resposta em frequência** de DACs e amplificadores costuma ser plana dentro de ±0,1 dB de 20 Hz a 20 kHz — e só deixa de ser quando a carga interage com a impedância de saída (veja [potência e impedância de saída](/eletronica/potencia-e-sensibilidade)) ou quando há filtros digitais de corte lento.
+
+**Diafonia** (*crosstalk*) é o vazamento de um canal no outro. Valores de −70 dB ou melhores são típicos e inaudíveis como degradação de imagem; saídas com terra compartilhado em cabos finos podem piorar o número, ainda assim com folga.
+
+## Mensurável vs audível
+
+A regra geral que emerge da literatura é que, em equipamentos eletrônicos modernos e bem projetados, operando dentro de seus limites:
+
+- THD abaixo de ~0,1% de ordem baixa é muito difícil de detectar com música;
+- ruído abaixo de ~0 dB SPL no ouvido é inaudível;
+- resposta plana dentro de ±0,1–0,2 dB é indistinguível de perfeitamente plana em testes controlados.
+
+Diferenças muito abaixo desses patamares — 0,0005% vs 0,0003% — são conquistas de engenharia, não diferenças audíveis. Os problemas reais aparecem quando o equipamento é levado ao **limite** (clipping, falta de corrente), quando há **ruído absoluto** alto com fones sensíveis, ou quando a **impedância de saída** interage com a carga. Esse tema volta com mais detalhes em [mensurável não é o mesmo que audível](/ciencia/mensuravel-vs-audivel).
+
+<References>
+  <Ref>AES17-2020. <em>AES standard method for digital audio engineering — Measurement of digital audio equipment</em>.</Ref>
+  <Ref>Geddes, E. R.; Lee, L. W. “Auditory perception of nonlinear distortion — theory.” AES 115th Convention, 2003.</Ref>
+  <Ref>Self, D. <em>Audio Power Amplifier Design</em>. 6ª ed. Focal Press, 2013.</Ref>
+  <Ref>Metzler, B. <em>Audio Measurement Handbook</em>. Audio Precision, 1993.</Ref>
+  <Ref>IEC 61606-3:2008. <em>Audio and audiovisual equipment — Digital audio parts — Basic measurement methods of audio characteristics — Part 3: Professional use</em>.</Ref>
+</References>

@@ -1,0 +1,120 @@
+<Lead>
+Um transdutor converte uma forma de energia em outra. Num fone, ele transforma uma corrente elétrica que varia no tempo num movimento mecânico, e esse movimento numa variação de pressão. Por trás das dezenas de tecnologias com nomes de marketing, há poucos princípios físicos — e entender esses princípios esclarece mais sobre o som de um fone do que qualquer contagem de drivers.
+</Lead>
+
+## Da corrente à força
+
+A maior parte dos drivers de fones usa o **eletromagnetismo**. Um condutor percorrido por uma corrente $i$, imerso num campo magnético de densidade $B$, sofre uma força perpendicular a ambos — a **força de Lorentz**. Para um fio de comprimento $l$ perpendicular ao campo:
+
+$$
+F = B \cdot l \cdot i
+$$
+
+<Vars
+  items={[
+    ['F', 'força sobre o condutor, em newtons'],
+    ['B', 'densidade de fluxo magnético no lugar onde está o fio, em tesla'],
+    ['l', 'comprimento de fio imerso no campo, em metros'],
+    ['i', 'corrente, em ampères'],
+  ]}
+/>
+
+O produto $Bl$ é o **fator de força** do motor: quanta força se obtém por ampère. Ímãs mais fortes (neodímio) e mais fio no campo aumentam $Bl$, o que melhora a sensibilidade e o controle do movimento. A beleza da equação é a **linearidade**: dobrar a corrente dobra a força. Enquanto $B$ e $l$ permanecerem constantes ao longo do movimento, o motor não distorce.
+
+Os drivers **dinâmicos** (bobina móvel) e **planares magnéticos** usam diretamente essa força. Os **balanced armatures** usam uma variante: a corrente magnetiza uma peça de ferro, que é atraída por ímãs. Os **eletrostáticos** trocam o magnetismo por forças entre cargas elétricas, e os **piezoelétricos** usam materiais que se deformam com a tensão. Cada princípio tem um artigo próprio neste módulo.
+
+## Da força ao movimento: o sistema massa-mola
+
+A parte móvel de qualquer driver — diafragma, bobina, membrana — tem **massa** $m$. Ela está presa por uma suspensão, que age como uma **mola** de rigidez $k$ (ou, de forma equivalente, compliância $C = 1/k$). E o movimento sofre **perdas** — atrito interno dos materiais, resistência do ar passando por aberturas — que agem como um amortecedor de resistência mecânica $R$. A equação do movimento é a de um oscilador forçado:
+
+$$
+m\,\ddot{x} + R\,\dot{x} + k\,x = F(t)
+$$
+
+Esse sistema tem uma **frequência de ressonância**:
+
+$$
+f_0 = \frac{1}{2\pi}\sqrt{\frac{k}{m}}
+$$
+
+e um **fator Q** que descreve quão pronunciada é a ressonância, $Q = \sqrt{km}/R$. Q alto significa pouco amortecimento: um pico alto e estreito na ressonância e um decaimento lento. Q baixo significa muito amortecimento: resposta suave, sem pico.
+
+O comportamento muda radicalmente conforme a frequência em relação a $f_0$:
+
+- **Abaixo de $f_0$:** a mola domina. O deslocamento é proporcional à força e praticamente constante com a frequência.
+- **Perto de $f_0$:** massa e mola trocam energia com facilidade; o movimento é amplificado por Q.
+- **Acima de $f_0$:** a massa domina. O deslocamento cai 12 dB por oitava, mas a **aceleração** permanece constante.
+
+<Lab id="resonator" />
+
+## Do movimento à pressão: depende de onde o ar está
+
+Aqui está a parte que costuma surpreender. A relação entre o movimento do diafragma e a pressão sonora depende do **ambiente acústico** em que ele trabalha.
+
+### Campo livre: pressão proporcional à aceleração
+
+Uma membrana pequena irradiando para o espaço aberto (um alto-falante numa sala, longe dele) produz, a distância, uma pressão proporcional à **aceleração** do diafragma. Como a aceleração é constante acima de $f_0$, um alto-falante tem resposta plana **acima** da sua ressonância. Por isso woofers são projetados com ressonâncias baixas (dezenas de hertz) e precisam deslocar volumes enormes de ar para reproduzir graves: para manter a pressão constante, cada oitava abaixo exige quatro vezes mais deslocamento.
+
+### Câmara vedada pequena: pressão proporcional ao deslocamento
+
+Um IEM bem vedado forma, com o canal auditivo, uma cavidade fechada de cerca de 1–2 cm³. Para frequências cujo comprimento de onda é muito maior que essa cavidade — todos os graves e médios —, a pressão dentro dela sobe e desce uniformemente, como numa seringa tampada. Pela lei dos gases (compressão adiabática), a variação de pressão é proporcional à variação de **volume**, ou seja, ao **deslocamento** do diafragma:
+
+$$
+p \approx \frac{\gamma P_0}{V}\,\Delta V = \frac{\rho c^2}{V}\, S_d\, x
+$$
+
+<Vars
+  items={[
+    ['V', 'volume da cavidade (canal residual + volume frontal do fone)'],
+    ['S_d', 'área efetiva do diafragma'],
+    ['x', 'deslocamento do diafragma'],
+    ['ρc²', 'módulo de compressibilidade adiabática do ar (≈ 1,42 × 10⁵ Pa)'],
+  ]}
+/>
+
+Como o deslocamento é constante **abaixo** da ressonância, um driver numa câmara vedada tem resposta plana **abaixo** da sua ressonância — em princípio, até frequências arbitrariamente baixas, enquanto a vedação se mantiver. Isso inverte a lógica dos alto-falantes: um driver de IEM pode ter a ressonância em vários quilohertz e ainda assim reproduzir 20 Hz com facilidade.
+
+Vale fazer a conta. Para produzir 100 dB SPL (2 Pa RMS) numa cavidade de 2 cm³ com um diafragma de 8 mm de diâmetro (área ≈ 50 mm²), o deslocamento necessário é da ordem de
+
+$$
+x \approx \frac{p\,V}{\rho c^2 S_d} = \frac{2 \cdot 2\times10^{-6}}{1{,}42\times10^{5} \cdot 5\times10^{-5}} \approx 0{,}6\ \mu\text{m}
+$$
+
+Menos de um micrômetro — e isso vale para 20 Hz como para 200 Hz. Um alto-falante de 16 cm numa sala precisaria de milímetros de excursão para o mesmo nível em 20 Hz. É por isso que IEMs minúsculos têm graves profundos, e por isso **qualquer vazamento** destrói esses graves: com uma saída de ar, a cavidade deixa de ser fechada e a pressão em baixas frequências escapa.
+
+<Callout type="chave" title="A física dos graves em IEMs">
+Em IEMs vedados, os graves não dependem de deslocar muito ar, mas de **manter a cavidade fechada**. A extensão de graves de um IEM é limitada principalmente pela vedação e pela ventilação, não pelo tamanho do driver. Um driver dinâmico grande ajuda a gerar graves com menos distorção e com mais facilidade quando há ventilação, mas não é a razão de existir grave.
+</Callout>
+
+## Acima da ressonância e dos modos
+
+Se um IEM é plano abaixo da ressonância do driver, por que não fazer todos com ressonâncias altíssimas? Porque o mundo real complica:
+
+- **A cavidade deixa de ser “pequena”** acima de alguns quilohertz: o canal passa a ter ondas estacionárias (veja [pinna gain](/percepcao/pinna-gain)), e a pressão deixa de ser uniforme.
+- **O diafragma deixa de ser rígido.** Em frequências altas, partes diferentes do diafragma vibram com fases diferentes (**modos de ruptura** ou *breakup*), criando picos e vales.
+- **Tubos e cavidades internas** do fone têm suas próprias ressonâncias.
+- **O fone precisa produzir ganho de presença** (o pinna gain artificial), o que exige moldar a resposta, não apenas deixá-la plana.
+
+Por isso, o projeto de um fone é sempre um projeto **acústico** em volta do driver: câmaras, tubos, ventilações, filtros e, às vezes, vários drivers com crossover. Esse é o assunto de [construção acústica](/drivers/construcao-acustica) e de [tuning](/iems/tuning).
+
+## Distorção: quando a linearidade se perde
+
+Tudo acima supõe linearidade. Na prática, várias coisas se tornam não lineares em grandes deslocamentos:
+
+- **$Bl$ varia com a posição:** se a bobina sai da região de campo uniforme, a força por ampère diminui.
+- **A suspensão endurece:** a mola deixa de ser linear em grandes excursões.
+- **O ar comprimido não é perfeitamente linear** em pressões muito altas (irrelevante em níveis normais).
+- **Materiais têm histerese** e comportamento não linear.
+
+Essas não linearidades geram [distorção harmônica e de intermodulação](/eletronica/medidas-de-desempenho), mais pronunciadas nos graves (onde o deslocamento é maior, especialmente com ventilação) e em níveis altos. Em IEMs bem projetados, a distorção em níveis normais de escuta costuma ser muito baixa — frequentemente abaixo de 1% mesmo em graves, e bem menor nos médios.
+
+## Impedância elétrica: o lado do amplificador
+
+Do ponto de vista do amplificador, o driver é uma **carga elétrica** com impedância que varia com a frequência. Num driver dinâmico, ela é dominada pela resistência do fio da bobina, com um pico na ressonância mecânica (o movimento gera uma força contraeletromotriz) e uma subida suave nos agudos pela indutância. Em balanced armatures, a indutância é muito maior e a impedância sobe muito com a frequência. Em IEMs com vários drivers e crossover, a curva de impedância pode ter variações enormes — o que torna o som sensível à [impedância de saída](/eletronica/potencia-e-sensibilidade) da fonte.
+
+<References>
+  <Ref>Beranek, L. L.; Mellow, T. J. <em>Acoustics: Sound Fields and Transducers</em>. Academic Press, 2012.</Ref>
+  <Ref>Kinsler, L. E. et al. <em>Fundamentals of Acoustics</em>. 4ª ed. Wiley, 2000. Cap. sobre osciladores e cavidades.</Ref>
+  <Ref>Klippel, W. “Tutorial: loudspeaker nonlinearities — causes, parameters, symptoms.” <em>Journal of the Audio Engineering Society</em>, 54(10), 907–939, 2006.</Ref>
+  <Ref>Poldy, C. A. “Headphones.” In: Borwick, J. (org.), <em>Loudspeaker and Headphone Handbook</em>. 3ª ed. Focal Press, 2001.</Ref>
+</References>

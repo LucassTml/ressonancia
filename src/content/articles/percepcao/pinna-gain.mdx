@@ -1,0 +1,145 @@
+<Lead>
+Entre o ar ao seu redor e o seu tímpano existe um filtro acústico que você carrega desde que nasceu. Ele amplifica a região de 2 a 5 kHz em até 15–20 dB, muda conforme a direção do som e é diferente em cada pessoa. Você nunca o percebe — e justamente por isso ele é a chave para entender por que um fone “plano” soa errado, de onde vêm as curvas-alvo e por que um IEM precisa recriar artificialmente algo que a sua orelha fazia de graça.
+</Lead>
+
+## Comece pela orelha
+
+A orelha externa tem duas partes acústicas principais. A **pina** (ou pavilhão auricular) é a estrutura de cartilagem visível: a borda externa enrolada (hélice), a dobra interna paralela a ela (antélice), a pequena aba à frente do canal (trago) e, no centro, uma cavidade em forma de tigela chamada **concha**, com cerca de 1 a 2 cm de profundidade, que leva à entrada do canal.
+
+O **canal auditivo** é um tubo de aproximadamente 25 mm de comprimento e 7 mm de diâmetro, com volume da ordem de 1 cm³. Ele não é reto: faz uma curva em “S”, o terço externo é cartilaginoso e flexível, os dois terços internos são ósseos e rígidos. No fundo está o **tímpano**, uma membrana cônica e oblíqua — inclinada cerca de 45° em relação ao eixo do canal — que não é uma parede rígida, mas uma superfície que se move e absorve energia acústica.
+
+Cada um desses elementos tem dimensões de alguns centímetros. Como você viu em [frequência e comprimento de onda](/fundamentos/frequencia-e-amplitude), essas são as dimensões dos comprimentos de onda entre ~2 e 15 kHz. A física é inevitável: estruturas comparáveis ao comprimento de onda ressoam, refletem e difratam o som. A orelha não pode deixar de ser um filtro.
+
+## O caminho de uma onda até o tímpano
+
+Imagine uma onda plana chegando de frente. Antes de atingir o tímpano, ela passa por uma sequência de transformações. No laboratório abaixo, cada uma está separada, e você pode modificar as dimensões e a direção.
+
+<Lab id="pinna" />
+
+### 1. Tronco, ombros e cabeça
+
+Os ombros e o tronco refletem parte do som, criando pequenas ondulações na faixa de 1 a 3 kHz. A cabeça difrata o som: para frequências cujo comprimento de onda é menor que ela, o lado voltado para a fonte funciona como uma parede e a pressão ali sobe (o chamado efeito de *baffle*), enquanto o lado oposto fica na sombra. Para o ouvido do lado da fonte, isso significa um ganho moderado, de alguns decibéis, crescendo a partir de ~500 Hz.
+
+### 2. A concha: uma cavidade ressonante
+
+A concha é uma cavidade aberta de ~1 a 1,5 cm de profundidade. Seu primeiro modo de ressonância — estudado em detalhe por Edgar Shaw nos anos 1960 e 1970 — fica por volta de **4 a 5 kHz**, e soma um ganho de vários decibéis. Modos superiores da concha, com padrões de vibração mais complexos, aparecem acima de 7 kHz e dependem fortemente da direção de chegada.
+
+### 3. O canal: um ressonador de quarto de onda
+
+O canal auditivo é um tubo aberto na entrada e fechado (aproximadamente) no tímpano. Como vimos em [fase e interferência](/fundamentos/fase-e-interferencia), um tubo assim ressoa quando seu comprimento vale um quarto do comprimento de onda:
+
+$$
+f_{\text{canal}} \approx \frac{c}{4\,L_{\text{ef}}}
+$$
+
+<Vars
+  items={[
+    ['c', 'velocidade do som, ≈ 343 m/s'],
+    ['L_ef', 'comprimento efetivo do canal: o comprimento físico mais uma “correção de extremidade” (a massa de ar logo além da abertura também oscila) e o efeito do acoplamento com a concha'],
+  ]}
+/>
+
+Para L = 25 mm, a conta ingênua dá 3,4 kHz; com a correção de extremidade e o acoplamento com a concha, a ressonância real costuma ficar entre **2,5 e 3 kHz**. Nessa frequência, forma-se uma onda estacionária com pressão mínima perto da entrada e máxima no tímpano — veja o padrão colorido dentro do canal na animação. A amplificação na ressonância é de 10 a 12 dB. Ela não é um pico estreito, porque o tímpano não é rígido: ele absorve energia, o que amortece a ressonância e a torna larga.
+
+### 4. A pina: reflexões que dependem da direção
+
+Parte do som entra diretamente no canal; outra parte reflete na parede posterior da concha e nas dobras da pina antes de entrar. As duas versões chegam com uma diferença de tempo de algumas dezenas de microssegundos. Pelo mecanismo de [filtro de pente](/fundamentos/fase-e-interferencia), essa diferença cria um **vale** no espectro na frequência em que o atraso vale meio ciclo:
+
+$$
+f_{\text{vale}} \approx \frac{c}{2\,\Delta d}
+$$
+
+em que $\Delta d$ é a diferença de percurso, da ordem de 1,5 a 3 cm. O ponto crucial é que $\Delta d$ muda com a **elevação** da fonte: para sons vindos de baixo, o vale cai perto de 6 kHz; para sons vindos de cima, sobe para 10 kHz ou mais. Hebrank e Wright (1974) mostraram que esses vales móveis são pistas fundamentais para a localização vertical. Mova o controle de elevação no laboratório e veja o vale se deslocar.
+
+### O resultado: a transformação campo–tímpano
+
+Somando tudo, a pressão no tímpano de um som que chega de frente, comparada à pressão que existiria no mesmo ponto do espaço sem a pessoa, tem a forma que Shaw compilou em 1974 a partir de doze estudos independentes: praticamente plana até ~500 Hz, subindo até um máximo de **15 a 20 dB entre 2,5 e 3 kHz**, um planalto alto até ~5 kHz e, acima disso, uma região irregular de picos e vales que depende da direção e da anatomia de cada um.
+
+A curva tracejada no laboratório é a média da transformação para **campo difuso** (som chegando de todas as direções igualmente) até o ponto de referência do tímpano, segundo a ISO 11904. Ela tem a mesma forma geral: o modelo de quatro ressonâncias, por mais simplificado que seja, captura a física essencial.
+
+## Por que você não ouve o próprio pinna gain
+
+Se a orelha amplifica 3 kHz em 15 dB, por que o mundo não soa estridente? Porque o seu sistema auditivo foi calibrado, ao longo da vida inteira, com esse filtro sempre presente. O cérebro não tem acesso à pressão “antes da orelha”; só à pressão no tímpano. O que ele aprendeu a considerar natural é *a pressão que fontes naturais produzem no seu tímpano* — com pinna gain incluído.
+
+Isso leva à conclusão mais importante deste artigo:
+
+<Callout type="chave" title="Neutro não significa plano no tímpano">
+Um fone que produzisse pressão **plana** no tímpano — mesma pressão em todas as frequências — soaria escuro, abafado e distante, porque estaria **removendo** o ganho de 2–5 kHz que você ouve em todo som natural. Para soar neutro, um fone precisa produzir no tímpano algo parecido com o que uma fonte neutra (uma boa caixa de som numa sala, por exemplo) produziria ali: com pinna gain. A pergunta “quanto pinna gain, e com que forma?” é exatamente a pergunta que as [curvas-alvo](/resposta/targets-e-harman) tentam responder.
+</Callout>
+
+A seção de áudio do laboratório permite ouvir isso diretamente. Seu fone já entrega algum ganho na região de presença. Removê-lo (−100%) simula um fone sem pinna gain: o som fica escuro, como se viesse de trás de uma cortina. Aplicá-lo de novo (+100%) simula um fone que soma o ganho pela segunda vez: gritado e cansativo.
+
+## Fones circum-auriculares, earbuds e IEMs
+
+Cada tipo de fone interage com a orelha de um jeito, e isso muda o que o fone precisa fazer.
+
+**Headphones circum-auriculares** (*over-ear*) envolvem a orelha. A pina e a concha continuam presentes, e parte das suas ressonâncias acontece naturalmente, mas de forma diferente da escuta de uma fonte distante: o driver está a poucos centímetros, numa direção fixa (de lado), dentro de uma cavidade fechada. As pistas direcionais ficam incoerentes e o ganho da concha muda. O fone precisa completar ou corrigir o que falta.
+
+**Earbuds** apoiam-se na concha, sem vedar o canal. Eliminam parte da ação da pina, mas o canal permanece aberto — com sua ressonância de quarto de onda — e o vazamento de ar limita os graves.
+
+**IEMs** vedam o canal. E isso muda tudo:
+
+1. **A pina e a concha desaparecem da equação.** Nenhuma das suas ressonâncias e reflexões acontece.
+2. **O canal deixa de ser um tubo aberto numa ponta.** Agora está fechado nas duas: pelo IEM de um lado e pelo tímpano do outro. A ressonância de quarto de onda em ~3 kHz **deixa de existir**.
+3. **Surge uma nova ressonância de meia onda**, numa frequência mais alta, que depende do comprimento do canal residual entre a ponta do IEM e o tímpano:
+
+$$
+f_{\text{ocluído}} \approx \frac{c}{2\,L_{\text{residual,ef}}}
+$$
+
+Para um canal residual de ~15–20 mm (efetivos), isso cai entre ~8 e 11 kHz. Mude a profundidade de inserção no modo “Com IEM inserido” do laboratório e veja a ressonância se mover: inserções mais profundas encurtam o canal residual e empurram a ressonância para cima.
+
+A consequência é direta: **um IEM precisa gerar, por conta própria, todo o ganho de 2–5 kHz que a orelha deixou de produzir.** Ele faz isso por meio do próprio driver, de tubos, filtros e crossovers — o processo de [tuning](/iems/tuning). Quando você olha o gráfico de um IEM medido num acoplador e vê um “morro” enorme entre 2 e 4 kHz, aquilo não é um defeito: é o pinna gain artificial, sem o qual o IEM soaria escuro.
+
+## O que o acoplador 711 está medindo
+
+IEMs são medidos em simuladores de ouvido ocluído, como o padronizado pela **IEC 60318-4** (conhecido como “711”). O acoplador reproduz o volume e a impedância acústica de um canal auditivo médio com tímpano, de modo que a pressão no seu microfone se aproxima da pressão que o IEM produziria no tímpano de uma pessoa média. Ele também tem a sua própria ressonância de meia onda, tipicamente entre 7 e 10 kHz, que aparece nas medições de quase todos os IEMs como um pico ou vale nessa região e varia com a profundidade de inserção do IEM no acoplador.
+
+Isso explica dois fatos que confundem quem começa a ler gráficos de IEMs: (1) todo IEM “bem afinado” tem um morro entre 2 e 4 kHz, e (2) a região de 6 a 10 kHz é instável e difícil de comparar. Os detalhes estão em [como se mede um fone](/resposta/como-se-mede).
+
+## Cada orelha é uma orelha
+
+Canais auditivos variam em comprimento (de ~20 a ~30 mm), diâmetro e curvatura; conchas variam em profundidade e volume; tímpanos variam em inclinação e impedância. As consequências se concentram acima de ~4 kHz:
+
+- A ressonância do canal aberto pode variar de ~2,3 a 3,5 kHz entre pessoas.
+- Com IEMs, as diferenças de comprimento do canal residual deslocam a ressonância de meia onda por mais de 1 kHz — o mesmo IEM pode ter um pico em 7 kHz numa pessoa e em 9 kHz em outra.
+- Medições em ouvidos reais, como as de Hammershøi e Møller (1996), mostram dispersões entre indivíduos de vários decibéis (com picos de 10 dB ou mais) acima de 5 kHz.
+
+É por isso que dois ouvintes podem divergir sinceramente sobre se um IEM é sibilante: a mesma curva medida no acoplador vira curvas diferentes nos tímpanos de cada um. Esse tema é desenvolvido em [por que cada pessoa ouve um fone de um jeito](/percepcao/percepcao-individual).
+
+## Equívocos comuns
+
+<Callout type="mito" title="“O ideal é um fone plano”">
+Plano onde? No acoplador, no tímpano, em campo livre? Um fone medido plano num acoplador 711 soaria muito escuro, porque não teria pinna gain. O termo “neutro” só tem sentido em relação a uma referência que inclua a transformação da orelha.
+</Callout>
+
+<Callout type="mito" title="“Esse pico em 3 kHz no gráfico precisa ser corrigido”">
+Num gráfico de IEM em acoplador, o morro entre 2 e 4 kHz é esperado. A pergunta certa não é se ele existe, mas se a sua altura, forma e posição estão próximas de uma referência que funciona para você. Equalizar esse “pico” até deixar a curva plana é uma das maneiras mais rápidas de estragar um bom IEM.
+</Callout>
+
+<Callout type="mito" title="“Pinna gain é um artefato do equipamento de medição”">
+É um fenômeno físico do ouvido humano, medido em pessoas desde os anos 1940 (Wiener e Ross, 1946) e compilado por Shaw. Os simuladores de ouvido reproduzem esse efeito porque ele existe nos ouvidos reais; não o inventam.
+</Callout>
+
+## Por que tudo isso importa
+
+O pinna gain é a ponte entre a anatomia e a audiofilia. Ele explica:
+
+- por que a resposta em frequência de fones nunca é desenhada plana;
+- por que existem curvas-alvo, e por que elas diferem entre headphones e IEMs;
+- por que a região de 2 a 5 kHz é a mais delicada de afinar — pouco ganho e o som fica distante; ganho demais e fica gritado;
+- por que a região acima de 5 kHz é a mais individual e a menos confiável nos gráficos;
+- e por que a profundidade de inserção e a escolha de ponteiras mudam os agudos de um IEM.
+
+O próximo passo natural é ver como essas ideias viraram curvas concretas: [do plano ao Harman](/resposta/targets-e-harman).
+
+<References>
+  <Ref>Shaw, E. A. G. “Transformation of sound pressure level from the free field to the eardrum in the horizontal plane.” <em>Journal of the Acoustical Society of America</em>, 56(6), 1848–1861, 1974.</Ref>
+  <Ref>Shaw, E. A. G. “Acoustical features of the human external ear.” In: Gilkey, R.; Anderson, T. (orgs.), <em>Binaural and Spatial Hearing in Real and Virtual Environments</em>. Lawrence Erlbaum, 1997, p. 25–47.</Ref>
+  <Ref>Wiener, F. M.; Ross, D. A. “The pressure distribution in the auditory canal in a progressive sound field.” <em>Journal of the Acoustical Society of America</em>, 18(2), 401–408, 1946.</Ref>
+  <Ref>Hammershøi, D.; Møller, H. “Sound transmission to and within the human ear canal.” <em>Journal of the Acoustical Society of America</em>, 100(1), 408–427, 1996.</Ref>
+  <Ref>Hebrank, J.; Wright, D. “Spectral cues used in the localization of sound sources on the median plane.” <em>Journal of the Acoustical Society of America</em>, 56(6), 1829–1834, 1974.</Ref>
+  <Ref>ISO 11904-1:2002 e 11904-2:2004. <em>Acoustics — Determination of sound immission from sound sources placed close to the ear</em>.</Ref>
+  <Ref>IEC 60318-4:2010. <em>Electroacoustics — Simulators of human head and ear — Part 4: Occluded-ear simulator for the measurement of earphones coupled to the ear by means of ear inserts</em>.</Ref>
+  <Ref>Møller, H. “Fundamentals of binaural technology.” <em>Applied Acoustics</em>, 36, 171–218, 1992.</Ref>
+</References>

@@ -1,0 +1,58 @@
+<Lead>
+O driver dinâmico — ou de bobina móvel — foi patenteado nos anos 1920 e continua sendo o transdutor mais usado do mundo, de alto-falantes de estádio a IEMs de 6 mm. Sua longevidade não é inércia histórica: é uma solução elegante, robusta e eficiente, cujos limites são bem conhecidos e cuidadosamente contornados.
+</Lead>
+
+## Anatomia
+
+Um driver dinâmico tem quatro partes essenciais:
+
+1. **Circuito magnético.** Um ímã (hoje quase sempre de neodímio) e peças polares de aço que concentram o campo num espaço estreito em forma de anel, o **entreferro**. Nele, o campo é radial: aponta do centro para fora (ou vice-versa) em todas as direções.
+2. **Bobina móvel.** Um enrolamento de fio fino (cobre ou alumínio, às vezes revestido de cobre) suspenso dentro do entreferro.
+3. **Diafragma.** A superfície que empurra o ar, presa à bobina. Em fones, geralmente um domo com uma borda (surround) flexível, de materiais como PET, PEN, polímeros compostos, berílio (ou revestimento de berílio), titânio, carbono, celulose (bio-celulose), entre outros.
+4. **Suspensão e chassi.** A borda flexível e, em alguns projetos, uma aranha (spider) mantêm a bobina centrada e fornecem a força restauradora (a “mola”).
+
+Quando a corrente do sinal percorre a bobina, ela sofre a força de Lorentz $F = Bli$ (veja [transdutores](/drivers/transdutores)). Como o campo é radial e a corrente circula, a força em todos os pontos da bobina aponta na mesma direção: para frente ou para trás, conforme o sentido da corrente. Bobina e diafragma se movem juntos, como um pistão.
+
+<Lab id="drivers" initial="dd" />
+
+## O diafragma como pistão — e quando deixa de ser
+
+Em frequências baixas, o diafragma se move inteiro, como um corpo rígido. À medida que a frequência sobe, ondas de flexão começam a se propagar no próprio material do diafragma. Acima de certa frequência, regiões diferentes vibram com fases diferentes: o centro avança enquanto um anel recua. São os **modos de ruptura** (*breakup modes*), que criam picos e vales na resposta e podem aumentar a distorção.
+
+A frequência em que isso começa depende de três propriedades do material:
+
+- **Rigidez** (módulo de elasticidade): quanto mais rígido, mais alto o primeiro modo.
+- **Densidade**: quanto mais leve, mais alto o primeiro modo e maior a sensibilidade.
+- **Amortecimento interno**: quanto mais o material dissipa energia, menos pronunciadas são as ressonâncias quando elas acontecem.
+
+A razão rigidez/densidade determina a velocidade das ondas de flexão no material. Berílio é famoso por ter uma razão excepcional; carbono e certos compósitos também. Materiais “macios” como polímeros e celulose têm modos mais baixos, mas mais amortecidos. Não há um material ideal: há compromissos, e a geometria (domo, cone, nervuras, espessura variável) importa tanto quanto a matéria-prima.
+
+<Callout type="mito" title="“Diafragma de berílio soa melhor”">
+Materiais exóticos permitem empurrar os modos de ruptura para cima ou deixá-los mais controlados, mas o som de um fone é o resultado do sistema inteiro: driver, câmaras, ventilação, filtros e tuning. IEMs com diafragmas de berílio podem ter qualquer assinatura — de muito brilhante a muito escura. O material é uma ferramenta de engenharia, não uma garantia de som.
+</Callout>
+
+## Pontos fortes
+
+- **Deslocamento de ar.** Um diafragma de 8 a 14 mm, com excursão de dezenas de micrômetros, move muito mais ar do que um balanced armature. Isso facilita graves com baixa distorção, especialmente em IEMs com ventilação, onde a cavidade não é perfeitamente selada.
+- **Resposta naturalmente suave nos graves e médios**, sem as ressonâncias internas de um BA.
+- **Impedância quase constante** ao longo do espectro (com um pico na ressonância mecânica), o que torna o som pouco sensível à impedância de saída da fonte.
+- **Simplicidade e custo.** Um IEM de driver dinâmico único pode cobrir toda a faixa audível com boa qualidade e sem crossover.
+
+## Limitações
+
+- **Agudos e modos de ruptura.** Acima de alguns quilohertz, a resposta depende muito do controle dos modos; um driver mal resolvido pode ter picos agressivos nos agudos ou uma queda precoce.
+- **Massa móvel.** A bobina e o diafragma têm massa; isso limita a sensibilidade em comparação com BAs e eletrostáticos.
+- **Pressão interna e ventilação.** Por ter diafragma relativamente grande e frontal, o DD é sensível às diferenças de pressão entre os dois lados. IEMs dinâmicos geralmente precisam de ventilações traseiras, e alguns sofrem de **driver flex** — um estalo ao inserir o fone, quando a pressão empurra o diafragma além do normal. Veja [construção acústica](/drivers/construcao-acustica).
+
+## Dinâmicos em IEMs, headphones e earbuds
+
+Em **headphones circum-auriculares**, drivers de 40 a 50 mm são comuns; a câmara traseira (fechada ou aberta) e as almofadas moldam a resposta. Em **earbuds**, o driver de 14–16 mm toca sem vedação, o que limita os graves. Em **IEMs**, drivers de 6 a 12 mm, em câmaras pequenas com ventilação controlada, conseguem respostas muito próximas de alvos como o Harman com um único driver.
+
+Existem variações sobre o tema: **drivers dinâmicos duplos** (dois diafragmas, um atrás do outro ou coaxiais), **diafragmas com dupla camada**, motores com dois ímãs e bobinas de alumínio revestido de cobre (CCAW) para reduzir massa. Cada uma é uma tentativa de melhorar o compromisso entre massa, rigidez, força e controle — e deve ser julgada pelo resultado medido e ouvido, não pela descrição.
+
+<References>
+  <Ref>Beranek, L. L.; Mellow, T. J. <em>Acoustics: Sound Fields and Transducers</em>. Academic Press, 2012.</Ref>
+  <Ref>Rice, C. W.; Kellogg, E. W. “Notes on the development of a new type of hornless loud speaker.” <em>Transactions of the AIEE</em>, 44, 461–480, 1925.</Ref>
+  <Ref>Borwick, J. (org.). <em>Loudspeaker and Headphone Handbook</em>. 3ª ed. Focal Press, 2001.</Ref>
+  <Ref>Klippel, W. “Tutorial: loudspeaker nonlinearities — causes, parameters, symptoms.” <em>JAES</em>, 54(10), 907–939, 2006.</Ref>
+</References>

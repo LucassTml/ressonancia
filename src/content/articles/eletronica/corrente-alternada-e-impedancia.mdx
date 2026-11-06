@@ -1,0 +1,66 @@
+<Lead>
+A ficha técnica de um IEM diz “16 Ω”. Mas, se você medir, vai encontrar 12 Ω em 200 Hz, 40 Ω em 3 kHz e 8 Ω em 10 kHz. Esse número único é uma simplificação de uma grandeza que muda com a frequência — a impedância. Entender por que ela muda explica crossovers, interação com amplificadores e por que alguns IEMs soam diferentes em fontes diferentes.
+</Lead>
+
+## Além da resistência: armazenar energia
+
+Resistores dissipam energia. Dois outros componentes fundamentais fazem algo diferente: **armazenam** energia e a devolvem ao circuito. Essa troca de energia faz com que sua oposição à corrente dependa de quão rápido o sinal varia.
+
+### Capacitores
+
+Um **capacitor** é formado por duas superfícies condutoras separadas por um isolante. Aplicando uma tensão, cargas se acumulam nas superfícies, criando um campo elétrico que armazena energia. Sua capacidade de armazenar carga por volt é a **capacitância** $C$, em farads (F) — em áudio, tipicamente de picofarads a milhares de microfarads.
+
+Um capacitor bloqueia corrente contínua (depois de carregado, nada mais flui), mas deixa passar corrente alternada, e com mais facilidade quanto mais rápida a alternância. Sua oposição à corrente alternada, a **reatância capacitiva**, é
+
+$$
+X_C = \frac{1}{2\pi f C}
+$$
+
+Ela diminui com a frequência. Um capacitor de 10 µF tem reatância de 796 Ω em 20 Hz e de apenas 0,8 Ω em 20 kHz.
+
+### Indutores
+
+Um **indutor** é, em geral, uma bobina de fio. A corrente que passa por ela cria um campo magnético que armazena energia; quando a corrente tenta mudar, o campo induz uma tensão que se opõe à mudança. A **indutância** $L$ é medida em henrys (H). A **reatância indutiva** é
+
+$$
+X_L = 2\pi f L
+$$
+
+Ela cresce com a frequência: o indutor deixa passar graves e resiste aos agudos. Toda bobina de driver é, em parte, um indutor.
+
+## Impedância
+
+A **impedância** $Z$ combina resistência e reatância. Como resistência e reatância não estão “em fase” (a tensão sobre um indutor está 90° adiantada em relação à corrente; sobre um capacitor, 90° atrasada), não se somam diretamente: compõem um número complexo, com uma parte resistiva e uma parte reativa. O módulo da impedância de um resistor em série com um indutor, por exemplo, é
+
+$$
+|Z| = \sqrt{R^2 + X_L^2}
+$$
+
+A Lei de Ohm continua valendo, com a impedância no lugar da resistência — para cada frequência. Para sinais de áudio, que contêm muitas frequências, isso significa que **cada frequência enxerga uma carga diferente**.
+
+<Lab id="impedance" />
+
+## A impedância de um fone
+
+Um fone combina vários efeitos:
+
+- **Resistência da bobina** (ou da trilha, num planar): a base, praticamente constante.
+- **Indutância da bobina**: faz a impedância subir nos agudos. É pequena em dinâmicos de fone, grande em balanced armatures e desprezível em planares.
+- **Impedância “mecânica” refletida**: quando o diafragma se move, a bobina no campo magnético gera uma tensão (força contraeletromotriz) que se opõe à corrente. Isso aparece como um **pico de impedância na ressonância** mecânica do driver — por exemplo, por volta de 80–120 Hz em headphones dinâmicos.
+- **Crossovers**: capacitores e indutores em série com os drivers de um IEM multi-driver criam vales e picos na impedância total.
+
+A **impedância nominal** declarada pelo fabricante é um valor representativo, normalmente medido em 1 kHz ou definido segundo a norma IEC 60268-7 (como o valor mínimo da impedância numa faixa, dentro de tolerâncias). Para um driver dinâmico, ela descreve bem a carga. Para um IEM multi-BA, é quase decorativa.
+
+## Por que isso importa
+
+**Interação com a fonte.** Toda fonte tem uma [impedância de saída](/eletronica/potencia-e-sensibilidade). Ela forma um divisor de tensão com a impedância do fone. Se a impedância do fone varia com a frequência, a fração da tensão que chega a ele também varia — e a resposta em frequência muda. Com impedância de saída baixa (menos de 1 Ω, comum em bons dongles e amplificadores), o efeito é desprezível. Com 10 Ω ou mais, IEMs multi-BA podem mudar vários decibéis.
+
+**Crossovers passivos.** Como capacitores deixam passar agudos e indutores deixam passar graves, eles são as peças básicas de um [crossover](/drivers/multi-driver-e-crossovers): um capacitor em série com um BA de agudos já é um filtro passa-altas de primeira ordem.
+
+**Fase e carga para o amplificador.** Cargas com reatância grande fazem a corrente se defasar em relação à tensão; amplificadores bem projetados lidam com isso sem dificuldade nas faixas de potência de fones.
+
+<References>
+  <Ref>Horowitz, P.; Hill, W. <em>The Art of Electronics</em>. 3ª ed. Cambridge University Press, 2015. Capítulo 1 (capacitores, indutores e impedância complexa).</Ref>
+  <Ref>IEC 60268-7:2010. <em>Sound system equipment — Part 7: Headphones and earphones</em> (definição de impedância nominal).</Ref>
+  <Ref>Beranek, L. L.; Mellow, T. J. <em>Acoustics: Sound Fields and Transducers</em>. Academic Press, 2012. Analogias eletromecânicas e impedância de transdutores.</Ref>
+</References>

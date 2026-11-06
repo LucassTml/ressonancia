@@ -1,0 +1,72 @@
+<Lead>
+Equipamentos de medição detectam diferenças milhões de vezes menores do que o ouvido. Isso é ótimo para a engenharia — e uma armadilha para quem lê especificações: uma diferença mensurável não é, necessariamente, uma diferença audível. Este artigo reúne o que a literatura indica sobre os limiares de audibilidade das grandezas mais discutidas em áudio.
+</Lead>
+
+## Por que mensurável e audível divergem
+
+Um analisador de áudio moderno mede distorções em −140 dB e ruídos de nanovolts. O ouvido, por outro lado, tem limites:
+
+- **limiar absoluto** (sons muito fracos não são ouvidos);
+- **mascaramento** (componentes fracos perto de componentes fortes desaparecem);
+- **resolução de frequência e de tempo** finitas;
+- **memória auditiva curta** e **atenção limitada**.
+
+Uma diferença precisa vencer todos esses filtros para ser audível. Os números a seguir são ordens de grandeza encontradas em estudos controlados; limiares variam com o ouvinte, o sinal e o método.
+
+## Resposta em frequência
+
+- **Desvios largos** (uma oitava ou mais) de **0,1 a 0,5 dB** podem ser detectados em comparações diretas com ruído de banda larga; com música, algo entre 0,3 e 1 dB é típico.
+- **Ressonâncias largas** são detectadas com amplitudes menores que as estreitas (Toole e Olive, 1988).
+- **Vales estreitos** são muito menos audíveis que picos de mesma largura (Bücklein, 1981).
+
+Conclusão: a resposta em frequência é a grandeza mais sensível. Diferenças de 1 dB em regiões largas importam — o que também significa que diferenças de **volume** de 1 dB importam.
+
+## Distorção
+
+A audibilidade depende fortemente do **tipo** de distorção e do sinal:
+
+- Distorção harmônica de **baixa ordem** (2º, 3º) costuma ser inaudível com música abaixo de algo como 0,1–1%, dependendo do programa — e pode chegar a vários por cento sem ser identificada em alguns sinais.
+- Distorções de **ordem alta**, **de cruzamento** e **de intermodulação** são audíveis em níveis muito menores, porque caem em regiões não mascaradas.
+- Por isso o número de THD isolado é um mau preditor de audibilidade, como mostraram Geddes e Lee (2003).
+
+Equipamentos eletrônicos modernos, operando dentro de seus limites, ficam ordens de grandeza abaixo desses limiares. Transdutores (drivers) distorcem muito mais que eletrônicos — e mesmo assim, em IEMs bem projetados e níveis normais, geralmente abaixo do audível.
+
+## Ruído
+
+O ruído é audível se, **no ouvido**, ficar acima do limiar de audição (cerca de 0 dB SPL para as frequências mais sensíveis) e acima do ruído ambiente que atravessa a vedação. Por isso o ruído **absoluto** de uma fonte importa com IEMs sensíveis (veja [medidas de desempenho](/eletronica/medidas-de-desempenho)), enquanto uma SNR de 110 ou de 125 dB, relativa ao máximo, raramente faz diferença na prática.
+
+## Jitter
+
+Os estudos de limiar de jitter (por exemplo, Ashihara e colegas, 2005) encontraram limiares de detecção para jitter aleatório da ordem de **centenas de nanossegundos** com música. Equipamentos atuais apresentam jitter de picossegundos a dezenas de picossegundos — milhares de vezes abaixo.
+
+## Fase
+
+Inverter a polaridade absoluta é inaudível na maioria dos casos. Distorções de fase moderadas dentro de um canal são difíceis de detectar com música, embora detectáveis com sinais especiais em fones (Lipshitz, Pocock e Vanderkooy, 1982). Diferenças de fase **entre canais** são audíveis, porque afetam a localização.
+
+## Alta resolução (taxas e bits acima do CD)
+
+Este é um dos temas mais debatidos:
+
+- Meyer e Moran (2007) inseriram um laço de conversão em qualidade de CD (16 bits/44,1 kHz) em sinais de alta resolução e não encontraram ouvintes capazes de detectá-lo em centenas de tentativas, em vários sistemas.
+- A meta-análise de Reiss (2016), reunindo dezenas de estudos, encontrou um efeito **pequeno, mas estatisticamente significativo** de discriminação de alta resolução — mais forte com ouvintes treinados e em alguns tipos de teste —, sem identificar com segurança o mecanismo.
+- Diferenças entre versões “hi-res” e de CD de um mesmo disco frequentemente vêm de **masterizações diferentes**, e não do formato.
+
+Interpretação razoável: se a alta resolução produz alguma diferença audível na reprodução, ela é pequena, difícil de detectar e não comparável às diferenças de resposta em frequência entre fones. Formatos de alta resolução continuam úteis na produção.
+
+## Codecs com perdas
+
+Com bitrates altos (AAC 256 kbps, Opus 160 kbps, MP3 VBR de alta qualidade), a maioria dos ouvintes não distingue do original na maioria dos trechos. Há trechos difíceis e ouvintes treinados que conseguem, especialmente em bitrates mais baixos. Ver [formatos e compressão](/digital/formatos-e-compressao).
+
+<Callout type="chave" title="Uma hierarquia de importância">
+Em ordem aproximada de impacto audível numa escuta com IEMs: **vedação e encaixe** → **resposta em frequência do fone** (incluindo a sua anatomia) → **volume e dinâmica da gravação** → **distorção do transdutor em níveis altos** → **interações elétricas** (impedância de saída, ruído com IEMs sensíveis) → **formato e codec** em boas condições → **DAC, cabos, jitter**, que, em equipamentos competentes, ficam abaixo dos limiares. Investir na ordem inversa é o erro mais comum da audiofilia.
+</Callout>
+
+<References>
+  <Ref>Meyer, E. B.; Moran, D. R. “Audibility of a CD-standard A/D/A loop inserted into high-resolution audio playback.” <em>Journal of the Audio Engineering Society</em>, 55(9), 775–779, 2007.</Ref>
+  <Ref>Reiss, J. D. “A meta-analysis of high resolution audio perceptual evaluation.” <em>Journal of the Audio Engineering Society</em>, 64(6), 364–379, 2016.</Ref>
+  <Ref>Geddes, E. R.; Lee, L. W. “Auditory perception of nonlinear distortion — theory.” AES 115th Convention, 2003.</Ref>
+  <Ref>Ashihara, K. et al. “Detection threshold for distortions due to jitter on digital audio.” <em>Acoustical Science and Technology</em>, 26(1), 50–54, 2005.</Ref>
+  <Ref>Toole, F. E.; Olive, S. E. “The modification of timbre by resonances: perception and measurement.” <em>JAES</em>, 36(3), 122–142, 1988.</Ref>
+  <Ref>Bücklein, R. “The audibility of frequency response irregularities.” <em>JAES</em>, 29(3), 126–131, 1981.</Ref>
+  <Ref>Lipshitz, S. P.; Pocock, M.; Vanderkooy, J. “On the audibility of midrange phase distortion in audio systems.” <em>JAES</em>, 30(9), 580–595, 1982.</Ref>
+</References>

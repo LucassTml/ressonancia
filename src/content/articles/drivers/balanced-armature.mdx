@@ -1,0 +1,56 @@
+<Lead>
+O balanced armature nasceu no telefone e amadureceu nos aparelhos auditivos, onde cada milímetro cúbico e cada microwatt importam. Ao chegar aos IEMs, trouxe consigo duas características que moldaram o mercado inteiro: o tamanho minúsculo, que permite colocar vários drivers num único fone, e uma resposta naturalmente irregular, que obrigou os fabricantes a dominar tubos, filtros e crossovers.
+</Lead>
+
+## Como funciona
+
+Num driver dinâmico, o fio se move dentro de um campo fixo. Num **balanced armature** (BA, ou armadura equilibrada), quase nada elétrico se move: a parte móvel é uma pequena palheta de liga magnética macia, a **armadura**.
+
+1. A armadura atravessa uma **bobina** fixa e tem a ponta livre posicionada entre dois **ímãs** permanentes, um de cada lado.
+2. Sem sinal, as atrações dos dois ímãs se equilibram e a armadura fica parada no centro — daí “armadura equilibrada”.
+3. Quando a corrente do sinal passa pela bobina, ela **magnetiza** a armadura. Sua ponta vira, digamos, um polo norte: passa a ser atraída por um ímã e repelida pelo outro, e se desloca. Invertendo a corrente, desloca-se para o outro lado.
+4. Uma **haste** (drive pin) liga a ponta da armadura a um **diafragma** muito leve, geralmente de alumínio, que empurra o ar dentro de uma pequena caixa selada. O som sai por um bocal (spout) estreito.
+
+<Lab id="drivers" initial="ba" />
+
+O equilíbrio é o segredo e o limite do BA. Como a armadura está num ponto de equilíbrio instável entre dois ímãs, forças pequenas produzem deslocamentos úteis — o que torna o BA muito **eficiente**. Mas o deslocamento precisa ser pequeno: longe do centro, a atração magnética cresce de forma não linear e, no limite, a armadura “cola” num dos ímãs. A excursão típica é da ordem de micrômetros.
+
+## Por que IEMs com BA usam vários drivers
+
+Um BA individual é otimizado para uma faixa. Sua resposta natural tem uma ressonância principal pronunciada (tipicamente entre 2 e 5 kHz, dependendo do modelo) e, acima dela, cai rapidamente. Fabricantes como Knowles e Sonion produzem dezenas de modelos: alguns voltados para graves (com diafragmas maiores e ressonâncias mais baixas), outros para médios, outros para agudos.
+
+Isso tornou natural a ideia de **multi-driver**: um BA para graves, outro para médios, outro para agudos, combinados por um [crossover](/drivers/multi-driver-e-crossovers). O primeiro IEM multi-driver popular, nos anos 1990, nasceu da necessidade de músicos profissionais, e a lógica se espalhou para o consumo — às vezes com exageros, como IEMs com 10 ou mais drivers.
+
+## Tubos, filtros e a resposta de um BA
+
+A resposta de um BA depende fortemente do que vem depois do bocal. O som passa por **tubos** de poucos milímetros de diâmetro até o bocal do IEM, e esses tubos ressoam (veja [construção acústica](/drivers/construcao-acustica)). Os engenheiros usam isso a seu favor:
+
+- **Comprimento e diâmetro dos tubos** posicionam ressonâncias onde ajudam — por exemplo, recriando o ganho de presença.
+- **Dampers** (pequenos filtros de malha ou tecido, frequentemente codificados por cores e especificados em “ohms acústicos”) atenuam picos.
+- **Câmaras** e **ventilações** moldam os graves.
+
+Por isso dois IEMs com exatamente os mesmos BAs podem soar completamente diferentes: o tuning acústico em volta do driver é parte do driver.
+
+## Impedância e sensibilidade
+
+Como a bobina de um BA é muito mais indutiva que a de um dinâmico, sua **impedância sobe com a frequência**. Um BA de agudos pode ter 10 Ω em 1 kHz e 80 Ω em 10 kHz. Num IEM com vários BAs e crossover passivo, a curva de impedância total pode ter vales e picos enormes.
+
+Isso tem uma consequência prática importante: se a fonte tiver **impedância de saída** alta (vários ohms), ela forma um divisor de tensão com essa impedância variável, e a resposta em frequência do IEM muda — em alguns casos, vários decibéis. É um dos poucos casos em que trocar de fonte muda o som de forma claramente mensurável. O laboratório de [impedância de saída](/eletronica/potencia-e-sensibilidade) mostra o efeito.
+
+BAs também costumam ser **muito sensíveis**: produzem altos níveis com pouca potência. Isso é ótimo para baterias, mas torna audível o **ruído de fundo** (hiss) de fontes ruidosas — veja [medidas de desempenho](/eletronica/medidas-de-desempenho).
+
+## Pontos fortes e limitações
+
+**Pontos fortes:** tamanho mínimo (alguns milímetros), alta sensibilidade, baixa sensibilidade a diferenças de pressão (são caixas seladas, sem driver flex), facilidade de combinar drivers especializados, resposta em agudos frequentemente boa com BAs dedicados.
+
+**Limitações:** excursão pequena (graves de BA tendem a ter menos “peso” e mais distorção em níveis altos do que os de um bom dinâmico, embora BAs de graves modernos sejam capazes); resposta naturalmente ressonante que exige muito trabalho acústico; impedância muito variável; tolerâncias de fabricação que podem gerar diferenças entre unidades.
+
+<Callout type="mito" title="“BA tem som analítico; dinâmico tem som musical”">
+Esta generalização mistura tecnologia com tuning. Muitos IEMs com BAs foram afinados com agudos proeminentes, o que criou a associação. Mas a percepção de “textura” ou “timbre natural” vem principalmente da resposta em frequência e da distorção que o projeto inteiro produz. Um IEM BA bem afinado pode soar tão natural quanto um dinâmico; um dinâmico mal afinado pode soar tão “frio” quanto qualquer outro.
+</Callout>
+
+<References>
+  <Ref>Knowles Electronics. <em>Balanced armature receivers — technical notes and datasheets</em>. Knowles Corporation.</Ref>
+  <Ref>Killion, M. C. “Design and evaluation of high-fidelity hearing aids.” Tese de doutorado, Northwestern University, 1979.</Ref>
+  <Ref>Borwick, J. (org.). <em>Loudspeaker and Headphone Handbook</em>. 3ª ed. Focal Press, 2001.</Ref>
+</References>

@@ -1,0 +1,82 @@
+<Lead>
+Com apenas dois sensores de pressão, separados por uma cabeça, você sabe se um som vem da esquerda, de cima, de trás, de perto ou de longe. O cérebro faz isso comparando os sinais dos dois ouvidos e decifrando as marcas que a cabeça e as orelhas deixam no som. Entender essas pistas explica por que a música em fones parece tocar dentro da cabeça — e o que se pode fazer a respeito.
+</Lead>
+
+## A teoria duplex
+
+No início do século XX, Lord Rayleigh propôs que a localização horizontal (azimute) depende de duas pistas diferentes, cada uma eficiente numa faixa de frequências. Essa **teoria duplex** continua sendo a base do que sabemos.
+
+### Diferença interaural de tempo (ITD)
+
+Um som vindo da direita chega ao ouvido direito antes do esquerdo. Para uma fonte distante e uma cabeça aproximadamente esférica de raio $a$, a diferença é bem aproximada pela fórmula de Woodworth:
+
+$$
+\text{ITD}(\theta) = \frac{a}{c}\,(\theta + \sin\theta)
+$$
+
+<Vars
+  items={[
+    ['a', 'raio efetivo da cabeça, ≈ 8,75 cm'],
+    ['c', 'velocidade do som, 343 m/s'],
+    ['θ', 'azimute da fonte em radianos (0 = à frente, π/2 = totalmente de lado)'],
+  ]}
+/>
+
+O máximo, com a fonte totalmente de lado, é de cerca de **650 a 700 µs**. O sistema auditivo detecta diferenças de apenas **10 a 20 µs** para fontes próximas da frente — o que corresponde a um deslocamento de 1 a 2 graus. Isso é feito no tronco encefálico, por neurônios que funcionam como detectores de coincidência.
+
+A ITD só é inequívoca enquanto o período do som for maior que o atraso máximo. Acima de ~1,5 kHz, o comprimento de onda fica menor que o diâmetro da cabeça e a fase deixa de indicar univocamente qual ouvido recebeu primeiro. Ainda assim, o cérebro consegue usar a ITD do **envelope** de sons agudos modulados (o início de uma nota, um transiente), o que torna cliques e ataques fáceis de localizar.
+
+### Diferença interaural de nível (ILD)
+
+A cabeça faz sombra acústica para o ouvido mais distante, mas apenas onde o comprimento de onda é comparável ou menor que ela. Em 200 Hz (λ ≈ 1,7 m) a sombra é praticamente nula; em 5 kHz, a diferença de nível entre os ouvidos pode chegar a 15–20 dB. A ILD é, portanto, a pista dominante nos agudos.
+
+O laboratório processa o som com essas duas pistas — separadamente ou juntas. Use fones e arraste a fonte em volta da cabeça.
+
+<Lab id="localization" />
+
+## O cone de confusão
+
+ITD e ILD resolvem bem esquerda e direita, mas têm um ponto cego. Uma fonte à frente, a 30° à direita, e outra atrás, a 150°, produzem praticamente a mesma ITD e a mesma ILD. Todos os pontos com a mesma diferença de distância até os dois ouvidos formam um cone (o **cone de confusão**), e com essas duas pistas não há como distinguir posições dentro dele: frente de trás, cima de baixo.
+
+O cérebro resolve isso com duas estratégias:
+
+- **Pistas espectrais da pina.** As dobras da orelha refletem e difratam o som de forma dependente da direção, gravando no espectro padrões característicos — sobretudo vales acima de 5 kHz cuja frequência muda com a elevação. Esses padrões são individuais (cada orelha é diferente) e aprendidos ao longo da vida. Experimentos clássicos mostram que preencher as cavidades da pina com massa degrada drasticamente a localização vertical e a distinção frente-trás.
+- **Movimento da cabeça.** Ao girar a cabeça, uma fonte à frente e outra atrás mudam suas ITDs em sentidos opostos. Movimentos de poucos graus bastam para desfazer a ambiguidade.
+
+## HRTF: a assinatura acústica da sua cabeça
+
+Juntando todos os efeitos — sombra e difração da cabeça, reflexões nos ombros e no tronco, ressonâncias e cancelamentos da pina e do canal —, obtemos a **função de transferência relativa à cabeça** (HRTF): para cada direção, a transformação que o som sofre entre o campo livre e o tímpano de cada ouvido. Uma HRTF completa é um conjunto de centenas de pares de filtros, um para cada direção.
+
+HRTFs são medidas colocando microfones minúsculos no canal auditivo de uma pessoa (ou de um manequim, como o KEMAR ou o B&K 5128) e tocando sinais de alto-falantes em várias posições numa câmara anecoica. Elas variam muito entre pessoas acima de ~4 kHz. Usar a HRTF de outra pessoa costuma funcionar para esquerda/direita, mas piora a elevação, a distinção frente-trás e a externalização.
+
+## Por que fones soam dentro da cabeça
+
+Com caixas de som, a música chega a cada ouvido depois de passar pela cabeça e pelas orelhas, vinda de direções específicas e com reflexões da sala. Com fones, cada canal vai diretamente para um ouvido:
+
+- Não há **crosstalk acústico**: o ouvido esquerdo nunca ouve a caixa direita. Sons pan totalmente de um lado ficam “colados” num ouvido, algo que não acontece na natureza.
+- Não há **pistas de pina** coerentes com uma direção externa — especialmente com IEMs, que contornam a orelha completamente.
+- Não há **reflexões de sala** nem mudança com o movimento da cabeça.
+
+O cérebro interpreta essa combinação como uma fonte muito próxima, ou dentro da cabeça: a chamada **lateralização**, em contraste com a **externalização** da escuta natural. A imagem estéreo em fones é uma linha entre os ouvidos, passando pelo meio do crânio, em vez de um palco à frente.
+
+<Callout type="nota" title="Soundstage em IEMs">
+É por isso que o “palco sonoro” de qualquer IEM é, em termos absolutos, pequeno. As diferenças de *soundstage* que os ouvintes relatam entre IEMs são reais como impressões, mas vêm de fatores mais sutis: equilíbrio tonal (especialmente na região de 3 a 10 kHz, onde ficam as pistas espectrais), ressonâncias, nível de agudos, distorção e a própria gravação. Veja [separação e resolução](/iems/separacao-e-resolucao).
+</Callout>
+
+## O que pode ser feito
+
+**Crossfeed.** Mistura em cada canal uma versão atrasada (~0,3 ms) e filtrada (passa-baixas) do outro canal, imitando o crosstalk acústico de caixas de som. Não externaliza o som, mas reduz a sensação de canais “colados” nos ouvidos e torna gravações com pan extremo (como muitos discos dos anos 1960) menos cansativas. Há um laboratório de crossfeed em [processamento espacial](/processamento/dinamica-e-espacializacao).
+
+**Binauralização com HRTF.** Processar cada canal como se viesse de uma caixa virtual a ±30°, usando HRTFs e, idealmente, reverberação de sala. Com HRTFs personalizadas e rastreamento de cabeça, a externalização pode ser convincente; com HRTFs genéricas, os resultados variam muito entre pessoas.
+
+**Gravações binaurais.** Feitas com microfones nos ouvidos de um manequim ou de uma pessoa, já contêm as pistas da cabeça e das orelhas. Soam espantosamente realistas em fones — especialmente para quem tem orelhas parecidas com as do manequim.
+
+<References>
+  <Ref>Rayleigh, Lord (J. W. Strutt). “On our perception of sound direction.” <em>Philosophical Magazine</em>, 13(74), 214–232, 1907.</Ref>
+  <Ref>Blauert, J. <em>Spatial Hearing: The Psychophysics of Human Sound Localization</em>. Ed. revisada. MIT Press, 1997.</Ref>
+  <Ref>Brown, C. P.; Duda, R. O. “A structural model for binaural sound synthesis.” <em>IEEE Transactions on Speech and Audio Processing</em>, 6(5), 476–488, 1998.</Ref>
+  <Ref>Woodworth, R. S. <em>Experimental Psychology</em>. Holt, 1938.</Ref>
+  <Ref>Møller, H. “Fundamentals of binaural technology.” <em>Applied Acoustics</em>, 36(3–4), 171–218, 1992.</Ref>
+  <Ref>Wenzel, E. M.; Arruda, M.; Kistler, D. J.; Wightman, F. L. “Localization using nonindividualized head-related transfer functions.” <em>Journal of the Acoustical Society of America</em>, 94(1), 111–123, 1993.</Ref>
+  <Ref>Gardner, M. B.; Gardner, R. S. “Problem of localization in the median plane: effect of pinnae cavity occlusion.” <em>Journal of the Acoustical Society of America</em>, 53(2), 400–408, 1973.</Ref>
+</References>

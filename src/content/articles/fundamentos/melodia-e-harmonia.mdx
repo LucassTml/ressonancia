@@ -1,0 +1,89 @@
+<Lead>
+Uma melodia sobrevive a um rádio de pilha, a uma ligação telefônica e a um assovio desafinado. Ela não é feita de frequências, mas de relações entre frequências organizadas no tempo. Entender o que compõe uma melodia — e como o cérebro a extrai do som — mostra o que um fone precisa preservar e o que ele pode, surpreendentemente, perder.
+</Lead>
+
+## Altura: uma percepção, não uma medida
+
+**Altura** (*pitch*) é a qualidade que permite ordenar sons do grave ao agudo. Para um tom puro, ela acompanha de perto a frequência. Mas quase nenhum som musical é um tom puro: uma nota de violão é uma pilha de harmônicos em 110, 220, 330, 440 Hz… e mesmo assim ouvimos **uma** nota, com **uma** altura, a da fundamental.
+
+Isso já indica que o cérebro não está simplesmente lendo “a frequência mais grave”. Ele procura um padrão. A prova mais elegante é o fenômeno da **fundamental ausente**: se você remove a fundamental de um som harmônico — ou mesmo os primeiros harmônicos —, a altura percebida continua sendo a da fundamental, embora não haja energia nenhuma naquela frequência. O sistema auditivo infere a periodicidade comum: 400, 600, 800 e 1 000 Hz são todos múltiplos de 200 Hz, e o sinal resultante se repete 200 vezes por segundo. Experimente no laboratório (aba “Fundamental ausente”).
+
+<Lab id="pitch" />
+
+Há duas grandes famílias de explicação, complementares:
+
+- **Teoria de lugar:** cada frequência excita uma região específica da membrana basilar na cóclea; a altura seria lida pela posição da excitação.
+- **Teoria temporal:** os neurônios auditivos disparam sincronizados com a fase da onda (*phase locking*); a altura seria lida pela periodicidade dos disparos.
+
+Os dados indicam que ambos os mecanismos participam. O travamento de fase enfraquece muito acima de 4–5 kHz, e não por acaso a percepção de **melodia** se degrada nessa região: sequências de tons puros acima de ~5 kHz são mal reconhecidas como melodias, ainda que as frequências sejam claramente distinguíveis. Toda a música “melódica” acontece abaixo disso; o que vem acima são harmônicos, brilho e textura.
+
+<Callout type="nota" title="Por que isso importa para fones pequenos">
+O efeito da fundamental ausente explica por que você reconhece a linha de baixo de uma música num alto-falante de celular que mal reproduz abaixo de 300 Hz: os harmônicos do baixo chegam, e o cérebro reconstrói a nota. Alguns processadores (“bass enhancement” psicoacústico) exploram isso deliberadamente, adicionando harmônicos de graves que o transdutor não consegue reproduzir. Em fones de boa qualidade isso não é necessário — mas o fenômeno mostra que a **altura** é muito robusta, enquanto o **peso** e o **timbre** dos graves não são.
+</Callout>
+
+## Notas, oitavas e afinação
+
+Duas notas separadas por uma **oitava** (razão 2:1) soam tão parecidas que recebem o mesmo nome em praticamente todas as culturas musicais. Isso tem base física: todos os harmônicos da nota mais aguda coincidem com harmônicos (pares) da mais grave. Por isso a altura tem duas dimensões: a **altura propriamente dita** (grave–agudo) e a **classe de altura** ou croma (Dó, Ré, Mi…), que se repete a cada oitava.
+
+A música ocidental divide a oitava em 12 semitons. No sistema de **temperamento igual**, usado em quase toda a música atual, todos os semitons correspondem à mesma razão de frequências, $2^{1/12} \approx 1{,}0595$. A frequência de qualquer nota pode ser calculada a partir da referência Lá4 = 440 Hz (padronizada na ISO 16):
+
+$$
+f(n) = 440 \cdot 2^{(n - 69)/12}\ \text{Hz}
+$$
+
+em que $n$ é o número da nota no padrão MIDI (Lá4 = 69, Dó4 = 60). Diferenças pequenas de afinação são medidas em **cents**: 100 cents por semitom, 1 200 por oitava. Ouvintes treinados percebem diferenças de 5 a 10 cents entre notas sucessivas.
+
+## Intervalos, consonância e dissonância
+
+Um **intervalo** é a relação entre duas alturas. Os intervalos mais consonantes correspondem a razões de números inteiros pequenos: oitava (2:1), quinta (3:2), quarta (4:3), terça maior (5:4). Há duas explicações físicas clássicas, que se reforçam:
+
+**Coincidência de harmônicos** (Helmholtz). Numa quinta entre 200 e 300 Hz, muitos harmônicos coincidem (600, 1 200, 1 800…). Os que não coincidem estão bem separados. O resultado é um espectro ordenado.
+
+**Rugosidade** (Plomp e Levelt, 1965). Quando dois parciais estão próximos — dentro de uma mesma [banda crítica](/percepcao/mascaramento) da cóclea, mas não idênticos —, eles batem rapidamente e produzem aspereza. A dissonância máxima ocorre quando a separação vale cerca de um quarto da banda crítica. Intervalos com razões simples minimizam esses encontros próximos de harmônicos; intervalos como a segunda menor (16:15) os multiplicam.
+
+A cultura também conta: o grau de consonância atribuído a certos intervalos e acordes muda com a exposição musical. Mas a base física — harmonicidade e rugosidade — é observada de forma consistente e ajuda a explicar por que distorções que criam parciais **inarmônicos** soam tão desagradáveis.
+
+O temperamento igual é um compromisso. Empilhar quintas perfeitas (3:2) não fecha o ciclo de oitavas: doze quintas puras ultrapassam sete oitavas em cerca de 23,5 cents (a *coma pitagórica*). A afinação justa produz acordes muito puros numa tonalidade, mas inutilizáveis em outras. O temperamento igual distribui o erro: quintas ficam 2 cents estreitas (imperceptível) e terças maiores ~14 cents largas (perceptível como batimento lento, especialmente em instrumentos de sustentação longa). Você pode comparar no laboratório.
+
+## O que compõe uma melodia
+
+Uma **melodia** é uma sequência de alturas organizada no tempo, percebida como uma unidade. Decompondo-a, encontramos várias camadas, cada uma com sua importância perceptiva:
+
+**Intervalos.** O que identifica uma melodia não são as frequências absolutas, mas as razões entre notas sucessivas. Por isso você reconhece “Parabéns a você” cantado em qualquer tom: a transposição multiplica todas as frequências pelo mesmo fator e preserva os intervalos. Pouquíssimas pessoas (estimativas falam em menos de 1 em 1 000, em populações ocidentais) têm ouvido absoluto, a capacidade de nomear notas sem referência.
+
+**Contorno.** O padrão de subidas e descidas. É a primeira coisa que bebês percebem e o que costuma ficar na memória de melodias pouco conhecidas. Preservar o contorno mantendo intervalos distorcidos produz algo “parecido, mas errado”.
+
+**Escala e tonalidade.** As notas pertencem a um conjunto (uma escala) e se organizam em torno de um centro (a tônica). Pesquisas de Carol Krumhansl mostraram que ouvintes, mesmo sem treino formal, têm expectativas estáveis sobre quais notas “pertencem” a um contexto tonal — a hierarquia tonal. Uma melodia é, em boa parte, o jogo entre tensão (notas instáveis) e resolução (retorno às estáveis).
+
+**Ritmo e métrica.** Durações, acentos e o pulso subjacente. Uma melodia com notas certas e ritmo uniformizado fica muito mais difícil de reconhecer — o laboratório permite testar. O ritmo musical vive entre aproximadamente 0,5 e 4 pulsos por segundo, a mesma escala de tempo dos movimentos do corpo, o que talvez não seja coincidência.
+
+**Faixa de altura.** Melodias concentradas numa região razoavelmente estreita de oitavas soam coerentes. Os experimentos de Diana Deutsch mostraram que, se cada nota de uma melodia conhecida for tocada numa oitava escolhida ao acaso (preservando a classe de altura, ou seja, o “nome” da nota), o reconhecimento despenca. Classe de altura sozinha não basta; a proximidade importa.
+
+**Timbre, dinâmica e articulação.** Estas não mudam *qual* melodia é, mas mudam profundamente o que ela expressa: um mesmo tema num oboé, num piano ou numa voz rouca tem caráter diferente. É aqui que a fidelidade do sistema de reprodução volta a ser decisiva.
+
+## Harmonia e textura
+
+Quando várias notas soam ao mesmo tempo, entramos na **harmonia**. Um acorde maior em posição fundamental tem frequências na proporção aproximada 4:5:6 — parciais de uma única série harmônica, o que explica sua estabilidade. A harmonia cria o contexto em que a melodia é ouvida: a mesma nota pode soar repousante sobre um acorde e tensa sobre outro.
+
+A **textura** descreve como as vozes se combinam: uma melodia sozinha (monofonia), melodia com acompanhamento (homofonia), ou várias melodias independentes ao mesmo tempo (polifonia, como numa fuga de Bach). Ouvir polifonia exige que o cérebro **separe correntes**: agrupe as notas de uma voz e as distinga das de outra. Albert Bregman chamou isso de *análise de cenas auditivas*. As pistas que o cérebro usa incluem proximidade de altura, continuidade de timbre, sincronia de ataques e posição espacial.
+
+## O que isso significa para a reprodução
+
+Juntando tudo, podemos responder com mais precisão o que importa ao reproduzir música:
+
+1. **A melodia em si é robusta.** Ela é codificada em relações de altura e tempo, e sobrevive a reproduções muito ruins. Um fone mediano não “perde a melodia”.
+2. **Timbre, textura e separação são frágeis.** Distinguir um violoncelo de uma viola tocando juntos, ou uma linha interna de um arranjo de cordas, depende de detalhes espectrais e temporais. Desequilíbrios de resposta em frequência (que mascaram regiões vizinhas), [distorção por intermodulação](/eletronica/medidas-de-desempenho) (que cria parciais inarmônicos sem relação com a harmonia) e ressonâncias mal amortecidas (que borram ataques) prejudicam justamente essas pistas.
+3. **A harmonia é sensível a parciais espúrios.** Como consonância depende de relações simples entre parciais, adicionar componentes que não pertencem a nenhuma série harmônica do acorde — típicos da intermodulação — “suja” a harmonia de uma forma que harmônicos simples da fundamental (como o segundo harmônico) não sujam.
+4. **O ritmo depende dos ataques.** Transientes bem definidos, que dependem de resposta equilibrada nos médios-agudos, tornam o pulso claro.
+
+Esse é o fio condutor que leva ao artigo sobre o que um fone precisa ter para que você consiga [distinguir instrumentos e linhas](/iems/separacao-e-resolucao) — inclusive quando todos estão na mesma região dos médios. Mas, antes, precisamos entender o instrumento que faz toda essa análise: [o ouvido](/percepcao/anatomia-do-ouvido).
+
+<References>
+  <Ref>Plomp, R.; Levelt, W. J. M. “Tonal consonance and critical bandwidth.” <em>Journal of the Acoustical Society of America</em>, 38(4), 548–560, 1965.</Ref>
+  <Ref>Deutsch, D. “Octave generalization and tune recognition.” <em>Perception &amp; Psychophysics</em>, 11(6), 411–412, 1972.</Ref>
+  <Ref>Krumhansl, C. L. <em>Cognitive Foundations of Musical Pitch</em>. Oxford University Press, 1990.</Ref>
+  <Ref>Bregman, A. S. <em>Auditory Scene Analysis: The Perceptual Organization of Sound</em>. MIT Press, 1990.</Ref>
+  <Ref>Attneave, F.; Olson, R. K. “Pitch as a medium: a new approach to psychophysical scaling.” <em>American Journal of Psychology</em>, 84(2), 147–166, 1971.</Ref>
+  <Ref>Plack, C. J.; Oxenham, A. J.; Fay, R. R.; Popper, A. N. (orgs.). <em>Pitch: Neural Coding and Perception</em>. Springer, 2005.</Ref>
+  <Ref>Schouten, J. F. “The residue and the mechanism of hearing.” <em>Proceedings of the Koninklijke Nederlandse Akademie van Wetenschappen</em>, 43, 991–999, 1940.</Ref>
+</References>

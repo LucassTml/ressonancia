@@ -1,0 +1,75 @@
+<Lead>
+“Preciso de um amplificador?” é uma das perguntas mais frequentes de quem compra um bom fone. Para respondê-la, é preciso saber o que um amplificador faz, o que um pré-amplificador faz, e por que, para a maioria dos IEMs, a resposta é surpreendentemente simples.
+</Lead>
+
+## O que é amplificar
+
+Um **amplificador** é um circuito que usa a energia de uma fonte de alimentação (uma bateria, a porta USB, a tomada) para produzir na saída uma cópia maior do sinal de entrada. O sinal de entrada não “ganha energia”: ele **controla** um dispositivo ativo — um transistor, uma válvula — que regula o fluxo de energia da alimentação para a carga. A forma do sinal é preservada; a amplitude, a tensão disponível e a capacidade de fornecer corrente aumentam.
+
+Duas grandezas descrevem um amplificador:
+
+- **Ganho de tensão:** a razão entre a tensão de saída e a de entrada, geralmente em dB. Um ganho de +20 dB multiplica a tensão por 10.
+- **Capacidade de corrente e potência:** quanta corrente a saída consegue fornecer sem que a tensão caia ou distorça. Um amplificador pode ter muito ganho e pouca corrente (inadequado para cargas de baixa impedância) ou pouco ganho e muita corrente.
+
+E dois limites:
+
+- **Limite de tensão:** a saída não pode ultrapassar a tensão da alimentação (os “trilhos”, ou *rails*). Ao tentar, o sinal **clipa**: os picos são cortados, criando distorção severa. A distância entre o nível de uso e esse limite é o **headroom**.
+- **Limite de corrente:** a fonte e os transistores de saída têm uma corrente máxima.
+
+<Lab id="gain" />
+
+## O que é um pré-amplificador
+
+O termo **pré-amplificador** tem dois sentidos relacionados, e é bom separá-los.
+
+**1. Estágio que eleva sinais muito fracos ao nível de linha.** Microfones produzem milivolts; cápsulas de toca-discos, ainda menos (cerca de 5 mV em cápsulas de ímã móvel, frações de milivolt nas de bobina móvel). Um **pré-amplificador de microfone** ou um **pré de phono** eleva esses sinais a ~1 V, com ruído mínimo. O de phono também aplica a **equalização RIAA**, que desfaz a curva usada no corte do disco (graves atenuados e agudos reforçados na gravação, para caber no sulco e reduzir ruído).
+
+**2. Centro de controle de um sistema de som.** Em sistemas com caixas, o “pré” é o equipamento que seleciona fontes, ajusta o volume e entrega um sinal de nível de linha ao **amplificador de potência**, que por sua vez aciona os alto-falantes. O pré não precisa fornecer corrente; precisa ser silencioso e preciso. O amplificador de potência não precisa de controle de volume; precisa fornecer corrente e potência.
+
+Em resumo: o pré-amplificador lida com **sinais pequenos e controle**; o amplificador de potência, com **energia para mover a carga**. Num amplificador de fone, os dois papéis costumam estar no mesmo aparelho: um controle de volume e um estágio de saída capaz de alimentar fones.
+
+## A cadeia típica
+
+Para escutar música digital em fones, a cadeia é:
+
+1. **Fonte digital** (arquivo, streaming) →
+2. **DAC**, que entrega um sinal analógico de nível de linha (tipicamente 1 a 2 V RMS) →
+3. **Controle de volume** (digital ou analógico) →
+4. **Amplificador de fone**, que entrega tensão e corrente ao fone →
+5. **Fone**.
+
+Num celular, num dongle USB ou num “DAC/amp”, as etapas 2 a 4 estão no mesmo chip ou na mesma placa. Num sistema de mesa, podem ser aparelhos separados.
+
+## Classes de amplificação
+
+As “classes” descrevem como os dispositivos de saída conduzem:
+
+- **Classe A:** os transistores (ou válvulas) conduzem o tempo todo, em todo o ciclo. Muito lineares, mas ineficientes — dissipam energia mesmo em silêncio.
+- **Classe B:** dois dispositivos em **push-pull**, cada um conduzindo meio ciclo. Eficientes, mas com **distorção de cruzamento** na passagem por zero, quando um desliga antes de o outro ligar.
+- **Classe AB:** como a B, mas com uma pequena corrente de repouso que mantém ambos conduzindo perto de zero, eliminando a distorção de cruzamento. É a classe mais comum em amplificadores de fone.
+- **Classe D:** os transistores funcionam como chaves que ligam e desligam muito rápido (centenas de kHz), modulando a largura dos pulsos; um filtro recupera o áudio. Muito eficientes; hoje alcançam desempenho excelente e aparecem em fones sem fio e amplificadores compactos.
+- Existem também classes “G” e “H” (com alimentação variável) e várias denominações comerciais.
+
+Classe é um meio, não uma qualidade audível por si. Um classe D bem projetado pode medir melhor que um classe A mediano.
+
+## Realimentação negativa
+
+Quase todo amplificador moderno usa **realimentação negativa**: uma parte da saída é comparada com a entrada, e a diferença corrige o circuito continuamente. Ela reduz a distorção e a impedância de saída e torna o ganho estável e previsível. Projetos sem realimentação (ou com pouca) existem — especialmente em válvulas — e tendem a ter mais distorção e impedância de saída maior, características que alguns ouvintes preferem. A ideia de que a realimentação “estraga a dinâmica” não se sustenta em amplificadores estáveis e bem compensados.
+
+## Quando um amplificador dedicado faz diferença
+
+Um amplificador separado (ou um DAC/amp mais potente) melhora o som quando a fonte atual tem uma limitação real:
+
+- **Tensão insuficiente:** o fone não chega ao volume desejado, ou chega clipando nos picos — comum com headphones de alta impedância ou planares de baixa sensibilidade.
+- **Impedância de saída alta** com fones cuja impedância varia muito (IEMs multi-BA).
+- **Ruído audível** (chiado) com IEMs sensíveis.
+- **Corrente insuficiente** com fones de impedância muito baixa e baixa sensibilidade.
+
+Se nenhuma dessas condições existe, a fonte já é transparente para aquele fone, e um amplificador “melhor” não tem o que melhorar. Para decidir na prática, use a [calculadora de potência](/eletronica/potencia-e-sensibilidade) e veja [DAC/amp, dongle ou EQ?](/iems/fonte-dac-amp-ou-eq).
+
+<References>
+  <Ref>Self, D. <em>Audio Power Amplifier Design</em>. 6ª ed. Focal Press, 2013.</Ref>
+  <Ref>Self, D. <em>Small Signal Audio Design</em>. 3ª ed. Focal Press, 2020. Pré-amplificadores, RIAA e controle de volume.</Ref>
+  <Ref>Horowitz, P.; Hill, W. <em>The Art of Electronics</em>. 3ª ed. Cambridge University Press, 2015.</Ref>
+  <Ref>Black, H. S. “Stabilized feedback amplifiers.” <em>Bell System Technical Journal</em>, 13(1), 1–18, 1934.</Ref>
+</References>

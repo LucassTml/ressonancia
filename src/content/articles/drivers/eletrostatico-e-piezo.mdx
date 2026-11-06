@@ -1,0 +1,56 @@
+<Lead>
+Nem todo fone usa ímãs para mover o ar. Os eletrostáticos movem uma membrana com forças entre cargas elétricas; os piezoelétricos, com cristais que mudam de forma sob tensão. São tecnologias com virtudes reais e limitações físicas igualmente reais — e, em IEMs, aparecem quase sempre como especialistas em agudos.
+</Lead>
+
+## Eletrostáticos
+
+### O princípio
+
+Um transdutor eletrostático tem três camadas: uma **membrana** extremamente fina e levemente condutora, posicionada entre duas **placas perfuradas** (os estatores). A membrana recebe uma **tensão de polarização** fixa e alta — centenas a milhares de volts em headphones —, o que a deixa carregada eletricamente. O sinal de áudio é aplicado aos dois estatores **em contrafase**: quando um fica positivo, o outro fica negativo.
+
+Cargas de mesmo sinal se repelem e de sinais opostos se atraem. A membrana carregada é, portanto, empurrada por um estator e puxada pelo outro ao mesmo tempo, e o movimento acompanha o sinal. Como a força age em toda a superfície, a membrana se move de forma quase uniforme, como nos planares — mas sem trilhas metálicas, o que permite membranas ainda mais leves.
+
+<Lab id="drivers" initial="est" />
+
+A força eletrostática sobre a membrana é aproximadamente proporcional ao produto da tensão de polarização pela tensão do sinal, dividido pelo quadrado da distância entre membrana e estator. A configuração em contrafase (*push-pull*) é essencial: ela cancela, em boa parte, a não linearidade que existiria com um estator só, porque a força de atração crescente de um lado é compensada pela força decrescente do outro. Manter a **carga** da membrana constante (usando uma resistência muito alta na polarização) também ajuda a linearizar.
+
+### Virtudes e custos
+
+**Virtudes:** massa móvel extremamente baixa, força distribuída, baixa distorção e excelente resposta em agudos. Headphones eletrostáticos de referência são admirados há décadas pela clareza.
+
+**Custos:** exigem tensões altas. Headphones eletrostáticos precisam de um **energizador** dedicado — um amplificador que gera a polarização e amplifica o sinal a centenas de volts. Isso os torna caros e pouco portáteis. A distância entre membrana e estatores limita a excursão, e por isso graves fortes são um desafio.
+
+### Eletrostáticos em IEMs
+
+Em IEMs, a solução foi miniaturizar: tweeters eletrostáticos (frequentemente chamados de **EST**) com membranas de poucos milímetros e um pequeno **transformador elevador** embutido no próprio IEM, que converte a tensão de uma saída comum de fone em tensões mais altas. Esses tweeters cobrem tipicamente a região acima de ~8–10 kHz e aparecem em projetos **híbridos** ou *tribrid* (dinâmico + BA + EST). Como a faixa é estreita e a área minúscula, seu efeito é sobre o “ar” e a extensão — e, como sempre, depende do tuning.
+
+<Callout type="nota">
+Tweeters EST em IEMs são componentes **capacitivos** acoplados por transformador. Isso torna a impedância do IEM nos agudos dependente desse conjunto, e a resposta pode variar com a fonte. Não há nada de errado nisso, mas é mais um motivo para avaliar o IEM medido, e não a lista de componentes.
+</Callout>
+
+## Piezoelétricos
+
+### O princípio
+
+Certos cristais (como o quartzo) e cerâmicas (como o titanato-zirconato de chumbo, PZT) são **piezoelétricos**: geram cargas elétricas quando deformados e, inversamente, deformam-se quando submetidos a uma tensão. O efeito foi descoberto pelos irmãos Pierre e Jacques Curie em 1880.
+
+Uma placa piezoelétrica sozinha se deforma muito pouco. Para amplificar o movimento, usa-se um **bimorfo**: duas camadas piezoelétricas coladas, polarizadas de forma que, sob tensão, uma se expande enquanto a outra se contrai. Como uma lâmina bimetálica, o conjunto se **curva**, e a ponta (ou o centro, num disco) se desloca bem mais.
+
+<Lab id="drivers" initial="piezo" />
+
+### Virtudes e custos
+
+**Virtudes:** muito finos, sem ímã nem bobina, eficientes em altas frequências e com bom comportamento como super-tweeters. São comuns em buzzers, alarmes e alguns tweeters de alto-falante.
+
+**Custos:** a excursão é pequena e a resposta, muito ressonante — os modos de flexão do disco criam picos pronunciados que precisam de amortecimento e filtragem cuidadosa. Do ponto de vista elétrico, comportam-se como **capacitores**: a corrente cresce com a frequência, o que exige cuidado no crossover. Em IEMs, aparecem como tweeters em projetos híbridos de alguns fabricantes, e sua contribuição depende inteiramente da implementação: podem soar suaves e arejados ou ásperos e metálicos.
+
+## O padrão que se repete
+
+Eletrostáticos e piezoelétricos ilustram uma lição que vale para todas as tecnologias: **cada princípio físico tem uma faixa em que é forte e limitações estruturais fora dela**. Não é por acaso que, em IEMs, ambos aparecem quase sempre como especialistas em agudos dentro de sistemas com vários drivers — o que nos leva aos [crossovers](/drivers/multi-driver-e-crossovers).
+
+<References>
+  <Ref>Baxandall, P. J. “Electrostatic loudspeakers.” In: Borwick, J. (org.), <em>Loudspeaker and Headphone Handbook</em>. 3ª ed. Focal Press, 2001.</Ref>
+  <Ref>Walker, P. J. “Wide range electrostatic loudspeakers.” <em>Wireless World</em>, 1955 (série de artigos).</Ref>
+  <Ref>Curie, J.; Curie, P. “Développement, par pression, de l’électricité polaire dans les cristaux hémièdres à faces inclinées.” <em>Comptes rendus de l’Académie des Sciences</em>, 91, 294–295, 1880.</Ref>
+  <Ref>Beranek, L. L.; Mellow, T. J. <em>Acoustics: Sound Fields and Transducers</em>. Academic Press, 2012.</Ref>
+</References>

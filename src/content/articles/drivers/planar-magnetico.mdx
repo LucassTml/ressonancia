@@ -1,0 +1,62 @@
+<Lead>
+Um fone planar magnético substitui a bobina e o cone por algo mais radical: um fio achatado desenhado diretamente sobre uma membrana mais fina que um fio de cabelo, suspensa entre fileiras de ímãs. A força deixa de ser aplicada num anel e passa a ser distribuída por toda a superfície. Essa ideia, antiga, voltou com força nos headphones de alta fidelidade e, mais recentemente, chegou aos IEMs.
+</Lead>
+
+## A ideia: empurrar a membrana inteira
+
+Num driver dinâmico, a força nasce na bobina e precisa ser transmitida ao resto do diafragma. Se o diafragma não for perfeitamente rígido, partes dele se atrasam em relação à bobina e surgem os [modos de ruptura](/drivers/driver-dinamico). Uma solução é tornar o diafragma mais rígido. Outra, a dos planares, é **aplicar a força em toda a superfície ao mesmo tempo**: se cada pedaço da membrana é empurrado igualmente, ela não precisa ser rígida para se mover como um todo.
+
+Para isso, o condutor é distribuído pela membrana. Em vez de uma bobina enrolada, há uma **trilha condutora plana** (normalmente de alumínio) depositada ou gravada sobre um filme polimérico de poucos micrômetros de espessura, desenhando um zigue-zague ou uma espiral que cobre quase toda a área.
+
+## O circuito magnético
+
+A força de Lorentz exige que o campo magnético seja **perpendicular à corrente** e que a força resultante seja perpendicular à membrana. Para isso, o campo precisa correr **paralelo** à membrana nos pontos onde estão as trilhas.
+
+Os planares conseguem isso com **fileiras de ímãs em barra** posicionadas de um lado da membrana (projeto de lado único, *single-sided*) ou dos dois lados (*double-sided* ou *push-pull*), com polaridades alternadas. Entre dois ímãs vizinhos de polaridades opostas, as linhas de campo fazem um arco que, na altura da membrana, é praticamente paralelo a ela. As trilhas são posicionadas exatamente nessas regiões, e o sentido da corrente alterna de uma trilha para a outra — de modo que todas as forças apontem para o mesmo lado.
+
+<Lab id="drivers" initial="planar" />
+
+Com ímãs dos dois lados, o campo é mais forte e mais simétrico, o que aumenta a força e a linearidade, mas acrescenta peso e obstáculos à passagem do som. Com ímãs de um lado só, o fone fica mais leve e mais aberto acusticamente, ao custo de menos força e de um campo um pouco menos uniforme ao longo do deslocamento. Fabricantes também experimentam arranjos de ímãs que concentram o campo (inspirados em arranjos de Halbach) e geometrias de trilhas que distribuem melhor a força.
+
+## O que a física favorece
+
+**Força distribuída e baixa massa por área.** A membrana com trilhas pesa pouco por unidade de área e é empurrada em toda parte. Sua tendência a se mover como um pistão é boa numa faixa larga de frequências.
+
+**Grande área, pequeno deslocamento.** Em headphones, a membrana pode ter 80 a 100 mm de diâmetro. Para deslocar o mesmo volume de ar, uma área maior exige excursão menor, e excursões pequenas ficam na região linear do motor. Isso explica parte da fama dos planares de **baixa distorção nos graves**, especialmente em headphones abertos, que não contam com a ajuda de uma cavidade selada.
+
+**Impedância quase puramente resistiva.** A trilha plana tem indutância muito baixa, então a impedância do driver é praticamente constante em toda a faixa de áudio. Consequência prática: planares são **pouco sensíveis à impedância de saída** da fonte — o oposto de IEMs multi-BA.
+
+**Linearidade do motor.** Se o campo é uniforme na região percorrida pelas trilhas, $Bl$ não muda com o deslocamento, e o motor é linear mesmo em níveis altos.
+
+## O que a física cobra
+
+**Sensibilidade.** O campo magnético que atravessa as trilhas, espalhado sobre uma área grande, costuma ser mais fraco que o de um entreferro concentrado. Planares clássicos eram notoriamente difíceis de alimentar, exigindo amplificadores potentes. Os modernos são bem mais eficientes, mas, em média, continuam menos sensíveis que dinâmicos e muito menos que BAs.
+
+**Obstáculos acústicos.** Os ímãs e as grades ficam na frente (e atrás) da membrana. O som precisa passar por fendas entre eles, o que pode gerar reflexões e ressonâncias — e é um dos motivos de alguns planares terem picos nos agudos que exigem tuning cuidadoso.
+
+**Peso** (em headphones), por causa dos ímãs.
+
+**A membrana também ressoa.** Força distribuída não elimina ressonâncias: a membrana é tensionada como a pele de um tambor e tem seus próprios modos, além da interação com as cavidades.
+
+## Planares em IEMs
+
+Levar o princípio para dentro do ouvido muda o equilíbrio de vantagens e desvantagens. Drivers planares para IEMs, que começaram a se popularizar por volta de 2021, têm tipicamente de 10 a 15 mm. Algumas consequências:
+
+- **A vantagem da área grande desaparece em boa parte.** Um planar de 14 mm tem área comparável a um dinâmico de 14 mm. E, numa cavidade selada, os graves são produzidos pelo princípio de câmara de pressão (veja [transdutores](/drivers/transdutores)), em que qualquer tecnologia bem vedada se sai bem.
+- **A força distribuída e a impedância resistiva continuam valendo.** Planares de IEM costumam ter impedância plana, o que os torna insensíveis à impedância de saída.
+- **A sensibilidade é baixa para um IEM.** Muitos exigem mais tensão do que IEMs dinâmicos ou BA — ainda dentro do que um bom dongle entrega, mas às vezes no limite de saídas de celular, especialmente com faixas de grande dinâmica.
+- **O tuning é desafiador.** Com pouco espaço, é difícil controlar as reflexões entre membrana, ímãs e grades; vários modelos apresentaram picos característicos em médios-agudos e agudos. Comunidades descrevem um “timbre planar” — impressão que, quando aparece, é mais bem explicada por esses picos e pela distorção (ou ausência dela) do que por uma propriedade mágica da tecnologia.
+
+<Callout type="mito" title="“Planar é mais rápido e mais detalhado”">
+Velocidade de resposta, em fones, está ligada à resposta em frequência: um sistema que reproduz bem até 20 kHz responde a transientes tão rápido quanto o sinal exige, seja qual for a tecnologia. Planares podem ter **menos distorção** e menos ressonâncias de ruptura, e isso pode ser percebido como clareza. Mas um planar com um pico em 6 kHz parecerá “mais detalhado” pelo mesmo motivo que qualquer fone brilhante: mais energia na região onde os detalhes moram. Julgue pela medição e pela escuta, não pela tecnologia.
+</Callout>
+
+## Em resumo
+
+Um fone planar magnético é um transdutor eletromagnético em que **o condutor é a própria membrana**: uma trilha plana sobre um filme ultrafino, entre ímãs que criam um campo paralelo a ela. A força distribuída, a baixa massa por área e a impedância resistiva são suas vantagens estruturais; sensibilidade menor, obstáculos acústicos e tuning difícil são seus custos. Em headphones, essas vantagens se traduzem frequentemente em graves limpos e baixa distorção. Em IEMs, a tecnologia é promissora, mas a implementação pesa mais do que o princípio.
+
+<References>
+  <Ref>Borwick, J. (org.). <em>Loudspeaker and Headphone Handbook</em>. 3ª ed. Focal Press, 2001. Capítulo sobre transdutores isodinâmicos e ortodinâmicos.</Ref>
+  <Ref>Beranek, L. L.; Mellow, T. J. <em>Acoustics: Sound Fields and Transducers</em>. Academic Press, 2012.</Ref>
+  <Ref>Halbach, K. “Design of permanent multipole magnets with oriented rare earth cobalt material.” <em>Nuclear Instruments and Methods</em>, 169(1), 1–10, 1980.</Ref>
+</References>

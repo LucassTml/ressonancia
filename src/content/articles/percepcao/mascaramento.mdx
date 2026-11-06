@@ -1,0 +1,64 @@
+<Lead>
+Você não ouve tudo o que chega ao seu tímpano. Sons fortes escondem sons fracos próximos em frequência e em tempo, num fenômeno chamado mascaramento. Ele é a razão pela qual um MP3 pode descartar boa parte dos dados sem que você perceba — e também a razão pela qual um fone com graves exagerados pode “apagar” detalhes que estão na gravação.
+</Lead>
+
+## O que é mascaramento
+
+**Mascaramento** é o aumento do limiar de audibilidade de um som (o *sinal*) causado pela presença de outro (o *mascarador*). Em vez de detectar o sinal a 5 dB SPL, por exemplo, você só o detecta a 40 dB SPL na presença de um ruído — o mascaramento foi de 35 dB.
+
+A explicação fisiológica vem direto da [cóclea](/percepcao/anatomia-do-ouvido). Cada frequência excita uma região da membrana basilar, mas a excitação não é um ponto: é uma “mancha” com extensão. Se a mancha de um som forte cobre a região onde um som fraco produziria sua própria excitação, a resposta neural adicional do som fraco fica pequena demais para ser notada em meio à atividade já presente. É como tentar ver uma lanterna ao lado de um holofote.
+
+## Bandas críticas
+
+Harvey Fletcher, nos anos 1940, fez uma observação fundamental: ao mascarar um tom com ruído centrado nele, aumentar a largura do ruído aumenta o mascaramento apenas até certo ponto. Ruído além de uma certa largura — a **banda crítica** — não contribui mais. Isso indica que o ouvido analisa o som com um conjunto de filtros, e que só a energia que cai dentro do filtro centrado no sinal compete com ele.
+
+A largura desses filtros auditivos é descrita de duas formas principais:
+
+- **Escala Bark** (Zwicker): o espectro audível dividido em cerca de 24 bandas críticas contíguas. A largura é de ~100 Hz abaixo de 500 Hz e de aproximadamente 20% da frequência central acima disso.
+- **ERB** (Glasberg e Moore): uma estimativa mais moderna, baseada em mascaramento com ruído com entalhe (*notched noise*): ERB = 24,7·(4,37·f/1000 + 1) Hz. É mais estreita que a banda Bark em baixas frequências.
+
+Em ambas, a ideia é a mesma: **frequências dentro de uma mesma banda interagem; frequências em bandas distantes são processadas de forma independente.**
+
+## A assimetria: o mascaramento sobe
+
+O laboratório abaixo apresenta uma banda estreita de ruído e um tom pulsante. Coloque o tom abaixo do ruído e depois acima dele, e diminua o nível do tom até ele sumir em cada posição.
+
+<Lab id="masking" />
+
+Você vai notar que o mascaramento é **assimétrico**: um mascarador esconde muito mais as frequências acima dele do que as abaixo. A razão está na forma da onda viajante na membrana basilar: ela cresce gradualmente desde a base (onde estão os agudos) até o pico e cai abruptamente depois. Um som grave, portanto, excita também a região dos agudos por onde a onda passou no caminho; um som agudo quase não excita a região dos graves, que fica além do seu pico. Esse efeito é o **espalhamento para cima** (*upward spread of masking*).
+
+E ele cresce com o nível. Mascaradores fortes têm inclinações mais suaves do lado agudo: em 80 dB SPL, um ruído em 500 Hz pode mascarar significativamente sons até 2 ou 3 kHz. O modelo de Terhardt usado no laboratório reproduz essa dependência: aumente o nível do ruído e veja a borda superior do limiar se alargar.
+
+<Callout type="chave" title="Graves excessivos escondem médios">
+Esta é a consequência mais importante do mascaramento para quem escolhe fones. Uma elevação larga de graves médios (100–300 Hz) não apenas adiciona grave: pelo espalhamento para cima, ela eleva o limiar de audibilidade na região de 300 Hz a 1,5 kHz, onde estão as fundamentais e harmônicos baixos de vozes, violões, pianos e cordas. Detalhes de baixo nível nessa região — textura, respiração, decaimentos — ficam escondidos. É por isso que fones com “grave invasivo” soam embolados e com pouca separação, mesmo quando seus médios, isoladamente, são bons. Um shelf de grave que começa abaixo de ~150 Hz e não invade os médios-graves preserva muito melhor essa informação.
+</Callout>
+
+## Mascaramento no tempo
+
+O mascaramento não acontece só entre sons simultâneos.
+
+- **Pós-mascaramento** (*forward masking*): um som forte eleva o limiar de sons que vêm logo depois dele, por até ~100–200 ms. O efeito é maior nos primeiros milissegundos.
+- **Pré-mascaramento** (*backward masking*): curiosamente, um som forte também mascara sons fracos que vêm **antes** dele, mas por apenas alguns milissegundos (tipicamente menos de 20 ms). Isso acontece porque o processamento neural do som fraco ainda não terminou quando chega a excitação do som forte.
+
+O pós-mascaramento tem uma consequência importante para a percepção de ressonâncias: uma ressonância que decai lentamente depois de cada nota “prolonga” a energia e pode mascarar o início da nota seguinte. Esse é um dos mecanismos pelos quais picos estreitos e mal amortecidos degradam a clareza de passagens rápidas.
+
+## Aplicações: codecs, mixagem e fones
+
+**Codecs com perdas.** MP3, AAC, Opus e os codecs Bluetooth dividem o sinal em bandas, calculam o limiar de mascaramento a cada instante com um modelo psicoacústico e quantizam cada banda com o mínimo de bits necessário para manter o ruído de quantização abaixo desse limiar. A informação “escondida” é descartada porque, por definição, você não a ouviria. Quando o bitrate é baixo demais, o ruído ultrapassa o limiar e surgem artefatos — o assunto de [formatos e compressão](/digital/formatos-e-compressao).
+
+**Mixagem.** Engenheiros de mixagem chamam de *masking* o fenômeno de instrumentos que disputam a mesma região e “se apagam”. A solução clássica é a equalização complementar: cortar um pouco de um instrumento onde outro precisa de espaço.
+
+**Fones e o ambiente.** Em ambientes ruidosos, o ruído externo (geralmente concentrado em graves) mascara a música e, por espalhamento para cima, também médios. A reação natural é aumentar o volume, o que aumenta o risco auditivo. Um IEM bem vedado ou com cancelamento ativo de ruído reduz o mascarador e permite ouvir mais detalhes em volume menor.
+
+## Mascaramento e distorção
+
+Por fim, o mascaramento explica por que certas distorções são inaudíveis e outras não. Um segundo harmônico (o dobro da frequência do sinal) cai perto da região já excitada pelo próprio sinal e é parcialmente mascarado por ele. Produtos de distorção de ordem alta ou de intermodulação podem cair longe do sinal, em regiões “vazias” do espectro, onde nada os esconde — e são muito mais audíveis para o mesmo percentual. É por isso que a mesma especificação de THD pode corresponder a experiências auditivas muito diferentes, como veremos em [medidas de desempenho](/eletronica/medidas-de-desempenho) e em [mensurável vs audível](/ciencia/mensuravel-vs-audivel).
+
+<References>
+  <Ref>Fletcher, H. “Auditory patterns.” <em>Reviews of Modern Physics</em>, 12(1), 47–65, 1940.</Ref>
+  <Ref>Zwicker, E.; Fastl, H. <em>Psychoacoustics: Facts and Models</em>. 3ª ed. Springer, 2007.</Ref>
+  <Ref>Zwicker, E.; Terhardt, E. “Analytical expressions for critical-band rate and critical bandwidth as a function of frequency.” <em>Journal of the Acoustical Society of America</em>, 68(5), 1523–1525, 1980.</Ref>
+  <Ref>Terhardt, E. “Calculating virtual pitch.” <em>Hearing Research</em>, 1(2), 155–182, 1979. (Inclui a formulação das inclinações de espalhamento usada no modelo.)</Ref>
+  <Ref>Glasberg, B. R.; Moore, B. C. J. “Derivation of auditory filter shapes from notched-noise data.” <em>Hearing Research</em>, 47, 103–138, 1990.</Ref>
+  <Ref>Painter, T.; Spanias, A. “Perceptual coding of digital audio.” <em>Proceedings of the IEEE</em>, 88(4), 451–515, 2000.</Ref>
+</References>

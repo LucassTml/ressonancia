@@ -1,0 +1,100 @@
+<Lead>
+Quando duas ondas ocupam o mesmo lugar ao mesmo tempo, o ar não escolhe uma delas: ele soma as duas. Esse princípio simples explica cancelamentos de ruído, batimentos entre notas desafinadas, os picos e vales de um fone medido e por que um atraso de meio milissegundo pode apagar uma frequência inteira.
+</Lead>
+
+## Fase: onde estamos no ciclo
+
+A **fase** indica em que ponto do ciclo uma onda periódica se encontra num dado instante. Costuma ser expressa em graus (um ciclo completo = 360°) ou radianos (2π). Duas senoides de mesma frequência podem estar “em fase” (picos coincidem), “em contrafase” ou “em oposição” (defasadas 180°: o pico de uma coincide com o vale da outra), ou em qualquer situação intermediária.
+
+O conceito mais importante sobre fase em áudio é sua relação com o **tempo**. Um atraso fixo Δt corresponde a uma defasagem que depende da frequência:
+
+$$
+\Delta\varphi = 360^\circ \cdot f \cdot \Delta t
+$$
+
+<Vars
+  items={[
+    ['Δφ', 'defasagem, em graus'],
+    ['f', 'frequência da componente considerada, em Hz'],
+    ['Δt', 'atraso, em segundos'],
+  ]}
+/>
+
+Um atraso de 1 ms é uma defasagem de 36° a 100 Hz, de 180° a 500 Hz e de 360° (um ciclo inteiro, ou seja, “de volta em fase”) a 1 kHz. **O mesmo atraso tem efeitos completamente diferentes em frequências diferentes.** É essa propriedade que transforma uma simples reflexão num padrão de picos e vales distribuído pelo espectro inteiro.
+
+## Superposição: pressões se somam
+
+O ar, nos níveis de pressão da música, é um meio **linear**: a pressão resultante de duas ondas é a soma das pressões que cada uma produziria sozinha. Esse é o princípio da superposição. Para duas senoides de mesma frequência e amplitudes $A_1$ e $A_2$, com defasagem Δφ, a soma é outra senoide da mesma frequência com amplitude
+
+$$
+A = \sqrt{A_1^2 + A_2^2 + 2 A_1 A_2 \cos \Delta\varphi}
+$$
+
+Com amplitudes iguais e em fase, a amplitude dobra (+6 dB): **interferência construtiva**. Em contrafase, ela vai a zero: **interferência destrutiva**. A 90°, o resultado é √2 vezes a amplitude (+3 dB), o mesmo que somar as potências de duas fontes independentes. No laboratório abaixo, ajuste a fase da segunda onda e observe a soma.
+
+<Lab id="interference" />
+
+O cancelamento ativo de ruído (ANC) é a aplicação engenhosa desse princípio: um microfone capta o ruído, um processador gera uma cópia invertida, e o driver do fone a reproduz, cancelando o ruído no canal auditivo. Funciona muito bem em graves e médios-graves — onde os comprimentos de onda são longos e pequenos erros de posição e de tempo não destroem a contrafase — e cada vez pior acima de 1–2 kHz, onde o isolamento passivo da ponteira precisa assumir o trabalho.
+
+## Batimentos e rugosidade
+
+Se as frequências forem ligeiramente diferentes, a defasagem entre as ondas muda continuamente: ora elas estão em fase, ora em oposição. Uma identidade trigonométrica mostra o que acontece:
+
+$$
+\sin(2\pi f_1 t) + \sin(2\pi f_2 t) = 2\cos\!\left(2\pi \tfrac{f_1 - f_2}{2} t\right)\sin\!\left(2\pi \tfrac{f_1 + f_2}{2} t\right)
+$$
+
+O resultado é uma senoide na frequência média, com amplitude que sobe e desce lentamente. A envoltória passa por um máximo $|f_1 - f_2|$ vezes por segundo — esses são os **batimentos**. Afinadores de piano os usam há séculos: ao ajustar duas cordas que devem soar em uníssono, o afinador escuta os batimentos ficarem cada vez mais lentos até desaparecerem.
+
+A percepção muda com a velocidade dos batimentos. Até uns 10–15 Hz, ouvimos claramente um som único que pulsa. Acima disso, a pulsação se torna rápida demais para ser acompanhada e vira uma sensação de **aspereza** (rugosidade). Com separações ainda maiores, a cóclea passa a resolver as duas frequências em lugares diferentes da membrana basilar e ouvimos dois tons distintos. A transição está ligada às [bandas críticas](/percepcao/mascaramento) e é uma das bases físicas da sensação de [consonância e dissonância](/fundamentos/melodia-e-harmonia).
+
+<Callout type="nota" title="Batimentos binaurais não são batimentos">
+Se cada frequência for apresentada a um ouvido diferente, as ondas nunca se somam no ar — não há interferência física. Ainda assim, com diferenças pequenas (alguns hertz) e frequências baixas, muitas pessoas percebem uma flutuação sutil: é o cérebro comparando as fases dos dois ouvidos. O efeito é real, mas fraco e totalmente diferente dos batimentos acústicos. Você pode comparar os dois no laboratório. As alegações de que batimentos binaurais induzem estados mentais específicos não têm sustentação científica sólida.
+</Callout>
+
+## Reflexões e filtros de pente
+
+Quando um som chega a um ponto por dois caminhos de comprimentos diferentes — diretamente e refletido numa parede, por exemplo — a cópia refletida chega atrasada. Pela relação entre atraso e fase, haverá frequências em que esse atraso vale exatamente meio ciclo (ou um ciclo e meio, dois e meio…) e o cancelamento é máximo, e outras em que vale ciclos inteiros e há reforço:
+
+$$
+f_{\text{vale}} = \frac{2n + 1}{2\,\Delta t}, \qquad n = 0, 1, 2, \ldots
+$$
+
+Desenhada num eixo de frequência linear, a resposta parece os dentes de um pente, daí o nome **filtro de pente** (*comb filter*). Na aba “Reflexão e pente” do laboratório, você pode ouvir esse efeito em ruído rosa. Atrasos de vários milissegundos geram dentes densos, ouvidos como um timbre “oco” ou “metálico” (é o efeito *flanger* quando o atraso varia). Atrasos curtos geram poucos vales largos.
+
+Filtros de pente aparecem em muitos lugares importantes para a audiofilia:
+
+- **Salas e microfones:** reflexões no chão, na mesa ou em paredes próximas colorem a gravação e a escuta. Fones eliminam as reflexões da sala, uma das razões de soarem “analíticos”.
+- **Multi-driver:** quando dois drivers reproduzem a mesma faixa (na região do crossover) a partir de posições ou caminhos diferentes, há interferência. O projeto do [crossover](/drivers/multi-driver-e-crossovers) precisa considerar fase, não apenas nível.
+- **Tubos e cavidades dentro do fone:** o som que reflete dentro do bocal ou do canal auditivo interfere com o som que chega diretamente.
+
+## Ondas estacionárias e ressonâncias de tubos
+
+Um caso especial de interferência ocorre num tubo, onde a onda vai e volta entre as extremidades. A onda incidente e a refletida se somam e formam uma **onda estacionária**: um padrão com pontos onde a pressão quase não varia (nós) e pontos onde varia muito (ventres). Isso só acontece com força nas frequências em que o comprimento do tubo “encaixa” um número adequado de meios ou quartos de comprimento de onda — as **ressonâncias**:
+
+- **Tubo aberto nas duas pontas** (ou fechado nas duas): $f_n = n \cdot \dfrac{c}{2L}$
+- **Tubo fechado numa ponta e aberto na outra:** $f_n = (2n - 1) \cdot \dfrac{c}{4L}$
+
+O canal auditivo é, em primeira aproximação, um tubo de ~25 mm fechado pelo tímpano e aberto para o mundo. Sua primeira ressonância de quarto de onda fica em 343/(4 × 0,025) ≈ **3,4 kHz** — e esta é a origem principal do ganho de cerca de 10 a 15 dB que o ouvido aplica perto de 3 kHz. Quando um IEM veda a entrada, o tubo passa a estar fechado nas duas pontas (fone de um lado, tímpano do outro), e a ressonância natural se desloca para uma frequência bem mais alta, ligada à metade do comprimento de onda e à profundidade de inserção. Essa mudança está no centro do artigo sobre [pinna gain](/percepcao/pinna-gain) e explica por que IEMs precisam “recriar” artificialmente o ganho perdido.
+
+## A fase é audível?
+
+Esta é uma das perguntas mais debatidas em áudio, e a resposta honesta depende do que se entende por “fase”.
+
+**Fase absoluta (polaridade).** Inverter a polaridade de um sinal inteiro, nos dois canais, é inaudível para a grande maioria dos sinais e ouvintes. Com sinais muito assimétricos (algumas vozes, certos instrumentos de sopro) em escuta atenta, alguns estudos relatam detecção, mas o efeito é pequeno.
+
+**Fase relativa entre canais.** Diferenças de tempo e fase entre os ouvidos são extremamente audíveis: são uma das principais pistas de [localização](/percepcao/localizacao-espacial). Um canal com polaridade invertida em relação ao outro destrói a imagem central — o som parece “sem centro”, difuso, dentro da cabeça.
+
+**Distorção de fase dentro de um canal** (frequências diferentes atrasadas de modos diferentes). Em níveis moderados de deslocamento, é difícil de ouvir com música; os trabalhos de Lipshitz, Pocock e Vanderkooy (1982) mostraram que defasagens comparáveis às de um alto-falante típico são detectáveis em condições favoráveis (sinais especiais, fones), mas sutis. Atrasos grandes de grupo, sobretudo em graves, podem ser percebidos.
+
+Há também uma razão física para a fase de um fone raramente ser um assunto separado: a maioria das partes de um fone é um sistema de **fase mínima**, no qual a resposta de fase é determinada matematicamente pela resposta de magnitude. Corrigir a magnitude com [equalização](/processamento/limites-da-eq) corrige, junto, a fase correspondente. É uma das razões pelas quais a resposta em frequência é tão informativa.
+
+O próximo passo é ir de duas ondas para muitas: [harmônicos, espectro e timbre](/fundamentos/harmonicos-e-timbre).
+
+<References>
+  <Ref>Lipshitz, S. P.; Pocock, M.; Vanderkooy, J. “On the audibility of midrange phase distortion in audio systems.” <em>Journal of the Audio Engineering Society</em>, 30(9), 580–595, 1982.</Ref>
+  <Ref>Kinsler, L. E. et al. <em>Fundamentals of Acoustics</em>. 4ª ed. Wiley, 2000. Ondas estacionárias e ressonâncias em tubos.</Ref>
+  <Ref>Plomp, R.; Levelt, W. J. M. “Tonal consonance and critical bandwidth.” <em>Journal of the Acoustical Society of America</em>, 38(4), 548–560, 1965.</Ref>
+  <Ref>Kuo, S. M.; Morgan, D. R. “Active noise control: a tutorial review.” <em>Proceedings of the IEEE</em>, 87(6), 943–973, 1999.</Ref>
+  <Ref>Oster, G. “Auditory beats in the brain.” <em>Scientific American</em>, 229(4), 94–102, 1973. Descrição clássica dos batimentos binaurais.</Ref>
+</References>

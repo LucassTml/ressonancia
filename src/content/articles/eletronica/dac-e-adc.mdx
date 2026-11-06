@@ -1,0 +1,73 @@
+<Lead>
+Toda música digital passa por dois conversores: um ADC, que transforma a tensão de um microfone em números, e um DAC, que transforma os números de volta em tensão para o seu fone. Entre os dois, a música é só aritmética. Entender o que esses conversores fazem — sem as metáforas erradas de “degraus” e “pontos ligados” — esclarece por que DACs modernos são, em sua maioria, extraordinariamente transparentes.
+</Lead>
+
+## O ADC: medir em instantes regulares
+
+Um **conversor analógico-digital** (ADC) faz duas coisas:
+
+1. **Amostragem:** mede a tensão de entrada em instantes regularmente espaçados — 44 100 vezes por segundo no CD, 48 000 em vídeo, 96 000 ou mais em gravações de alta resolução.
+2. **Quantização:** expressa cada medida como um número inteiro com um certo número de bits (16, 24…).
+
+Antes de amostrar, o ADC precisa de um **filtro antialiasing**, que remove tudo acima de metade da taxa de amostragem. Sem ele, frequências altas apareceriam disfarçadas de frequências baixas no resultado (aliasing). Os detalhes matemáticos — por que amostras discretas bastam para representar exatamente um sinal contínuo limitado em banda — estão em [amostragem e Nyquist](/digital/amostragem) e [quantização e dither](/digital/quantizacao-e-dither).
+
+## O DAC: o caminho de volta
+
+Um **conversor digital-analógico** (DAC) recebe a sequência de números e precisa produzir uma tensão contínua no tempo cujas amostras, nos instantes certos, valham exatamente aqueles números — e que não contenha nada acima da metade da taxa de amostragem. Isso é feito em duas etapas conceituais.
+
+### 1. Gerar uma tensão a partir dos números
+
+A forma mais intuitiva é um DAC que, a cada amostra, produz uma tensão proporcional ao número e a **mantém** até a próxima amostra. É a **retenção de ordem zero** (*zero-order hold*). O resultado é uma forma de onda em degraus.
+
+### 2. Filtrar: o filtro de reconstrução
+
+A forma em degraus **não é o sinal**. Matematicamente, ela é igual ao sinal original somado a cópias do seu espectro deslocadas para cima — as **imagens**, centradas em múltiplos da taxa de amostragem (44,1 kHz, 88,2 kHz…). As quinas dos degraus são essas imagens. Um **filtro de reconstrução** passa-baixas, que deixa passar tudo até ~20 kHz e remove as imagens, transforma os degraus de volta numa curva suave — e essa curva é o sinal original, exatamente, desde que ele estivesse abaixo de metade da taxa de amostragem.
+
+<Lab id="dac" />
+
+<Callout type="mito" title="“Áudio digital é feito de degraus”">
+Os degraus que aparecem em ilustrações são um artefato de um tipo específico de DAC **antes** do filtro de reconstrução — e equivalem ao sinal correto mais imagens ultrassônicas. Depois do filtro, não há degrau algum. Uma senoide de 15 kHz reproduzida a partir de apenas ~3 amostras por ciclo sai do DAC como uma senoide perfeita de 15 kHz, não como um triângulo ou uma escada. O que limita a fidelidade é a largura de banda (até onde se reproduz) e o ruído (decidido pelos bits), não “a resolução dos degraus”.
+</Callout>
+
+## Sobreamostragem e filtros digitais
+
+Construir um filtro analógico que passe 20 kHz intacto e elimine tudo acima de 22,05 kHz é difícil: exigiria um corte abrupto, muitos componentes e comportamento de fase complicado. Os DACs modernos resolvem isso com **sobreamostragem** (*oversampling*):
+
+1. Um **filtro digital** interpola amostras intermediárias, aumentando a taxa por um fator de 8, 16, 64 ou mais. Matematicamente, isso é feito com precisão arbitrária no domínio digital.
+2. Agora as imagens estão longe — em centenas de quilohertz ou megahertz.
+3. Um **filtro analógico simples e suave** remove essas imagens distantes sem tocar a faixa audível.
+
+No laboratório acima, ative a sobreamostragem ×8 e o filtro suave: os degraus ficam muito mais finos e as imagens se afastam, mostrando por que o filtro analógico pode ser trivial.
+
+Os **filtros digitais** de DACs vêm em variações — fase linear com corte abrupto, fase mínima, corte lento (*slow roll-off*), “apodizantes”. Eles diferem no comportamento perto de 20 kHz (alguns atenuam 1–3 dB em 20 kHz) e na forma da resposta ao impulso (*pre-ringing* nos de fase linear). São diferenças reais e mensuráveis, quase sempre fora da faixa em que a audição é sensível; testes controlados raramente encontram diferenças audíveis entre filtros bem projetados com música comum.
+
+## Arquiteturas de DAC
+
+**R-2R e multibit.** Uma rede de resistores com valores R e 2R gera uma corrente proporcional a cada bit do número. É conceitualmente direto, mas exige resistores com precisão extrema: num DAC de 16 bits, o resistor do bit mais significativo precisa ser preciso a uma parte em 65 536. Imprecisões causam erros de linearidade.
+
+**Sigma-delta (ΔΣ).** A arquitetura dominante em praticamente todos os DACs atuais. O sinal é sobreamostrado a vários megahertz e convertido num fluxo de poucos bits (até um bit) por um **modulador** que usa realimentação para empurrar o erro de quantização (o ruído) para frequências ultrassônicas — o *noise shaping*. Um filtro simples remove esse ruído. O resultado combina linearidade excelente e baixo custo. Chips sigma-delta de consumo atingem faixas dinâmicas acima de 120 dB.
+
+**NOS (non-oversampling).** Alguns DACs de nicho omitem deliberadamente a sobreamostragem e o filtro digital. Eles produzem uma queda mensurável nos agudos (por volta de −3 dB em 20 kHz, pelo envelope sinc da retenção) e imagens não filtradas acima de 22 kHz. Algumas pessoas preferem esse comportamento; tecnicamente, é uma reconstrução menos exata.
+
+## Jitter e relógio
+
+O DAC precisa converter cada amostra no instante certo. Variações aleatórias ou periódicas nesse instante — o **jitter** — fazem o sinal ser reconstruído com pequenos erros de tempo, que equivalem a ruído ou a bandas laterais ao redor de cada frequência. O efeito é proporcional à frequência do sinal e à magnitude do jitter.
+
+Em DACs modernos, o jitter efetivo costuma estar na faixa de picossegundos a poucas dezenas de picossegundos, e seus produtos ficam bem abaixo de −110 dB. Estudos de audibilidade (como os de Ashihara e colegas) encontraram limiares de detecção de jitter aleatório na ordem de centenas de nanossegundos com música — milhares de vezes maiores que os valores de equipamentos atuais. Jitter foi um problema real em alguns equipamentos antigos; hoje, raramente é um fator.
+
+## O que diferencia um DAC de outro, de verdade
+
+Para a maioria dos DACs integrados atuais, o conversor em si é muito melhor que o necessário. As diferenças audíveis entre fontes, quando existem, quase sempre vêm de outro lugar:
+
+- **O estágio de saída (amplificador):** impedância de saída, tensão máxima, ruído de fundo e distorção sob carga. Veja [amplificadores](/eletronica/amplificadores) e [potência](/eletronica/potencia-e-sensibilidade).
+- **Implementação:** alimentação ruidosa, interferência de USB ou do celular, aterramento mal resolvido (zumbidos e chiados).
+- **Volume:** diferenças de nível em comparações não controladas.
+- **Processamento:** EQ, “melhorias” de som ou volume digital em 16 bits sem dither.
+
+<References>
+  <Ref>Pohlmann, K. C. <em>Principles of Digital Audio</em>. 6ª ed. McGraw-Hill, 2010.</Ref>
+  <Ref>Watkinson, J. <em>The Art of Digital Audio</em>. 3ª ed. Focal Press, 2001.</Ref>
+  <Ref>Candy, J. C.; Temes, G. C. (orgs.). <em>Oversampling Delta-Sigma Data Converters</em>. IEEE Press, 1992.</Ref>
+  <Ref>Ashihara, K.; Kiryu, S.; Koizumi, N.; Nishimura, A.; Ohga, J.; Sawaguchi, M.; Yoshikawa, S. “Detection threshold for distortions due to jitter on digital audio.” <em>Acoustical Science and Technology</em>, 26(1), 50–54, 2005.</Ref>
+  <Ref>Dunn, J. “Jitter theory.” Audio Precision Technote TN-23, 2000.</Ref>
+</References>

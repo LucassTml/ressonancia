@@ -1,0 +1,66 @@
+<Lead>
+Você tem um IEM e algum dinheiro para melhorar o som. Compra um DAC/amp? Um dongle? Ou instala um equalizador gratuito? As três opções resolvem problemas diferentes — e saber qual problema você tem é o que separa um upgrade real de um gasto sem efeito.
+</Lead>
+
+## O que cada opção muda
+
+**Um DAC/amp (ou dongle)** substitui a conversão e a amplificação da sua fonte atual. Ele muda o som **somente se a fonte atual tiver uma limitação**:
+
+- tensão insuficiente (volume baixo ou picos distorcidos);
+- impedância de saída alta (que altera a resposta de IEMs com impedância variável);
+- ruído de fundo audível (chiado com IEMs sensíveis);
+- defeitos de implementação (interferência, zumbido, problemas de volume digital).
+
+Se a fonte atual não tem nenhum desses problemas com o seu IEM, ela já é **transparente** para ele, e um DAC/amp mais caro não tem o que melhorar. Diferenças de DAC entre dispositivos competentes estão muito abaixo dos limiares de audibilidade (veja [DACs](/eletronica/dac-e-adc) e [medidas de desempenho](/eletronica/medidas-de-desempenho)).
+
+**A equalização** muda a **resposta em frequência** — o fator que mais determina o som do fone. Ela transforma o equilíbrio tonal, corrige ressonâncias e aproxima o fone da sua preferência. Não resolve falta de tensão, ruído ou impedância de saída (e um reforço por EQ pode até piorar a falta de tensão).
+
+Em outras palavras: **o amplificador é responsável por entregar o sinal sem alterá-lo; a EQ é responsável por alterá-lo do jeito que você quer.** São ferramentas complementares, não concorrentes.
+
+## Diagnóstico: qual problema eu tenho?
+
+| Sintoma | Causa provável | Solução |
+| --- | --- | --- |
+| Volume máximo baixo, ou distorção nos picos | Tensão insuficiente | Fonte com mais tensão (dongle de 1–2 V, saída balanceada) |
+| Chiado em silêncio ou entre faixas | Ruído da fonte + IEM sensível | Fonte mais silenciosa, modo de ganho baixo |
+| Som diferente (mais escuro/brilhante) só em certas fontes, com IEM multi-BA | Impedância de saída alta | Fonte com impedância de saída &lt; 1–2 Ω |
+| Zumbido, ruído de interferência ao carregar o celular | Problemas de aterramento/alimentação | Outra fonte, isolador, bateria |
+| Grave de mais/de menos, agudos agressivos, vozes recuadas | Resposta em frequência do IEM | **EQ** (ou outro IEM) |
+| Grave some e volta, varia ao mastigar | Vedação | **Ponteiras** |
+| Incômodo após 30 minutos | Conforto/encaixe | Ponteiras, outro IEM |
+
+## Quando um dongle simples basta
+
+Use a [calculadora de potência](/eletronica/potencia-e-sensibilidade). Para um IEM típico (100–125 dB/V), atingir 100 dB SPL de pico exige entre 0,06 e 1 V. Praticamente qualquer dongle USB-C bem projetado entrega 1 a 2 V com impedância de saída abaixo de 1–2 Ω e ruído baixo. Para quase todos os IEMs, um dongle competente é **tudo o que se precisa** em termos de fonte — e muitas saídas P2 de celulares e notebooks também servem.
+
+<Lab id="power" />
+
+## Quando faz sentido algo mais
+
+- **IEMs de baixa sensibilidade** (alguns planares e dinâmicos abaixo de ~95 dB/V), se você ouve alto ou com música muito dinâmica.
+- **IEMs muito sensíveis com fontes ruidosas**: aqui, o upgrade é para uma fonte mais **silenciosa**, não mais potente.
+- **IEMs multi-BA com fonte de impedância de saída alta**: o laboratório abaixo mostra a magnitude do efeito.
+- **Headphones** de alta impedância ou planares de baixa sensibilidade: o caso clássico para amplificadores dedicados.
+
+<Lab id="output-impedance" />
+
+## A ordem que dá mais resultado
+
+Para a maioria das pessoas com um IEM razoável, a sequência de melhorias com maior impacto por custo é:
+
+1. **Ponteiras** que vedem e sejam confortáveis (custo baixo, impacto enorme nos graves e na consistência).
+2. **Equalização** para ajustar o equilíbrio ao seu gosto (custo zero, impacto grande na tonalidade). Veja [sua curva de preferência](/resposta/sua-curva) e [os limites da EQ](/processamento/limites-da-eq).
+3. **Um dongle competente**, se a sua fonte atual tiver alguma das limitações acima (custo baixo a moderado).
+4. **Outro IEM**, se o problema for conforto, isolamento, distorção ou uma resposta muito distante do que você quer (a EQ resolve muito, mas não tudo).
+
+DAC/amps de mesa caros, cabos de upgrade e fontes “audiófilas” raramente aparecem nessa lista para IEMs — não porque sejam ruins, mas porque, na maioria dos casos, não há problema para eles resolverem.
+
+<Callout type="nota" title="EQ no software ou no hardware?">
+EQ por software (Equalizer APO, Wavelet etc.) é gratuito e muito flexível, mas só vale no dispositivo onde está instalado. Dongles e DAC/amps com **EQ paramétrico embutido** guardam a curva no próprio aparelho e a aplicam com qualquer fonte (celular, notebook, console). Em termos de qualidade, ambos são equivalentes quando bem implementados — a diferença é de conveniência.
+</Callout>
+
+<References>
+  <Ref>Self, D. <em>Audio Power Amplifier Design</em>. 6ª ed. Focal Press, 2013.</Ref>
+  <Ref>Olive, S. E.; Welti, T.; McMullin, E. “A virtual headphone listening test methodology.” AES 51st International Conference, 2013.</Ref>
+  <Ref>IEC 60268-7:2010. Headphones and earphones.</Ref>
+</References>

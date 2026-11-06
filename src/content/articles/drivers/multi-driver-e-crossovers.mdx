@@ -1,0 +1,67 @@
+<Lead>
+IEMs anunciam “4 BA + 1 DD”, “tribrid”, “12 drivers por lado”. A ideia é intuitiva: dividir o espectro entre especialistas. Mas cada driver adicional cria uma nova interface onde sons de origens diferentes precisam se somar corretamente — e é aí, nos crossovers, que muitos projetos ganham ou perdem.
+</Lead>
+
+## Por que dividir o espectro
+
+Nenhum transdutor é ideal em toda a faixa audível. Um driver grande desloca muito ar (bom para graves), mas tende a ter modos de ruptura nos agudos. Um driver pequeno e leve vai bem nos agudos, mas desloca pouco ar. Balanced armatures, em particular, são naturalmente especializados (veja [balanced armature](/drivers/balanced-armature)). Dividir o trabalho permite que cada driver opere onde é bom — com menos excursão, menos distorção e menos ressonâncias na faixa que lhe cabe.
+
+Isso dá origem a configurações como:
+
+- **Multi-BA:** dois ou mais balanced armatures (por exemplo, graves, médios e agudos).
+- **Híbrido:** um driver dinâmico para graves e BAs para médios e agudos.
+- **Tribrid:** dinâmico + BA + eletrostático (ou piezo, ou planar) — três tecnologias.
+- **Drivers duplos ou em paralelo:** dois drivers idênticos tocando a mesma faixa, geralmente para aumentar a sensibilidade ou reduzir a distorção.
+
+## O crossover
+
+Um **crossover** é o conjunto de filtros que entrega a cada driver sua parte do espectro: um **passa-baixas** para o driver de graves, um **passa-altas** para o de agudos e, nos sistemas de três vias, um **passa-faixa** para os médios. A frequência em que um driver “passa o bastão” ao outro é a **frequência de corte** (ou de cruzamento).
+
+Em IEMs, crossovers são de três tipos, frequentemente combinados:
+
+- **Elétricos (passivos):** resistores, capacitores e indutores minúsculos numa placa dentro do IEM. Um capacitor em série com um BA de agudos, por exemplo, forma um passa-altas de primeira ordem. Indutores ocupam espaço, então filtros de ordem alta são raros.
+- **Acústicos:** tubos, dampers e câmaras que filtram mecanicamente. Um tubo longo e estreito com damper atenua agudos; um driver de agudos posicionado perto do bocal, sem tubo, os preserva.
+- **Naturais:** a própria resposta do driver, que já cai fora da sua faixa.
+
+## A soma é o que importa
+
+O ouvido não recebe as saídas separadas: recebe a **soma das pressões** de todos os drivers no tímpano, cada uma com sua magnitude e sua **fase**. Na região de cruzamento, os dois drivers tocam juntos, e a forma como se somam depende da relação de fase entre eles — exatamente o fenômeno de [interferência](/fundamentos/fase-e-interferencia).
+
+Filtros não alteram só a magnitude; eles também atrasam o sinal de forma dependente da frequência. Um passa-baixas e um passa-altas de segunda ordem, por exemplo, ficam **180° defasados** no ponto de corte: somados com a mesma polaridade, cancelam-se. Por isso, em certos tipos de crossover, a polaridade de um dos drivers é invertida de propósito.
+
+Explore no laboratório: escolha o tipo de crossover, mude a polaridade, o nível e o atraso do tweeter, e veja (e ouça) a soma.
+
+<Lab id="crossover" />
+
+Os tipos clássicos se comportam assim:
+
+| Tipo | Inclinação | Comportamento da soma |
+| --- | --- | --- |
+| 1ª ordem (Butterworth) | 6 dB/oit. | Plana em magnitude; grande sobreposição entre drivers |
+| Butterworth 2ª ordem | 12 dB/oit. | Pico de +3 dB com polaridade invertida; vale profundo sem inversão |
+| Linkwitz-Riley 2ª ordem | 12 dB/oit. | Plana com polaridade invertida |
+| Linkwitz-Riley 4ª ordem | 24 dB/oit. | Plana com mesma polaridade; transição rápida |
+
+### Geometria e atraso
+
+Em caixas acústicas, a distância entre os drivers e o ouvinte é diferente para cada driver, o que adiciona atraso. Em IEMs, as distâncias são milimétricas, mas os **caminhos acústicos** podem diferir bastante: um BA de graves no fundo da carcaça com um tubo longo e um BA de agudos junto ao bocal chegam ao tímpano com dezenas de microssegundos de diferença. Na região de cruzamento, isso basta para criar picos e vales. Experimente um atraso de 50 a 100 µs no laboratório.
+
+## Mais drivers não significam mais qualidade
+
+Cada driver adicional traz novas regiões de cruzamento, novas tolerâncias de fabricação, novas ressonâncias de tubos e mais variação de impedância. Um IEM com um único driver dinâmico bem afinado pode ter uma resposta mais suave e coerente do que um IEM de oito drivers mal resolvidos.
+
+<Callout type="mito" title="“Quanto mais drivers, mais detalhe”">
+Não existe relação direta entre contagem de drivers e qualidade sonora. O que se ouve é a pressão final no tímpano: resposta em frequência, distorção, igualdade entre canais. Drivers adicionais podem ajudar a reduzir distorção ou a estender os agudos, mas também criam mais oportunidades de erro. Em muitos casos, a quantidade de drivers é usada principalmente como argumento de marketing — e o preço acompanha a contagem, não o desempenho.
+</Callout>
+
+Há, sim, situações em que mais drivers ajudam: dois BAs de graves em paralelo produzem mais pressão com menos excursão cada, reduzindo distorção; um tweeter dedicado pode estender a resposta acima de 15 kHz que um driver dinâmico mais pesado não alcança. O ponto é que a vantagem tem de ser demonstrada **na medição e na escuta**, não deduzida da ficha técnica.
+
+## Impedância de sistemas multi-driver
+
+Com crossovers passivos, a impedância vista pelo amplificador é a combinação das impedâncias dos drivers e dos componentes de filtro, e pode variar de, por exemplo, 5 Ω numa região a 40 Ω em outra. Fontes com impedância de saída alta alteram a resposta desses IEMs de forma audível. Esse efeito é calculado em [sensibilidade, potência e impedância de saída](/eletronica/potencia-e-sensibilidade).
+
+<References>
+  <Ref>Linkwitz, S. H. “Active crossover networks for noncoincident drivers.” <em>Journal of the Audio Engineering Society</em>, 24(1), 2–8, 1976.</Ref>
+  <Ref>Dickason, V. <em>The Loudspeaker Design Cookbook</em>. 7ª ed. Audio Amateur Press, 2006.</Ref>
+  <Ref>Small, R. H. “Constant-voltage crossover network design.” <em>Journal of the Audio Engineering Society</em>, 19(1), 12–19, 1971.</Ref>
+</References>

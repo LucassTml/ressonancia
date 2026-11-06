@@ -1,0 +1,58 @@
+<Lead>
+Se a amostragem decide até que frequência um sinal digital chega, a quantização decide quão baixo é o seu ruído de fundo. Bits não são “resolução de degraus” no sentido intuitivo: são decibéis de faixa dinâmica. E, por um dos resultados mais elegantes do processamento de sinais, adicionar um pouco de ruído pode tornar a representação de um sinal mais fiel.
+</Lead>
+
+## Quantizar é arredondar
+
+Cada amostra precisa ser guardada como um número com uma quantidade finita de bits. Com $N$ bits, há $2^N$ valores possíveis: 65 536 com 16 bits, cerca de 16,8 milhões com 24 bits. **Quantizar** é arredondar cada amostra ao valor representável mais próximo. A diferença entre o valor verdadeiro e o arredondado é o **erro de quantização**, que fica sempre entre −½ e +½ do menor passo (o *LSB*, *least significant bit*).
+
+## Bits são faixa dinâmica
+
+Se o erro de quantização se comporta como um ruído aleatório uniforme — o que é uma boa aproximação para sinais complexos, e passa a ser rigorosamente verdade com dither —, sua potência é constante e conhecida. A razão entre uma senoide de escala cheia e esse ruído é
+
+$$
+\text{SNR} \approx 6{,}02\,N + 1{,}76\ \text{dB}
+$$
+
+Cada bit acrescenta ~6 dB de faixa dinâmica. **16 bits ≈ 98 dB; 24 bits ≈ 146 dB.** O número de bits não muda a “precisão da forma de onda” de um sinal forte de modo audível: muda **quão baixo está o ruído de fundo**. Um sinal digital de 16 bits é, em termos práticos, o sinal original mais um ruído branco muito baixo — 98 dB abaixo do máximo.
+
+Para comparar: a faixa dinâmica de uma sala silenciosa até o limiar da dor é de ~100–120 dB, mas nenhuma música usa isso; gravações com 60 dB de faixa dinâmica efetiva já são muito dinâmicas. 16 bits bem utilizados cobrem a reprodução com folga. 24 bits são valiosos na **gravação e na produção**, onde dão margem para níveis imprecisos e para o acúmulo de processamentos.
+
+## Quando o erro deixa de ser ruído
+
+A aproximação “erro = ruído aleatório” falha justamente onde mais importa: em **sinais muito baixos**, comparáveis a poucos LSB. Imagine uma senoide com amplitude de 1,5 LSB. Quantizada sem cuidado, ela vira uma forma de onda quadrada grosseira: o erro não é aleatório, é **correlacionado** com o sinal, e aparece como **harmônicos** — distorção. Um sinal com menos de ½ LSB simplesmente desaparece.
+
+Isso acontece na prática: no decaimento de uma nota de piano, num fade-out, na reverberação no fim de uma faixa, ou quando um volume digital reduz muito o sinal em 16 bits. O resultado soa áspero e “granulado”.
+
+## Dither: ruído que conserta
+
+A solução, formalizada por Lipshitz, Wannamaker e Vanderkooy (1992), é adicionar **antes** da quantização um pequeno ruído aleatório — o **dither**. Com um dither de densidade de probabilidade triangular (**TPDF**) de ±1 LSB:
+
+- o erro de quantização se torna **estatisticamente independente** do sinal;
+- a distorção desaparece por completo, substituída por um ruído constante, sem relação com a música;
+- sinais **menores que 1 LSB** continuam presentes no resultado, em média, e audíveis sob o ruído.
+
+O preço é um aumento pequeno do ruído de fundo (cerca de 4,8 dB em relação ao erro de quantização puro). É uma troca excelente: o ouvido tolera muito bem um chiado constante e muito baixo, e muito mal uma distorção que acompanha o sinal.
+
+<Lab id="quantization" />
+
+### Noise shaping
+
+Uma extensão do dither é o **noise shaping**: usar realimentação do erro para redistribuir o ruído pelo espectro, empurrando-o para regiões onde a audição é menos sensível (acima de ~15 kHz) e reduzindo-o na região de 2 a 5 kHz. Bem feito, isso aumenta a faixa dinâmica **percebida** de um sinal de 16 bits para algo equivalente a 18–20 bits. O mesmo princípio, levado ao extremo, é o que os conversores sigma-delta e o formato DSD fazem.
+
+## Onde a quantização aparece na prática
+
+- **Ao converter de 24 para 16 bits** (masterização para CD, por exemplo): deve-se aplicar dither.
+- **Ao aplicar ganho ou EQ em ponto fixo**: cada operação pode exigir nova requantização. Sistemas modernos processam em ponto flutuante de 32 ou 64 bits, o que torna o erro desprezível até a conversão final.
+- **Volume digital**: em sistemas de 24 bits ou ponto flutuante, reduzir 30 ou 40 dB digitalmente não causa problema audível; o limite prático é o ruído do DAC. Em sistemas antigos de 16 bits sem dither, grandes atenuações podiam degradar sinais baixos.
+
+<Callout type="chave">
+**Taxa de amostragem determina a largura de banda; bits determinam o ruído de fundo.** Nenhum dos dois cria “degraus” na saída de um sistema bem projetado. 44,1 kHz / 16 bits com dither cobre a audição humana em faixa e dinâmica para reprodução; formatos maiores dão margem na produção.
+</Callout>
+
+<References>
+  <Ref>Lipshitz, S. P.; Wannamaker, R. A.; Vanderkooy, J. “Quantization and dither: a theoretical survey.” <em>Journal of the Audio Engineering Society</em>, 40(5), 355–375, 1992.</Ref>
+  <Ref>Vanderkooy, J.; Lipshitz, S. P. “Resolution below the least significant bit in digital systems with dither.” <em>Journal of the Audio Engineering Society</em>, 32(3), 106–113, 1984.</Ref>
+  <Ref>Gerzon, M. A.; Craven, P. G. “Optimal noise shaping and dither of digital signals.” AES 87th Convention, 1989.</Ref>
+  <Ref>Watkinson, J. <em>The Art of Digital Audio</em>. 3ª ed. Focal Press, 2001.</Ref>
+</References>

@@ -1,0 +1,100 @@
+<Lead>
+O ouvido é um instrumento de engenharia notável: capta variações de pressão menores que um bilionésimo da atmosfera, transfere essa energia do ar para um líquido quase sem perdas, decompõe o som em frequências e o converte em impulsos elétricos — tudo num volume menor que uma bolinha de gude. Entender cada estágio explica muito do que ouvimos, e do que um fone precisa entregar.
+</Lead>
+
+## Três estágios, três problemas físicos
+
+É costume dividir o ouvido em **externo**, **médio** e **interno**. Mais útil do que decorar nomes é ver cada parte como a solução para um problema físico diferente:
+
+1. **Ouvido externo** (pina e canal auditivo): coletar o som e transformá-lo de modo dependente da direção — e amplificar a faixa onde está a informação da fala.
+2. **Ouvido médio** (tímpano e ossículos): transferir energia de um meio leve e compressível (o ar) para um meio denso e quase incompressível (o líquido da cóclea), algo que, sem ajuda, desperdiçaria quase toda a energia.
+3. **Ouvido interno** (cóclea): separar as frequências, amplificar sons fracos, comprimir sons fortes e transformar movimento em sinais nervosos.
+
+## Ouvido externo: um filtro acústico com assinatura pessoal
+
+A **pina** — a parte visível da orelha — não é um funil passivo. Suas dobras (hélice, antélice, trago, concha) refletem e difratam o som de formas que dependem da direção de chegada, criando padrões de picos e vales no espectro, principalmente acima de 4–5 kHz. O cérebro aprende esses padrões e os usa para localizar sons, sobretudo em elevação e para distinguir frente de trás.
+
+O **canal auditivo** é um tubo de cerca de 7 mm de diâmetro e 25 mm de comprimento, ligeiramente curvo, fechado pelo tímpano. Como vimos em [fase e interferência](/fundamentos/fase-e-interferencia), um tubo fechado numa ponta ressoa quando seu comprimento vale um quarto do comprimento de onda — cerca de 3 kHz para um canal típico. Junto com a ressonância da concha (perto de 5 kHz), isso cria um ganho de 15 a 20 dB entre o campo sonoro e o tímpano na região de 2 a 5 kHz. Esse é o **pinna gain**, tão importante para o entendimento de fones que tem um [artigo próprio](/percepcao/pinna-gain).
+
+Repare que o ouvido externo já faz uma “equalização” antes de qualquer processamento neural: ele reforça justamente as frequências que carregam a inteligibilidade da fala. Ouvimos o mundo inteiro, a vida inteira, através desse filtro — e o cérebro o considera “neutro”.
+
+## Ouvido médio: um transformador de impedância
+
+Quando uma onda sonora no ar encontra a superfície da água, cerca de 99,9% da energia é refletida. A razão é o descasamento de [impedância acústica](/fundamentos/o-que-e-som): a água tem impedância cerca de 3 600 vezes maior que o ar. Se o tímpano empurrasse diretamente o líquido da cóclea, perderíamos uns 30 dB de sensibilidade.
+
+O ouvido médio resolve isso com dois mecanismos mecânicos, exatamente como um transformador elétrico casa impedâncias:
+
+- **Razão de áreas.** O tímpano tem área efetiva de ~55 mm²; a base do estribo, que empurra a janela oval da cóclea, tem ~3,2 mm². A mesma força concentrada numa área ~17 vezes menor produz uma pressão ~17 vezes maior.
+- **Alavanca dos ossículos.** Martelo, bigorna e estribo formam uma alavanca com vantagem mecânica de cerca de 1,3.
+
+Multiplicando, o ganho de pressão é da ordem de 17 × 1,3 ≈ 22 vezes, ou cerca de **27 dB**. Medições reais mostram um ganho menor e dependente da frequência, máximo por volta de 1 kHz, mas o princípio é esse: o ouvido médio é um casador de impedância que recupera a maior parte da energia que seria refletida.
+
+Dois detalhes adicionais têm consequências práticas:
+
+**A tuba auditiva (trompa de Eustáquio)** liga o ouvido médio à garganta e equaliza a pressão estática. Quando ela não abre (num avião, num resfriado), a diferença de pressão tensiona o tímpano e a audição fica abafada. Algo parecido, em escala minúscula, ocorre ao inserir um IEM rapidamente: o ar empurrado para dentro do canal pressiona o tímpano, e alguns IEMs dinâmicos com pouca ventilação sofrem com isso (o *driver flex*, discutido em [construção acústica](/drivers/construcao-acustica)).
+
+**O reflexo acústico.** Sons muito intensos (acima de ~80–90 dB SPL) disparam a contração dos músculos estapédio e tensor do tímpano, que enrijecem a cadeia ossicular e atenuam sobretudo as baixas frequências em até 10–20 dB. O reflexo tem latência de dezenas de milissegundos, então não protege contra impulsos súbitos, como um estampido.
+
+## Ouvido interno: a cóclea como analisador de espectro
+
+A **cóclea** é um tubo de ~35 mm enrolado em espiral (duas voltas e meia, no ser humano), cheio de líquido e dividido longitudinalmente por estruturas membranosas. Uma delas, a **membrana basilar**, é a peça central da análise de frequências.
+
+A membrana basilar não é uniforme: perto da base (junto à janela oval) ela é estreita e rígida; perto do ápice, larga e flexível. Quando o estribo empurra o líquido, surge uma **onda viajante** ao longo da membrana. Como cada ponto tem uma rigidez e uma massa efetiva diferentes, cada ponto tem uma frequência de ressonância diferente. A onda cresce enquanto viaja, atinge o máximo no ponto cuja frequência característica corresponde à do estímulo e morre rapidamente depois. Frequências altas excitam a base; frequências baixas, o ápice. Essa organização se chama **tonotopia**, e foi descrita experimentalmente por Georg von Békésy, que recebeu o Nobel de 1961 por isso.
+
+<Lab id="cochlea" />
+
+A relação entre posição e frequência característica, em humanos, é bem descrita pela função de Greenwood:
+
+$$
+f(x) = 165{,}4 \,\bigl(10^{\,2{,}1\,x} - 0{,}88\bigr)\ \text{Hz}
+$$
+
+<Vars
+  items={[
+    ['x', 'posição ao longo da membrana basilar como fração do comprimento total, medida a partir do ápice (0 = ápice, 1 = base)'],
+    ['f(x)', 'frequência característica daquele ponto'],
+  ]}
+/>
+
+A função é quase exponencial acima de ~500 Hz: cada oitava ocupa aproximadamente a mesma extensão da membrana (cerca de 4 a 5 mm). É a base fisiológica da percepção logarítmica de frequência — e da razão pela qual gráficos de áudio usam eixos logarítmicos.
+
+### Células ciliadas: transdução e amplificação
+
+Sobre a membrana basilar fica o **órgão de Corti**, com dois tipos de células sensoriais:
+
+- **Células ciliadas internas** (~3 500 em cada ouvido, numa única fileira): são os verdadeiros receptores. Quando a membrana se move, seus feixes de estereocílios se inclinam, canais iônicos se abrem e a célula libera neurotransmissor nas fibras do nervo auditivo. Cerca de 95% das fibras aferentes vêm dessas células.
+- **Células ciliadas externas** (~12 000, em três fileiras): funcionam como **motores**. Elas mudam de comprimento em sincronia com o estímulo (eletromotilidade, graças à proteína prestina) e injetam energia mecânica na vibração da membrana, amplificando localmente os sons fracos em até 40–60 dB e tornando a sintonia muito mais aguda.
+
+Esse **amplificador coclear** é não linear: amplifica muito sons fracos e pouco sons fortes. O resultado é uma compressão enorme da faixa dinâmica — mais de 120 dB de variação de pressão comprimidos numa faixa que os neurônios conseguem codificar. Uma consequência curiosa é que a cóclea gera sons: as **emissões otoacústicas**, captadas por microfones no canal auditivo e usadas na triagem auditiva de recém-nascidos.
+
+As células ciliadas externas são também as mais vulneráveis a ruído excessivo, envelhecimento e certos medicamentos. Quando danificadas, perde-se sensibilidade e seletividade de frequência: sons fracos somem, a separação entre frequências próximas piora e o recrutamento de intensidade (sons fortes “estourando” rapidamente) aparece. Por isso perda auditiva não é apenas “ouvir mais baixo” — é ouvir **pior**, com menos resolução. Esse é o argumento mais forte para [cuidar da audição](/percepcao/saude-auditiva).
+
+## Filtros auditivos e bandas críticas
+
+Como cada ponto da membrana responde a uma faixa de frequências em torno da sua frequência característica, a cóclea funciona como um banco de filtros passa-faixa sobrepostos. A largura desses **filtros auditivos** é medida em ERB (*equivalent rectangular bandwidth*). Pela fórmula de Glasberg e Moore (1990):
+
+$$
+\text{ERB}(f) = 24{,}7\,\left(\frac{4{,}37\, f}{1000} + 1\right)\ \text{Hz}
+$$
+
+A 1 kHz, um filtro auditivo tem ~133 Hz de largura; a 4 kHz, ~456 Hz. Sons que caem dentro do mesmo filtro interagem fortemente — somam sonoridade, batem, se mascaram. Sons em filtros diferentes são processados de forma relativamente independente. Esse conceito explica [mascaramento](/percepcao/mascaramento), consonância, a eficiência dos codecs com perdas e parte do que chamamos de “separação” num fone.
+
+## Do nervo ao cérebro
+
+O nervo auditivo carrega cerca de 30 000 fibras. A informação sobre o som é codificada de duas maneiras: **qual** fibra dispara (lugar na cóclea, ou seja, frequência) e **quando** ela dispara (sincronização com a fase da onda, eficiente até ~4–5 kHz). Daí em diante, a via auditiva passa por vários núcleos no tronco encefálico — onde, por exemplo, as diferenças de tempo e nível entre os dois ouvidos são comparadas com precisão de microssegundos para a [localização](/percepcao/localizacao-espacial) — até chegar ao córtex auditivo.
+
+Ao longo desse caminho, o cérebro não “recebe” o som passivamente: ele o organiza em objetos e correntes, compara com expectativas, preenche lacunas e decide o que merece atenção. Parte do que chamamos de ouvir é inferência. Isso torna a audição extraordinariamente robusta — e também sujeita a [viés e expectativa](/ciencia/vies-e-placebo).
+
+## O que um fone precisa entregar a esse sistema
+
+Para a reprodução sonora, a lição fundamental é que **o ouvido só tem acesso à pressão no tímpano**, em cada lado, ao longo do tempo. Tudo o que ocorre antes — salas, orelhas, fones — importa apenas pelo que muda nessa pressão. Um fone que entrega no tímpano a mesma pressão que uma performance real entregaria soaria indistinguível dela. Na prática, isso é impossível de forma exata (cada orelha é diferente, e fones não reproduzem as pistas direcionais de uma sala), e é por isso que existe uma ciência inteira de [curvas-alvo](/resposta/targets-e-harman) para decidir qual pressão um fone deve produzir.
+
+<References>
+  <Ref>Pickles, J. O. <em>An Introduction to the Physiology of Hearing</em>. 4ª ed. Brill, 2012.</Ref>
+  <Ref>Greenwood, D. D. “A cochlear frequency-position function for several species — 29 years later.” <em>Journal of the Acoustical Society of America</em>, 87(6), 2592–2605, 1990.</Ref>
+  <Ref>Glasberg, B. R.; Moore, B. C. J. “Derivation of auditory filter shapes from notched-noise data.” <em>Hearing Research</em>, 47(1–2), 103–138, 1990.</Ref>
+  <Ref>von Békésy, G. <em>Experiments in Hearing</em>. McGraw-Hill, 1960.</Ref>
+  <Ref>Brownell, W. E. et al. “Evoked mechanical responses of isolated cochlear outer hair cells.” <em>Science</em>, 227(4683), 194–196, 1985.</Ref>
+  <Ref>Puria, S.; Fay, R. R.; Popper, A. N. (orgs.). <em>The Middle Ear: Science, Otosurgery, and Technology</em>. Springer, 2013.</Ref>
+  <Ref>Moore, B. C. J. <em>An Introduction to the Psychology of Hearing</em>. 6ª ed. Brill, 2012.</Ref>
+</References>

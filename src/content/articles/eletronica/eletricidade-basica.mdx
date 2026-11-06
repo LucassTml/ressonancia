@@ -1,0 +1,81 @@
+<Lead>
+Antes de discutir DACs, amplificadores e impedância de saída, vale construir do zero as quatro grandezas que aparecem em toda especificação: tensão, corrente, resistência e potência. Elas são simples, mas é nelas que nascem quase todos os mal-entendidos sobre o que um fone “precisa”.
+</Lead>
+
+## Carga, corrente e tensão
+
+A matéria contém cargas elétricas: prótons (positivos) e elétrons (negativos). Em metais, parte dos elétrons não está presa a um átomo específico e pode se mover pelo material — são os elétrons livres que tornam o cobre um bom condutor.
+
+**Corrente** é o fluxo de carga por unidade de tempo. Sua unidade é o **ampère** (A): um coulomb de carga passando por segundo. Em fones, as correntes são pequenas — tipicamente de microampères a dezenas de miliampères.
+
+**Tensão** (ou diferença de potencial) é a “pressão” que empurra as cargas: a energia que cada unidade de carga ganha ou perde ao ir de um ponto a outro. Sua unidade é o **volt** (V): um joule por coulomb. Uma pilha de 1,5 V entrega 1,5 J de energia a cada coulomb que atravessa o circuito.
+
+A analogia hidráulica é útil com moderação: tensão é como a diferença de pressão entre duas pontas de um cano, corrente é a vazão de água. Ela ajuda a intuir que sem diferença de pressão não há fluxo, e que um cano mais estreito deixa passar menos água. Ela falha em vários detalhes — eletricidade não “escorre” por gravidade, capacitores e indutores não têm análogos óbvios —, então use-a como ponto de partida, não como modelo.
+
+<Callout type="nota" title="O que realmente se move">
+Num fio de cobre com 1 A, os elétrons avançam a uma velocidade média de frações de milímetro por segundo. O que se propaga quase à velocidade da luz é o **campo elétrico** ao longo do fio — o “recado” para que todos os elétrons comecem a se mover. É por isso que o som sai do fone no mesmo instante em que o sinal é aplicado, mesmo com elétrons tão lentos.
+</Callout>
+
+## Resistência e a Lei de Ohm
+
+Os elétrons em movimento colidem com a rede atômica do material e perdem energia, que vira calor. Essa oposição ao fluxo é a **resistência**, medida em **ohms** (Ω). Para muitos materiais, num intervalo amplo de condições, a corrente é proporcional à tensão aplicada. Essa é a **Lei de Ohm**:
+
+$$
+V = R \cdot I
+$$
+
+<Vars
+  items={[
+    ['V', 'tensão aplicada, em volts'],
+    ['R', 'resistência, em ohms'],
+    ['I', 'corrente resultante, em ampères'],
+  ]}
+/>
+
+Dobre a tensão e a corrente dobra; dobre a resistência e a corrente cai pela metade. Um fone de 32 Ω com 1 V aplicado conduz 31,25 mA. O mesmo 1 V num fone de 300 Ω conduz apenas 3,3 mA.
+
+## Potência
+
+**Potência** é a taxa de transferência de energia, em **watts** (W): um joule por segundo. Num elemento resistivo, a potência dissipada é o produto da tensão pela corrente, e com a Lei de Ohm pode ser escrita de três formas equivalentes:
+
+$$
+P = V \cdot I = \frac{V^2}{R} = I^2 \cdot R
+$$
+
+Note a consequência da forma do meio: **com a mesma tensão, uma resistência menor consome mais potência**. O fone de 32 Ω com 1 V consome 31 mW; o de 300 Ω, 3,3 mW. Isso parece dizer que o fone de 32 Ω “exige mais”, mas é aqui que começa a confusão. Quanto som cada um produz com essa tensão depende da **sensibilidade** de cada um — de quão eficiente é a conversão de energia elétrica em pressão sonora. Um fone pode receber mais potência e tocar mais baixo que outro. Esse é o assunto de [sensibilidade e potência](/eletronica/potencia-e-sensibilidade).
+
+<Lab id="ohm" />
+
+## Série e paralelo
+
+Quando resistores estão **em série** (um depois do outro), a mesma corrente atravessa todos, e as resistências se somam: $R_{\text{eq}} = R_1 + R_2$. A tensão se divide entre eles proporcionalmente às resistências — o princípio do **divisor de tensão**, que reaparecerá ao estudar a impedância de saída de amplificadores.
+
+Quando estão **em paralelo** (lado a lado, ligados aos mesmos dois pontos), a tensão é a mesma em todos, as correntes se somam, e a resistência equivalente é menor que a menor delas:
+
+$$
+\frac{1}{R_{\text{eq}}} = \frac{1}{R_1} + \frac{1}{R_2}
+$$
+
+Dois fones de 32 Ω ligados à mesma saída (com um adaptador “Y”, por exemplo) formam uma carga de 16 Ω.
+
+## Corrente contínua, alternada e valor RMS
+
+Uma pilha fornece **corrente contínua** (CC): tensão constante, corrente num só sentido. Um sinal de áudio é uma **corrente alternada** (CA): a tensão oscila entre positiva e negativa, acompanhando a forma de onda do som. A média de um sinal de áudio é zero, então “a média” não serve para descrever sua intensidade.
+
+Usa-se o **valor eficaz** ou **RMS** (*root mean square*): a raiz quadrada da média dos quadrados do sinal. Ele tem um significado físico preciso: uma tensão alternada de 1 V RMS dissipa num resistor exatamente a mesma potência que 1 V contínuo. Para uma senoide, $V_{\text{rms}} = V_{\text{pico}}/\sqrt{2}$. Especificações de áudio (tensão de saída, sensibilidade em dB/V, potência) referem-se, salvo indicação, a valores RMS.
+
+## Por que isso importa para fones
+
+Com essas quatro grandezas, já é possível desfazer algumas confusões:
+
+- **“Potência do amplificador”** é apenas parte da história. Um fone precisa de **tensão** suficiente para atingir um nível sonoro (segundo sua sensibilidade em dB/V), e o amplificador precisa ser capaz de fornecer a **corrente** que essa tensão vai puxar da carga.
+- **Impedância nominal** não diz se um fone é “fácil de tocar”. Ela diz quanta corrente uma dada tensão vai exigir.
+- **Fones de baixa impedância** são exigentes em corrente; **fones de alta impedância**, em tensão. Fones de alta sensibilidade (IEMs) precisam de pouco de ambos.
+
+Mas fones não são resistores puros: sua oposição à corrente muda com a frequência. Esse é o próximo passo — [corrente alternada e impedância](/eletronica/corrente-alternada-e-impedancia).
+
+<References>
+  <Ref>Horowitz, P.; Hill, W. <em>The Art of Electronics</em>. 3ª ed. Cambridge University Press, 2015. Capítulo 1.</Ref>
+  <Ref>Halliday, D.; Resnick, R.; Walker, J. <em>Fundamentos de Física</em>, vol. 3 (Eletromagnetismo). LTC.</Ref>
+  <Ref>Feynman, R. P.; Leighton, R. B.; Sands, M. <em>The Feynman Lectures on Physics</em>, vol. II. Addison-Wesley, 1964.</Ref>
+</References>

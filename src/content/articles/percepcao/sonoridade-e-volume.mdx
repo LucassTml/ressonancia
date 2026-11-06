@@ -1,0 +1,87 @@
+<Lead>
+Volume parece a coisa mais simples do áudio: um botão que deixa tudo mais alto ou mais baixo. Mas a audição não escala todas as frequências por igual. Mudar o volume muda o equilíbrio tonal que você percebe, muda o que você consegue ouvir e, principalmente, muda o que você julga. Este artigo responde a uma pergunta que quase ninguém faz e todos deveriam: até onde o volume importa?
+</Lead>
+
+## Intensidade física e sonoridade percebida
+
+O nível de pressão sonora (dB SPL) é uma grandeza física. A **sonoridade** (*loudness*) é a sensação de intensidade — uma grandeza perceptiva. As duas estão relacionadas, mas não de forma simples: a sonoridade depende da frequência, da largura de banda, da duração do som e do estado do ouvido.
+
+Em 1933, Harvey Fletcher e Wilden Munson, nos Bell Labs, pediram a ouvintes que ajustassem o nível de tons de várias frequências até que soassem tão altos quanto um tom de referência de 1 kHz. Ligando os pontos de igual sensação, obtiveram as primeiras **curvas de igual sonoridade**. Elas foram refinadas por Robinson e Dadson nos anos 1950 e padronizadas na **ISO 226**, cuja edição de 2003 se baseia num grande esforço internacional coordenado por Suzuki e Takeshima, com uma revisão menor em 2023.
+
+A unidade dessas curvas é o **fon**: um som tem N fons se soa tão alto quanto um tom de 1 kHz a N dB SPL. Por definição, as curvas passam por N dB em 1 kHz. Em outras frequências, revelam o quanto a audição é mais ou menos sensível.
+
+<Lab id="loudness" />
+
+## O que as curvas mostram
+
+Três características saltam aos olhos.
+
+**A audição é muito pouco sensível aos graves.** Na curva de 40 fons, um tom de 50 Hz precisa de cerca de 64 dB SPL para soar tão alto quanto 40 dB a 1 kHz — 24 dB a mais. Em 20 Hz, a diferença passa de 55 dB.
+
+**A região de 2 a 5 kHz é a mais sensível.** As curvas mergulham abaixo do nível de 1 kHz nessa região, refletindo o [pinna gain](/percepcao/pinna-gain) e a eficiência do ouvido médio. Um pequeno excesso aqui é muito audível.
+
+**As curvas se achatam em níveis altos.** Este é o ponto mais importante para a escuta. A diferença entre a sensibilidade aos graves e a sensibilidade em 1 kHz diminui à medida que o nível sobe: as curvas “se juntam” nos graves. Na prática, isso significa que, nos graves, **poucos decibéis de diferença física correspondem a uma grande diferença de sonoridade**. Se você abaixa o volume em 20 dB, os médios perdem 20 fons de sonoridade, mas os graves perdem mais — eles parecem “sumir”.
+
+### Fons e sones
+
+O fon resolve a dependência de frequência, mas não diz quanto algo soa “duas vezes mais alto”. Para isso, S. S. Stevens propôs o **sone**: 1 sone é a sonoridade de um tom de 1 kHz a 40 dB SPL, e cada aumento de ~10 fons dobra a sonoridade em sones. Uma conversa (60 fons) tem ~4 sones; um show (100 fons), ~64. Essa relação vale para níveis moderados e altos.
+
+### Sonoridade de sons complexos
+
+Sons de banda larga soam mais altos que tons puros de mesma energia, porque a energia se espalha por mais [filtros auditivos](/percepcao/mascaramento) e a sonoridade total é aproximadamente a soma das sonoridades em cada banda. Por isso modelos de loudness como o de Zwicker (ISO 532-1) ou o de Moore-Glasberg (ISO 532-2) calculam a sonoridade por banda crítica. Medidores de loudness para broadcast e streaming, como o **LUFS** da ITU-R BS.1770, usam uma aproximação mais simples — um filtro de ponderação K e uma média de energia —, suficientemente boa para normalizar músicas (veja [loudness e resampling](/digital/loudness-e-resampling)).
+
+## Até onde o volume importa?
+
+Agora podemos responder com precisão. O volume importa de cinco maneiras distintas, e cada uma tem um limite diferente.
+
+### 1. Ele muda o equilíbrio tonal percebido
+
+Música é mixada e masterizada em estúdio, tipicamente entre 79 e 85 dB SPL. Quando você ouve bem mais baixo, as curvas de igual sonoridade preveem que os graves (e, em menor grau, os agudos extremos) soarão relativamente mais fracos do que o engenheiro ouviu. Use a aba “Volume e equilíbrio” do laboratório: ouvindo 25 dB abaixo do nível de referência, a ISO 226 prevê que seria necessário reforçar os graves em vários decibéis em 50 Hz para manter o mesmo equilíbrio percebido.
+
+Consequência prática: **o equilíbrio de graves “certo” de um fone depende do volume em que você ouve**. As curvas preveem que quem escuta baixo precise de mais grave para obter o mesmo equilíbrio percebido — uma das várias razões plausíveis para a grande dispersão de preferências de graves observada em estudos com fones (que também dependem de idade, experiência e gosto). Alguns reprodutores e sistemas oferecem *loudness compensation* — um EQ que se ajusta automaticamente ao volume, como o laboratório demonstra. Ele é tecnicamente bem fundamentado, ainda que pouco comum em fones.
+
+### 2. Ele muda o que você julga — “mais alto parece melhor”
+
+Este é o efeito mais traiçoeiro. Quando dois sons idênticos são apresentados com uma pequena diferença de nível, o mais alto tende a ser descrito como mais detalhado, mais encorpado, mais claro, com mais grave e mais “presença” — e raramente como “mais alto”. Diferenças de 0,5 a 1 dB, abaixo do que muitas pessoas identificariam conscientemente como diferença de volume, bastam para enviesar comparações.
+
+Por isso as recomendações para testes de audição de pequenas diferenças, como a ITU-R BS.1116, exigem compatibilização cuidadosa de nível, e a prática em testes de equipamentos é igualar os níveis com diferença inferior a **0,1–0,2 dB**. Qualquer comparação entre fones, DACs ou amplificadores sem esse cuidado mede principalmente a diferença de volume. Veja [comparar IEMs com honestidade](/iems/comparando-iems).
+
+### 3. Ele determina quais detalhes ficam acima do limiar
+
+Uma gravação contém informações em níveis muito baixos: reverberação da sala, decaimento de notas, respiração, ruídos de dedos nas cordas. Se o volume é baixo demais, essas informações ficam abaixo do limiar de audição ou mascaradas pelo ruído ambiente. Aumentar o volume as traz para cima do limiar — e isso é percebido, legitimamente, como “mais detalhe”. É um dos motivos de IEMs com bom isolamento parecerem mais detalhados no ônibus: eles reduzem o ruído que mascara, sem exigir volume alto.
+
+### 4. Acima de certo ponto, ele piora o que você ouve
+
+O ganho de detalhe com o volume não continua indefinidamente. Em níveis altos:
+
+- O **mascaramento se espalha** mais para as frequências acima do mascarador; graves intensos escondem mais médios.
+- O **reflexo acústico** começa a atuar acima de ~80–90 dB SPL, atenuando graves de forma variável.
+- A **distorção dos transdutores** cresce, especialmente em graves com grande deslocamento.
+- A **fadiga auditiva** e o **deslocamento temporário de limiar** (TTS) reduzem a sensibilidade depois de algum tempo — você aumenta o volume para compensar, e o ciclo se repete.
+
+Há, portanto, uma faixa ótima: alta o bastante para que os detalhes fiquem acima do ruído e do limiar, baixa o bastante para não comprimir a percepção nem cansar. Para a maioria das pessoas em ambiente silencioso, isso fica em torno de 65 a 80 dB SPL de nível médio.
+
+### 5. Ele determina o risco à audição
+
+A dose de exposição depende de nível e tempo, com uma regra de troca de 3 dB: a cada +3 dB, metade do tempo seguro. Ouvir a 94 dB(A) por uma hora equivale, em dose, a 85 dB(A) por oito horas. Esse tema tem um artigo próprio em [saúde auditiva](/percepcao/saude-auditiva).
+
+<Callout type="chave" title="Resumo prático">
+- Ao **comparar** fones ou equipamentos, iguale o volume com precisão de ~0,1–0,2 dB, medindo — não confie no ouvido.
+- Ao **escolher** a quantidade de graves de um fone, considere o volume em que você costuma ouvir: quem ouve baixo geralmente prefere mais grave.
+- Ao **ouvir**, prefira o nível mais baixo em que a música soa completa. Mais isolamento (melhor vedação) permite volumes menores.
+- Uma vez compatibilizado o nível e dentro da faixa confortável, pequenas variações de volume deixam de ser o fator dominante — e o que sobra são as diferenças reais entre os sistemas.
+</Callout>
+
+## Volume digital, analógico e perda de resolução
+
+Uma preocupação comum é se reduzir o volume no computador (digitalmente) “perde bits”. Em sistemas que processam em ponto flutuante ou em 24/32 bits — a regra hoje —, uma atenuação digital de 30 dB ainda deixa o sinal com resolução muito superior à necessária; o que limita a faixa dinâmica efetiva é o ruído do DAC e do amplificador, não a aritmética. O problema real aparece em cadeias de 16 bits com atenuações grandes e sem [dither](/digital/quantizacao-e-dither), ou quando um amplificador com muito ganho obriga a usar o volume digital quase no mínimo, trazendo o ruído de fundo para cima em relação ao sinal. Com IEMs muito sensíveis, essa é uma razão legítima para preferir fontes com ganho baixo, como veremos em [medidas de desempenho](/eletronica/medidas-de-desempenho).
+
+<References>
+  <Ref>Fletcher, H.; Munson, W. A. “Loudness, its definition, measurement and calculation.” <em>Journal of the Acoustical Society of America</em>, 5(2), 82–108, 1933.</Ref>
+  <Ref>Suzuki, Y.; Takeshima, H. “Equal-loudness-level contours for pure tones.” <em>Journal of the Acoustical Society of America</em>, 116(2), 918–933, 2004.</Ref>
+  <Ref>ISO 226:2003 e ISO 226:2023. <em>Acoustics — Normal equal-loudness-level contours</em>.</Ref>
+  <Ref>ISO 532-1:2017 (método de Zwicker) e ISO 532-2:2017 (método de Moore-Glasberg). <em>Acoustics — Methods for calculating loudness</em>.</Ref>
+  <Ref>ITU-R BS.1116-3 (2015). <em>Methods for the subjective assessment of small impairments in audio systems</em>.</Ref>
+  <Ref>ITU-R BS.1770-5 (2023). <em>Algorithms to measure audio programme loudness and true-peak audio level</em>.</Ref>
+  <Ref>Olive, S.; Welti, T.; Khonsaripour, O. “Factors that influence listeners’ preferred bass and treble balance in headphones.” AES 145th Convention, 2018.</Ref>
+</References>

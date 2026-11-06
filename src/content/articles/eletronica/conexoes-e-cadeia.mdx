@@ -1,0 +1,68 @@
+<Lead>
+Entre o arquivo de música e o seu ouvido há conectores, cabos, interfaces e, às vezes, caixas acústicas. Cada elo tem propriedades físicas bem definidas — e cada um acumula uma quantidade surpreendente de folclore. Este artigo organiza o que cada parte faz e onde estão as diferenças reais.
+</Lead>
+
+## Conectores de fone
+
+**P2 / 3,5 mm (TRS).** O padrão universal. Três contatos: ponta (*tip*, canal esquerdo), anel (*ring*, direito) e corpo (*sleeve*, terra comum aos dois canais). A versão **TRRS**, com quatro contatos, acrescenta um microfone. Pela simplicidade, o terra é **compartilhado** pelos dois canais.
+
+**P10 / 6,35 mm.** Mesma lógica do 3,5 mm, em tamanho maior e mais robusto — comum em equipamento profissional e amplificadores de mesa.
+
+**2,5 mm (TRRS balanceado).** Quatro contatos, com ida e retorno separados para cada canal. Pequeno e frágil; foi popular em reprodutores portáteis e perdeu espaço.
+
+**4,4 mm (Pentaconn).** Conector de cinco contatos padronizado no Japão (JEITA RC-8141C), com ida e retorno separados por canal e um contato de terra. Mais robusto que o de 2,5 mm, tornou-se o padrão de fato para saídas balanceadas portáteis.
+
+**XLR de 4 pinos.** Padrão balanceado de amplificadores de mesa.
+
+**Conectores do lado do IEM.** IEMs com cabo removível usam **MMCX** (coaxial com encaixe giratório) ou **2 pinos de 0,78 mm** (frequentemente com variações como o padrão “QDC”, em que os pinos ficam rebaixados). A escolha afeta durabilidade e ajuste, não o som.
+
+## O que “balanceado” significa em fones
+
+O termo vem do áudio profissional, onde uma **linha balanceada** transporta o sinal em dois condutores com polaridades opostas, e o receptor amplifica apenas a diferença entre eles. Interferências captadas ao longo do cabo aparecem igualmente nos dois condutores (modo comum) e são canceladas. Isso permite cabos de dezenas de metros em ambientes ruidosos.
+
+Em fones, “saída balanceada” geralmente significa outra coisa: cada canal é acionado por **dois amplificadores em contrafase**, um em cada terminal do driver (configuração em ponte, ou *bridge-tied load*), e não há terra comum entre os canais. As consequências reais são:
+
+- **Até o dobro da tensão** disponível (+6 dB), útil para fones difíceis de alimentar.
+- **Sem terra compartilhado**, o que elimina a diafonia causada pela resistência do condutor de retorno comum.
+- Às vezes, **mais ruído** e **impedância de saída maior**, porque há dois amplificadores em série com o fone — o que pode ser pior com IEMs sensíveis.
+
+Não há rejeição de interferência relevante, já que o cabo de fone é curto e o “receptor” é o próprio driver. As melhorias audíveis, quando existem, vêm em geral da maior tensão disponível ou de diferenças de projeto entre as duas saídas do aparelho — e não do conector em si.
+
+## Cabos
+
+Do ponto de vista elétrico, um cabo de fone é um conjunto de condutores com:
+
+- **Resistência**, tipicamente de 0,1 a 0,5 Ω por condutor em cabos de IEM. Ela age como uma impedância de saída adicional, pequena.
+- **Capacitância** entre condutores, de 50 a 150 pF por metro. Só teria efeito em frequências de megahertz.
+- **Indutância**, igualmente irrelevante nas frequências de áudio e nos comprimentos de um cabo de fone.
+
+<Lab id="cable" />
+
+Os efeitos calculáveis são, na grande maioria dos casos, centésimos de decibel na resposta e uma diafonia de −40 a −60 dB pelo terra comum — longe do audível em música. Cabos importam, sim, por motivos práticos: **conforto** e peso, **microfonia** (ruído mecânico transmitido quando o cabo raspa na roupa), **durabilidade** dos conectores e da isolação, comprimento, e compatibilidade com o conector do IEM e da fonte.
+
+<Callout type="mito" title="Cabos de prata, cobre OCC e “amaciamento”">
+Prata tem resistividade cerca de 6% menor que cobre; cobre “OCC” ou monocristalino tem menos fronteiras de grão. Nos comprimentos e correntes de um cabo de fone, essas diferenças mudam a resistência total em miliohms — efeitos dezenas de decibéis abaixo do audível. Não há mecanismo físico conhecido pelo qual um cabo “amacie” com o uso. Testes cegos controlados com cabos de fone, quando feitos, não encontram diferenças audíveis entre cabos eletricamente adequados. Se dois cabos soam diferentes, a primeira hipótese a testar é uma diferença de resistência grande (cabos muito finos e longos) com um IEM multi-BA; a segunda, a ausência de um teste cego.
+</Callout>
+
+## Interfaces digitais
+
+**USB.** O meio mais comum entre computador/celular e DAC externo. No modo assíncrono (USB Audio Class 2), o **DAC controla o relógio** e pede os dados de que precisa, de modo que o jitter do computador não chega ao conversor. Problemas reais com USB são ruído elétrico da alimentação ou do terra (zumbidos, chiados) e falhas de transmissão (estalos, cortes) — não “perda sutil de detalhe”.
+
+**S/PDIF (coaxial e óptico).** Interface de consumo em que a fonte controla o relógio; o DAC recupera o relógio a partir do sinal. DACs modernos fazem isso bem. O óptico (Toslink) isola eletricamente os aparelhos, útil contra laços de terra.
+
+**Bluetooth.** Envolve codificação com perdas e um DAC dentro do fone. Tem seu próprio artigo: [Bluetooth](/digital/bluetooth).
+
+## O resto da cadeia: interfaces, monitores e subwoofers
+
+**Interfaces de áudio** são DAC e ADC voltados à gravação: entradas de microfone com pré-amplificador e alimentação *phantom* (48 V para microfones condensadores), entradas de instrumento de alta impedância, saídas de linha balanceadas e drivers de baixa latência. Para escuta em fones, muitas têm saídas de fone competentes — mas nem sempre com impedância de saída baixa ou ruído adequado a IEMs sensíveis; vale conferir medições.
+
+**Monitores de estúdio** são caixas acústicas projetadas para resposta plana e boa dispersão, geralmente **ativas** (amplificadores e crossover dentro da caixa). A **divisão de trabalho** entre **woofer** (graves e médios-graves), **tweeter** (agudos) e, às vezes, um **driver de médios** segue a mesma lógica de [crossover](/drivers/multi-driver-e-crossovers) dos IEMs multi-driver — com a diferença de que, numa sala, a dispersão e as reflexões importam tanto quanto a resposta frontal.
+
+**Subwoofers** reproduzem a região abaixo de ~80–120 Hz. Como os comprimentos de onda nessa faixa são de vários metros, a resposta numa sala é dominada pelos **modos da sala**: posições diferentes do ouvinte e do subwoofer produzem diferenças de 10–20 dB em certas frequências. Posicionamento, múltiplos subwoofers e equalização medida na posição de escuta são as ferramentas para controlar isso. Fones, por não excitarem a sala, não têm esse problema — uma das razões pelas quais é mais fácil conseguir graves precisos em fones do que em caixas.
+
+<References>
+  <Ref>JEITA RC-8141C. <em>Plugs and jacks for audio equipment</em> (inclui o conector de 4,4 mm).</Ref>
+  <Ref>USB Implementers Forum. <em>Universal Serial Bus Device Class Definition for Audio Devices</em>, Release 2.0.</Ref>
+  <Ref>Whitlock, B. “Balanced lines in audio systems: fact, fiction, and transformers.” <em>Journal of the Audio Engineering Society</em>, 43(6), 454–464, 1995.</Ref>
+  <Ref>Toole, F. E. <em>Sound Reproduction</em>. 3ª ed. Routledge, 2017. Modos de sala e subwoofers.</Ref>
+</References>

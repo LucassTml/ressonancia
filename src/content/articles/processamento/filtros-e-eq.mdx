@@ -1,0 +1,73 @@
+<Lead>
+Equalizar é aplicar filtros ao sinal para mudar a sua resposta em frequência. Por trás dos botões “bass” e “treble” e dos aplicativos com dez barrinhas existem poucos tipos de filtro, descritos por três parâmetros — frequência, ganho e Q — e governados por uma matemática simples e exata.
+</Lead>
+
+## O que é EQ
+
+**Equalização** (EQ) é a alteração intencional da resposta em frequência de um sinal. O nome vem da telefonia do início do século XX, quando circuitos eram usados para “igualar” (compensar) as perdas de frequência de linhas longas. Hoje, a EQ serve a três objetivos diferentes:
+
+1. **Corrigir** um sistema: aproximar um fone ou uma sala de uma resposta de referência.
+2. **Ajustar ao gosto**: mais grave, menos brilho.
+3. **Criar** (na mixagem): esculpir timbres e abrir espaço entre instrumentos.
+
+Em todos os casos, a ferramenta é a mesma: filtros.
+
+## Equalizador gráfico e paramétrico
+
+Um **equalizador gráfico** tem bandas com frequências fixas (por exemplo, 10 bandas em oitavas: 31, 63, 125… 16 kHz) e largura fixa; só o ganho de cada uma é ajustável. É intuitivo — a posição dos controles desenha a curva —, mas impreciso: um problema em 7,2 kHz cai entre as bandas de 4 e 8 kHz.
+
+Um **equalizador paramétrico** (PEQ) permite ajustar livremente, em cada filtro, a **frequência**, o **ganho** e a **largura**. Com poucos filtros bem posicionados, ele faz o que um gráfico precisaria de dezenas de bandas para aproximar. É a ferramenta padrão para corrigir fones.
+
+## Os tipos de filtro
+
+Quase todo EQ digital usa **biquads**: filtros de segunda ordem definidos por cinco coeficientes. As fórmulas mais usadas para calcular esses coeficientes a partir de frequência, ganho e Q são as do *Audio EQ Cookbook*, de Robert Bristow-Johnson — as mesmas que a Web Audio API implementa, e as mesmas usadas nos laboratórios deste site.
+
+- **Peak (sino, *peaking*)**: reforça ou atenua uma faixa em torno da frequência central. O formato é simétrico em escala logarítmica. É o filtro de correção por excelência.
+- **Low shelf**: eleva ou reduz tudo abaixo de uma frequência, como um degrau. Ideal para ajustar a quantidade de graves.
+- **High shelf**: o mesmo para tudo acima de uma frequência; ideal para inclinar agudos.
+- **Passa-baixas (*low-pass*)** e **passa-altas (*high-pass*)**: deixam passar um lado e atenuam o outro, aqui com 12 dB por oitava. Servem para cortar regiões inteiras (ruído de baixa frequência, por exemplo), não para ajustes finos.
+- **Notch**: remove uma faixa estreita, profundamente (zumbidos de rede, ressonâncias muito estreitas).
+- **Passa-faixa (*band-pass*)**: deixa passar apenas uma faixa.
+
+<Lab id="filter" />
+
+## Frequência, ganho e Q
+
+A **frequência** é o centro (num peak) ou o ponto de transição (num shelf ou passa-baixas).
+
+O **ganho**, em dB, é o quanto o filtro reforça ou atenua na frequência central (num peak) ou no patamar (num shelf).
+
+O **Q** (fator de qualidade) define a largura. Para um ressonador, Q é a frequência central dividida pela largura de banda:
+
+$$
+Q = \frac{f_0}{\Delta f}
+$$
+
+Q alto significa filtro estreito; Q baixo, filtro largo. Para filtros peak, é comum traduzir Q em **largura em oitavas** ($BW$), pela relação do cookbook:
+
+$$
+BW = \frac{2}{\ln 2}\,\operatorname{arsinh}\!\left(\frac{1}{2Q}\right)
+$$
+
+Alguns valores de referência: Q = 0,7 ≈ 2 oitavas (muito largo); Q = 1,4 ≈ 1 oitava; Q = 4,3 ≈ 1/3 de oitava; Q = 10 ≈ 1/7 de oitava (bem estreito).
+
+<Callout type="atencao" title="Q não é padronizado entre programas">
+Diferentes equalizadores definem largura de formas ligeiramente diferentes (largura a −3 dB, largura à meia altura do ganho, “Q proporcional” que muda com o ganho). O mesmo filtro “Q = 2” pode ter larguras diferentes em programas diferentes. Os laboratórios deste site e o Equalizer APO seguem a definição do cookbook para filtros peak. Para shelves, este site usa a inclinação padrão da Web Audio API (S = 1, equivalente a Q ≈ 0,707).
+</Callout>
+
+## Magnitude e fase andam juntas
+
+Os biquads de EQ são filtros de **fase mínima**: sua resposta de fase é determinada pela de magnitude. Um filtro peak altera a fase só em torno da frequência onde altera o nível — ative “Mostrar fase” no laboratório para ver. Isso é exatamente o que se quer ao corrigir uma ressonância de um fone, que também é um fenômeno de fase mínima: o filtro inverso cancela tanto o pico quanto o “toque” prolongado associado a ele. Esse ponto é central para entender [o que a EQ consegue corrigir](/processamento/limites-da-eq).
+
+Existem também equalizadores de **fase linear**, que alteram a magnitude sem alterar a fase relativa entre frequências, ao custo de latência e de “pré-eco” (pre-ringing) antes de transientes. Eles são úteis em masterização e em situações específicas; para corrigir fones, os de fase mínima são, em geral, a escolha física mais coerente.
+
+## Filtros combinados
+
+Filtros em série somam suas respostas em dB. Um low shelf de +4 dB e um peak de −3 dB em 3 kHz resultam numa curva que é a soma das duas. Por isso a curva total de um EQ paramétrico é simplesmente a soma das curvas individuais — o que o próximo laboratório mostra ao vivo, em [equalizador paramétrico, preamp e clipping](/processamento/equalizador-parametrico).
+
+<References>
+  <Ref>Bristow-Johnson, R. <em>Cookbook formulae for audio EQ biquad filter coefficients</em>. (Incorporado à especificação da Web Audio API, W3C.)</Ref>
+  <Ref>W3C. <em>Web Audio API</em> — BiquadFilterNode. w3.org/TR/webaudio.</Ref>
+  <Ref>Zölzer, U. (org.). <em>DAFX: Digital Audio Effects</em>. 2ª ed. Wiley, 2011. Capítulo sobre filtros e equalizadores.</Ref>
+  <Ref>Orfanidis, S. J. “Digital parametric equalizer design with prescribed Nyquist-frequency gain.” <em>Journal of the Audio Engineering Society</em>, 45(6), 444–455, 1997.</Ref>
+</References>

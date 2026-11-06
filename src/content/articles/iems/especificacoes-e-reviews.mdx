@@ -1,0 +1,64 @@
+<Lead>
+A caixa do IEM promete “resposta de 5 Hz a 40 kHz”, “16 Ω”, “110 dB”, “4 drivers”. O review diz que o som é “holográfico, com graves texturizados e agudos cintilantes”. Como transformar números e adjetivos em informação útil?
+</Lead>
+
+## A ficha técnica
+
+**Resposta em frequência (“20 Hz – 20 kHz”).** Sem a tolerância (por exemplo, “±3 dB”) e sem um gráfico, o número não diz praticamente nada. Quase qualquer transdutor produz *algum* som de 5 Hz a 40 kHz — 30 dB abaixo do resto. Ignore a faixa; procure o gráfico.
+
+**Impedância (“16 Ω”).** O valor nominal informa quanta corrente o fone vai pedir para uma tensão. Não diz se o fone é fácil de tocar (isso depende da sensibilidade) e, em IEMs multi-BA, esconde uma impedância que varia muito com a frequência. Útil para estimar a interação com a fonte.
+
+**Sensibilidade (“110 dB”).** Essencial — se a unidade estiver declarada. **dB/mW** e **dB/V** diferem por 10·log₁₀(1000/Z): para 16 Ω, 18 dB. Um “110 dB” sem unidade pode significar coisas muito diferentes. Use a [calculadora de potência](/eletronica/potencia-e-sensibilidade) para converter e saber quanta tensão o IEM exige.
+
+**THD (“&lt; 1%”).** Normalmente medida em 1 kHz e num nível não informado. Indica pouco; a distorção relevante costuma estar nos graves e em níveis altos.
+
+**Drivers (“4 BA + 1 DD”).** Descreve a arquitetura, não a qualidade. Veja [multi-driver](/drivers/multi-driver-e-crossovers).
+
+**Materiais (“diafragma de berílio”, “carcaça de titânio”, “cabo de prata 8 fios”).** Podem afetar durabilidade, peso e, no caso do diafragma, o comportamento do driver — mas o efeito audível só aparece na medição do conjunto.
+
+## Medições independentes
+
+O documento mais informativo sobre um IEM é uma **medição de resposta em frequência de uma fonte independente**, idealmente:
+
+- feita em acoplador IEC 60318-4 ou B&K 5128, com o equipamento declarado;
+- com os dois canais;
+- com a suavização e a normalização declaradas;
+- comparada a um alvo no **mesmo domínio**.
+
+Bancos de dados de medições (de avaliadores individuais e de projetos colaborativos) permitem comparar centenas de IEMs medidos no mesmo equipamento — e essa comparação “mesmo avaliador, mesmo equipamento” é a única legítima, como explicado em [como se mede um fone](/resposta/como-se-mede).
+
+Medições complementares úteis: **distorção** (THD em função da frequência, em 90–100 dB SPL), **impedância** em função da frequência, **casamento entre canais** e, às vezes, **isolamento**.
+
+## Como ler um review
+
+Reviews subjetivos são úteis quando você sabe **calibrá-los**. Algumas perguntas:
+
+1. **Qual é a referência do avaliador?** Alguém acostumado a fones muito brilhantes descreverá um Harman como “escuro”. Leia outros reviews do mesmo autor sobre fones cuja medição você conhece.
+2. **Como foi a escuta?** Com que fonte, que ponteira, que volume? Houve comparação direta, com volume igualado? Ou é uma impressão isolada?
+3. **O avaliador mostra medições?** Quando as impressões e a medição concordam, ótimo; quando discordam, a medição costuma explicar melhor o que acontece abaixo de 5 kHz, e a anatomia do avaliador, o que acontece acima.
+4. **Há conflitos de interesse?** Unidades recebidas de graça, links de afiliados e relações com fabricantes não invalidam um review, mas devem ser declarados.
+5. **O texto usa termos com sentido verificável?** “Graves com +6 dB que invadem os médios-graves” é verificável; “graves com textura aveludada e escuridão holográfica” não é.
+
+## Um pequeno dicionário de termos subjetivos
+
+| Termo | Interpretação mais comum |
+| --- | --- |
+| Quente, encorpado | Graves e médios-graves acima do alvo, agudos contidos |
+| Brilhante, analítico | Presença e agudos acima do alvo |
+| Escuro, velado | Presença e agudos abaixo do alvo |
+| Em V | Graves e agudos elevados, médios recuados |
+| Sibilante | Pico entre ~5 e 9 kHz |
+| Gritado | Excesso em ~1,5–3 kHz |
+| Embolado | Excesso em ~250–500 Hz, ou grave invadindo os médios |
+| Arejado | Extensão e energia acima de 10 kHz |
+| Detalhado, resolvido | Presença e agudos suficientes, pouco mascaramento, baixa distorção |
+| Palco amplo | Impressão espacial; frequentemente associada a agudos e à região de 3–10 kHz |
+| Musical | Geralmente uma assinatura mais quente e tolerante |
+
+O vocabulário completo, ligado às curvas, está em [regiões e defeitos](/resposta/regioes-e-defeitos).
+
+<References>
+  <Ref>IEC 60268-7:2010. Headphones and earphones — especificações e métodos de medição.</Ref>
+  <Ref>Olive, S. E.; Welti, T.; Khonsaripour, O. “A survey and analysis of consumer and professional headphones based on their objective and subjective performances.” AES 145th Convention, 2018.</Ref>
+  <Ref>Pedersen, T. H.; Zacharov, N. “The development of a sound wheel for reproduced sound.” AES 138th Convention, 2015.</Ref>
+</References>

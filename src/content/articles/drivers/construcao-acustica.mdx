@@ -1,0 +1,79 @@
+<Lead>
+Um driver sozinho não é um fone. O que transforma um transdutor em um produto é a acústica em volta dele: câmaras que dão forma aos graves, tubos que posicionam ressonâncias, ventilações que aliviam pressão, filtros que domam picos e carcaças que definem como o som chega à orelha.
+</Lead>
+
+## Câmaras: frontal e traseira
+
+Todo driver tem dois lados. O lado da frente empurra o ar em direção ao ouvido; o de trás empurra o ar na direção oposta, em contrafase. O que acontece com essa onda traseira define boa parte do caráter de um fone.
+
+- A **câmara frontal** (entre o diafragma e o bocal, mais o canal residual) é onde a pressão útil é gerada. Seu volume e suas aberturas influenciam médios e agudos.
+- A **câmara traseira** age como uma mola de ar adicional para o diafragma. Uma câmara traseira pequena e fechada “endurece” a mola e sobe a ressonância; uma maior ou ventilada a deixa mais macia.
+
+Em headphones, o contraste é claro: **fechados** (*closed-back*) têm a traseira selada, o que isola o ambiente e reforça graves, mas pode criar ressonâncias internas; **abertos** (*open-back*) deixam a onda traseira escapar por uma grade, o que reduz ressonâncias e dá sensação de abertura, mas vaza som e não isola.
+
+## Ventilação e pressão
+
+Em IEMs dinâmicos, a ventilação tem papéis importantes:
+
+- **Controle de graves.** Uma pequena abertura (frequentemente com um filtro de malha) na câmara traseira ou frontal ajusta o nível e a forma dos graves. Ventilar a câmara traseira reduz a rigidez do ar atrás do diafragma.
+- **Alívio de pressão.** Inserir um IEM vedado empurra ar para o canal, aumentando a pressão estática sobre o tímpano e o diafragma. Sem ventilação, alguns drivers dinâmicos sofrem **driver flex**: o diafragma se deforma além do normal e produz um estalo ou um som amassado ao inserir ou retirar. Ventilações reduzem esse efeito, e muitas pessoas também relatam menos sensação de “ouvido tampado”.
+- **Compromisso com isolamento.** Ventilações deixam algum som entrar e sair, reduzindo o isolamento — tipicamente pouco, mas mensurável.
+
+Balanced armatures são caixas seladas e não precisam desse tipo de alívio — mas IEMs só com BA costumam ter pouquíssima ventilação, o que alguns ouvintes percebem como pressão.
+
+## Ressonadores de Helmholtz
+
+Uma câmara conectada ao exterior por uma abertura estreita é um **ressonador de Helmholtz**: a massa de ar no gargalo oscila contra a elasticidade do ar na câmara, como numa garrafa em que se sopra. A frequência de ressonância é
+
+$$
+f_0 = \frac{c}{2\pi}\sqrt{\frac{A}{V\, L_{\text{ef}}}}
+$$
+
+<Vars
+  items={[
+    ['A', 'área da seção do gargalo'],
+    ['V', 'volume da câmara'],
+    ['L_ef', 'comprimento efetivo do gargalo (comprimento físico mais uma correção de extremidade, ≈ 1,7 vez o raio para aberturas nas duas pontas)'],
+  ]}
+/>
+
+Em IEMs, câmaras e ventilações formam ressonadores que podem reforçar ou atenuar regiões específicas — às vezes intencionalmente, para moldar graves e médios-graves; às vezes como efeito colateral a ser corrigido.
+
+## Tubos e bocais
+
+Em IEMs com BAs, o som de cada driver frequentemente viaja por **tubos** até o bocal. Um tubo tem ressonâncias que dependem do comprimento e das condições nas pontas (veja [fase e interferência](/fundamentos/fase-e-interferencia)):
+
+- fechado (ou aberto) nas duas pontas: $f_n = n\,c/(2L)$;
+- fechado numa ponta e aberto na outra: $f_n = (2n-1)\,c/(4L)$.
+
+Para tubos de 5 a 20 mm, essas ressonâncias caem entre 4 e 35 kHz — justamente na região que define presença, agudos e extensão. O diâmetro também importa: tubos estreitos têm mais perdas (atenuam agudos) e mais **inertância** (a massa de ar dentro deles “pesa” mais em altas frequências). O **bocal** (*nozzle*) do IEM é, ele próprio, um tubo que ressoa com o canal residual.
+
+<Lab id="tube" />
+
+## Dampers e filtros acústicos
+
+Para controlar ressonâncias, engenheiros usam **dampers**: pequenos elementos resistivos — malhas metálicas, tecidos, espumas — que dissipam energia quando o ar passa por eles. Dampers comerciais para IEMs (fabricados por empresas como Knowles) são especificados em **ohms acústicos** e frequentemente identificados por cores. Trocar um damper por outro de maior resistência reduz picos e, geralmente, também o nível na faixa afetada.
+
+Alguns IEMs oferecem **filtros de bocal intercambiáveis** que o usuário troca para ajustar o som: na prática, são dampers ou tubos diferentes. Eles costumam alterar os agudos em alguns decibéis — mudanças reais e mensuráveis, ainda que menores do que o marketing sugere.
+
+## Carcaças, materiais e formatos
+
+**Materiais da carcaça** (resina, alumínio, titânio, madeira) influenciam pouco o som diretamente, desde que a carcaça seja rígida e bem vedada. Vibrações da carcaça em IEMs são muito pequenas comparadas às da câmara de ar. O material importa mais para conforto, peso, durabilidade e — no caso de metais — para a forma interna que é possível usinar.
+
+**Formatos de fone:**
+
+- **Circum-auriculares** (*over-ear*): envolvem a orelha. Interagem com a pina, o que torna a resposta dependente do posicionamento e da anatomia.
+- **Supra-auriculares** (*on-ear*): apoiam-se sobre a orelha. Vedação e graves dependem muito da pressão de contato.
+- **Earbuds**: apoiam-se na concha sem vedar o canal. Graves limitados pelo vazamento; pouco isolamento.
+- **IEMs**: vedam o canal auditivo. Isolamento alto, graves por câmara de pressão, resposta muito dependente da inserção e da ponteira (veja [vedação e ponteiras](/iems/vedacao-e-ponteiras)).
+
+## A lição
+
+O mesmo driver, em duas carcaças diferentes, pode soar como dois fones diferentes. A acústica em volta do transdutor não é um detalhe: é a maior parte do projeto. É por isso que a próxima pergunta natural é como os fabricantes usam todas essas ferramentas para chegar a uma curva — o assunto de [tuning](/iems/tuning).
+
+<References>
+  <Ref>Kinsler, L. E. et al. <em>Fundamentals of Acoustics</em>. 4ª ed. Wiley, 2000. Ressonadores de Helmholtz e tubos.</Ref>
+  <Ref>Beranek, L. L.; Mellow, T. J. <em>Acoustics: Sound Fields and Transducers</em>. Academic Press, 2012. Circuitos acústicos equivalentes.</Ref>
+  <Ref>Knowles Corporation. <em>Acoustic dampers — application notes</em>.</Ref>
+  <Ref>Borwick, J. (org.). <em>Loudspeaker and Headphone Handbook</em>. 3ª ed. Focal Press, 2001.</Ref>
+</References>

@@ -1,0 +1,54 @@
+<Lead>
+Duas músicas no mesmo volume do aparelho podem soar com 10 dB de diferença. Serviços de streaming corrigem isso automaticamente — e, nesse processo, mudam a comparação entre faixas, entre masterizações e até entre formatos. Entender loudness, normalização e conversão de taxas de amostragem evita conclusões erradas sobre qualidade.
+</Lead>
+
+## Pico não é sonoridade
+
+O nível de pico de uma faixa (o maior valor de amostra, em dBFS) diz pouco sobre quão alta ela soa. Uma gravação de música clássica pode atingir 0 dBFS num único golpe de tímpano e ter um nível médio muito baixo; uma faixa pop moderna pode ficar colada no teto o tempo todo. O que se percebe como “volume” é a **sonoridade** (loudness) média, ponderada pela sensibilidade auditiva — ver [sonoridade e volume](/percepcao/sonoridade-e-volume).
+
+## LUFS e a norma ITU-R BS.1770
+
+Para medir sonoridade de programas de áudio de forma padronizada, a ITU definiu na recomendação **BS.1770** um método simples e eficaz:
+
+1. O sinal passa por um filtro de ponderação **K**: um shelf que reforça ~4 dB acima de ~2 kHz (simulando o efeito acústico da cabeça) e um passa-altas que atenua graves abaixo de ~100 Hz.
+2. Calcula-se a energia média em blocos de 400 ms, somando os canais.
+3. Blocos muito silenciosos são descartados (*gating*) para que pausas não puxem a média para baixo.
+4. O resultado é expresso em **LUFS** (*Loudness Units relative to Full Scale*), em que 1 LU equivale a 1 dB.
+
+A mesma norma define o **true peak**: o pico estimado do sinal **analógico reconstruído**, calculado com sobreamostragem. Ele pode ser maior que o maior valor de amostra — os chamados *inter-sample peaks* —, porque a curva suave entre duas amostras próximas de 0 dBFS pode passar acima delas. Masterizações muito altas, com picos de amostra em 0 dBFS, podem ter true peaks de +1 a +2 dBTP e causar clipping no DAC ou nos codificadores com perdas.
+
+## A guerra do volume
+
+Como “mais alto parece melhor” em comparações rápidas, a indústria passou décadas masterizando músicas cada vez mais altas — a **guerra do volume** (*loudness war*). Como o teto digital é fixo, isso só é possível **comprimindo a faixa dinâmica**: limitadores e compressores reduzem a diferença entre picos e média. Masterizações extremas chegam a −5 LUFS ou mais, com fator de crista de apenas alguns decibéis, transientes achatados e, às vezes, clipping audível.
+
+## Normalização nos serviços de streaming
+
+Serviços de streaming e reprodutores medem a sonoridade de cada faixa e ajustam o ganho na reprodução para um alvo comum — tipicamente em torno de **−14 LUFS** (Spotify e YouTube) ou **−16 LUFS** (Apple Music), com variações por modo e configuração. Uma faixa masterizada a −8 LUFS é tocada 6 dB mais baixa; uma faixa dinâmica a −18 LUFS pode ser elevada (se houver margem de pico) ou deixada como está.
+
+Consequências:
+
+- **A guerra do volume perde o sentido** em ambientes normalizados: masterizar mais alto só resulta em mais compressão, sem ganho de volume na reprodução.
+- **Comparações ficam mais justas**, mas só entre faixas tocadas no mesmo sistema de normalização. Comparar uma versão local (sem normalização) com uma de streaming (normalizada) é comparar volumes diferentes.
+- Ao avaliar **masterizações diferentes** da mesma música, a normalização evita que a mais alta pareça “melhor” só por ser mais alta.
+
+## ReplayGain
+
+Em bibliotecas locais, o **ReplayGain** cumpre o mesmo papel: um programa analisa cada faixa (e cada álbum) e grava nos metadados quanto ganho aplicar para atingir um nível de referência (na versão 2.0, baseado em BS.1770 e −18 LUFS). Reprodutores compatíveis aplicam esse ganho na hora de tocar. O modo **por álbum** preserva as diferenças de volume intencionais entre faixas de um disco; o modo **por faixa** iguala todas.
+
+## Resampling: conversão de taxa de amostragem
+
+Quando um arquivo de 44,1 kHz é tocado num sistema que opera em 48 kHz (situação comum em celulares e computadores), o sistema precisa **converter a taxa** — calcular novas amostras em instantes diferentes. Conceitualmente, isso é reconstruir o sinal contínuo a partir das amostras (pela fórmula de Whittaker-Shannon) e reamostrá-lo. Na prática, usa-se um filtro passa-baixas digital de alta qualidade que interpola as novas amostras.
+
+Bons conversores (como o SoX, o libsamplerate em modo de alta qualidade e os de sistemas operacionais modernos) fazem isso com erros abaixo de −120 dB e banda passante plana até perto de 20 kHz. Conversores ruins, comuns em sistemas antigos, podiam deixar passar aliasing ou atenuar agudos. Hoje, resampling é raramente um problema audível — mas, para evitar qualquer dúvida, alguns reprodutores oferecem modo “exclusivo” ou *bit-perfect*, que envia o áudio ao DAC na taxa original, sem mistura nem conversão do sistema.
+
+<Callout type="atencao" title="Volume e EQ antes do resampling">
+Se uma equalização eleva o sinal e a cadeia trabalha em ponto fixo sem margem, o clipping pode acontecer antes ou durante a conversão. Em cadeias de ponto flutuante (o padrão atual), basta aplicar um **preamp** negativo correspondente ao maior reforço da EQ. Veja [equalizador paramétrico](/processamento/equalizador-parametrico).
+</Callout>
+
+<References>
+  <Ref>ITU-R BS.1770-5 (2023). <em>Algorithms to measure audio programme loudness and true-peak audio level</em>.</Ref>
+  <Ref>EBU R 128 (2020). <em>Loudness normalisation and permitted maximum level of audio signals</em>.</Ref>
+  <Ref>AES TD1008 (2021). <em>Recommendations for loudness of internet audio streaming and on-demand distribution</em>.</Ref>
+  <Ref>Vickers, E. “The loudness war: background, speculation and recommendations.” AES 129th Convention, 2010.</Ref>
+  <Ref>Hydrogenaudio. <em>ReplayGain 2.0 specification</em>.</Ref>
+</References>

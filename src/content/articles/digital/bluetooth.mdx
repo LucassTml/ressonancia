@@ -1,0 +1,61 @@
+<Lead>
+Num fone sem fio, a música passa por uma etapa extra: é recodificada com perdas, transmitida por rádio e decodificada dentro do fone, onde um DAC, um amplificador e quase sempre um processador de sinais assumem o papel que, num fone com fio, cabia à fonte. A escolha do codec importa — mas menos, e de formas diferentes, do que a maioria das discussões sugere.
+</Lead>
+
+## O caminho do som num fone Bluetooth
+
+1. O celular decodifica o arquivo ou stream (que pode já ser AAC, Opus, FLAC…).
+2. O sistema mistura sons, aplica volume e efeitos e **reencoda** o resultado com um codec Bluetooth.
+3. O rádio transmite os pacotes em 2,4 GHz, com uma largura de banda disponível que varia conforme interferências, distância e obstáculos (inclusive o seu corpo).
+4. O fone decodifica, aplica seu próprio **processamento** — EQ do fabricante, cancelamento de ruído, compensação de volume —, converte em analógico e amplifica.
+
+Duas consequências se destacam. Primeiro, há quase sempre uma **dupla codificação com perdas** quando a fonte já é lossy. Segundo, o **tuning do próprio fone**, que inclui o DSP, define o som muito mais do que o codec.
+
+## Os codecs
+
+| Codec | Taxa de dados típica | Observações |
+| --- | --- | --- |
+| **SBC** | ~200–345 kbps | Obrigatório em todo dispositivo A2DP. Simples; a qualidade depende muito dos parâmetros usados (bitpool). Em bitrates altos, é melhor do que sua fama. |
+| **AAC** | ~200–320 kbps | Padrão em aparelhos Apple. Bom codec perceptivo, mas a qualidade depende do codificador do sistema — muito bom no iOS, variável no Android. |
+| **aptX** | 352/384 kbps | Codificação ADPCM em sub-bandas, 4:1, sem modelo psicoacústico complexo. Latência baixa, robusto. |
+| **aptX HD** | 576 kbps | Versão de 24 bits do aptX. |
+| **aptX Adaptive** | ~279–420 kbps (variável) | Ajusta bitrate e latência conforme o link; versões recentes têm um modo lossless. |
+| **LDAC** | 330 / 660 / 990 kbps | Da Sony. Suporta 24 bits/96 kHz; o modo de 990 kbps exige um link muito estável e cai para taxas menores com frequência. |
+| **LC3** (LE Audio) | ~16–345 kbps | Codec do Bluetooth LE Audio. Muito mais eficiente que o SBC; base do Auracast. |
+
+Os valores reais variam com o aparelho e as condições. E o codec usado é **negociado** entre transmissor e receptor: os dois precisam suportá-lo, e o sistema operacional decide. Muitos aparelhos permitem ver e forçar o codec nas opções de desenvolvedor.
+
+## O que é audível
+
+**Codecs modernos em boas condições são, em geral, perceptivamente transparentes ou próximos disso** para a maioria das pessoas com a maioria das músicas. AAC de 256 kbps bem codificado, aptX Adaptive e LDAC em taxas altas ficam nessa categoria; SBC em bitrate alto também se sai bem em testes cegos.
+
+As diferenças audíveis aparecem principalmente:
+
+- **Em condições ruins de link**, quando o bitrate cai (LDAC a 330 kbps, por exemplo, ou SBC com bitpool baixo) e os artefatos de codificação surgem.
+- **Com a dupla codificação** de material já lossy em taxas baixas.
+- **Em trechos difíceis**: ataques muito rápidos, cravo, aplausos, pratos.
+
+O que quase sempre importa mais do que o codec:
+
+- **O tuning do fone** (resposta em frequência, inclusive a do DSP) — o fator dominante.
+- **A vedação** (em earbuds e IEMs sem fio, a mesma física dos IEMs com fio).
+- **O cancelamento de ruído**, que muda o som de forma mensurável e reduz o mascaramento pelo ambiente.
+- **O ruído de fundo** do amplificador interno, às vezes audível em silêncio.
+
+## Latência
+
+A latência total — do celular ao ouvido — inclui buffers de codificação, transmissão, retransmissões e decodificação. Com o Bluetooth clássico (A2DP), valores entre **100 e 300 ms** são comuns; codecs e modos de baixa latência reduzem para algo como 40–80 ms, e o LE Audio permite latências menores. Para vídeo, os sistemas compensam atrasando a imagem; para jogos e instrumentos musicais, a latência é perceptível e incômoda acima de algumas dezenas de milissegundos.
+
+## Resumo prático
+
+1. Se o seu fone e o seu celular suportam um codec de alta qualidade, use-o — mas não espere uma transformação.
+2. Em ambientes com muita interferência, prefira modos que **priorizam estabilidade**; cortes e quedas de bitrate são mais audíveis que a diferença entre codecs.
+3. Julgue fones sem fio sobretudo pelo **tuning, conforto, vedação e ANC**.
+4. Para escuta crítica ou para IEMs com fio de alta sensibilidade, o caminho com fio (com um bom dongle) continua sendo o mais simples e previsível.
+
+<References>
+  <Ref>Bluetooth SIG. <em>Advanced Audio Distribution Profile (A2DP)</em> e <em>Low Complexity Communication Codec (LC3)</em> — especificações.</Ref>
+  <Ref>Qualcomm. <em>aptX audio codec family</em> — documentação técnica.</Ref>
+  <Ref>Sony Corporation. <em>LDAC</em> — documentação técnica.</Ref>
+  <Ref>Painter, T.; Spanias, A. “Perceptual coding of digital audio.” <em>Proceedings of the IEEE</em>, 88(4), 451–515, 2000.</Ref>
+</References>

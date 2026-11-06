@@ -1,0 +1,75 @@
+<Lead>
+Se você aprender a ler um único gráfico em audiofilia, que seja este. A resposta em frequência resume, numa linha, a maior parte do que determina o som de um fone: quanto grave, quanta presença, quanto brilho, onde estão os excessos e as faltas. Ela não diz tudo — mas diz mais do que qualquer outra medida isolada, e quase todas as descrições subjetivas de som podem ser traduzidas para ela.
+</Lead>
+
+## O que é resposta em frequência
+
+Um sistema de áudio linear — como um fone em níveis normais de uso — transforma cada frequência de forma independente: uma senoide de 1 kHz entra e sai como uma senoide de 1 kHz, apenas com amplitude e fase possivelmente diferentes. A **resposta em frequência** (FR, de *frequency response*) descreve essa transformação para todas as frequências: quanto cada uma é reforçada ou atenuada (**magnitude**) e quanto é atrasada (**fase**).
+
+Em fones, quase sempre se mostra só a magnitude, e por bons motivos: ela é o que mais influencia o timbre, como vimos em [harmônicos e timbre](/fundamentos/harmonicos-e-timbre), e a fase de um fone é em grande parte determinada pela própria magnitude (sistemas de [fase mínima](/processamento/limites-da-eq)).
+
+Para medir, aplica-se um sinal que contém todas as frequências — tipicamente uma varredura senoidal ou ruído — ao fone acoplado a um simulador de ouvido, e mede-se a pressão sonora que chega ao microfone. O gráfico resultante é a pressão (em dB) em função da frequência. Os detalhes de como isso é feito, e por que o equipamento importa tanto, estão em [como se mede um fone](/resposta/como-se-mede).
+
+## Os eixos
+
+**O eixo horizontal é a frequência**, de 20 Hz a 20 kHz, em **escala logarítmica**: a distância entre 20 e 200 Hz é a mesma que entre 2 e 20 kHz. Cada década (fator 10) e cada oitava (fator 2) ocupam espaços iguais. Isso não é arbitrário: corresponde aproximadamente à forma como a [cóclea](/percepcao/anatomia-do-ouvido) organiza as frequências e como percebemos altura. Num eixo linear, tudo abaixo de 2 kHz — onde está a maior parte da música — seria espremido nos primeiros 10% do gráfico.
+
+**O eixo vertical é o nível, em decibéis.** Em gráficos de fones, os valores absolutos raramente importam: o que importa é a **forma** da curva. Por isso as curvas costumam ser **normalizadas** — deslocadas verticalmente para que passem por 0 dB numa frequência de referência (500 Hz ou 1 kHz são as mais comuns) ou para que a média de uma faixa coincida com a de outra curva.
+
+<Callout type="atencao" title="Sempre olhe a escala vertical">
+O mesmo fone desenhado com um eixo de ±5 dB parece uma montanha-russa; com um eixo de ±40 dB parece uma linha reta. A recomendação comum (e adotada neste site) é que **10 dB verticais ocupem aproximadamente o mesmo espaço que uma década horizontal**, ou algo próximo disso, para que a forma visual corresponda razoavelmente à importância perceptiva.
+</Callout>
+
+## Lendo a curva por regiões
+
+Com o [mapa do espectro](/fundamentos/espectro-audivel) em mente, um gráfico pode ser lido da esquerda para a direita:
+
+- **Abaixo de ~200 Hz:** o nível dos graves. Uma elevação em degrau (um *shelf*) indica mais peso e impacto. Uma queda indica graves fracos ou, em IEMs, frequentemente uma medição com vedação imperfeita.
+- **200 Hz a 1 kHz:** a transição para os médios. Uma curva que continua alta aqui “carrega” o grave para dentro dos médios-graves, o que tende a soar quente ou embolado.
+- **1 a 5 kHz:** a região de presença e do **pinna gain**. Em IEMs medidos num acoplador 711, espera-se um “morro” largo com máximo entre 2 e 4 kHz. A altura, a largura e a posição desse morro são decisivas para o caráter do fone (veja [pinna gain](/percepcao/pinna-gain)).
+- **5 a 10 kHz:** agudos e sibilância. Aqui a medição fica sensível ao posicionamento, e ressonâncias do acoplador aparecem. Picos estreitos e altos são suspeitos de sibilância.
+- **Acima de 10 kHz:** extensão e “ar”. É a região menos confiável de qualquer medição em acoplador e a que mais varia entre pessoas.
+
+## Pico, vale, ressonância e cancelamento
+
+Formas diferentes de desvio são percebidas de modos diferentes, e não apenas pela altura.
+
+**Largura importa tanto quanto altura.** Toole e Olive (1988) mostraram que, para sons comuns de música, ressonâncias **largas** (baixo Q) são detectadas com amplitudes menores que ressonâncias **estreitas** (alto Q). Um desvio de 2 dB que cobre uma oitava inteira é mais perceptível que um pico de 6 dB com 1/10 de oitava. Por isso a impressão visual de “picos pontudos” costuma enganar: o que pesa mais na percepção é o equilíbrio de regiões largas.
+
+**Picos são mais audíveis que vales.** Um vale estreito de −10 dB pode passar quase despercebido com música, porque pouca energia cai exatamente ali e o cérebro “preenche” a lacuna; um pico de +10 dB com a mesma largura é bem audível. Esta assimetria foi documentada por Bücklein (1981) e é um dos motivos pelos quais equalizar vales estreitos raramente vale a pena.
+
+**Ressonâncias têm uma assinatura no tempo.** Num sistema de fase mínima, um pico estreito na resposta em frequência é acompanhado de um decaimento lento naquela frequência: o fone “continua tocando” depois que o sinal termina. Isso aparece em gráficos de decaimento espectral acumulado (CSD, ou *waterfall*). Mas atenção: em fones, CSD e resposta em frequência carregam essencialmente a mesma informação; um CSD “limpo” e uma FR suave andam juntos.
+
+**Cancelamentos têm causas diferentes de ressonâncias.** Um vale profundo e estreito costuma vir de interferência (dois caminhos que chegam em contrafase) — por exemplo, num crossover mal resolvido entre drivers, ou de uma reflexão dentro do bocal. Diferente de um pico de ressonância, um vale de cancelamento muitas vezes **não pode** ser corrigido por EQ: reforçar a frequência reforça os dois caminhos, que continuam se cancelando.
+
+## Suavização
+
+Medições brutas são cheias de pequenas ondulações. Para facilitar a leitura, publicam-se curvas **suavizadas**: cada ponto é a média da curva numa janela de uma fração de oitava em volta dele. Com 1/3 de oitava, picos estreitos desaparecem e a curva fica “arredondada”; com 1/24 ou 1/48, quase todo detalhe aparece. Nenhuma das duas é “a certa”: a suavização forte esconde ressonâncias reais, e a fraca destaca detalhes que podem não ser audíveis ou que variam com o posicionamento. O importante é **saber qual foi usada**, e não comparar curvas com suavizações diferentes.
+
+## O laboratório
+
+O laboratório abaixo reúne tudo isso. Escolha uma curva de partida (um alvo ou uma assinatura sintética), arraste os pontos, aplique um shelf de graves ou filtros paramétricos, compare com uma segunda curva e com um alvo, e alterne para a vista de **diferença**, que mostra só o desvio em relação ao alvo — muitas vezes a forma mais clara de ler um fone. O painel à direita traduz os desvios em descrições perceptivas prováveis.
+
+<Lab id="fr" />
+
+Uma observação sobre o que você ouve no laboratório: nenhum site consegue fazer você “ouvir uma curva” em termos absolutos, porque o som passa pelo seu próprio fone, que tem a sua própria curva. O que o laboratório faz — e é o que importa — é aplicar ao áudio a **diferença** entre a curva A e a referência escolhida. Se o seu fone estiver próximo do alvo, você ouve algo próximo da curva A. Se não estiver, você ainda ouve corretamente a *mudança* que a curva A representa em relação à referência, que é exatamente o que diferencia um fone de outro.
+
+## O que o gráfico não diz
+
+A resposta em frequência é a medida mais informativa, mas não é a única. Ela não mostra:
+
+- **distorção** (não linearidade), que aparece em níveis altos e graves intensos;
+- **diferenças entre os canais esquerdo e direito**, que afetam a imagem estéreo;
+- **variação entre unidades** e entre posicionamentos;
+- **como o fone interage com a sua anatomia** em particular, sobretudo acima de 5 kHz;
+- **conforto, isolamento e vedação**, que mudam o que chega ao seu ouvido.
+
+Esses limites são o assunto de [o que medições mostram e o que não mostram](/ciencia/o-que-medicoes-mostram). Mas, dentro desses limites, saber ler este gráfico é o que permite transformar “achei sibilante” em “tem um pico de 6 dB em 7 kHz” — e decidir, com informação, se um fone combina com você.
+
+<References>
+  <Ref>Toole, F. E.; Olive, S. E. “The modification of timbre by resonances: perception and measurement.” <em>Journal of the Audio Engineering Society</em>, 36(3), 122–142, 1988.</Ref>
+  <Ref>Bücklein, R. “The audibility of frequency response irregularities.” <em>Journal of the Audio Engineering Society</em>, 29(3), 126–131, 1981 (tradução do original alemão de 1962).</Ref>
+  <Ref>Olive, S. E.; Welti, T. “The relationship between perception and measurement of headphone sound quality.” AES 133rd Convention, paper 8744, 2012.</Ref>
+  <Ref>IEC 60268-7:2010. <em>Sound system equipment — Part 7: Headphones and earphones</em>.</Ref>
+  <Ref>Toole, F. E. <em>Sound Reproduction: The Acoustics and Psychoacoustics of Loudspeakers and Rooms</em>. 3ª ed. Routledge, 2017.</Ref>
+</References>

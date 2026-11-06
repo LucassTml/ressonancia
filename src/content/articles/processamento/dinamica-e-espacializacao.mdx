@@ -1,0 +1,65 @@
+<Lead>
+Nem todo processamento mexe na resposta em frequência. Compressores e limitadores mexem no tempo — em quanto os picos sobressaem da média. Saturadores e distorções acrescentam harmônicos. Crossfeed e espacializadores mexem na relação entre os canais. Saber a diferença evita usar a ferramenta errada para o problema certo.
+</Lead>
+
+## Compressão de faixa dinâmica
+
+Um **compressor** monitora o nível do sinal e reduz o ganho quando ele ultrapassa um **limiar** (*threshold*). Os parâmetros:
+
+- **Razão** (*ratio*): acima do limiar, quantos decibéis de entrada correspondem a 1 dB de saída. Com 4:1, um sinal 8 dB acima do limiar sai apenas 2 dB acima.
+- **Joelho** (*knee*): a suavidade da transição em torno do limiar.
+- **Ataque**: quão rápido a redução de ganho começa quando o sinal sobe.
+- **Liberação** (*release*): quão rápido o ganho volta quando o sinal desce.
+- **Ganho de compensação** (*makeup*): recupera o volume perdido.
+
+Um **limitador** é um compressor com razão muito alta e ataque muito rápido: impede que o sinal passe de um teto.
+
+<Lab id="dynamics" />
+
+Compressão é indispensável na produção e na radiodifusão (deixar vozes inteligíveis, controlar picos, “colar” uma mixagem). Na **reprodução**, ela tem usos legítimos — ouvir num ambiente ruidoso sem que passagens baixas desapareçam, ou à noite sem picos incômodos —, mas altera a música: reduz contrastes e, com ataques rápidos, achata transientes. Exagerada, gera o “bombeamento” audível e foi o motor da [guerra do volume](/digital/loudness-e-resampling).
+
+<Callout type="nota">
+O laboratório deste site usa um limitador fixo na saída geral, com limiar em −3 dBFS, como proteção. Ele quase nunca atua com os sons de teste, mas existe para que nenhum experimento produza picos inesperados.
+</Callout>
+
+## Distorção como efeito
+
+Distorção é, por definição, a adição de componentes que não estavam no sinal. Em reprodução de alta fidelidade, é algo a evitar. Como efeito, é uma ferramenta criativa central: a saturação de fita e de válvulas, os pedais de guitarra, os “exciters” que acrescentam harmônicos de agudos. O [laboratório de distorção](/eletronica/valvulas-vs-transistores) mostra como curvas de transferência diferentes produzem perfis harmônicos diferentes.
+
+Alguns processadores de “melhoria” de som em fones e celulares aplicam saturação leve, realce harmônico de graves (que explora o efeito da [fundamental ausente](/fundamentos/melodia-e-harmonia)) ou compressão multibanda. Eles podem soar impressionantes numa primeira audição — e cansativos depois.
+
+## EQ não é espacialização
+
+EQ altera o equilíbrio de frequências de cada canal. **Espacialização** altera a relação entre os canais e a percepção de posição. São coisas diferentes, embora se misturem: aumentar agudos pode dar a impressão de mais “espaço”, e muitos processadores espaciais incluem EQ.
+
+### Crossfeed
+
+Em caixas de som, cada ouvido também ouve a caixa do lado oposto, um pouco atrasada (~0,3 ms) e com menos agudos (pela sombra da cabeça). Em fones, isso não acontece: o canal esquerdo vai só para o ouvido esquerdo. O resultado é uma imagem “estendida demais” e cansativa em gravações com pan extremo — muitas gravações dos anos 1950 e 1960 colocam instrumentos inteiros num só canal.
+
+O **crossfeed**, proposto por Benjamin Bauer em 1961, mistura em cada canal uma cópia filtrada e atrasada do outro, imitando essa condição.
+
+<Lab id="crossfeed" />
+
+Crossfeed não externaliza o som — a imagem continua dentro da cabeça — mas a torna mais coesa e menos fatigante. É uma questão de preferência: muita gente não gosta e prefere a separação total.
+
+### Espacializadores e HRTF
+
+Processadores mais ambiciosos simulam caixas virtuais: aplicam a cada canal a **HRTF** correspondente a uma caixa a ±30°, frequentemente com reverberação de sala e, em alguns sistemas, **rastreamento de cabeça** (a cena sonora fica parada quando você gira a cabeça). Com HRTFs personalizadas e rastreamento, a externalização pode ser convincente. Com HRTFs genéricas, os resultados variam muito entre pessoas: para alguns, o som “sai da cabeça”; para outros, fica apenas colorido. O assunto é tratado em [localização espacial](/percepcao/localizacao-espacial).
+
+## Qual ferramenta para qual problema
+
+| Problema | Ferramenta adequada |
+| --- | --- |
+| Grave demais ou de menos, sibilância, aspereza | EQ |
+| Passagens baixas inaudíveis num ônibus | Compressão leve, ou melhor vedação/ANC |
+| Pan extremo cansativo | Crossfeed |
+| Som “dentro da cabeça” | Espacialização com HRTF (resultados variáveis) |
+| Músicas com volumes muito diferentes | Normalização de loudness (ReplayGain) |
+| Distorção ou chiado | Nenhum processamento: resolver na fonte ou no fone |
+
+<References>
+  <Ref>Bauer, B. B. “Stereophonic earphones and binaural loudspeakers.” <em>Journal of the Audio Engineering Society</em>, 9(2), 148–151, 1961.</Ref>
+  <Ref>Giannoulis, D.; Massberg, M.; Reiss, J. D. “Digital dynamic range compressor design — a tutorial and analysis.” <em>Journal of the Audio Engineering Society</em>, 60(6), 399–408, 2012.</Ref>
+  <Ref>Zölzer, U. (org.). <em>DAFX: Digital Audio Effects</em>. 2ª ed. Wiley, 2011.</Ref>
+  <Ref>Begault, D. R. <em>3-D Sound for Virtual Reality and Multimedia</em>. Academic Press, 1994.</Ref>
+</References>

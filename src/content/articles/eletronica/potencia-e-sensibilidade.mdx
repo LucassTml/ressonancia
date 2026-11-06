@@ -1,0 +1,90 @@
+<Lead>
+“Este fone precisa de amplificador?” A resposta não está na impedância nem na potência anunciada da fonte, e sim numa conta simples que combina sensibilidade, impedância, o volume que você quer e a tensão que a sua fonte entrega. Este artigo mostra a conta, explica cada termo e desmonta o mito mais persistente da área: o de que baixa impedância significa fácil de tocar.
+</Lead>
+
+## Sensibilidade: duas formas de dizer a mesma coisa
+
+A **sensibilidade** diz quanto som um fone produz para uma entrada elétrica de referência. Ela aparece em duas formas:
+
+- **dB SPL/mW:** o nível produzido quando o fone recebe **1 miliwatt**.
+- **dB SPL/V:** o nível produzido quando o fone recebe **1 volt RMS**.
+
+As duas estão ligadas pela impedância. Com 1 V numa impedância $Z$, a potência é $P = V^2/Z = 1/Z$ watts $= 1000/Z$ mW. Logo:
+
+$$
+S_{\text{dB/V}} = S_{\text{dB/mW}} + 10\log_{10}\!\left(\frac{1000}{Z}\right)
+$$
+
+Para 32 Ω, a diferença é +14,9 dB; para 16 Ω, +18 dB; para 300 Ω, +5,2 dB. Um fone de 32 Ω com 100 dB/mW tem 114,9 dB/V.
+
+<Callout type="chave" title="Qual usar?">
+Como quase todas as fontes de áudio se comportam como **fontes de tensão** (sua saída tenta manter a tensão independentemente da carga), a sensibilidade em **dB/V** é a mais útil para saber se uma fonte dá conta: ela diz diretamente quanta tensão o fone precisa. A sensibilidade em dB/mW combinada com a impedância diz a mesma coisa, só que com uma conta a mais.
+</Callout>
+
+## A conta: tensão, corrente e potência necessárias
+
+Para atingir um nível $L$ (em dB SPL) num fone com sensibilidade $S$ (em dB/V), a tensão RMS necessária é
+
+$$
+V = 10^{\,(L - S_{\text{dB/V}})/20}
+$$
+
+A corrente e a potência seguem pela Lei de Ohm: $I = V/Z$ e $P = V^2/Z$.
+
+Um exemplo completo. Um IEM de 32 Ω com 108 dB/V. Você ouve com nível médio de 85 dB SPL e quer folga para picos de 15 dB (música com boa dinâmica), ou seja, 100 dB SPL nos picos:
+
+- $V = 10^{(100-108)/20} = 10^{-0{,}4} \approx 0{,}40$ V
+- $I = 0{,}40/32 \approx 12{,}5$ mA
+- $P = 0{,}40^2/32 \approx 5$ mW
+
+Quase qualquer celular, notebook ou dongle entrega 0,4 V. Esse IEM não precisa de amplificador dedicado.
+
+Agora um headphone planar de 50 Ω com 86 dB/mW (= 99 dB/V), com o mesmo objetivo de 100 dB SPL de pico:
+
+- $V = 10^{(100-99)/20} \approx 1{,}12$ V
+- $I \approx 22$ mA, $P \approx 25$ mW
+
+Uma saída de celular de 0,5 V não chega lá — o pico clipa ou o volume fica baixo. Um dongle de 2 V resolve com folga.
+
+<Lab id="power" />
+
+## Baixa impedância não significa fácil de tocar
+
+Volte à calculadora e compare os exemplos de headphone de 32 Ω com 90 dB/mW e de 300 Ω com 102 dB/mW. Em dB/V, o primeiro tem 104,9 e o segundo 107,2: **o fone de 300 Ω precisa de menos tensão** para o mesmo volume. Ele também puxa muito menos corrente (por causa da impedância alta). Já o fone de 32 Ω exige mais tensão **e** dez vezes mais corrente.
+
+A impedância, sozinha, não diz nada sobre quanta tensão é necessária. Ela informa como a carga se comporta: impedâncias baixas exigem mais **corrente** para uma dada tensão; impedâncias altas exigem mais **tensão** para uma dada potência. O que define se um fone é “difícil” é a combinação de baixa sensibilidade com a impedância — e, na prática, a pergunta certa é sempre: **a minha fonte entrega a tensão necessária, sem passar do limite de corrente e sem distorcer?**
+
+## Headroom e clipping
+
+Música não é uma senoide constante: tem picos muito acima do nível médio. O **fator de crista** de música pouco comprimida pode chegar a 15–20 dB; de música pop moderna muito masterizada, 6–10 dB. Dimensionar a fonte para o nível médio é um erro: os picos serão cortados.
+
+**Headroom** é a margem entre o pico do sinal e o limite da fonte. Sem headroom, ocorre **clipping**: os picos são achatados, gerando distorção rica em harmônicos ímpares, percebida como aspereza, “compressão” ou, em casos graves, estalos. Note que o clipping pode acontecer antes do amplificador — no domínio digital, se uma equalização elevar o sinal acima de 0 dBFS. Esse caso é tratado em [preamp e clipping](/processamento/equalizador-parametrico).
+
+## Impedância de saída
+
+Uma fonte real se comporta como uma fonte de tensão ideal em série com uma pequena resistência interna: a **impedância de saída** $Z_{\text{out}}$. Ela forma um **divisor de tensão** com o fone:
+
+$$
+V_{\text{fone}} = V_{\text{fonte}} \cdot \frac{Z_{\text{fone}}}{Z_{\text{fone}} + Z_{\text{out}}}
+$$
+
+Duas consequências:
+
+1. **Perda de nível**, pequena se $Z_{\text{out}} \ll Z_{\text{fone}}$.
+2. **Alteração da resposta em frequência** se $Z_{\text{fone}}$ variar com a frequência. Como vimos em [impedância](/eletronica/corrente-alternada-e-impedancia), IEMs multi-BA podem variar de 5 a 50 Ω ao longo do espectro. Com uma fonte de 10 Ω, a fração de tensão que chega ao fone muda de região para região — e a resposta pode mudar vários decibéis.
+
+<Lab id="output-impedance" />
+
+A regra prática mais citada é a **regra de 1/8**: manter a impedância de saída abaixo de um oitavo da menor impedância do fone limita o desvio a ~1 dB. Para IEMs multi-BA, isso costuma significar menos de 1–2 Ω — o que bons dongles e amplificadores modernos atendem facilmente, mas algumas saídas de notebooks, amplificadores antigos e quase todos os valvulados sem transformador não.
+
+Há outro efeito, menor: a impedância de saída também reduz o **amortecimento elétrico** do driver dinâmico na ressonância (o *damping factor*), o que pode aumentar ligeiramente os graves de headphones dinâmicos com pico de impedância nos graves. É o mesmo mecanismo de divisor de tensão visto de outro ângulo.
+
+## Limites desta conta
+
+A calculadora e as fórmulas assumem que a sensibilidade foi medida corretamente (em 1 kHz, num acoplador), que a impedância nominal representa bem a carga e que a fonte se comporta como fonte de tensão até seu limite. Especificações de fabricantes nem sempre são precisas; algumas fontes limitam corrente antes da tensão; e a sensibilidade em graves pode ser diferente da de 1 kHz. Ainda assim, a conta acerta a ordem de grandeza — e ordem de grandeza é exatamente o que separa “não precisa de amplificador” de “precisa”.
+
+<References>
+  <Ref>IEC 60268-7:2010. <em>Sound system equipment — Part 7: Headphones and earphones</em> (sensibilidade e impedância).</Ref>
+  <Ref>Self, D. <em>Audio Power Amplifier Design</em>. 6ª ed. Focal Press, 2013.</Ref>
+  <Ref>Horowitz, P.; Hill, W. <em>The Art of Electronics</em>. 3ª ed. Cambridge University Press, 2015. Divisores de tensão e impedância de fonte.</Ref>
+</References>

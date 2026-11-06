@@ -1,0 +1,86 @@
+<Lead>
+Quanto dá para transformar um fone só com equalização? Muito mais do que a maioria das pessoas imagina — e menos do que alguns entusiastas da EQ afirmam. A resposta precisa depende de entender o que torna um fone diferente de outro, e quais dessas diferenças vivem na resposta em frequência.
+</Lead>
+
+## A resposta curta
+
+**A EQ consegue mudar quase tudo o que depende da resposta em frequência do fone, na faixa em que o fone produz som limpo.** Como a resposta em frequência é o fator que mais determina o som de um fone, isso é muita coisa: equilíbrio de graves, médios e agudos, ressonâncias, sibilância, presença, a assinatura inteira.
+
+**A EQ não consegue mudar** o que não está na resposta em frequência (distorção, ruído, conforto, isolamento), o que varia a cada vez que você coloca o fone (vedação, inserção) e o que ela não sabe medir (a sua anatomia), nem criar o que o driver não produz.
+
+## Por que a EQ é tão poderosa
+
+### Fones são, em grande parte, sistemas lineares e de fase mínima
+
+Em níveis normais de escuta, um fone se comporta como um sistema linear: a pressão no tímpano é a resposta em frequência do fone aplicada ao sinal. E boa parte do seu comportamento é de **fase mínima**: magnitude e fase estão ligadas matematicamente (pela transformada de Hilbert). Uma consequência importante é que **a resposta temporal também está determinada pela magnitude**. Um pico de ressonância em 6 kHz vem acompanhado de um decaimento lento em 6 kHz; um filtro de EQ de fase mínima que corta esse pico corrige, junto, o decaimento.
+
+Por isso não faz sentido dizer que um fone é “lento” e outro “rápido” se ambos tiverem a mesma resposta em frequência (de fase mínima): eles teriam a mesma resposta ao impulso. E por isso a EQ corrige mais do que “tonalidade”.
+
+### A evidência dos fones virtuais
+
+A melhor demonstração vem da própria pesquisa da Harman. O **método do fone virtual** consiste em equalizar um fone de referência para reproduzir a resposta de outros fones e testá-los às cegas. Estudos de validação mostraram que as notas de preferência obtidas com as versões virtuais acompanham de perto as obtidas com os fones reais — ou seja, **a resposta em frequência explicou a maior parte das diferenças percebidas** entre os fones avaliados. Diferenças residuais existem (distorção, encaixe, vazamento), mas são menores.
+
+## Até onde ela vai, na prática
+
+Com uma medição confiável do seu modelo e um alvo, uma ferramenta de autoEQ consegue, com 5 a 10 filtros, aproximar a resposta medida do alvo dentro de cerca de ±1 dB entre 20 Hz e 10 kHz, na maioria dos casos. Isso significa que você pode, por exemplo, deixar um IEM em V muito próximo de um Harman, ou transformar a resposta de um IEM na de outro — **no acoplador**.
+
+<Lab id="autoeq" />
+
+O laboratório mostra o processo e, ao mudar a “condição de uso”, mostra também onde ele para.
+
+## Os limites
+
+### 1. A medição não é o seu ouvido
+
+A EQ calculada a partir de uma medição corrige o fone **no acoplador**. No seu ouvido, a resposta difere por causa do comprimento e da forma do canal, da impedância do tímpano e da profundidade de inserção, principalmente acima de 4–5 kHz. Uma EQ que aplaina um pico de 8 kHz no acoplador pode criar um vale no seu ouvido, se a sua ressonância estiver em outro lugar. Por isso:
+
+- confie na correção automática até ~5–6 kHz;
+- ajuste os agudos **de ouvido**, com filtros largos e moderados;
+- desconfie de correções estreitas e profundas acima de 6 kHz.
+
+### 2. Vedação e encaixe variam
+
+A EQ é fixa; a vedação não. Um vazamento que muda cada vez que você coloca o fone, ou quando você fala e mastiga, muda os graves em vários decibéis. Nenhum filtro compensa algo que varia. Ponteiras adequadas resolvem o que a EQ não resolve.
+
+### 3. Cancelamentos não se preenchem
+
+Vales estreitos e profundos causados por **interferência** — dois caminhos acústicos chegando em contrafase, por exemplo entre drivers num crossover ou numa reflexão no bocal — não são de fase mínima. Reforçar a frequência reforça os dois caminhos, que continuam se cancelando. Além disso, esses vales costumam mudar de posição com o encaixe. A boa notícia é que vales estreitos são pouco audíveis com música (Bücklein, 1981); o melhor costuma ser deixá-los em paz.
+
+### 4. Headroom e excursão
+
+Todo reforço consome **headroom digital** (exige preamp) e **tensão** do amplificador. Reforços grandes de graves também exigem mais **excursão** do driver; em drivers dinâmicos com ventilação e em BAs, isso aumenta a distorção e pode levá-los ao limite em volumes altos. Um shelf de +6 dB costuma ser tranquilo; +15 dB em 30 Hz num BA pequeno, não.
+
+### 5. Distorção e ruído não mudam (ou pioram)
+
+A EQ não reduz a distorção do driver nem o ruído da fonte. Reforçar uma região reforça também os produtos de distorção ali presentes. Um fone com distorção alta nos graves continua com distorção alta depois da EQ — e com mais distorção, se os graves forem reforçados.
+
+### 6. Extensão que não existe
+
+Se a resposta do driver despenca acima de 14 kHz, reforçar 18 kHz em 15 dB não cria saída limpa ali: aumenta ruído, distorção e risco, com pouco ganho real.
+
+### 7. O espaço e a imagem
+
+A EQ pode **igualar os dois canais**, aplicando filtros diferentes em cada lado — o que melhora a imagem central quando há desequilíbrio entre os fones esquerdo e direito. Mas ela não cria externalização: o som em fones continua dentro da cabeça. Para isso seriam necessários processamentos espaciais com HRTF (veja [localização](/percepcao/localizacao-espacial)).
+
+### 8. O que não é som
+
+Conforto, peso, isolamento, durabilidade, cabo e estética não são equalizáveis — e, numa escolha de compra, muitas vezes importam tanto quanto o som.
+
+<Callout type="evidencia" title="Resumo do que se sabe">
+- A resposta em frequência explica a maior parte das diferenças de preferência entre fones em testes cegos, e a EQ pode alterá-la com precisão.
+- A EQ calculada por medição é confiável até ~5–6 kHz; acima disso, precisa de ajuste individual.
+- Vedação, distorção, ruído, limites de excursão e anatomia individual são os limites reais.
+- Por isso “um bom fone com EQ” pode chegar muito perto de “um fone excelente” — desde que o bom fone tenha baixa distorção, encaixe bem e não exija reforços extremos.
+</Callout>
+
+## Quando a EQ é a melhor compra
+
+Se você já tem um IEM confortável, bem vedado e de baixa distorção, mas não gosta do equilíbrio tonal, a EQ quase sempre resolve melhor (e mais barato) do que trocar de fone ou de fonte. Se o problema é conforto, isolamento, vedação ou chiado, a EQ não ajuda — e a solução está em outro lugar. Essa comparação, aplicada à pergunta “DAC/amp ou EQ?”, está em [DAC/amp, dongle ou EQ por software?](/iems/fonte-dac-amp-ou-eq).
+
+<References>
+  <Ref>Olive, S. E.; Welti, T.; McMullin, E. “A virtual headphone listening test methodology.” AES 51st International Conference on Loudspeakers and Headphones, 2013.</Ref>
+  <Ref>Oppenheim, A. V.; Schafer, R. W. <em>Discrete-Time Signal Processing</em>. 3ª ed. Pearson, 2010. Sistemas de fase mínima.</Ref>
+  <Ref>Bücklein, R. “The audibility of frequency response irregularities.” <em>Journal of the Audio Engineering Society</em>, 29(3), 126–131, 1981.</Ref>
+  <Ref>Toole, F. E.; Olive, S. E. “The modification of timbre by resonances: perception and measurement.” <em>JAES</em>, 36(3), 122–142, 1988.</Ref>
+  <Ref>Pasanen, J. <em>AutoEq</em> — github.com/jaakkopasanen/AutoEq.</Ref>
+</References>

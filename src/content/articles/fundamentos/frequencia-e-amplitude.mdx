@@ -1,0 +1,113 @@
+<Lead>
+Toda descrição técnica de som — de uma ficha de especificações a um gráfico de resposta em frequência — é construída sobre quatro grandezas: frequência, período, amplitude e comprimento de onda. Elas parecem simples, e são; mas cada uma esconde consequências que reaparecem em todo o resto da audiofilia.
+</Lead>
+
+## A senoide: o átomo do som
+
+Quando um sistema massa-mola é deslocado e solto, ele oscila de um jeito muito específico: a posição varia como uma **senoide**. Não é uma escolha estética da matemática. É a solução da equação mais simples possível para “uma força que puxa de volta proporcionalmente ao deslocamento” — e como quase todo sistema físico se comporta assim para pequenas perturbações, senoides aparecem em toda parte: num diapasão, numa corda, na membrana de um fone, no ar.
+
+Uma onda sonora senoidal, observada num ponto fixo do espaço, é descrita por:
+
+$$
+p(t) = A \,\sin(2\pi f t + \varphi)
+$$
+
+<Vars
+  items={[
+    ['p(t)', 'pressão acústica (desvio em relação à pressão atmosférica) no instante t'],
+    ['A', 'amplitude: o desvio máximo de pressão, em pascals'],
+    ['f', 'frequência: quantos ciclos completos ocorrem por segundo, em hertz (Hz)'],
+    ['t', 'tempo, em segundos'],
+    ['φ', 'fase inicial: em que ponto do ciclo a onda está em t = 0, em radianos'],
+  ]}
+/>
+
+Há um segundo motivo, mais profundo, para a senoide ser o tijolo fundamental. Sistemas **lineares e invariantes no tempo** — e boa parte da cadeia de áudio é aproximadamente assim: amplificadores, cabos, filtros, o ar, o próprio fone em níveis moderados — têm uma propriedade notável: se você coloca uma senoide na entrada, sai uma senoide **da mesma frequência**. Só a amplitude e a fase podem mudar. Isso significa que, para descrever completamente o que um sistema linear faz com *qualquer* sinal, basta dizer o que ele faz com cada frequência. É exatamente isso que é uma [resposta em frequência](/resposta/lendo-graficos). E como qualquer sinal pode ser decomposto numa soma de senoides (o teorema de Fourier, assunto de [harmônicos e timbre](/fundamentos/harmonicos-e-timbre)), essa descrição frequência a frequência é completa.
+
+## Frequência e período
+
+A **frequência** conta ciclos por segundo; o **período** mede a duração de um ciclo. Um é o inverso do outro:
+
+$$
+T = \frac{1}{f}
+$$
+
+Um tom de 100 Hz tem período de 10 ms; um de 1 kHz, de 1 ms; um de 10 kHz, de 100 µs. Costuma-se dizer que a audição humana vai de 20 Hz a 20 kHz, mas esses números são uma convenção arredondada. Abaixo de ~20 Hz o som deixa de ser percebido como tom contínuo e passa a ser sentido como pulsação ou pressão (e precisa de níveis muito altos para ser detectado). O limite superior varia muito: crianças podem ouvir acima de 20 kHz, enquanto a maioria dos adultos de meia-idade tem dificuldade acima de 14–16 kHz. A perda começa pelos agudos e é chamada de **presbiacusia**. Use a varredura do laboratório abaixo para estimar o seu limite — sabendo que o resultado também depende do seu fone e do volume.
+
+<Lab id="tone" />
+
+A relação entre frequência e **altura** (a sensação de grave ou agudo) é aproximadamente logarítmica: o que soa como um passo igual é uma *multiplicação* igual de frequência. De 100 para 200 Hz soa como o mesmo salto que de 1 000 para 2 000 Hz — uma oitava. É por isso que todos os gráficos de áudio usam eixo de frequência logarítmico, e por isso a faixa audível, que parece imensa em hertz (de 20 a 20 000), corresponde a apenas cerca de dez oitavas. Frequência é uma grandeza física; altura é uma percepção, e as duas não são a mesma coisa — sons sem nenhuma energia na frequência da nota percebida podem ter altura bem definida, como você verá em [altura, melodia e harmonia](/fundamentos/melodia-e-harmonia).
+
+## Amplitude: pico, pico a pico e RMS
+
+A amplitude diz “quanto” o sinal oscila, mas há várias maneiras de medi-la, e confundi-las é uma fonte constante de erros em especificações.
+
+- **Pico:** o maior desvio em relação a zero.
+- **Pico a pico:** a distância entre o máximo e o mínimo — o dobro do pico, para uma senoide.
+- **RMS (root mean square):** a raiz da média dos quadrados do sinal. É o valor que determina a **potência** entregue, e por isso é o padrão para tensões e pressões em áudio.
+
+Para uma senoide, o valor RMS é o pico dividido por √2:
+
+$$
+A_{\text{rms}} = \frac{A_{\text{pico}}}{\sqrt{2}} \approx 0{,}707 \, A_{\text{pico}}
+$$
+
+A razão entre pico e RMS é o **fator de crista**. Para uma senoide ele vale √2 (3 dB). Música real tem fatores de crista muito maiores: picos de bateria podem estar 15 a 20 dB acima do nível médio numa gravação pouco comprimida. Isso importa diretamente para a escolha de amplificadores: um amplificador dimensionado para o nível *médio* da música vai cortar (clipar) os picos. Esse conceito, o [headroom](/eletronica/potencia-e-sensibilidade), aparece de novo no módulo de eletrônica.
+
+<Callout type="mito" title="“Frequências mais altas soam mais alto”">
+Frequência e intensidade são independentes: um tom de 3 kHz e um de 100 Hz podem ter exatamente a mesma amplitude de pressão. Acontece que a audição é muito mais sensível perto de 3 kHz, então o primeiro *parece* bem mais alto. Essa dependência de frequência da sensação de intensidade é o assunto das [curvas de igual sonoridade](/percepcao/sonoridade-e-volume), e é a razão pela qual um pequeno pico em 3 kHz num fone é muito mais perceptível do que o mesmo pico em 100 Hz.
+</Callout>
+
+## Comprimento de onda
+
+Enquanto a frequência descreve a onda no tempo, o **comprimento de onda** a descreve no espaço: é a distância entre duas compressões consecutivas. Como a onda avança à velocidade do som $c$ e leva um período $T$ para completar um ciclo:
+
+$$
+\lambda = c \cdot T = \frac{c}{f}
+$$
+
+No ar a 20 °C (c ≈ 343 m/s), isso gera uma régua que vale a pena memorizar:
+
+| Frequência | Comprimento de onda | Comparável a… |
+| --- | --- | --- |
+| 20 Hz | 17,2 m | um prédio de 5 andares |
+| 100 Hz | 3,4 m | a altura de uma sala |
+| 500 Hz | 69 cm | um braço |
+| 1 kHz | 34 cm | um par de ombros |
+| 3,4 kHz | 10 cm | quatro vezes o canal auditivo |
+| 10 kHz | 3,4 cm | o diâmetro de uma orelha |
+| 20 kHz | 1,7 cm | o comprimento de um IEM |
+
+Essa tabela explica uma quantidade enorme de fenômenos. Objetos muito menores que o comprimento de onda praticamente não afetam o som; objetos maiores o refletem, bloqueiam e difratam. Por isso:
+
+- **Graves contornam obstáculos** e atravessam paredes com facilidade, enquanto agudos são bloqueados. O vizinho ouve o seu subwoofer, não os seus pratos.
+- **A cabeça faz sombra apenas para frequências médias e altas**, o que cria diferenças de nível entre os ouvidos — uma das pistas de [localização espacial](/percepcao/localizacao-espacial).
+- **A orelha e o canal auditivo têm dimensões de alguns centímetros**, comparáveis aos comprimentos de onda entre 2 e 10 kHz. É exatamente nessa faixa que eles produzem ressonâncias fortes — o fenômeno do [pinna gain](/percepcao/pinna-gain).
+- **Uma sala com 3 a 5 m de dimensão tem ressonâncias (modos) entre ~30 e 200 Hz**, que reforçam ou cancelam graves conforme a posição de quem ouve. Fones não sofrem com isso, o que é uma das grandes vantagens da escuta com fones.
+
+O simulador de ondas mostra a relação diretamente: aumente a frequência e veja os comprimentos de onda encolherem dentro da janela de dois metros.
+
+<Lab id="wave" />
+
+## Tempo e frequência são duas faces da mesma moeda
+
+Uma senoide pura dura, por definição, para sempre. Um som real começa e termina — e isso tem um preço espectral. Quanto mais curto um evento, mais larga a faixa de frequências necessária para representá-lo. Um clique instantâneo contém, em princípio, todas as frequências com a mesma intensidade; um tom de 1 kHz que dura só 2 ms já não é “um 1 kHz”, mas uma mancha de energia espalhada por centenas de hertz ao redor. Matematicamente, a duração Δt de um sinal e sua largura de banda Δf obedecem aproximadamente a
+
+$$
+\Delta t \cdot \Delta f \gtrsim 1
+$$
+
+Esse princípio aparece em muitos lugares: é por isso que **ataques rápidos** (de uma baqueta, de uma palheta) dependem de agudos bem reproduzidos; por isso que um filtro muito estreito em frequência “toca” (ressoa) por mais tempo; e por isso que, em sistemas lineares de fase mínima como um fone, **a resposta no tempo e a resposta em frequência são a mesma informação** vista de dois ângulos. Um fone com um pico estreito e alto em 6 kHz terá, necessariamente, uma ressonância que demora a decair em 6 kHz. Não existe um fone “rápido” com resposta em frequência idêntica a um fone “lento” — tema que retomaremos ao discutir [separação e resolução](/iems/separacao-e-resolucao).
+
+## Juntando as peças
+
+Frequência define *onde* no espectro a energia está e, perceptivamente, a altura; amplitude define *quanta* energia há e, perceptivamente (com muitas ressalvas), a intensidade; fase define *quando* no ciclo e importa sobretudo quando ondas se encontram; comprimento de onda traduz tudo isso para o espaço e determina como o som interage com objetos — inclusive com a sua cabeça.
+
+O próximo passo natural é aprender a falar de amplitudes que variam por fatores de milhões sem se perder em zeros: os [decibéis](/fundamentos/decibeis).
+
+<References>
+  <Ref>Hartmann, W. M. <em>Signals, Sound, and Sensation</em>. AIP Press / Springer, 1997. Excelente ponte entre a matemática dos sinais e a percepção.</Ref>
+  <Ref>Rossing, T. D.; Moore, F. R.; Wheeler, P. A. <em>The Science of Sound</em>. 3ª ed. Addison-Wesley, 2002.</Ref>
+  <Ref>ISO 7029:2017. <em>Acoustics — Statistical distribution of hearing thresholds related to age and gender</em>. Base estatística da perda auditiva com a idade.</Ref>
+  <Ref>Oppenheim, A. V.; Willsky, A. S. <em>Signals and Systems</em>. 2ª ed. Prentice Hall, 1997. Sistemas lineares, senoides como autofunções e a dualidade tempo-frequência.</Ref>
+</References>

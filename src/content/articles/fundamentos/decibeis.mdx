@@ -1,0 +1,125 @@
+<Lead>
+O decibel é a unidade mais usada em áudio e, provavelmente, a mais mal compreendida. Ele não mede uma quantidade: mede uma razão. Entender isso — e por que usamos logaritmos — é o que permite ler especificações, gráficos e medições sem cair em armadilhas.
+</Lead>
+
+## O problema: grandezas que variam por milhões
+
+O som mais fraco que um ouvido jovem detecta a 1 kHz tem pressão de cerca de 20 µPa. O limiar da dor fica perto de 20 Pa a 200 Pa, dependendo do critério. Isso é uma razão de um milhão a dez milhões em pressão — e de um trilhão em intensidade, já que a intensidade cresce com o quadrado da pressão. Escrever “o show estava a 2 Pa e a conversa a 0,02 Pa” é exato, mas inútil para comparar coisas rapidamente, desenhar gráficos ou fazer contas de cabeça.
+
+Há também um motivo perceptivo. No século XIX, Ernst Weber e Gustav Fechner observaram que, para muitos sentidos, a menor mudança perceptível de um estímulo é proporcional ao próprio estímulo: notamos +10% tanto num som fraco quanto num forte. Se sensação cresce com *razões* iguais de estímulo, então sensação acompanha o **logaritmo** do estímulo. A lei de Weber–Fechner é apenas uma aproximação (a sonoridade, como veremos, segue mais de perto uma lei de potência, segundo S. S. Stevens), mas ela captura algo verdadeiro: o ouvido funciona em escala de razões, não de diferenças.
+
+O logaritmo transforma multiplicações em somas. Uma escala logarítmica transforma “dez milhões de vezes” em “140 unidades”, e “o dobro” sempre no mesmo número de unidades, não importa o ponto de partida. É isso que o decibel faz.
+
+## A definição
+
+O bel (homenagem a Alexander Graham Bell, criado por engenheiros de telefonia nos anos 1920) é o logaritmo decimal de uma razão de **potências**. O decibel é um décimo de bel:
+
+$$
+L = 10 \log_{10}\!\left(\frac{P_1}{P_0}\right) \ \text{dB}
+$$
+
+<Vars
+  items={[
+    ['L', 'nível em decibéis'],
+    ['P₁', 'potência (ou intensidade, ou energia) que está sendo descrita'],
+    ['P₀', 'potência de referência — sem ela, o número não significa nada em termos absolutos'],
+  ]}
+/>
+
+Mas em áudio quase sempre medimos **amplitudes**: pressão, tensão elétrica, valores de amostra digital. Como a potência é proporcional ao quadrado da amplitude ($P \propto V^2$, $I \propto p^2$), o quadrado sai do logaritmo como fator 2:
+
+$$
+L = 10 \log_{10}\!\left(\frac{V_1^2}{V_0^2}\right) = 20 \log_{10}\!\left(\frac{V_1}{V_0}\right) \ \text{dB}
+$$
+
+Essa é a origem da famosa confusão entre “10 log” e “20 log”. Não são duas definições diferentes: é a mesma definição aplicada a grandezas diferentes. Um aumento de **6 dB** pode ser descrito como “o dobro da tensão” ou como “quatro vezes a potência” — as duas frases descrevem a mesma mudança física.
+
+| Mudança | Em amplitude (tensão, pressão) | Em potência |
+| --- | --- | --- |
+| +1 dB | × 1,122 | × 1,259 |
+| +3 dB | × 1,413 | × 2 |
+| +6 dB | × 2 | × 4 |
+| +10 dB | × 3,16 | × 10 |
+| +20 dB | × 10 | × 100 |
+| −6 dB | × 0,5 | × 0,25 |
+| −40 dB | × 0,01 | × 0,0001 |
+
+Se você memorizar só uma linha, memorize esta: **+6 dB = dobro da amplitude; +3 dB = dobro da potência; +20 dB = dez vezes a amplitude.**
+
+## As referências: o que vem depois do “dB”
+
+Um número em decibéis só tem significado absoluto quando a referência está declarada — normalmente por um sufixo.
+
+**dB SPL** (*sound pressure level*): pressão acústica RMS relativa a 20 µPa. É o “volume” físico de um som num ponto. A referência foi escolhida por ser aproximadamente o limiar de audição a 1 kHz, de modo que 0 dB SPL é “quase inaudível” e quase todos os sons cotidianos ficam entre 0 e 120.
+
+$$
+L_p = 20 \log_{10}\!\left(\frac{p_{\text{rms}}}{20\ \mu\text{Pa}}\right)\ \text{dB SPL}
+$$
+
+**dB(A), dB(C)**: SPL medido com uma **ponderação** que imita a sensibilidade da audição, atenuando graves e agudos extremos. A curva A deriva aproximadamente da curva de igual sonoridade de 40 fons e é usada em normas de ruído e saúde ocupacional; a C é quase plana e usada para níveis altos e picos. São definidas na IEC 61672-1.
+
+**dBFS** (*full scale*): nível digital relativo ao maior valor representável. 0 dBFS é o teto; todo sinal digital válido tem nível ≤ 0 dBFS. Não há tensão associada fixa — depende do conversor.
+
+**dBV**: tensão RMS relativa a 1 V. **dBu**: tensão RMS relativa a 0,775 V, o valor que dissipa 1 mW numa carga de 600 Ω (herança da telefonia). Os dois diferem por uma constante: dBu = dBV + 2,21. O áudio profissional opera em +4 dBu (1,23 V); o de consumo, em −10 dBV (0,316 V).
+
+**dBm**: potência relativa a 1 mW. Em fones, a sensibilidade é frequentemente dada em **dB SPL/mW** (o nível produzido com 1 mW de entrada) ou **dB SPL/V** (com 1 V RMS). Converter uma na outra exige conhecer a impedância, como veremos em [sensibilidade e potência](/eletronica/potencia-e-sensibilidade).
+
+**dB sem sufixo**, num gráfico de resposta em frequência, quase sempre é **relativo**: a curva foi normalizada para 0 dB em alguma frequência (500 Hz ou 1 kHz, tipicamente) e o que importa é a forma, não o valor absoluto.
+
+<Lab id="db" />
+
+## Fazendo contas com decibéis
+
+Como decibéis são logaritmos, as regras aritméticas mudam.
+
+**Ganhos em série se somam.** Um pré-amplificador com +20 dB seguido de um amplificador com +26 dB resulta em +46 dB de ganho total — o que equivale a multiplicar 10 × 20 = 200 em tensão. Esta é a grande conveniência dos decibéis: cadeias inteiras de áudio viram somas simples.
+
+**Níveis de fontes independentes não se somam diretamente.** Dois ruídos de 80 dB não somam 160 dB: somam suas *potências*, ou seja, 80 + 10·log₁₀(2) = **83 dB**. Dez fontes iguais somam +10 dB; cem, +20 dB. Se uma fonte está 10 dB abaixo da outra, sua contribuição para o total é de apenas 0,4 dB.
+
+**Sinais idênticos em fase somam amplitudes.** Dois sinais coerentes e em fase (por exemplo, o mesmo canal mono tocado por dois drivers sobrepostos) somam +6 dB; em contrafase, cancelam-se. Na prática, entre esses extremos, depende da fase — o assunto de [interferência](/fundamentos/fase-e-interferencia).
+
+**Percentuais viram decibéis negativos.** Especificações de distorção aparecem às vezes em %, às vezes em dB. A conversão é 20·log₁₀ da fração:
+
+| Distorção | Em dB relativo ao sinal |
+| --- | --- |
+| 10% | −20 dB |
+| 1% | −40 dB |
+| 0,1% | −60 dB |
+| 0,01% | −80 dB |
+| 0,001% | −100 dB |
+
+Isso deixa claro por que a diferença entre 0,001% e 0,0005% de THD num DAC é irrelevante para a audição: é a diferença entre −100 e −106 dB em relação ao sinal, algo enterrado muito abaixo do que o mascaramento permite ouvir na maioria das situações (veja [mensurável vs audível](/ciencia/mensuravel-vs-audivel)).
+
+## Decibéis e percepção
+
+É tentador traduzir decibéis diretamente em sensação, e algumas regras práticas funcionam razoavelmente bem para sons de banda larga em níveis moderados:
+
+- **~1 dB** é aproximadamente a menor diferença de nível que se nota numa comparação direta entre dois sons iguais. Em condições ideais (troca instantânea, ruído de banda larga), ouvintes atentos detectam diferenças de 0,2 a 0,5 dB.
+- **+10 dB** soa, para a maioria das pessoas, como “o dobro do volume”. Note: isso é 10 vezes a potência e ~3,2 vezes a pressão.
+- **+3 dB** é uma mudança clara, mas não drástica.
+
+O número de 1 dB parece pequeno, mas é crucial: em comparações entre fones ou equipamentos, uma diferença de volume de meio decibel, que ninguém identifica *como* diferença de volume, é frequentemente interpretada como “mais detalhe”, “mais grave” ou “mais presença”. Por isso comparações sérias precisam de [volume compatibilizado](/iems/comparando-iems).
+
+<Callout type="atencao" title="Decibéis não são todos iguais para o ouvido">
+Um aumento de 10 dB em 1 kHz e um aumento de 10 dB em 50 Hz são fisicamente idênticos (o mesmo fator de pressão), mas não perceptivamente. Em baixas frequências, as curvas de igual sonoridade ficam comprimidas: poucos decibéis de diferença mudam muito a sensação de intensidade. Por isso uma elevação de graves de 6 dB pode parecer enorme em volume baixo e moderada em volume alto. Veja [sonoridade e volume](/percepcao/sonoridade-e-volume).
+</Callout>
+
+## Armadilhas comuns
+
+**“Este fone chega a 120 dB.”** Com quanta potência ou tensão? A que distorção? Sem referência de entrada, o número é marketing.
+
+**“A relação sinal-ruído é 110 dB.”** Medida em relação a qual nível de sinal? Com ponderação A ou sem? Numa faixa de 20 Hz a 20 kHz? Especificações de SNR podem variar 10 dB ou mais conforme essas escolhas.
+
+**Ler eixos de gráficos com escalas diferentes.** Um gráfico de resposta em frequência com eixo vertical de ±5 dB faz uma variação de 2 dB parecer uma montanha; outro com ±30 dB a faz parecer uma linha reta. Sempre olhe a escala antes de olhar a curva.
+
+**Misturar referências.** dBFS de um arquivo e dB SPL no ouvido não se relacionam sem conhecer o ganho de toda a cadeia (DAC, amplificador, sensibilidade do fone, volume ajustado). Normalizar uma faixa para −14 LUFS não diz nada sobre quão alto ela vai tocar no seu fone.
+
+Com decibéis em mãos, podemos olhar para o que acontece quando duas ondas se encontram: [fase e interferência](/fundamentos/fase-e-interferencia).
+
+<References>
+  <Ref>Davis, D.; Patronis, E.; Brown, P. <em>Sound System Engineering</em>. 4ª ed. Focal Press, 2013. Capítulo sobre decibéis e referências.</Ref>
+  <Ref>Stevens, S. S. “The measurement of loudness.” <em>Journal of the Acoustical Society of America</em>, 27(5), 815–829, 1955.</Ref>
+  <Ref>IEC 61672-1:2013. <em>Electroacoustics — Sound level meters — Part 1: Specifications</em> (ponderações A, C e Z).</Ref>
+  <Ref>ISO 1683:2015. <em>Acoustics — Preferred reference values for acoustical and vibratory levels</em>.</Ref>
+  <Ref>Moore, B. C. J. <em>An Introduction to the Psychology of Hearing</em>. 6ª ed. Brill, 2012. Limiares de discriminação de intensidade.</Ref>
+</References>

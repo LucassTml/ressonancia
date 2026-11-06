@@ -1,0 +1,75 @@
+<Lead>
+WAV, FLAC, ALAC, MP3, AAC, Opus, DSD, “hi-res”… Os formatos de áudio digital se dividem em duas famílias com filosofias opostas: os que guardam cada bit do original e os que descartam, com método, o que a audição provavelmente não vai notar. Entender como cada um funciona é entender de onde vêm — e onde não vêm — as diferenças de qualidade.
+</Lead>
+
+## PCM: o formato fundamental
+
+Quase todo áudio digital é **PCM** (*pulse-code modulation*): uma sequência de amostras de amplitude, tomadas a uma taxa fixa, com um número fixo de bits — exatamente o que descrevem os artigos sobre [amostragem](/digital/amostragem) e [quantização](/digital/quantizacao-e-dither). Um minuto de PCM estéreo a 44,1 kHz e 16 bits ocupa
+
+$$
+44\,100 \times 16 \times 2 \times 60 \approx 84{,}7\ \text{Mbit} \approx 10{,}6\ \text{MB}
+$$
+
+ou seja, um **bitrate** de 1 411 kbps. Arquivos **WAV** e **AIFF** são PCM sem compressão, com um cabeçalho que descreve o formato.
+
+## Compressão sem perdas (lossless)
+
+Formatos como **FLAC**, **ALAC** (Apple Lossless) e **WavPack** reduzem o tamanho do arquivo sem alterar nenhum bit do áudio decodificado — da mesma forma que um arquivo ZIP devolve exatamente o documento original. Eles exploram a **redundância** do áudio: as amostras são previsíveis a partir das anteriores (por predição linear), e o que se guarda é o pequeno erro de previsão, codificado de forma compacta (por códigos de Rice, no caso do FLAC).
+
+O resultado típico é de 50% a 70% do tamanho original. Como a decodificação é exata, **um FLAC e o WAV de origem são idênticos** quando tocados: qualquer diferença percebida entre eles vem de outra coisa (volume, reprodutor, expectativa).
+
+## Compressão com perdas (lossy) e codificação perceptiva
+
+**MP3**, **AAC**, **Vorbis** e **Opus** descartam informação. Mas não ao acaso: eles usam **modelos psicoacústicos** para decidir o que descartar. O processo, em linhas gerais:
+
+1. **Análise em frequência.** O sinal é dividido em blocos curtos e transformado em componentes de frequência (por bancos de filtros e pela MDCT, uma variante da transformada de cosseno).
+2. **Cálculo do limiar de mascaramento.** Para cada bloco, o modelo psicoacústico estima, banda por banda, o nível abaixo do qual qualquer ruído seria **inaudível** por causa do [mascaramento](/percepcao/mascaramento) causado pelo próprio sinal.
+3. **Alocação de bits.** Cada banda é quantizada com o mínimo de bits necessário para manter o ruído de quantização abaixo desse limiar. Bandas com sinal muito mascarado recebem poucos bits ou nenhum.
+4. **Empacotamento** com codificação de entropia (Huffman, aritmética).
+
+Com bitrate suficiente, o ruído adicionado fica inteiro abaixo do limiar, e o resultado é **perceptivamente transparente** para a maioria dos ouvintes e dos trechos musicais. Com bitrate baixo, o ruído ultrapassa o limiar e surgem **artefatos**:
+
+- **Pré-eco:** num ataque súbito (castanholas, cravo), o ruído de quantização se espalha pelo bloco inteiro, inclusive antes do ataque, onde nada o mascara. Codecs modernos trocam para blocos curtos nesses momentos.
+- **“Água” ou “metálico”** (*birdies*): bandas de agudos que aparecem e desaparecem de bloco para bloco.
+- **Perda de agudos:** em bitrates baixos, codificadores cortam tudo acima de 15–16 kHz.
+- **Estreitamento estéreo:** a codificação conjunta dos canais pode reduzir informação espacial.
+
+### Bitrates e transparência
+
+Os números são aproximados, variam com o codificador e com a música, e os testes cegos (como os promovidos por comunidades como a Hydrogenaudio e pela ITU) mostram grande variação entre ouvintes:
+
+| Formato | Bitrate em que a maioria dos ouvintes não distingue do original |
+| --- | --- |
+| MP3 (LAME, VBR) | ~190–256 kbps |
+| AAC (bom codificador) | ~128–192 kbps |
+| Opus | ~128–160 kbps |
+| Vorbis | ~160–192 kbps |
+
+Abaixo disso, ouvintes atentos começam a identificar artefatos em trechos difíceis. Muito abaixo (64 kbps estéreo), mesmo ouvintes comuns notam.
+
+<Callout type="evidencia">
+Serviços de streaming entregam AAC ou Vorbis/Opus de 256–320 kbps, ou formatos lossless. Em testes controlados, a diferença entre lossy de alta qualidade e lossless é, na maior parte dos casos, inaudível ou muito difícil de detectar. Há exceções (trechos específicos, ouvintes treinados), e o lossless continua sendo a melhor escolha para **arquivo e edição**, porque não acumula perdas em conversões sucessivas.
+</Callout>
+
+## Alta resolução
+
+Arquivos “hi-res” usam taxas de 88,2–192 kHz e 24 bits. Tecnicamente, guardam mais faixa de frequência (até 48–96 kHz) e um ruído de fundo mais baixo. Na reprodução, o que sabemos pela literatura é discutido em [mensurável vs audível](/ciencia/mensuravel-vs-audivel): quando diferenças são encontradas, são pequenas, e muitas vezes atribuíveis a masterizações diferentes, filtros diferentes ou não linearidades do equipamento com conteúdo ultrassônico — não ao formato em si.
+
+## DSD
+
+O **DSD** (*Direct Stream Digital*), criado para o SACD, usa **1 bit** a uma taxa altíssima: 2,8224 MHz (64 × 44,1 kHz) no DSD64, com versões de 128 e 256. Com um único bit, o erro de quantização é enorme, mas um modulador **sigma-delta** de alta ordem empurra quase todo esse ruído para frequências ultrassônicas (*noise shaping*), deixando a faixa audível limpa.
+
+DSD tem particularidades: o ruído ultrassônico cresce acentuadamente acima de ~20–30 kHz (no DSD64) e precisa ser filtrado; edição e mixagem não podem ser feitas diretamente em 1 bit (são convertidas para PCM de alta resolução e depois de volta). Em reprodução, um DSD bem feito e um PCM de alta resolução bem feito são, para todos os efeitos práticos, equivalentes. Muitos DACs convertem um no outro internamente.
+
+## Metadados e o que realmente muda o som
+
+Além do áudio, arquivos carregam metadados: título, capa e, às vezes, informações de **ReplayGain** (veja [loudness](/digital/loudness-e-resampling)). Quando duas versões de uma música soam diferentes, as causas mais frequentes, em ordem, são: **masterizações diferentes** (versões remasterizadas com mais compressão, edições “hi-res” com outro tratamento), **diferenças de volume** (normalização ligada num e não no outro), **bitrates baixos** e, só então, o formato em si.
+
+<References>
+  <Ref>Painter, T.; Spanias, A. “Perceptual coding of digital audio.” <em>Proceedings of the IEEE</em>, 88(4), 451–515, 2000.</Ref>
+  <Ref>Brandenburg, K. “MP3 and AAC explained.” AES 17th International Conference on High-Quality Audio Coding, 1999.</Ref>
+  <Ref>Valin, J.-M.; Maxwell, G.; Terriberry, T. B.; Vos, K. “High-quality, low-delay music coding in the Opus codec.” AES 135th Convention, 2013.</Ref>
+  <Ref>ITU-R BS.1534-3 (2015). <em>Method for the subjective assessment of intermediate quality level of audio systems</em> (MUSHRA).</Ref>
+  <Ref>Xiph.Org Foundation. <em>FLAC format specification</em>. xiph.org/flac.</Ref>
+  <Ref>Reefman, D.; Janssen, E. “Signal processing for Direct Stream Digital.” Philips Research, 2002.</Ref>
+</References>
