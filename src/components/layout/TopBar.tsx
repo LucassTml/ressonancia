@@ -119,6 +119,9 @@ export function TopBar({ onSearch, onMenu }: { onSearch: () => void; onMenu: () 
               )}
             </NavLink>
           ))}
+          <a href="https://github.com/LucassTml" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 text-[13.5px] rounded-lg text-muted hover:text-fg transition-colors">
+            LucassTml
+          </a>
         </nav>
         <div className="ml-auto flex items-center gap-1.5">
           <button

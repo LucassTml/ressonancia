@@ -55,6 +55,12 @@ function Footer() {
           <Link to="/ciencia/avaliando-alegacoes" className="hover:text-fg">{tr("Fontes confiáveis")}</Link>
         </nav>
       </div>
+      <p className="mx-auto max-w-[1180px] px-4 sm:px-6 pb-3 text-[13px] text-muted">
+        {tr("Feito por")}{' '}
+        <a href="https://github.com/LucassTml" target="_blank" rel="noopener noreferrer" className="text-fg font-medium hover:text-accent transition-colors">LucassTml</a>
+        {' · '}
+        <a href="https://github.com/LucassTml" target="_blank" rel="noopener noreferrer" className="hover:text-fg transition-colors">GitHub</a>
+      </p>
       <p className="mx-auto max-w-[1180px] px-4 sm:px-6 pb-10 text-[11.5px] text-faint leading-relaxed">{tr("Curvas-alvo e medições de IEMs obtidas do projeto AutoEq (licença MIT); as medições de IEMs são de oratory1990. Curvas de “assinatura” são sintéticas e representativas. Nenhuma informação deste site substitui avaliação audiológica profissional.")}</p>
     </footer>
   );
