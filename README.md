@@ -17,32 +17,15 @@ O módulo “Comece aqui” apresenta o essencial: o que são hertz, oitavas e d
 
 ![Artigo sobre como ler um gráfico de fone, com diagrama explicativo](docs/images/grafico.png)
 
-## Para ver e ouvir
+## Laboratório de frequência
 
-Cada conceito tem um experimento por perto. Aqui, as oitavas: cada degrau dobra a frequência, e dá para ouvir por que todos soam como a mesma nota.
-
-![Laboratório de oitavas, com degraus de frequência e comparação de ondas](docs/images/oitavas.png)
-
-No laboratório de resposta em frequência, você arrasta a curva, compara com alvos como o Harman e ouve o resultado aplicado à música.
+Arraste a curva, compare com alvos como o Harman e ouça o resultado aplicado à música.
 
 ![Laboratório de resposta em frequência, com curva editável](docs/images/resposta.png)
 
-## IEMs famosos, com medições reais
-
-Uma galeria de 29 modelos, de cerca de US$ 20 a mais de US$ 2.000, todos medidos no mesmo equipamento. Dá para comparar curvas, entender as escolhas de afinação e ouvir a diferença.
-
-![Explorador comparando as curvas do Moondrop Chu e do Sennheiser IE 900](docs/images/explorador.png)
-
-E os dados rendem uma descoberta: pagar mais não aproxima um fone do alvo.
-
-![Gráfico de preço contra proximidade do alvo, sem tendência de subida](docs/images/preco.png)
-
 ## Também no site
 
-- Sons de fundo personalizáveis para a leitura, que pausam quando um experimento toca
-- Glossário com definições dentro do texto, busca e favoritos
-- Tema claro ou escuro
-- Volume limitado e aviso de proteção auditiva nos experimentos
+Galeria de IEMs famosos com medições reais, explorador para comparar curvas, gráfico de preço contra proximidade do alvo, laboratório de oitavas e dezenas de outros experimentos. Há ainda sons de fundo para a leitura, glossário, busca, favoritos e tema escuro.
 
 ## Créditos
 
