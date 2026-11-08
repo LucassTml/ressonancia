@@ -25,7 +25,13 @@ Arraste a curva, compare com alvos como o Harman e ouça o resultado aplicado à
 
 ## Também no site
 
-Galeria de IEMs famosos com medições reais, explorador para comparar curvas, gráfico de preço contra proximidade do alvo, laboratório de oitavas e dezenas de outros experimentos. Há ainda sons de fundo para a leitura, glossário, busca, favoritos e tema escuro.
+- **Onda interativa:** a onda da página inicial é um instrumento. Mover o ponteiro muda a nota e o brilho, e um clique dedilha.
+- **Galeria de IEMs famosos:** 29 modelos em quatro faixas de preço, de cerca de US$ 20 a mais de US$ 2.000, todos medidos no mesmo equipamento. Cada um traz a curva, os drivers, o motivo da fama e o que a medição revela sobre as escolhas de afinação.
+- **Explorador de curvas:** compare até quatro IEMs sobre o alvo Harman, veja só a diferença em relação a ele e ouça o caráter de cada modelo com música de demonstração, ruído rosa ou um arquivo seu.
+- **Preço contra proximidade do alvo:** um gráfico com dados reais mostra o que o preço compra e o que não compra. O modelo mais próximo do alvo custa cerca de US$ 150, e vários dos mais caros estão entre os mais distantes.
+- **Outros experimentos:** oitavas, equalizador paramétrico com seus próprios arquivos e exportação para o Equalizer APO, autoEQ, simulador de vedação e ponteiras, curvas de igual sonoridade, amostragem digital, teste cego ABX com estatística e dezenas de outros.
+- **Sons de fundo:** 13 camadas de ruídos, natureza e música calma, todas sintetizadas no navegador, com 7 misturas prontas e volume individual. Pausam sozinhas quando um experimento toca e voltam quando ele termina.
+- **Para ler melhor:** definições do glossário ao passar o ponteiro sobre os termos, busca, favoritos salvos no navegador, tema claro ou escuro e seletor entre português e inglês.
 
 ## Créditos
 
