@@ -6,6 +6,7 @@ import { FreqPlot, Legend } from '../../viz/FreqPlot';
 import { biquadCoefs, biquadDb, interpCurve, logFreqs } from '../../audio/dsp';
 import { harmanIE, harmanIENoBass } from '../../data/targets';
 import { rmsError } from '../../audio/autoeq';
+import { tr } from '../../i18n';
 
 const FS = 96000;
 const pk = (f: number, fc: number, g: number, q: number) => biquadDb(biquadCoefs({ id: '', type: 'peaking', freq: fc, gain: g, q }, FS), f, FS);
@@ -80,8 +81,8 @@ export default function TuningLab() {
 
   return (
     <LabFrame
-      title="Tuning: do protótipo à linha de produção"
-      description="Um IEM híbrido (1 driver dinâmico para graves, 1 BA para médios-agudos). Use as ferramentas de afinação para aproximar o protótipo do alvo; depois, aprove a curva e veja o controle de qualidade avaliar um lote de unidades."
+      title={tr("Tuning: do protótipo à linha de produção")}
+      description={tr("Um IEM híbrido (1 driver dinâmico para graves, 1 BA para médios-agudos). Use as ferramentas de afinação para aproximar o protótipo do alvo; depois, aprove a curva e veja o controle de qualidade avaliar um lote de unidades.")}
       onReset={() => {
         setT(PROTO);
         setStage('tune');
@@ -92,12 +93,12 @@ export default function TuningLab() {
           value={stage}
           onChange={setStage}
           options={[
-            { value: 'tune', label: '1. Afinar o protótipo' },
-            { value: 'qc', label: '2. Controle de qualidade' },
+            { value: 'tune', label: tr("1. Afinar o protótipo") },
+            { value: 'qc', label: tr("2. Controle de qualidade") },
           ]}
         />
       }
-      footer="Modelo didático: cada ferramenta é representada pelo efeito típico que produz na resposta (ordens de grandeza realistas), não por uma simulação física completa. Em engenharia real, cada mudança é feita no protótipo e verificada numa nova medição."
+      footer={tr("Modelo didático: cada ferramenta é representada pelo efeito típico que produz na resposta (ordens de grandeza realistas), não por uma simulação física completa. Em engenharia real, cada mudança é feita no protótipo e verificada numa nova medição.")}
     >
       <AnimatePresence mode="wait">
         {stage === 'tune' ? (
@@ -108,27 +109,25 @@ export default function TuningLab() {
               dbMax={18}
               dbStep={3}
               curves={[
-                { id: 't', label: 'Alvo (Harman IE 2019)', fn: target, color: 'var(--c-target)', width: 1.6, dash: '6 4' },
-                { id: 'p', label: 'Protótipo', fn: resp, color: 'var(--c-a)', width: 2.6 },
+                { id: 't', label: tr("Alvo (Harman IE 2019)"), fn: target, color: 'var(--c-target)', width: 1.6, dash: '6 4' },
+                { id: 'p', label: tr("Protótipo"), fn: resp, color: 'var(--c-a)', width: 2.6 },
               ]}
-              ariaLabel="Resposta do protótipo e alvo"
+              ariaLabel={tr("Resposta do protótipo e alvo")}
             />
             <div className="mt-2 mb-4">
-              <Legend items={[{ label: 'Alvo', color: 'var(--c-target)', dash: true }, { label: 'Protótipo', color: 'var(--c-a)' }]} />
+              <Legend items={[{ label: tr("Alvo"), color: 'var(--c-target)', dash: true }, { label: tr("Protótipo"), color: 'var(--c-a)' }]} />
             </div>
             <Controls cols={3}>
-              <Slider label="Ventilação do DD" value={t.vent} min={0} max={1} step={0.01} onChange={(v) => set('vent', v)} format={(v) => `${Math.round(v * 100)}%`} hint="Mais ventilação: menos grave e menos pressão." />
-              <Slider label="Damper traseiro do DD" value={t.ddDamper} min={0} max={1} step={0.01} onChange={(v) => set('ddDamper', v)} format={(v) => `${Math.round(v * 100)}%`} hint="Controla o volume de médios-graves." />
-              <Slider label="Capacitor do BA (crossover)" value={t.cap} min={0.5} max={10} log onChange={(v) => set('cap', Number(v.toFixed(2)))} unit="µF" hint={`Corte ≈ ${fmtHz(1 / (2 * Math.PI * 20 * t.cap * 1e-6))}`} />
-              <Slider label="Damper no tubo do BA" value={t.baDamper} min={0} max={1} step={0.01} onChange={(v) => set('baDamper', v)} format={(v) => `${Math.round(v * 100)}%`} hint="Doma a ressonância do BA." />
-              <Slider label="Comprimento do tubo do BA" value={t.tube} min={4} max={20} step={0.5} onChange={(v) => set('tube', v)} unit="mm" hint={`Ressonância ≈ ${fmtHz(343 / (2 * (t.tube + 6) / 1000))}`} />
-              <Slider label="Filtro de bocal" value={t.nozzle} min={0} max={1} step={0.01} onChange={(v) => set('nozzle', v)} format={(v) => (v < 0.05 ? 'aberto' : `${Math.round(v * 100)}%`)} hint="Malha mais densa: menos agudos." />
+              <Slider label={tr("Ventilação do DD")} value={t.vent} min={0} max={1} step={0.01} onChange={(v) => set('vent', v)} format={(v) => `${Math.round(v * 100)}%`} hint={tr("Mais ventilação: menos grave e menos pressão.")} />
+              <Slider label={tr("Damper traseiro do DD")} value={t.ddDamper} min={0} max={1} step={0.01} onChange={(v) => set('ddDamper', v)} format={(v) => `${Math.round(v * 100)}%`} hint={tr("Controla o volume de médios-graves.")} />
+              <Slider label={tr("Capacitor do BA (crossover)")} value={t.cap} min={0.5} max={10} log onChange={(v) => set('cap', Number(v.toFixed(2)))} unit="µF" hint={tr("Corte ≈ {0}", fmtHz(1 / (2 * Math.PI * 20 * t.cap * 1e-6)))} />
+              <Slider label={tr("Damper no tubo do BA")} value={t.baDamper} min={0} max={1} step={0.01} onChange={(v) => set('baDamper', v)} format={(v) => `${Math.round(v * 100)}%`} hint={tr("Doma a ressonância do BA.")} />
+              <Slider label={tr("Comprimento do tubo do BA")} value={t.tube} min={4} max={20} step={0.5} onChange={(v) => set('tube', v)} unit="mm" hint={tr("Ressonância ≈ {0}", fmtHz(343 / (2 * (t.tube + 6) / 1000)))} />
+              <Slider label={tr("Filtro de bocal")} value={t.nozzle} min={0} max={1} step={0.01} onChange={(v) => set('nozzle', v)} format={(v) => (v < 0.05 ? 'aberto' : `${Math.round(v * 100)}%`)} hint={tr("Malha mais densa: menos agudos.")} />
             </Controls>
             <div className="mt-4 flex flex-wrap items-center gap-3">
-              <Readout items={[{ label: 'Desvio do alvo (RMS, 20 Hz–10 kHz)', value: `${fmtNum(err, 2)} dB`, accent: true, hint: err < 1.2 ? 'pronto para aprovar' : err < 2.5 ? 'quase lá' : 'longe do alvo' }]} />
-              <Button variant={err < 1.5 ? 'primary' : 'outline'} onClick={() => setStage('qc')}>
-                Aprovar como amostra de referência →
-              </Button>
+              <Readout items={[{ label: tr("Desvio do alvo (RMS, 20 Hz–10 kHz)"), value: `${fmtNum(err, 2)} dB`, accent: true, hint: err < 1.2 ? tr("pronto para aprovar") : err < 2.5 ? tr("quase lá") : tr("longe do alvo") }]} />
+              <Button variant={err < 1.5 ? 'primary' : 'outline'} onClick={() => setStage('qc')}>{tr("Aprovar como amostra de referência →")}</Button>
             </div>
           </motion.div>
         ) : (
@@ -141,7 +140,7 @@ export default function TuningLab() {
               fMin={100}
               fMax={10000}
               readout={false}
-              regions={[{ from: 100, to: 8000, label: `janela de tolerância ±${tol} dB`, color: 'transparent' }]}
+              regions={[{ from: 100, to: 8000, label: tr("janela de tolerância ±{0} dB", tol), color: 'transparent' }]}
               curves={[
                 { id: 'up', fn: () => tol, color: 'var(--c-diff)', width: 1.2, dash: '4 3' },
                 { id: 'dn', fn: () => -tol, color: 'var(--c-diff)', width: 1.2, dash: '4 3' },
@@ -150,22 +149,22 @@ export default function TuningLab() {
                   { id: `r${i}`, fn: u.R, color: u.pass ? 'var(--c-a)' : 'var(--c-b)', width: 1, opacity: 0.4, dash: '2 2' },
                 ]),
               ]}
-              ariaLabel="Desvios de cada unidade em relação à amostra de referência"
+              ariaLabel={tr("Desvios de cada unidade em relação à amostra de referência")}
             />
-            <p className="text-[12px] text-muted mt-2">Desvio de cada fone (esquerdo: linha cheia; direito: tracejada) em relação à amostra de referência aprovada.</p>
+            <p className="text-[12px] text-muted mt-2">{tr("Desvio de cada fone (esquerdo: linha cheia; direito: tracejada) em relação à amostra de referência aprovada.")}</p>
             <div className="mt-4">
               <Controls cols={2}>
-                <Slider label="Tolerância de resposta" value={tol} min={1} max={4} step={0.25} onChange={setTol} format={(v) => `±${fmtNum(v, 2)} dB`} hint="Casamento entre canais exigido: ≤ 1,5 dB." />
+                <Slider label={tr("Tolerância de resposta")} value={tol} min={1} max={4} step={0.25} onChange={setTol} format={(v) => tr("±{0} dB", fmtNum(v, 2))} hint={tr("Casamento entre canais exigido: ≤ 1,5 dB.")} />
               </Controls>
             </div>
             <div className="mt-4 flex flex-wrap items-center gap-3">
               <Readout
                 items={[
-                  { label: 'Pares aprovados neste lote', value: `${passed} de ${units.length}`, accent: true },
-                  { label: 'Pior casamento L/R', value: `${fmtNum(Math.max(...units.map((u) => u.lr)), 1)} dB` },
+                  { label: tr("Pares aprovados neste lote"), value: `${passed} de ${units.length}`, accent: true },
+                  { label: tr("Pior casamento L/R"), value: `${fmtNum(Math.max(...units.map((u) => u.lr)), 1)} dB` },
                 ]}
               />
-              <Button onClick={() => setBatch((b) => b + 1)}>Produzir outro lote</Button>
+              <Button onClick={() => setBatch((b) => b + 1)}>{tr("Produzir outro lote")}</Button>
             </div>
           </motion.div>
         )}
@@ -173,8 +172,8 @@ export default function TuningLab() {
       <div className="mt-4">
         <Note>
           {stage === 'tune'
-            ? 'Cada ferramenta age numa região: ventilação e damper do DD nos graves; o capacitor decide onde o BA entra; o damper e o tubo do BA moldam presença e agudos; o filtro de bocal faz o ajuste final. Engenheiros iteram assim, medição após medição, até a curva convergir.'
-            : 'Tolerâncias apertadas aumentam a consistência — e o custo, porque mais unidades (ou drivers) são reprovadas. Fabricantes também separam drivers por lotes de sensibilidade para montar pares bem casados.'}
+            ? tr("Cada ferramenta age numa região: ventilação e damper do DD nos graves; o capacitor decide onde o BA entra; o damper e o tubo do BA moldam presença e agudos; o filtro de bocal faz o ajuste final. Engenheiros iteram assim, medição após medição, até a curva convergir.")
+            : tr("Tolerâncias apertadas aumentam a consistência — e o custo, porque mais unidades (ou drivers) são reprovadas. Fabricantes também separam drivers por lotes de sensibilidade para montar pares bem casados.")}
         </Note>
       </div>
     </LabFrame>

@@ -1,0 +1,143 @@
+<Lead>
+The decibel is the most used unit in audio and probably the most misunderstood. It doesn't measure a quantity: it measures a ratio. Understanding that, and why we use logarithms, is what lets you read specifications, graphs and measurements without falling into traps.
+</Lead>
+
+<Callout type="simples">
+A decibel number says how much bigger one thing is than another. Three figures take you a long way: +3 dB is double the power, +6 dB is double the signal, and +10 dB sounds about twice as loud. The everyday version is in [Decibels without math](/inicio/decibel-sem-matematica).
+</Callout>
+
+## The problem: quantities that vary by millions
+
+<Diagram id="db-ladder" />
+
+The faintest sound a young ear detects at 1 kHz has a pressure of about 20 µPa. The threshold of pain is near 20 Pa to 200 Pa, depending on the criterion. That's a ratio of one million to ten million in pressure, and a trillion in intensity, since intensity grows with the square of pressure. Writing "the concert was at 2 Pa and the conversation at 0.02 Pa" is exact, but useless for quick comparisons, drawing graphs or mental arithmetic.
+
+There's also a perceptual reason. In the 19th century, Ernst Weber and Gustav Fechner observed that, for many senses, the smallest noticeable change in a stimulus is proportional to the stimulus itself: we notice +10% in both a faint and a loud sound. If sensation grows with equal *ratios* of stimulus, then sensation follows the **logarithm** of the stimulus. The Weber–Fechner law is only an approximation (loudness, as we'll see, more closely follows a power law, according to S. S. Stevens), but it captures something true: the ear works on a scale of ratios, not differences.
+
+A logarithm turns multiplication into addition. A logarithmic scale turns "ten million times" into "140 units," and "double" always into the same number of units, no matter the starting point. That's what the decibel does.
+
+## The definition
+
+The bel (named after Alexander Graham Bell, created by telephone engineers in the 1920s) is the base-10 logarithm of a ratio of **powers**. A decibel is a tenth of a bel:
+
+<Formula say="Compare two powers, take the logarithm of the ratio and multiply by ten. Ten times the power is +10 dB.">
+
+$$
+L = 10 \log_{10}\!\left(\frac{P_1}{P_0}\right) \ \text{dB}
+$$
+
+<Vars
+  items={[
+    ['L', 'level in decibels'],
+    ['P₁', 'the power (or intensity, or energy) being described'],
+    ['P₀', 'reference power; without it, the number means nothing in absolute terms'],
+  ]}
+/>
+
+</Formula>
+
+But in audio we nearly always measure **amplitudes**: pressure, electrical voltage, digital sample values. Since power is proportional to the square of amplitude ($P \propto V^2$, $I \propto p^2$), the square comes out of the logarithm as a factor of 2:
+
+<Formula say="For voltage or sound pressure, the multiplier is twenty instead of ten, because power grows with the square of those quantities.">
+
+$$
+L = 10 \log_{10}\!\left(\frac{V_1^2}{V_0^2}\right) = 20 \log_{10}\!\left(\frac{V_1}{V_0}\right) \ \text{dB}
+$$
+
+</Formula>
+
+That's the origin of the famous confusion between "10 log" and "20 log." They aren't two different definitions: it's the same definition applied to different quantities. An increase of **6 dB** can be described as "double the voltage" or as "four times the power." Both phrases describe the same physical change.
+
+| Change | In amplitude (voltage, pressure) | In power |
+| --- | --- | --- |
+| +1 dB | × 1.122 | × 1.259 |
+| +3 dB | × 1.413 | × 2 |
+| +6 dB | × 2 | × 4 |
+| +10 dB | × 3.16 | × 10 |
+| +20 dB | × 10 | × 100 |
+| −6 dB | × 0.5 | × 0.25 |
+| −40 dB | × 0.01 | × 0.0001 |
+
+If you memorize only one line, make it this one: **+6 dB = double the amplitude; +3 dB = double the power; +20 dB = ten times the amplitude.**
+
+## References: what comes after the "dB"
+
+A decibel figure only has absolute meaning when its reference is stated, usually by a suffix.
+
+**dB SPL** (*sound pressure level*): RMS acoustic pressure relative to 20 µPa. It's the physical "loudness" of a sound at a point. The reference was chosen because it's approximately the threshold of hearing at 1 kHz, so that 0 dB SPL is "almost inaudible" and nearly all everyday sounds fall between 0 and 120.
+
+<Formula say="dB SPL compares the sound's pressure with the faintest sound a young ear can detect at 1 kHz.">
+
+$$
+L_p = 20 \log_{10}\!\left(\frac{p_{\text{rms}}}{20\ \mu\text{Pa}}\right)\ \text{dB SPL}
+$$
+
+</Formula>
+
+**dB(A), dB(C)**: SPL measured with a **weighting** that imitates hearing sensitivity, attenuating extreme bass and treble. The A curve derives approximately from the 40-phon equal-loudness contour and is used in noise and occupational health standards; C is nearly flat and used for high levels and peaks. They are defined in IEC 61672-1.
+
+**dBFS** (*full scale*): digital level relative to the largest representable value. 0 dBFS is the ceiling; every valid digital signal has a level ≤ 0 dBFS. There's no fixed associated voltage, as it depends on the converter.
+
+**dBV**: RMS voltage relative to 1 V. **dBu**: RMS voltage relative to 0.775 V, the value that dissipates 1 mW in a 600 Ω load (a telephony legacy). The two differ by a constant: dBu = dBV + 2.21. Professional audio operates at +4 dBu (1.23 V); consumer audio at −10 dBV (0.316 V).
+
+**dBm**: power relative to 1 mW. In headphones, sensitivity is often given in **dB SPL/mW** (the level produced with 1 mW input) or **dB SPL/V** (with 1 V RMS). Converting one to the other requires knowing the impedance, as we'll see in [sensitivity and power](/eletronica/potencia-e-sensibilidade).
+
+**dB with no suffix**, on a frequency response graph, is nearly always **relative**: the curve has been normalized to 0 dB at some frequency (500 Hz or 1 kHz, typically) and what matters is the shape, not the absolute value.
+
+<Lab id="db" />
+
+## Doing arithmetic with decibels
+
+Since decibels are logarithms, the rules of arithmetic change.
+
+**Gains in series add up.** A preamp at +20 dB followed by an amplifier at +26 dB gives +46 dB of total gain, equivalent to multiplying 10 × 20 = 200 in voltage. That's the great convenience of decibels: whole audio chains become simple sums.
+
+**Levels of independent sources don't add directly.** Two 80 dB noises don't total 160 dB. Their *powers* add, so 80 + 10·log₁₀(2) = **83 dB**. Ten equal sources add +10 dB; a hundred, +20 dB. If one source is 10 dB below another, its contribution to the total is only 0.4 dB.
+
+**Identical in-phase signals add amplitudes.** Two coherent in-phase signals (for example, the same mono channel played by two overlapping drivers) add +6 dB; out of phase, they cancel. In practice, between those extremes, it depends on the phase, the subject of [interference](/fundamentos/fase-e-interferencia).
+
+**Percentages become negative decibels.** Distortion specs appear sometimes in %, sometimes in dB. The conversion is 20·log₁₀ of the fraction:
+
+| Distortion | In dB relative to the signal |
+| --- | --- |
+| 10% | −20 dB |
+| 1% | −40 dB |
+| 0.1% | −60 dB |
+| 0.01% | −80 dB |
+| 0.001% | −100 dB |
+
+This makes clear why the difference between 0.001% and 0.0005% THD in a DAC is irrelevant to hearing: it's the difference between −100 and −106 dB relative to the signal, buried far below what masking allows you to hear in most situations (see [measurable vs audible](/ciencia/mensuravel-vs-audivel)).
+
+## Decibels and perception
+
+It's tempting to translate decibels directly into sensation, and some rules of thumb work reasonably well for broadband sounds at moderate levels:
+
+- **~1 dB** is roughly the smallest level difference noticed in a direct comparison between two identical sounds. In ideal conditions (instant switching, broadband noise), attentive listeners detect differences of 0.2 to 0.5 dB.
+- **+10 dB** sounds, to most people, like "twice as loud." Note: that's 10 times the power and ~3.2 times the pressure.
+- **+3 dB** is a clear but not drastic change.
+
+The 1 dB figure seems small, but it's crucial: in comparisons between headphones or equipment, a half-decibel volume difference that nobody identifies *as* a volume difference is often interpreted as "more detail," "more bass" or "more presence." That's why serious comparisons need [matched volume](/iems/comparando-iems).
+
+<Callout type="atencao" title="Decibels aren't all equal to the ear">
+A 10 dB increase at 1 kHz and a 10 dB increase at 50 Hz are physically identical (the same pressure factor), but not perceptually. At low frequencies, equal-loudness contours are compressed: a few decibels of difference change the sensation of loudness a lot. That's why a 6 dB bass lift can seem enormous at low volume and moderate at high volume. See [loudness and volume](/percepcao/sonoridade-e-volume).
+</Callout>
+
+## Common traps
+
+**"This headphone reaches 120 dB."** With how much power or voltage? At what distortion? Without an input reference, the number is marketing.
+
+**"The signal-to-noise ratio is 110 dB."** Measured relative to which signal level? With or without A-weighting? Over a 20 Hz to 20 kHz band? SNR specs can vary by 10 dB or more depending on those choices.
+
+**Reading graph axes with different scales.** A frequency response graph with a ±5 dB vertical axis makes a 2 dB variation look like a mountain; another with ±30 dB makes it look like a straight line. Always look at the scale before looking at the curve.
+
+**Mixing references.** A file's dBFS and the dB SPL at your ear aren't related without knowing the gain of the whole chain (DAC, amplifier, headphone sensitivity, volume setting). Normalizing a track to −14 LUFS says nothing about how loud it will play in your headphones.
+
+With decibels in hand, we can look at what happens when two waves meet: [phase and interference](/fundamentos/fase-e-interferencia).
+
+<References>
+  <Ref>Davis, D.; Patronis, E.; Brown, P. <em>Sound System Engineering</em>. 4th ed. Focal Press, 2013. Chapter on decibels and references.</Ref>
+  <Ref>Stevens, S. S. "The measurement of loudness." <em>Journal of the Acoustical Society of America</em>, 27(5), 815–829, 1955.</Ref>
+  <Ref>IEC 61672-1:2013. <em>Electroacoustics — Sound level meters — Part 1: Specifications</em> (A, C and Z weightings).</Ref>
+  <Ref>ISO 1683:2015. <em>Acoustics — Preferred reference values for acoustical and vibratory levels</em>.</Ref>
+  <Ref>Moore, B. C. J. <em>An Introduction to the Psychology of Hearing</em>. 6th ed. Brill, 2012. Intensity discrimination thresholds.</Ref>
+</References>

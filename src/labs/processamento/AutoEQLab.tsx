@@ -11,12 +11,13 @@ import { harmanIE, signatureDb, signatures } from '../../data/targets';
 import { useStore } from '../../lib/storage';
 import { preferenceFilters, preferenceStore } from '../resposta/PreferenceLab';
 import { fitDelta } from '../percepcao/FitLab';
+import { tr } from '../../i18n';
 
 const pk = (f: number, fc: number, g: number, q: number) => biquadDb(biquadCoefs({ id: '', type: 'peaking', freq: fc, gain: g, q }, 96000), f, 96000);
 
 const SOURCES = [
-  { value: 'real', label: 'IEM sintético com ressonâncias e um cancelamento' },
-  ...signatures.filter((s) => !['neutral', 'harman'].includes(s.id)).map((s) => ({ value: `s:${s.id}`, label: `Assinatura: ${s.name}` })),
+  { value: 'real', label: tr("IEM sintético com ressonâncias e um cancelamento") },
+  ...signatures.filter((s) => !['neutral', 'harman'].includes(s.id)).map((s) => ({ value: `s:${s.id}`, label: tr("Assinatura: {0}", s.name) })),
 ];
 
 function sourceFn(id: string) {
@@ -67,8 +68,8 @@ export default function AutoEQLab() {
 
   return (
     <LabFrame
-      title="AutoEQ e os limites da equalização"
-      description="Um algoritmo ajusta filtros paramétricos para aproximar um IEM de um alvo, como fazem ferramentas como o AutoEq. Depois, mude as condições de uso e veja o que a EQ calculada no acoplador não consegue prever."
+      title={tr("AutoEQ e os limites da equalização")}
+      description={tr("Um algoritmo ajusta filtros paramétricos para aproximar um IEM de um alvo, como fazem ferramentas como o AutoEq. Depois, mude as condições de uso e veja o que a EQ calculada no acoplador não consegue prever.")}
       audio
       onReset={() => {
         setSrc('real');
@@ -78,11 +79,11 @@ export default function AutoEQLab() {
         setBass(true);
         setCond('ideal');
       }}
-      footer="Algoritmo: colocação gulosa de filtros no maior desvio restante (largura pela meia altura), seguida de refinamento local que minimiza o erro quadrático ponderado (peso menor acima de 8 kHz). Reforços limitados para preservar headroom e evitar excursão excessiva. Curvas sintéticas."
+      footer={tr("Algoritmo: colocação gulosa de filtros no maior desvio restante (largura pela meia altura), seguida de refinamento local que minimiza o erro quadrático ponderado (peso menor acima de 8 kHz). Reforços limitados para preservar headroom e evitar excursão excessiva. Curvas sintéticas.")}
     >
       <div className="grid sm:grid-cols-2 gap-3 mb-4">
-        <Select label="IEM de partida" value={src} onChange={setSrc} options={SOURCES} />
-        <Select label="Alvo" value={tgt} onChange={(v) => setTgt(v as 'harman' | 'pref')} options={[{ value: 'harman', label: 'Harman IE 2019' }, { value: 'pref', label: pref ? 'Minha curva (salva no laboratório de preferência)' : 'Minha curva (ainda não salva — usa Harman)' }]} />
+        <Select label={tr("IEM de partida")} value={src} onChange={setSrc} options={SOURCES} />
+        <Select label={tr("Alvo")} value={tgt} onChange={(v) => setTgt(v as 'harman' | 'pref')} options={[{ value: 'harman', label: tr("Harman IE 2019") }, { value: 'pref', label: pref ? tr("Minha curva (salva no laboratório de preferência)") : tr("Minha curva (ainda não salva — usa Harman)") }]} />
       </div>
       <FreqPlot
         height={310}
@@ -90,51 +91,51 @@ export default function AutoEQLab() {
         dbMax={18}
         dbStep={3}
         curves={[
-          { id: 't', label: 'Alvo', fn: target, color: 'var(--c-target)', width: 1.6, dash: '6 4' },
-          { id: 's', label: 'IEM original', fn: source, color: 'var(--c-b)', width: 1.6, opacity: 0.85 },
-          { id: 'r', label: 'IEM + EQ (acoplador)', fn: result, color: 'var(--c-a)', width: 2.6 },
-          ...(cond !== 'ideal' ? [{ id: 'e', label: 'IEM + EQ (no seu ouvido)', fn: inEar, color: 'var(--c-diff)', width: 1.8, dash: '3 3' }] : []),
+          { id: 't', label: tr("Alvo"), fn: target, color: 'var(--c-target)', width: 1.6, dash: '6 4' },
+          { id: 's', label: tr("IEM original"), fn: source, color: 'var(--c-b)', width: 1.6, opacity: 0.85 },
+          { id: 'r', label: tr("IEM + EQ (acoplador)"), fn: result, color: 'var(--c-a)', width: 2.6 },
+          ...(cond !== 'ideal' ? [{ id: 'e', label: tr("IEM + EQ (no seu ouvido)"), fn: inEar, color: 'var(--c-diff)', width: 1.8, dash: '3 3' }] : []),
         ]}
-        ariaLabel="IEM, alvo e resultado da equalização"
+        ariaLabel={tr("IEM, alvo e resultado da equalização")}
       />
       <div className="mt-2 mb-4">
         <Legend
           items={[
-            { label: 'Alvo', color: 'var(--c-target)', dash: true },
-            { label: 'Original', color: 'var(--c-b)' },
-            { label: 'Com EQ (acoplador)', color: 'var(--c-a)' },
-            ...(cond !== 'ideal' ? [{ label: 'Com EQ no seu ouvido', color: 'var(--c-diff)', dash: true }] : []),
+            { label: tr("Alvo"), color: 'var(--c-target)', dash: true },
+            { label: tr("Original"), color: 'var(--c-b)' },
+            { label: tr("Com EQ (acoplador)"), color: 'var(--c-a)' },
+            ...(cond !== 'ideal' ? [{ label: tr("Com EQ no seu ouvido"), color: 'var(--c-diff)', dash: true }] : []),
           ]}
         />
       </div>
       <div className="grid sm:grid-cols-3 gap-x-6 gap-y-3">
-        <Slider label="Número de filtros" value={count} min={1} max={10} step={1} onChange={setCount} />
-        <Slider label="Reforço máximo por filtro" value={maxGain} min={0} max={12} step={0.5} onChange={setMaxGain} format={fmtDb} />
+        <Slider label={tr("Número de filtros")} value={count} min={1} max={10} step={1} onChange={setCount} />
+        <Slider label={tr("Reforço máximo por filtro")} value={maxGain} min={0} max={12} step={0.5} onChange={setMaxGain} format={fmtDb} />
         <div className="pt-4">
-          <Toggle checked={bass} onChange={setBass} label="Low shelf para graves" />
+          <Toggle checked={bass} onChange={setBass} label={tr("Low shelf para graves")} />
         </div>
       </div>
       <div className="mt-4">
-        <div className="text-[12.5px] text-muted font-medium mb-1.5">Condição de uso (o que a medição não sabe)</div>
+        <div className="text-[12.5px] text-muted font-medium mb-1.5">{tr("Condição de uso (o que a medição não sabe)")}</div>
         <Segmented
           size="sm"
           value={cond}
           onChange={setCond}
           options={[
-            { value: 'ideal', label: 'Igual ao acoplador' },
-            { value: 'leak', label: 'Vedação imperfeita' },
-            { value: 'deep', label: 'Inserção mais funda' },
-            { value: 'unit', label: 'Outra unidade' },
+            { value: 'ideal', label: tr("Igual ao acoplador") },
+            { value: 'leak', label: tr("Vedação imperfeita") },
+            { value: 'deep', label: tr("Inserção mais funda") },
+            { value: 'unit', label: tr("Outra unidade") },
           ]}
         />
       </div>
       <div className="mt-4">
         <Readout
           items={[
-            { label: 'Desvio do alvo antes (RMS, 20 Hz–10 kHz)', value: `${fmtNum(before, 2)} dB` },
-            { label: 'Depois, no acoplador', value: `${fmtNum(after, 2)} dB`, accent: true },
-            ...(cond !== 'ideal' ? [{ label: 'Depois, no seu ouvido', value: `${fmtNum(afterEar, 2)} dB` }] : []),
-            { label: 'Preamp necessário', value: fmtDb(preamp) },
+            { label: tr("Desvio do alvo antes (RMS, 20 Hz–10 kHz)"), value: `${fmtNum(before, 2)} dB` },
+            { label: tr("Depois, no acoplador"), value: `${fmtNum(after, 2)} dB`, accent: true },
+            ...(cond !== 'ideal' ? [{ label: tr("Depois, no seu ouvido"), value: `${fmtNum(afterEar, 2)} dB` }] : []),
+            { label: tr("Preamp necessário"), value: fmtDb(preamp) },
           ]}
         />
       </div>
@@ -144,9 +145,9 @@ export default function AutoEQLab() {
             <thead>
               <tr className="text-left text-muted border-b border-line">
                 <th className="py-1.5 pr-3 font-medium">#</th>
-                <th className="py-1.5 pr-3 font-medium">Tipo</th>
-                <th className="py-1.5 pr-3 font-medium">Frequência</th>
-                <th className="py-1.5 pr-3 font-medium">Ganho</th>
+                <th className="py-1.5 pr-3 font-medium">{tr("Tipo")}</th>
+                <th className="py-1.5 pr-3 font-medium">{tr("Frequência")}</th>
+                <th className="py-1.5 pr-3 font-medium">{tr("Ganho")}</th>
                 <th className="py-1.5 font-medium">Q</th>
               </tr>
             </thead>
@@ -166,19 +167,15 @@ export default function AutoEQLab() {
         <div>
           <pre className="text-[11.5px] font-mono bg-sunken border border-line rounded-xl px-3 py-2.5 overflow-x-auto leading-relaxed">{apo}</pre>
           <Button size="sm" variant="ghost" className="mt-1" icon={<IconCopy size={14} />} onClick={() => void navigator.clipboard?.writeText(apo).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1500); })}>
-            {copied ? 'Copiado' : 'Copiar para Equalizer APO'}
+            {copied ? tr("Copiado") : tr("Copiar para Equalizer APO")}
           </Button>
         </div>
       </div>
       <div className="mt-5 pt-4 border-t border-line">
-        <SourceBar player={player} extra={<Toggle checked={on} onChange={setOn} label={on ? 'Ouvindo com a EQ calculada' : 'Sem EQ'} />} />
+        <SourceBar player={player} extra={<Toggle checked={on} onChange={setOn} label={on ? tr("Ouvindo com a EQ calculada") : tr("Sem EQ")} />} />
       </div>
       <div className="mt-3">
-        <Note>
-          Repare no IEM sintético: o vale estreito e profundo em 9 kHz (um cancelamento) quase não é corrigido — exigiria um reforço enorme e
-          estreito, que o algoritmo limita de propósito. Com “vedação imperfeita”, a EQ perfeita no acoplador deixa um déficit de grave no seu
-          ouvido; com “inserção mais funda”, os agudos mudam. A EQ corrige o fone; não corrige o encaixe.
-        </Note>
+        <Note>{tr("Repare no IEM sintético: o vale estreito e profundo em 9 kHz (um cancelamento) quase não é corrigido — exigiria um reforço enorme e estreito, que o algoritmo limita de propósito. Com “vedação imperfeita”, a EQ perfeita no acoplador deixa um déficit de grave no seu ouvido; com “inserção mais funda”, os agudos mudam. A EQ corrige o fone; não corrige o encaixe.")}</Note>
       </div>
     </LabFrame>
   );

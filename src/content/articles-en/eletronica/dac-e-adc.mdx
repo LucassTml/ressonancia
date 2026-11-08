@@ -1,0 +1,77 @@
+<Lead>
+All digital music passes through two converters: an ADC, which turns a microphone's voltage into numbers, and a DAC, which turns the numbers back into voltage for your headphones. Between the two, music is only arithmetic. Understanding what these converters do, without the wrong metaphors of "steps" and "connected dots," makes clear why modern DACs are, for the most part, extraordinarily transparent.
+</Lead>
+
+<Callout type="simples">
+A DAC turns the numbers in a music file back into a smooth electrical wave. Contrary to popular images, the result isn't a staircase. Today's DACs, even cheap ones, do this so accurately that the differences are rarely audible.
+</Callout>
+
+## The ADC: measuring at regular instants
+
+An **analog-to-digital converter** (ADC) does two things:
+
+1. **Sampling:** measures the input voltage at regularly spaced instants: 44,100 times a second for CD, 48,000 in video, 96,000 or more in high-resolution recordings.
+2. **Quantization:** expresses each measurement as an integer with a certain number of bits (16, 24…).
+
+Before sampling, the ADC needs an **anti-aliasing filter**, which removes everything above half the sampling rate. Without it, high frequencies would appear disguised as low frequencies in the result (aliasing). The mathematical details, why discrete samples are enough to exactly represent a band-limited continuous signal, are in [sampling and Nyquist](/digital/amostragem) and [quantization and dither](/digital/quantizacao-e-dither).
+
+## The DAC: the way back
+
+A **digital-to-analog converter** (DAC) receives the sequence of numbers and has to produce a voltage that's continuous in time whose samples, at the right instants, exactly equal those numbers, and which contains nothing above half the sampling rate. This is done in two conceptual stages.
+
+### 1. Generating a voltage from the numbers
+
+The most intuitive form is a DAC that, at each sample, produces a voltage proportional to the number and **holds** it until the next sample. This is the **zero-order hold**. The result is a stepped waveform.
+
+### 2. Filtering: the reconstruction filter
+
+The stepped shape **isn't the signal**. Mathematically, it equals the original signal plus copies of its spectrum shifted upward, the **images**, centered on multiples of the sampling rate (44.1 kHz, 88.2 kHz…). The corners of the steps are those images. A low-pass **reconstruction filter**, which passes everything up to ~20 kHz and removes the images, turns the steps back into a smooth curve, and that curve is the original signal, exactly, as long as it was below half the sampling rate.
+
+<Lab id="dac" />
+
+<Callout type="mito" title="&quot;Digital audio is made of steps&quot;">
+The steps shown in illustrations are an artifact of a specific type of DAC **before** the reconstruction filter, and amount to the correct signal plus ultrasonic images. After the filter, there are no steps at all. A 15 kHz sine wave reproduced from only ~3 samples per cycle leaves the DAC as a perfect 15 kHz sine wave, not as a triangle or a staircase. What limits fidelity is bandwidth (how far it reproduces) and noise (decided by the bits), not "the resolution of the steps."
+</Callout>
+
+## Oversampling and digital filters
+
+Building an analog filter that passes 20 kHz intact and eliminates everything above 22.05 kHz is hard: it would require a steep cutoff, many components and complicated phase behavior. Modern DACs solve this with **oversampling**:
+
+1. A **digital filter** interpolates intermediate samples, raising the rate by a factor of 8, 16, 64 or more. Mathematically, this is done with arbitrary precision in the digital domain.
+2. Now the images are far away, at hundreds of kilohertz or megahertz.
+3. A **simple, gentle analog filter** removes those distant images without touching the audible band.
+
+In the lab above, turn on ×8 oversampling and the gentle filter: the steps become much finer and the images move away, showing why the analog filter can be trivial.
+
+DAC **digital filters** come in variations: steep linear phase, minimum phase, slow roll-off, "apodizing." They differ in behavior near 20 kHz (some attenuate 1–3 dB at 20 kHz) and in the shape of the impulse response (*pre-ringing* in linear-phase ones). These are real and measurable differences, almost always outside the range where hearing is sensitive; controlled tests rarely find audible differences between well-designed filters with ordinary music.
+
+## DAC architectures
+
+**R-2R and multibit.** A network of resistors with values R and 2R generates a current proportional to each bit of the number. It's conceptually direct but requires extremely precise resistors: in a 16-bit DAC, the resistor for the most significant bit has to be precise to one part in 65,536. Imprecision causes linearity errors.
+
+**Sigma-delta (ΔΣ).** The dominant architecture in practically all current DACs. The signal is oversampled to several megahertz and converted to a stream of few bits (as few as one) by a **modulator** that uses feedback to push the quantization error (the noise) to ultrasonic frequencies, known as *noise shaping*. A simple filter removes that noise. The result combines excellent linearity and low cost. Consumer sigma-delta chips reach dynamic ranges above 120 dB.
+
+**NOS (non-oversampling).** Some niche DACs deliberately omit oversampling and the digital filter. They produce a measurable treble roll-off (around −3 dB at 20 kHz, from the sinc envelope of the hold) and unfiltered images above 22 kHz. Some people prefer this behavior; technically, it's a less exact reconstruction.
+
+## Jitter and clock
+
+The DAC has to convert each sample at the right instant. Random or periodic variations in that instant, **jitter**, cause the signal to be reconstructed with small timing errors, equivalent to noise or sidebands around each frequency. The effect is proportional to the signal frequency and the magnitude of the jitter.
+
+In modern DACs, effective jitter is usually in the range of picoseconds to a few tens of picoseconds, and its products are well below −110 dB. Audibility studies (such as those by Ashihara and colleagues) found detection thresholds for random jitter on the order of hundreds of nanoseconds with music, thousands of times larger than the values in current equipment. Jitter was a real problem in some old equipment; today it's rarely a factor.
+
+## What really differentiates one DAC from another
+
+For most current integrated DACs, the converter itself is much better than needed. Audible differences between sources, when they exist, nearly always come from somewhere else:
+
+- **The output stage (amplifier):** output impedance, maximum voltage, noise floor and distortion under load. See [amplifiers](/eletronica/amplificadores) and [power](/eletronica/potencia-e-sensibilidade).
+- **Implementation:** noisy power supply, interference from USB or the phone, poor grounding (hum and hiss).
+- **Volume:** level differences in uncontrolled comparisons.
+- **Processing:** EQ, sound "enhancements" or 16-bit digital volume without dither.
+
+<References>
+  <Ref>Pohlmann, K. C. <em>Principles of Digital Audio</em>. 6th ed. McGraw-Hill, 2010.</Ref>
+  <Ref>Watkinson, J. <em>The Art of Digital Audio</em>. 3rd ed. Focal Press, 2001.</Ref>
+  <Ref>Candy, J. C.; Temes, G. C. (eds.). <em>Oversampling Delta-Sigma Data Converters</em>. IEEE Press, 1992.</Ref>
+  <Ref>Ashihara, K.; Kiryu, S.; Koizumi, N.; Nishimura, A.; Ohga, J.; Sawaguchi, M.; Yoshikawa, S. "Detection threshold for distortions due to jitter on digital audio." <em>Acoustical Science and Technology</em>, 26(1), 50–54, 2005.</Ref>
+  <Ref>Dunn, J. "Jitter theory." Audio Precision Technote TN-23, 2000.</Ref>
+</References>

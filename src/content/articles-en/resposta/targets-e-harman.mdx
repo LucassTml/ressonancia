@@ -1,0 +1,115 @@
+<Lead>
+To judge whether a headphone has "too much bass" or "too little treble," you need a reference. With speakers, the answer is relatively simple: flat in an anechoic chamber. With headphones, there's no obvious answer, and the search for one led to decades of research, from German standards in the 1980s to Harman's blind tests in the 2010s. This article tells that story, explains what the Harman curve is (and isn't) and shows its versions side by side.
+</Lead>
+
+<Callout type="simples">
+A "target" is a reference curve saying how much of each frequency a headphone should deliver to sound right. The best known, Harman, came from blind tests where people chose what they liked best. It's an excellent starting point, but it describes the average listener, not you.
+</Callout>
+
+## The problem: flat where?
+
+A reference speaker should have a **flat free-field** response: measured from the front, in a reflection-free chamber, it should produce the same pressure at all frequencies. That makes sense because a speaker is a *source* in space: the sound it emits will still interact with the room, head and ears of the listener, like any natural sound. If the speaker is neutral, what reaches the eardrum is what would arrive from an instrument in that position.
+
+A headphone is not a source in space. It injects sound directly into the ear (or canal), skipping the room, the head and, in the case of IEMs, the pinna and concha. As we saw in [pinna gain](/percepcao/pinna-gain), a flat response at the eardrum would sound dark and distant, because it wouldn't have the gain the ear always applies. So the question has to be different: **what pressure should the headphone produce at the eardrum to sound natural?** And that depends on what "natural sound" we take as a reference.
+
+## First answer: free field
+
+The most direct idea is for the headphone to reproduce at the eardrum what a flat speaker, in front of the listener in an anechoic chamber, would produce. That is, the headphone's response measured at the eardrum should equal the **frontal free-field transformation** of the head and ear, Shaw's curve for 0° incidence.
+
+The problem is that nobody listens to music in an anechoic chamber with a single source directly in front. Headphones equalized to a frontal free field tend to sound bright and forward, because the frontal transformation has a pronounced, directional presence peak. Moreover, the image of a single source in front doesn't correspond to a stereo mix, made while listening to two speakers at ±30° in a room.
+
+## Second answer: diffuse field
+
+In 1986, Günther Theile of the Institut für Rundfunktechnik (IRT) published an influential argument. According to his association model, the brain separates two pieces of information in a sound: **direction** (encoded in HRTF variations) and the source's **timbre**. For a headphone, which can't correctly reproduce direction cues, the most neutral reference for timbre would be the average of all directions: the **diffuse-field** response, in which sound arrives equally from all sides.
+
+Diffuse field became the norm for studio headphones in German broadcasting, and many reference headphones, including IEMs like Etymotic's ER-4 line, were tuned with it as a target. The diffuse-field curve still has pinna gain (a broad peak at ~2.5–3 kHz), but it's smoother and less directional than the free-field one.
+
+In practice, however, many listeners describe diffuse-field headphones as somewhat **thin and bright**: lacking bass and with excess treble compared with what they're used to hearing from speakers in a room. Why?
+
+## The clue from rooms
+
+A good speaker has a flat frontal response, but what you hear in a room is the sum of the direct sound and the reflections. Two things happen to that sum:
+
+- **The bass rises**, because at low frequencies the speaker radiates in all directions and the room returns that energy (modes and low-frequency reflections), and because we listen near surfaces.
+- **The treble falls**, because at high frequencies the speaker becomes directional: it radiates less energy to the sides, and the reflections reaching the listener have less treble.
+
+The result is that the steady-state response of an excellent speaker in a good room, measured at the listening position, is **tilted**: it descends smoothly from bass to treble. That's what we've grown used to hearing as "reference sound," and it's what a diffuse-field headphone doesn't reproduce.
+
+## The Harman research
+
+In the early 2010s, Sean Olive, Todd Welti and colleagues at Harman International began a research program to discover, experimentally, what response listeners prefer in headphones. Two methodological innovations made the work convincing.
+
+**Truly blind tests.** Headphones are hard to test blind: the listener feels the weight, pressure and fit. The team developed the **virtual headphone method**: a single reference headphone is equalized to reproduce, at the ear, the response of each headphone being evaluated. The listener compares the responses without knowing which is which, with no cues from comfort or brand. Validation studies showed that results with virtual headphones agree well with those from real headphones.
+
+**Trained listeners and varied programs.** The tests used many listeners (trained and untrained), several musical excerpts and statistical procedures to measure each listener's reliability.
+
+### The sequence of results
+
+1. **2012–2013: the starting point.** Among several candidate curves, listeners preferred one derived from **the response of reference loudspeakers in a room**, measured with a head simulator with ears. This curve has more bass and less treble than diffuse field, exactly the room tilt described above. It was refined into the **Harman Over-Ear 2013, 2015 and 2018** targets.
+2. **2016–2017: IEMs.** Tests with dozens of commercial IEMs (reproduced virtually) led to an in-ear target, referenced to the IEC 60318-4 coupler. The team also developed a **statistical model** that predicts an IEM's preference rating from its measurement: the smaller and smoother the deviation from the target (and the lower the slope of that deviation), the higher the predicted preference. The model explained the vast majority of the variation in average ratings.
+3. **2019: IEM bass.** A study dedicated to bass response refined the low-frequency shelf, giving the **Harman In-Ear 2019** target (sometimes called "v2"), the most cited today.
+
+### Average preference and groups of listeners
+
+One of the most important and least cited results is that average preference hides **groups**. Segmentation analyses showed that most listeners (about two-thirds) prefer something close to the target; a smaller group (around a fifth) prefers more bass; and a minority prefers less. Factors like age, gender and experience were associated with these preferences: on average, younger listeners and men preferred more bass and treble; trained listeners, a bit less of both. That doesn't determine any person's taste, but it shows that **the Harman target is a central tendency, not a universal rule**.
+
+## The curves side by side
+
+The lab below shows the published curve data (via the AutoEq project). Compare the versions, see what changes between the IEM and headphone targets, and use the "Vary Harman" tab to move the two levers where preferences vary most: the bass shelf and treble tilt.
+
+<Lab id="targets" />
+
+Some points to observe:
+
+- **The Harman IE 2019 bass shelf** adds about 9 dB at 20 Hz relative to the shelf-free version, with a transition around 100–200 Hz. Above ~300 Hz, the two versions are identical.
+- **The presence hill** reaches ~+9 dB between 2.5 and 3 kHz (relative to 1 kHz). It's the artificial pinna gain an IEM needs to produce, measured in the 711 coupler domain.
+- **The 2017 version** had more energy at 8–10 kHz and a much steeper drop in the extreme treble; the 2019 one is smoother on top.
+- **The over-ear target** has relatively less bass and a different presence shape, partly because it's measured on different equipment (head with ear) and partly because a headphone's acoustic interaction with the ear is different.
+
+<Callout type="atencao" title="Curves from different rigs can't be compared point by point">
+The IEM target is in the 711 coupler domain; the over-ear target, on a head simulator with ear; the 5128 and ISO 11904 diffuse-field curves, at references near the real eardrum. The differences above ~1 kHz between these groups largely reflect the **equipment**, not just preference. Always compare targets and headphones in the same domain.
+</Callout>
+
+## Neutral, balanced, flat and preferred
+
+It's worth separating four ideas that get mixed up in discussions about targets:
+
+- **Measured flat**: a flat response on the coupler or at the eardrum. It sounds dark; it isn't neutral.
+- **Neutral**: reproduces at the eardrum what a defined reference (diffuse field, free field, speakers in a room) would produce. It's a technical definition that depends on the chosen reference.
+- **Balanced**: a perceptual impression, where no region draws more attention than the others. It depends on the listener, the volume and the music.
+- **Preferred**: what listeners actually choose in tests. The Harman curve belongs to this category: it's a preference target that turned out close to an idea of "neutral with room bass."
+
+To say a headphone "follows Harman" therefore means it tends to be preferred by most listeners in a blind test, not that it's "the correct sound."
+
+## Limitations and debates
+
+**The region above ~8 kHz is uncertain.** The 711 coupler is validated up to ~10 kHz and its resonance varies with insertion. Differences between people are also large there. The target's shape in the extreme treble is the least reliable part.
+
+**Averages erase individuals.** The target was derived from averages of listeners and from measurements on an average artificial ear. Your anatomy transforms what reaches your eardrum (see [individual perception](/percepcao/percepcao-individual)).
+
+**Volume and program.** The tests were done with specific levels and music. As we saw in [loudness and volume](/percepcao/sonoridade-e-volume), the preferred bass balance depends on volume.
+
+**New rigs, new targets.** With the popularization of the B&K 5128, which has a more realistic ear canal and a response valid to higher frequencies, reviewers and communities have proposed targets in the 5128 domain, often based on the diffuse field with a tilt (for example, −1 dB per octave) and an adjustable bass shelf. The logic is the same as Harman's research (a diffuse field tilted as in a room, plus bass to taste), with a different measurement reference. These targets are reasonable proposals, but not all have been validated with preference tests of the same scale.
+
+<Callout type="evidencia">
+What's well established: (1) headphones with a response close to a tilted diffuse-field target with a bass shelf tend to be preferred by most listeners in blind tests; (2) small, smooth deviations from the target predict much of the preference; (3) real individual variation exists, especially in the amount of bass and treble. What's uncertain: the exact shape of the target above ~8 kHz, the best way to translate targets between rigs and how much each person's anatomical differences shift their ideal target.
+</Callout>
+
+## How to use targets in practice
+
+1. Use the target as a **ruler**, not as a judge. A headphone 3 dB above the target in the bass isn't "wrong"; it's a headphone with more bass than the preferred average.
+2. Read the **difference view** (headphone − target): it shows immediately where the headphone departs, and in which direction.
+3. Give more weight to **broad** deviations than to narrow peaks, and more weight to the 100 Hz to 5 kHz range, where measurements are reliable.
+4. Find **your** target: start from Harman and adjust bass and treble until it's good for you. The method is in [how to find your preference curve](/resposta/sua-curva).
+
+<References>
+  <Ref>Theile, G. "On the standardization of the frequency response of high-quality studio headphones." <em>Journal of the Audio Engineering Society</em>, 34(12), 956–969, 1986.</Ref>
+  <Ref>Olive, S. E.; Welti, T. "The relationship between perception and measurement of headphone sound quality." AES 133rd Convention, paper 8744, 2012.</Ref>
+  <Ref>Olive, S. E.; Welti, T.; McMullin, E. "Listener preference for different headphone target response curves." AES 134th Convention, paper 8867, 2013.</Ref>
+  <Ref>Olive, S. E.; Welti, T.; McMullin, E. "Listener preferences for in-room loudspeaker and headphone target responses." AES 135th Convention, paper 8994, 2013.</Ref>
+  <Ref>Olive, S. E.; Welti, T.; Khonsaripour, O. "A statistical model that predicts listeners' preference ratings of in-ear headphones: Part 1 — listening test results and acoustic measurements." AES 143rd Convention, paper 9840, 2017. Part 2 — development and validation of the model, paper 9878.</Ref>
+  <Ref>Olive, S. E.; Welti, T.; Khonsaripour, O. "The preferred low frequency response of in-ear headphones." AES International Conference on Headphone Technology, 2019.</Ref>
+  <Ref>Olive, S.; Welti, T.; Khonsaripour, O. "Factors that influence listeners' preferred bass and treble balance in headphones." AES 145th Convention, 2018.</Ref>
+  <Ref>Møller, H.; Hammershøi, D.; Jensen, C. B.; Sørensen, M. F. "Transfer characteristics of headphones measured on human ears." <em>Journal of the Audio Engineering Society</em>, 43(4), 203–217, 1995.</Ref>
+  <Ref>Pasanen, J. <em>AutoEq</em> — open-source project with target curve data and measurements. github.com/jaakkopasanen/AutoEq (MIT license).</Ref>
+</References>

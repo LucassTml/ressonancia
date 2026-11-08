@@ -6,6 +6,7 @@ import { FreqPlot } from '../../viz/FreqPlot';
 import { dbToGain, pinkNoiseBuffer } from '../../audio/engine';
 import { useAnimationFrame, useInView } from '../../lib/hooks';
 import { setupCanvas, useThemeColors } from '../../lib/themeColors';
+import { tr } from '../../i18n';
 
 const D = { f1: 440, f2: 440, a2: 1, ph2: 0, span: 20, routing: 'mix' as 'mix' | 'split', delay: 1, refl: 0.8 };
 
@@ -35,9 +36,9 @@ export default function InterferenceLab() {
     // Rola lentamente quando há batimento, para que o envelope se mova
     const t0 = sameF ? 0 : tRef.current * 0.02;
     const rows = [
-      { fn: (t: number) => Math.sin(2 * Math.PI * s.f1 * t), color: colors.a, label: 'Onda 1', scale: 1 },
-      { fn: (t: number) => s.a2 * Math.sin(2 * Math.PI * s.f2 * t + ph2), color: colors.b, label: 'Onda 2', scale: 1 },
-      { fn: (t: number) => Math.sin(2 * Math.PI * s.f1 * t) + s.a2 * Math.sin(2 * Math.PI * s.f2 * t + ph2), color: colors.fg, label: 'Soma', scale: 0.5 },
+      { fn: (t: number) => Math.sin(2 * Math.PI * s.f1 * t), color: colors.a, label: tr("Onda 1"), scale: 1 },
+      { fn: (t: number) => s.a2 * Math.sin(2 * Math.PI * s.f2 * t + ph2), color: colors.b, label: tr("Onda 2"), scale: 1 },
+      { fn: (t: number) => Math.sin(2 * Math.PI * s.f1 * t) + s.a2 * Math.sin(2 * Math.PI * s.f2 * t + ph2), color: colors.fg, label: tr("Soma"), scale: 0.5 },
     ];
     const rh = h / 3;
     rows.forEach((r, i) => {
@@ -155,8 +156,8 @@ export default function InterferenceLab() {
 
   return (
     <LabFrame
-      title="Interferência, batimentos e filtros de pente"
-      description="Ondas se somam ponto a ponto. Ajuste a fase para ver o reforço e o cancelamento; desafine levemente para ouvir batimentos; atrase uma cópia do sinal para criar um filtro de pente."
+      title={tr("Interferência, batimentos e filtros de pente")}
+      description={tr("Ondas se somam ponto a ponto. Ajuste a fase para ver o reforço e o cancelamento; desafine levemente para ouvir batimentos; atrase uma cópia do sinal para criar um filtro de pente.")}
       audio
       onReset={() => setS(D)}
       toolbar={
@@ -168,8 +169,8 @@ export default function InterferenceLab() {
             setTab(v);
           }}
           options={[
-            { value: 'waves', label: 'Duas ondas' },
-            { value: 'comb', label: 'Reflexão e pente' },
+            { value: 'waves', label: tr("Duas ondas") },
+            { value: 'comb', label: tr("Reflexão e pente") },
           ]}
         />
       }
@@ -189,39 +190,39 @@ export default function InterferenceLab() {
                 pb.stop();
               }}
               options={[
-                { value: 'mix', label: 'Somadas no ar (ambos os ouvidos)' },
-                { value: 'split', label: 'Uma em cada ouvido' },
+                { value: 'mix', label: tr("Somadas no ar (ambos os ouvidos)") },
+                { value: 'split', label: tr("Uma em cada ouvido") },
               ]}
             />
           </div>
           <Controls cols={4}>
-            <Slider label="Frequência 1" value={s.f1} min={100} max={2000} log onChange={(v) => set('f1', Math.round(v * 10) / 10)} format={fmtHz} />
-            <Slider label="Frequência 2" value={s.f2} min={100} max={2000} log onChange={(v) => set('f2', Math.round(v * 10) / 10)} format={fmtHz} />
-            <Slider label="Amplitude da onda 2" value={s.a2} min={0} max={1} step={0.01} onChange={(v) => set('a2', v)} format={(v) => fmtNum(v, 2)} />
-            <Slider label="Fase da onda 2" value={s.ph2} min={0} max={360} step={1} onChange={(v) => set('ph2', v)} unit="°" disabled={!sameF} />
-            <Slider label="Janela de tempo" value={s.span} min={2} max={500} log onChange={(v) => set('span', Math.round(v))} unit="ms" />
+            <Slider label={tr("Frequência 1")} value={s.f1} min={100} max={2000} log onChange={(v) => set('f1', Math.round(v * 10) / 10)} format={fmtHz} />
+            <Slider label={tr("Frequência 2")} value={s.f2} min={100} max={2000} log onChange={(v) => set('f2', Math.round(v * 10) / 10)} format={fmtHz} />
+            <Slider label={tr("Amplitude da onda 2")} value={s.a2} min={0} max={1} step={0.01} onChange={(v) => set('a2', v)} format={(v) => fmtNum(v, 2)} />
+            <Slider label={tr("Fase da onda 2")} value={s.ph2} min={0} max={360} step={1} onChange={(v) => set('ph2', v)} unit="°" disabled={!sameF} />
+            <Slider label={tr("Janela de tempo")} value={s.span} min={2} max={500} log onChange={(v) => set('span', Math.round(v))} unit="ms" />
           </Controls>
           <div className="mt-4">
             <Readout
               items={
                 sameF
                   ? [
-                      { label: 'Amplitude resultante', value: `${fmtNum(resultAmp, 2)}×`, accent: true },
-                      { label: 'Nível relativo à onda 1', value: `${resultAmp < 0.001 ? '−∞' : fmtNum(20 * Math.log10(resultAmp), 1)} dB` },
-                      { label: 'Situação', value: s.ph2 < 30 || s.ph2 > 330 ? 'Construtiva' : Math.abs(s.ph2 - 180) < 30 ? 'Destrutiva' : 'Parcial' },
+                      { label: tr("Amplitude resultante"), value: `${fmtNum(resultAmp, 2)}×`, accent: true },
+                      { label: tr("Nível relativo à onda 1"), value: `${resultAmp < 0.001 ? '−∞' : fmtNum(20 * Math.log10(resultAmp), 1)} dB` },
+                      { label: tr("Situação"), value: s.ph2 < 30 || s.ph2 > 330 ? tr("Construtiva") : Math.abs(s.ph2 - 180) < 30 ? tr("Destrutiva") : tr("Parcial") },
                     ]
                   : [
-                      { label: 'Frequência de batimento', value: `${fmtNum(Math.abs(s.f1 - s.f2), 2)} Hz`, accent: true },
-                      { label: 'Período do batimento', value: `${fmtNum(1000 / Math.abs(s.f1 - s.f2), 0)} ms` },
-                      { label: 'Altura percebida (média)', value: fmtHz((s.f1 + s.f2) / 2) },
+                      { label: tr("Frequência de batimento"), value: `${fmtNum(Math.abs(s.f1 - s.f2), 2)} Hz`, accent: true },
+                      { label: tr("Período do batimento"), value: `${fmtNum(1000 / Math.abs(s.f1 - s.f2), 0)} ms` },
+                      { label: tr("Altura percebida (média)"), value: fmtHz((s.f1 + s.f2) / 2) },
                     ]
               }
             />
           </div>
           <Note>
             {s.routing === 'split'
-              ? 'Com uma onda em cada ouvido não há soma acústica: nenhum cancelamento acontece no ar. Mesmo assim, com frequências próximas, você pode ouvir “batimentos binaurais” — uma flutuação criada pelo cérebro ao comparar as fases dos dois ouvidos, bem mais fraca que o batimento real.'
-              : 'Batimento real: quando as frequências diferem um pouco, as ondas alternam entre fase e contrafase. A amplitude da soma sobe e desce |f₁ − f₂| vezes por segundo. Com a fase em 180° e amplitudes iguais, o cancelamento é total.'}
+              ? tr("Com uma onda em cada ouvido não há soma acústica: nenhum cancelamento acontece no ar. Mesmo assim, com frequências próximas, você pode ouvir “batimentos binaurais” — uma flutuação criada pelo cérebro ao comparar as fases dos dois ouvidos, bem mais fraca que o batimento real.")
+              : tr("Batimento real: quando as frequências diferem um pouco, as ondas alternam entre fase e contrafase. A amplitude da soma sobe e desce |f₁ − f₂| vezes por segundo. Com a fase em 180° e amplitudes iguais, o cancelamento é total.")}
           </Note>
         </>
       ) : (
@@ -231,30 +232,26 @@ export default function InterferenceLab() {
             dbMin={-24}
             dbMax={9}
             dbStep={6}
-            curves={[{ id: 'comb', label: 'Som direto + reflexão', fn: combFn, color: 'var(--c-a)', width: 1.8 }]}
-            ariaLabel="Resposta de um filtro de pente"
+            curves={[{ id: 'comb', label: tr("Som direto + reflexão"), fn: combFn, color: 'var(--c-a)', width: 1.8 }]}
+            ariaLabel={tr("Resposta de um filtro de pente")}
           />
           <div className="flex flex-wrap items-center gap-3 my-4">
-            <PlayButton playing={pb.playing} onToggle={() => (pb.playing ? pb.stop() : startComb())} label="Ouvir em ruído rosa" />
+            <PlayButton playing={pb.playing} onToggle={() => (pb.playing ? pb.stop() : startComb())} label={tr("Ouvir em ruído rosa")} />
           </div>
           <Controls cols={2}>
-            <Slider label="Atraso da reflexão" value={s.delay} min={0.05} max={20} log onChange={(v) => set('delay', Number(v.toFixed(3)))} unit="ms" hint={`Diferença de percurso: ${fmtNum(s.delay * 34.3, 1)} cm`} />
-            <Slider label="Ganho da reflexão" value={s.refl} min={0} max={1} step={0.01} onChange={(v) => set('refl', v)} format={(v) => `${fmtNum(v, 2)} (${v > 0 ? fmtNum(20 * Math.log10(v), 1) : '−∞'} dB)`} />
+            <Slider label={tr("Atraso da reflexão")} value={s.delay} min={0.05} max={20} log onChange={(v) => set('delay', Number(v.toFixed(3)))} unit="ms" hint={tr("Diferença de percurso: {0} cm", fmtNum(s.delay * 34.3, 1))} />
+            <Slider label={tr("Ganho da reflexão")} value={s.refl} min={0} max={1} step={0.01} onChange={(v) => set('refl', v)} format={(v) => `${fmtNum(v, 2)} (${v > 0 ? fmtNum(20 * Math.log10(v), 1) : '−∞'} dB)`} />
           </Controls>
           <div className="mt-4">
             <Readout
               items={[
-                { label: 'Primeiro cancelamento', value: fmtHz(firstNotch), accent: true },
-                { label: 'Espaçamento entre vales', value: fmtHz(2 * firstNotch) },
-                { label: 'Profundidade máxima', value: s.refl >= 0.999 ? '−∞ dB' : `${fmtNum(20 * Math.log10(1 - s.refl), 1)} dB` },
+                { label: tr("Primeiro cancelamento"), value: fmtHz(firstNotch), accent: true },
+                { label: tr("Espaçamento entre vales"), value: fmtHz(2 * firstNotch) },
+                { label: tr("Profundidade máxima"), value: s.refl >= 0.999 ? tr("−∞ dB") : `${fmtNum(20 * Math.log10(1 - s.refl), 1)} dB` },
               ]}
             />
           </div>
-          <Note>
-            Uma cópia atrasada de τ segundos cancela as frequências em que o atraso vale meio ciclo: f = 1/(2τ), 3/(2τ), 5/(2τ)… Atrasos
-            curtos (abaixo de ~1 ms) criam poucos vales largos — é o que acontece com reflexões dentro de tubos e cavidades de fones.
-            Atrasos de alguns ms criam um pente denso, ouvido como coloração “metálica” ou “oca”.
-          </Note>
+          <Note>{tr("Uma cópia atrasada de τ segundos cancela as frequências em que o atraso vale meio ciclo: f = 1/(2τ), 3/(2τ), 5/(2τ)… Atrasos curtos (abaixo de ~1 ms) criam poucos vales largos — é o que acontece com reflexões dentro de tubos e cavidades de fones. Atrasos de alguns ms criam um pente denso, ouvido como coloração “metálica” ou “oca”.")}</Note>
         </>
       )}
     </LabFrame>

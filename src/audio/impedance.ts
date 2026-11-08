@@ -1,3 +1,4 @@
+import { tr } from '../i18n';
 /**
  * Modelos elétricos simplificados de fones, para os laboratórios de
  * impedância. Valores representativos — não correspondem a produtos reais.
@@ -37,21 +38,21 @@ export interface PhoneModel {
 export const PHONES: PhoneModel[] = [
   {
     id: 'dd',
-    name: 'IEM com 1 driver dinâmico',
+    name: tr("IEM com 1 driver dinâmico"),
     nominal: 32,
     z: (f) => cadd(cadd(R(30), L(25e-6, f)), motional(f, 2800, 8, 1.4)),
-    note: 'Impedância quase constante, com um pequeno pico na ressonância mecânica.',
+    note: tr("Impedância quase constante, com um pequeno pico na ressonância mecânica."),
   },
   {
     id: 'ba',
-    name: 'IEM com 1 balanced armature',
+    name: tr("IEM com 1 balanced armature"),
     nominal: 22,
     z: (f) => cadd(R(14), baInductive(f, 9)),
-    note: 'A indutância da bobina faz a impedância subir bastante nos agudos.',
+    note: tr("A indutância da bobina faz a impedância subir bastante nos agudos."),
   },
   {
     id: 'multi',
-    name: 'IEM multi-BA (3 vias, crossover passivo)',
+    name: tr("IEM multi-BA (3 vias, crossover passivo)"),
     nominal: 16,
     z: (f) => {
       const low = cadd(cadd(R(9), baInductive(f, 8)), L(0.4e-3, f));
@@ -59,21 +60,21 @@ export const PHONES: PhoneModel[] = [
       const high = cadd(cadd(R(12), baInductive(f, 2.5)), cadd(Cap(2.2e-6, f), R(2)));
       return cpar(cpar(low, mid), high);
     },
-    note: 'Os filtros do crossover criam vales e picos fortes: a impedância pode variar várias vezes ao longo do espectro.',
+    note: tr("Os filtros do crossover criam vales e picos fortes: a impedância pode variar várias vezes ao longo do espectro."),
   },
   {
     id: 'planar',
-    name: 'IEM planar magnético',
+    name: tr("IEM planar magnético"),
     nominal: 16,
     z: (f) => cadd(R(16), L(5e-6, f)),
-    note: 'Trilha plana com indutância desprezível: impedância praticamente resistiva e constante.',
+    note: tr("Trilha plana com indutância desprezível: impedância praticamente resistiva e constante."),
   },
   {
     id: 'hp300',
-    name: 'Headphone dinâmico de 300 Ω',
+    name: tr("Headphone dinâmico de 300 Ω"),
     nominal: 300,
     z: (f) => cadd(cadd(R(280), L(0.3e-3, f)), motional(f, 95, 220, 1.6)),
-    note: 'Alta impedância com o pico de ressonância nos graves típico de headphones dinâmicos.',
+    note: tr("Alta impedância com o pico de ressonância nos graves típico de headphones dinâmicos."),
   },
 ];
 

@@ -1,3 +1,5 @@
+import { tr } from '../i18n';
+
 export interface GlossaryEntry {
   id: string;
   term: string;
@@ -6,7 +8,14 @@ export interface GlossaryEntry {
   see?: string;
 }
 
-export const glossary: GlossaryEntry[] = [
+const rawGlossary: GlossaryEntry[] = [
+  { id: 'semitom', term: 'Semitom', def: 'O menor passo do teclado: de uma tecla à vizinha, contando as pretas. Doze semitons formam uma oitava.', see: 'inicio/o-que-e-uma-oitava' },
+  { id: 'escala-log', term: 'Escala logarítmica', def: 'Régua em que passos iguais representam multiplicações iguais, não somas. No áudio, cada oitava (dobro da frequência) ocupa o mesmo espaço no eixo.', see: 'inicio/o-que-e-uma-oitava' },
+  { id: 'hertz', term: 'Hertz (Hz)', def: 'Unidade de frequência: número de ciclos por segundo. 1 kHz são mil ciclos por segundo.', see: 'inicio/hertz-graves-e-agudos' },
+  { id: 'nota', term: 'Nota musical', def: 'Som com altura definida e nome (Dó, Ré, Lá…). Uma mesma nota existe em várias oitavas.', see: 'inicio/o-que-e-uma-oitava' },
+  { id: 'sinal', term: 'Sinal', def: 'Qualquer grandeza que varia no tempo e carrega informação. Em áudio, uma tensão elétrica, uma sequência de números ou a pressão do ar que representam o som.', see: 'inicio/caminho-do-som' },
+  { id: 'filtro', term: 'Filtro', def: 'Circuito ou cálculo que aumenta ou reduz certas frequências e deixa as outras como estão.', see: 'processamento/filtros-e-eq' },
+  { id: 'alvo-curva', term: 'Curva', def: 'Forma abreviada de dizer “curva de resposta em frequência”: o desenho que mostra quanto som um fone produz em cada frequência.', see: 'inicio/ler-um-grafico' },
   { id: 'onda-longitudinal', term: 'Onda longitudinal', def: 'Onda em que as partículas do meio oscilam na mesma direção em que a onda se propaga. O som no ar é longitudinal: alternância de compressões e rarefações.', see: 'fundamentos/o-que-e-som' },
   { id: 'pressao-sonora', term: 'Pressão sonora', def: 'Variação da pressão do ar em torno da pressão atmosférica causada por uma onda sonora, medida em pascals (Pa). Uma conversa típica produz cerca de 0,02 Pa — duzentos milionésimos da pressão atmosférica.', see: 'fundamentos/o-que-e-som' },
   { id: 'frequencia', term: 'Frequência', def: 'Número de ciclos completos de uma oscilação por segundo, medido em hertz (Hz). Determina principalmente a altura percebida de um tom.', see: 'fundamentos/frequencia-e-amplitude' },
@@ -119,5 +128,7 @@ export const glossary: GlossaryEntry[] = [
   { id: 'imd', term: 'IMD', def: 'Distorção por intermodulação: produtos em somas e diferenças de frequências quando dois ou mais tons passam por um sistema não linear.', see: 'eletronica/medidas-de-desempenho' },
   { id: 'loudness-war', term: 'Guerra do volume', def: 'Tendência de masterizar música cada vez mais alta, comprimindo sua faixa dinâmica, para se destacar em comparações.', see: 'digital/loudness-e-resampling' },
 ];
+
+export const glossary: GlossaryEntry[] = rawGlossary.map((e) => ({ ...e, term: tr(e.term), def: tr(e.def) }));
 
 export const glossaryById: Record<string, GlossaryEntry> = Object.fromEntries(glossary.map((g) => [g.id, g]));

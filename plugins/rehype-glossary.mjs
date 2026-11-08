@@ -86,15 +86,105 @@ const TERMS = [
   ['FFT', 'fft'],
   ['pina', 'pinna'],
   ['concha', 'concha'],
+  ['semitons?', 'semitom'],
+  ['escalas? logarítmicas?', 'escala-log'],
+];
+
+/** Mesmos termos para os artigos em inglês. */
+const TERMS_EN = [
+  ['output impedance', 'impedancia-saida'],
+  ['Nyquist frequency', 'nyquist'],
+  ['insertion depth', 'insercao'],
+  ['Helmholtz resonators?', 'helmholtz'],
+  ['frequency response', 'resposta-em-frequencia'],
+  ['equal[- ]loudness (?:contours?|curves?)', 'iso226'],
+  ['wavelengths?', 'comprimento-de-onda'],
+  ['longitudinal waves?', 'onda-longitudinal'],
+  ['basilar membrane', 'membrana-basilar'],
+  ['hair cells', 'celulas-ciliadas'],
+  ['critical bands?', 'banda-critica'],
+  ['diffuse[- ]field', 'campo-difuso'],
+  ['free[- ]field', 'campo-livre'],
+  ['Harman curve', 'harman'],
+  ['bass shelf', 'bass-shelf'],
+  ['711 coupler|IEC 60318-4', 'acoplador-711'],
+  ['B&K 5128', 'bk5128'],
+  ['balanced armatures?', 'ba'],
+  ['dynamic drivers?', 'dd'],
+  ['planar magnetics?', 'planar'],
+  ['preamplifiers?', 'pre-amplificador'],
+  ['dynamic range', 'faixa-dinamica'],
+  ['minimum[- ]phase', 'fase-minima'],
+  ['pink noise', 'ruido-rosa'],
+  ['soundstage', 'soundstage'],
+  ['stereo imag(?:e|ing)', 'imagem'],
+  ['ABX test|ABX', 'abx'],
+  ['expectation bias', 'vies-expectativa'],
+  ['loudness war', 'loudness-war'],
+  ['true peak', 'true-peak'],
+  ['Q factor', 'q'],
+  ['pinna gain', 'pinna-gain'],
+  ['cochlea', 'coclea'],
+  ['masking', 'mascaramento'],
+  ['HRTFs?', 'hrtf'],
+  ['ITD', 'itd'],
+  ['ILD', 'ild'],
+  ['sibilance', 'sibilancia'],
+  ['smoothing', 'suavizacao'],
+  ['crossovers?', 'crossover'],
+  ['dampers?', 'damper'],
+  ['reactance', 'reatancia'],
+  ['impedance', 'impedancia'],
+  ['sensitivity', 'sensibilidade'],
+  ['headroom', 'headroom'],
+  ['clipping', 'clipping'],
+  ['THD', 'thd'],
+  ['intermodulation|IMD', 'imd'],
+  ['jitter', 'jitter'],
+  ['aliasing', 'aliasing'],
+  ['dither', 'dither'],
+  ['quantization', 'quantizacao'],
+  ['LUFS', 'lufs'],
+  ['preamp', 'preamp'],
+  ['crossfeed', 'crossfeed'],
+  ['seal', 'vedacao'],
+  ['eartips?', 'ponteira'],
+  ['dB SPL', 'spl'],
+  ['dBFS', 'dbfs'],
+  ['dBV', 'dbv'],
+  ['dBu', 'dbu'],
+  ['harmonics', 'harmonico'],
+  ['timbre', 'timbre'],
+  ['formants?', 'formante'],
+  ['sones?', 'sone'],
+  ['RMS', 'rms'],
+  ['excursion', 'excursao'],
+  ['tuning', 'tuning'],
+  ['DSD', 'dsd'],
+  ['PCM', 'pcm'],
+  ['lossless', 'lossless'],
+  ['bitrate', 'bitrate'],
+  ['electrostatics?', 'est'],
+  ['compressor', 'compressor'],
+  ['octaves?', 'oitava'],
+  ['spectrum', 'espectro'],
+  ['FFT', 'fft'],
+  ['pinna', 'pinna'],
+  ['concha', 'concha'],
+  ['semitones?', 'semitom'],
+  ['logarithmic scales?', 'escala-log'],
 ];
 
 const SKIP_TAGS = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'code', 'pre', 'button', 'th', 'thead']);
-const SKIP_COMPONENTS = new Set(['Term', 'Lab', 'References', 'Ref', 'Vars', 'KeyNumbers', 'Figure']);
+const SKIP_COMPONENTS = new Set(['Term', 'Lab', 'References', 'Ref', 'Vars', 'KeyNumbers', 'Figure', 'Formula', 'Diagram', 'Listen', 'IemGallery']);
 
-const compiled = TERMS.map(([pat, id]) => ({ id, re: new RegExp(`(?<![\\p{L}\\d-])(?:${pat})(?![\\p{L}\\d-])`, 'iu') }));
+const compile = (list) => list.map(([pat, id]) => ({ id, re: new RegExp(`(?<![\\p{L}\\d-])(?:${pat})(?![\\p{L}\\d-])`, 'iu') }));
+const compiledPt = compile(TERMS);
+const compiledEn = compile(TERMS_EN);
 
 export default function rehypeGlossary() {
-  return (tree) => {
+  return (tree, file) => {
+    const compiled = String(file?.path ?? '').replace(/\\/g, '/').includes('/articles-en/') ? compiledEn : compiledPt;
     const used = new Set();
 
     const walk = (node) => {

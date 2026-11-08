@@ -2,11 +2,17 @@
 Quando duas ondas ocupam o mesmo lugar ao mesmo tempo, o ar não escolhe uma delas: ele soma as duas. Esse princípio simples explica cancelamentos de ruído, batimentos entre notas desafinadas, os picos e vales de um fone medido e por que um atraso de meio milissegundo pode apagar uma frequência inteira.
 </Lead>
 
+<Callout type="simples">
+Quando dois sons se encontram, eles se somam. Se os empurrões coincidem, o resultado fica mais forte; se um empurra enquanto o outro puxa, eles se cancelam. Fones com cancelamento de ruído funcionam exatamente assim, e é também por isso que duas notas quase afinadas parecem pulsar.
+</Callout>
+
 ## Fase: onde estamos no ciclo
 
 A **fase** indica em que ponto do ciclo uma onda periódica se encontra num dado instante. Costuma ser expressa em graus (um ciclo completo = 360°) ou radianos (2π). Duas senoides de mesma frequência podem estar “em fase” (picos coincidem), “em contrafase” ou “em oposição” (defasadas 180°: o pico de uma coincide com o vale da outra), ou em qualquer situação intermediária.
 
 O conceito mais importante sobre fase em áudio é sua relação com o **tempo**. Um atraso fixo Δt corresponde a uma defasagem que depende da frequência:
+
+<Formula say="O mesmo atraso desloca as frequências altas em uma fração maior do ciclo do que as baixas. Um atraso não é uma defasagem única, e sim uma diferente em cada frequência.">
 
 $$
 \Delta\varphi = 360^\circ \cdot f \cdot \Delta t
@@ -20,15 +26,21 @@ $$
   ]}
 />
 
+</Formula>
+
 Um atraso de 1 ms é uma defasagem de 36° a 100 Hz, de 180° a 500 Hz e de 360° (um ciclo inteiro, ou seja, “de volta em fase”) a 1 kHz. **O mesmo atraso tem efeitos completamente diferentes em frequências diferentes.** É essa propriedade que transforma uma simples reflexão num padrão de picos e vales distribuído pelo espectro inteiro.
 
 ## Superposição: pressões se somam
 
 O ar, nos níveis de pressão da música, é um meio **linear**: a pressão resultante de duas ondas é a soma das pressões que cada uma produziria sozinha. Esse é o princípio da superposição. Para duas senoides de mesma frequência e amplitudes $A_1$ e $A_2$, com defasagem Δφ, a soma é outra senoide da mesma frequência com amplitude
 
+<Formula say="O resultado depende de quão alinhadas as ondas estão: do dobro do tamanho, quando coincidem, a zero, quando estão em oposição.">
+
 $$
 A = \sqrt{A_1^2 + A_2^2 + 2 A_1 A_2 \cos \Delta\varphi}
 $$
+
+</Formula>
 
 Com amplitudes iguais e em fase, a amplitude dobra (+6 dB): **interferência construtiva**. Em contrafase, ela vai a zero: **interferência destrutiva**. A 90°, o resultado é √2 vezes a amplitude (+3 dB), o mesmo que somar as potências de duas fontes independentes. No laboratório abaixo, ajuste a fase da segunda onda e observe a soma.
 
@@ -40,11 +52,15 @@ O cancelamento ativo de ruído (ANC) é a aplicação engenhosa desse princípio
 
 Se as frequências forem ligeiramente diferentes, a defasagem entre as ondas muda continuamente: ora elas estão em fase, ora em oposição. Uma identidade trigonométrica mostra o que acontece:
 
+<Formula say="Duas notas próximas se somam numa única nota na frequência média, cuja intensidade cresce e diminui.">
+
 $$
 \sin(2\pi f_1 t) + \sin(2\pi f_2 t) = 2\cos\!\left(2\pi \tfrac{f_1 - f_2}{2} t\right)\sin\!\left(2\pi \tfrac{f_1 + f_2}{2} t\right)
 $$
 
-O resultado é uma senoide na frequência média, com amplitude que sobe e desce lentamente. A envoltória passa por um máximo $|f_1 - f_2|$ vezes por segundo — esses são os **batimentos**. Afinadores de piano os usam há séculos: ao ajustar duas cordas que devem soar em uníssono, o afinador escuta os batimentos ficarem cada vez mais lentos até desaparecerem.
+</Formula>
+
+O resultado é uma senoide na frequência média, com amplitude que sobe e desce lentamente. A envoltória passa por um máximo $|f_1 - f_2|$ vezes por segundo — esses são os **batimentos**. Afinadores de piano os usam há séculos: ao ajustar duas cordas que devem soar em uníssono, o afinador escuta os batimentos ficarem cada vez mais lentos até desaparecerem. Ouça dois tons separados por 4 Hz: <Listen label="Batimentos" f="440,444" together dur={3} />.
 
 A percepção muda com a velocidade dos batimentos. Até uns 10–15 Hz, ouvimos claramente um som único que pulsa. Acima disso, a pulsação se torna rápida demais para ser acompanhada e vira uma sensação de **aspereza** (rugosidade). Com separações ainda maiores, a cóclea passa a resolver as duas frequências em lugares diferentes da membrana basilar e ouvimos dois tons distintos. A transição está ligada às [bandas críticas](/percepcao/mascaramento) e é uma das bases físicas da sensação de [consonância e dissonância](/fundamentos/melodia-e-harmonia).
 
@@ -56,9 +72,13 @@ Se cada frequência for apresentada a um ouvido diferente, as ondas nunca se som
 
 Quando um som chega a um ponto por dois caminhos de comprimentos diferentes — diretamente e refletido numa parede, por exemplo — a cópia refletida chega atrasada. Pela relação entre atraso e fase, haverá frequências em que esse atraso vale exatamente meio ciclo (ou um ciclo e meio, dois e meio…) e o cancelamento é máximo, e outras em que vale ciclos inteiros e há reforço:
 
+<Formula say="Uma cópia atrasada cancela o original numa série regular de frequências, e quanto maior o atraso, mais próximas elas ficam.">
+
 $$
 f_{\text{vale}} = \frac{2n + 1}{2\,\Delta t}, \qquad n = 0, 1, 2, \ldots
 $$
+
+</Formula>
 
 Desenhada num eixo de frequência linear, a resposta parece os dentes de um pente, daí o nome **filtro de pente** (*comb filter*). Na aba “Reflexão e pente” do laboratório, você pode ouvir esse efeito em ruído rosa. Atrasos de vários milissegundos geram dentes densos, ouvidos como um timbre “oco” ou “metálico” (é o efeito *flanger* quando o atraso varia). Atrasos curtos geram poucos vales largos.
 

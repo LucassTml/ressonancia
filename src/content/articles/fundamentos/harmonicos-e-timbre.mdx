@@ -2,9 +2,15 @@
 Um violino, uma flauta e uma voz cantando a mesma nota, no mesmo volume, são inconfundíveis. A diferença não está na frequência da nota nem na intensidade: está na maneira como a energia se distribui entre muitas frequências e em como essa distribuição evolui no tempo. Esse é o território do timbre — e é exatamente o que um fone altera quando muda a resposta em frequência.
 </Lead>
 
+<Callout type="simples">
+Toda nota musical é, na verdade, uma pilha de notas: a principal e outras mais fracas, múltiplas dela, chamadas harmônicos. A receita dessa pilha, e como ela muda ao longo da nota, é o que faz um violão soar como violão. Um fone altera essa receita quando aumenta ou reduz uma região.
+</Callout>
+
 ## Fourier: todo som é uma soma de senoides
 
 Em 1807, Joseph Fourier propôs, estudando a condução de calor, uma ideia que se tornaria uma das mais poderosas da ciência: qualquer função periódica pode ser escrita como uma soma de senoides cujas frequências são múltiplos inteiros da frequência de repetição. Para um sinal de período $T$ (frequência fundamental $f_0 = 1/T$):
+
+<Formula say="Qualquer som que se repete pode ser construído somando ondas simples em uma, duas, três, quatro… vezes a frequência principal, cada uma com sua própria força.">
 
 $$
 x(t) = \sum_{n=1}^{\infty} A_n \sin(2\pi n f_0 t + \varphi_n)
@@ -19,11 +25,15 @@ $$
   ]}
 />
 
+</Formula>
+
 O conjunto das amplitudes $A_n$ é o **espectro** do som. Para sinais que não se repetem — um estalo, uma fala, uma música inteira — a mesma ideia se generaliza na transformada de Fourier, em que as frequências deixam de ser discretas e passam a formar um contínuo. Em computadores, calculamos espectros de trechos curtos de áudio digital com a **FFT** (*Fast Fourier Transform*), o algoritmo que alimenta os analisadores de espectro deste site.
 
 A ideia de Fourier não é só uma ferramenta matemática; ela corresponde a algo que a cóclea faz fisicamente. A membrana basilar responde a frequências diferentes em lugares diferentes — ela própria é um analisador de espectro mecânico, como veremos em [anatomia do ouvido](/percepcao/anatomia-do-ouvido).
 
 ## Por que instrumentos produzem harmônicos
+
+<Diagram id="string-harmonics" />
 
 Uma corda presa nas duas pontas só pode vibrar em padrões que têm “nós” (pontos parados) nas extremidades. Os padrões possíveis são aqueles em que cabe um número inteiro de meios comprimentos de onda no comprimento da corda: meia onda (a fundamental), uma onda inteira (o dobro da frequência), uma onda e meia (o triplo)… Ao ser dedilhada ou friccionada, a corda vibra em todos esses modos simultaneamente, com intensidades que dependem de onde e como foi excitada. O resultado é a **série harmônica**: $f_0, 2f_0, 3f_0, 4f_0\ldots$
 
@@ -60,6 +70,8 @@ Um sinal de dente de serra que passa por um filtro passa-tudo (que altera só as
 
 ## O que forma o timbre
 
+<Diagram id="timbre-bars" />
+
 O espectro de um som sustentado é só parte da história. O timbre — a “cor” que identifica uma fonte — depende de pelo menos quatro coisas.
 
 ### 1. O envelope espectral e os formantes
@@ -88,9 +100,13 @@ O sopro numa flauta, o atrito do arco no violino, o “chiado” inicial de uma 
 
 Analisadores de espectro baseados em FFT dividem o eixo de frequência em faixas (*bins*) de largura fixa. Para um bloco de $N$ amostras a uma taxa de amostragem $f_s$, a resolução é
 
+<Formula say="Quanto mais longo o trecho de áudio analisado, mais fino o detalhe em frequência.">
+
 $$
 \Delta f = \frac{f_s}{N}
 $$
+
+</Formula>
 
 Com $f_s$ = 48 kHz e N = 8 192 amostras, cada bin tem ~5,9 Hz, e o bloco dura 171 ms. Há um compromisso inevitável (a mesma relação tempo-frequência vista em [frequência e amplitude](/fundamentos/frequencia-e-amplitude)): mais resolução em frequência exige blocos mais longos e, portanto, pior resolução no tempo. Por isso analisadores usam janelas (Hann, Blackman…) e escalas logarítmicas que agrupam bins em frações de oitava.
 

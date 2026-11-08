@@ -1,0 +1,161 @@
+<Lead>
+Before there is music, headphones or ears, there is a mechanical disturbance: something pushes the air, that air pushes the air next to it, and the chain of pushes crosses space. Everything you'll read in this encyclopedia, from the Harman curve to how a DAC works, is ultimately a way of controlling, measuring or interpreting that disturbance.
+</Lead>
+
+<Callout type="simples">
+Sound is a chain of tiny pushes moving through the air. The air itself stays where it is, only trembling in place. Your eardrum feels those pressure changes, and that's all it ever gets. If you're new to this, [Sound in five minutes](/inicio/som-em-5-minutos) is a gentler start.
+</Callout>
+
+## A disturbance that travels, not air that travels
+
+The air around you is a gas: about 25 trillion trillion molecules (2.5 × 10²⁵) in each cubic meter, moving in all directions at thermal speeds on the order of 500 m/s and colliding billions of times per second. A molecule travels on average only about 70 nanometers between one collision and the next. That chaos is air's resting state and, curiously, it's what makes sound possible.
+
+Imagine a speaker diaphragm moving forward a few micrometers. It pushes the layer of air immediately in front of it, which becomes slightly denser. Molecules that are closer together collide more often, which means **higher pressure**. That pressurized layer pushes the next one, which pushes the next, and so on. When the diaphragm pulls back, the opposite happens: a region with molecules slightly further apart, at slightly lower pressure, starts propagating in the same way.
+
+Two properties of the medium make this a wave rather than just a push that dies away:
+
+- **Elasticity (compressibility):** compressed air "wants" to return to its original volume. That's the restoring force: air behaves like a spring.
+- **Inertia (mass):** air set in motion tends to keep moving and overshoots its equilibrium position, compressing the next layer.
+
+Spring and mass, alternating potential energy (compression) and kinetic energy (motion): the same pair of ingredients as a pendulum or a guitar string. In a continuous medium, that exchange doesn't stay in one place. It passes from layer to layer. What travels is the **pattern** of compressions and rarefactions, not the air. Each parcel of air merely oscillates around where it already was.
+
+<Callout type="mito" title="&quot;Headphones push air into your ear&quot;">
+There's no flow of air leaving the headphone toward the eardrum. In a 1 kHz tone at 94 dB SPL (loud, but common when listening), molecules oscillate about half a micrometer back and forth, a thousand times a second, and end up where they started. Strong bass doesn't "push more air" in the sense of a wind either. It demands larger diaphragm movements to create the same pressure, but the air is still only oscillating.
+</Callout>
+
+## Compressions and rarefactions
+
+<Diagram id="air-molecules" />
+
+The simulator below shows a two-meter window of air in slow motion. The dots represent molecules (actually small parcels of air, since drawing 10²⁵ dots wouldn't be practical). Follow the red dots: they go back and forth without leaving their place, while the dark region, the compression, crosses the screen.
+
+<Lab id="wave" />
+
+Notice three details that usually go unnoticed:
+
+**Pressure and displacement are not "in phase."** Turn on both curves. Pressure is highest where the molecules are most bunched together, and that happens precisely at the points where displacement is *zero*: the molecules to the left have been pushed right and those to the right have been pushed left, meeting there. The pressure curve is the spatial derivative of displacement (with the sign flipped), and so it appears a quarter of a cycle ahead, 90°. Microphones and the eardrum respond to pressure, and it's what usually appears on graphs.
+
+**The pressure changes are minuscule.** Atmospheric pressure at sea level is about 101,325 Pa. A sound at 94 dB SPL, the level used to calibrate microphones and comparable to a shout at close range, corresponds to a variation of only 1 Pa RMS, or one hundred-thousandth of atmospheric pressure. The ear detects variations another 50,000 times smaller.
+
+**Molecular motion is more microscopic than it seems.** Set the level to 0 dB SPL and the frequency to 1 kHz: the calculated displacement drops to about 10⁻¹¹ m, a tenth of the diameter of an atom. The threshold of human hearing literally corresponds to air movements smaller than an atom. It's one of the most sensitive mechanical sensors in nature, and how it works is the subject of the [perception module](/percepcao/anatomia-do-ouvido).
+
+## Longitudinal and transverse waves
+
+A wave is called **longitudinal** when the medium oscillates in the same direction the wave travels, and **transverse** when it oscillates perpendicular to it. Sound in air is longitudinal, and not by accident: a fluid doesn't resist shear. You can push air (compress it), but you can't "twist" it and expect it to come back, because layers of gas slide freely past one another. Without a sideways restoring force, there's no transverse wave.
+
+Solids are different: they resist both compression and shear and therefore carry both types. Earthquakes generate P waves (primary, longitudinal) and S waves (secondary, transverse); P waves arrive first because rock is stiffer against compression. A guitar string vibrates transversally but hardly moves any air by itself, being too thin. The vibration passes through the bridge to the wooden top, a large surface that pushes the air and finally generates longitudinal waves. Use the simulator's selector to compare both geometries.
+
+<Callout type="simplificacao">
+Drawing sound as a sine wave going up and down is extremely useful, but it can give the impression that air "goes up and down." The vertical axis of those graphs represents **pressure** (or electrical voltage, or a digital value), not position in space. Whenever you see a waveform on this site, remember it's a graph of a quantity against time or against position, not a photograph of the air.
+</Callout>
+
+## Where the speed of sound comes from
+
+If sound is a chain of pushes, its speed depends on how "stiff" the spring is (how much the medium resists compression) and how heavy the mass is (its density). For any fluid:
+
+<Formula say="The stiffer the medium, the faster sound travels. The denser it is, the slower.">
+
+$$
+c = \sqrt{\frac{K}{\rho}}
+$$
+
+<Vars
+  items={[
+    ['c', 'speed of sound, in m/s'],
+    ['K', 'bulk modulus, in Pa: how much pressure it takes to reduce the volume by a given fraction'],
+    ['ρ', 'density of the medium, in kg/m³'],
+  ]}
+/>
+
+</Formula>
+
+Stiffer media transmit faster; denser media, more slowly. That's why sound travels at about 1,480 m/s in water and nearly 6,000 m/s in steel: density goes up a lot, but stiffness goes up much more.
+
+For a gas, there's a historical subtlety. Isaac Newton calculated the speed of sound assuming the air's temperature stays constant during compressions and got about 280 m/s, almost 20% below the measured value. The correction came from Pierre-Simon Laplace in the early 19th century: compressions and rarefactions are too fast and too far apart for heat to flow between them. Compressed air warms slightly, rarefied air cools slightly, and that heating makes the spring stiffer. The process is **adiabatic**, and the effective bulk modulus is $K = \gamma P$:
+
+<Formula say="In air, the speed of sound depends on temperature and not on pressure: about 343 m/s at 20 °C.">
+
+$$
+c = \sqrt{\frac{\gamma P}{\rho}} = \sqrt{\frac{\gamma R T}{M}}
+$$
+
+<Vars
+  items={[
+    ['γ', 'ratio of specific heats of the gas (≈ 1.40 for dry air)'],
+    ['P', 'static pressure of the gas, in Pa'],
+    ['R', 'universal gas constant, 8.314 J/(mol·K)'],
+    ['T', 'absolute temperature, in kelvin'],
+    ['M', 'molar mass of air, ≈ 0.02897 kg/mol'],
+  ]}
+/>
+
+</Formula>
+
+With T = 293.15 K (20 °C), the result is **343 m/s**. The second form of the equation reveals something counterintuitive: the speed of sound in an ideal gas **doesn't depend on pressure**. Raise the pressure and the density rises in the same proportion, so the effects cancel. What matters is temperature: it governs the average speed of the molecules, and sound can't travel faster than the molecules can "pass the message along." A practical approximation is $c \approx 331.3 + 0.606\,T$ (with T in °C). Humidity increases the speed slightly, because water vapor is lighter than the dry air it replaces.
+
+### Why this matters for headphones
+
+The speed of sound turns time into distance and vice versa. One millisecond of delay equals 34 cm of travel. A sound's difference in arrival time between your two ears is at most about 0.7 ms, and the brain uses differences of a few microseconds to locate sources, as we'll see in [spatial localization](/percepcao/localizacao-espacial). Inside an IEM, tubes a few millimeters long and the ear canal itself (about 25 mm) have dimensions comparable to the wavelength of treble, and that's exactly the range where the resonances that dominate measurements arise, the subject of [pinna gain](/percepcao/pinna-gain).
+
+## Pressure, particle velocity and acoustic impedance
+
+In a plane wave (parallel wavefronts, far from the source), acoustic pressure $p$ and the speed at which particles oscillate, $u$, are proportional:
+
+<Formula say="Pressure and particle speed rise together. The ratio between them is a property of the medium.">
+
+$$
+p = \rho\, c \; u
+$$
+
+</Formula>
+
+The product $\rho c$ is the **characteristic acoustic impedance** of the medium, about 413 Pa·s/m for air at 20 °C. It tells you how much pressure it takes to set the medium moving at a given speed. The concept of impedance, which reappears in [electronics](/eletronica/corrente-alternada-e-impedancia) and in the physics of the [middle ear](/percepcao/anatomia-do-ouvido), is central to understanding energy transfer: when a wave passes from one medium to another with very different impedance, almost all the energy is reflected. The impedance of water is about 3,600 times that of air, which is why you barely hear voices from the surface when you dive, and why the middle ear needs an impedance-matching mechanism between the air and the liquid of the cochlea.
+
+The energy carried per unit area and per unit time is **intensity**:
+
+<Formula say="Energy grows with the square of pressure: double the pressure and you have four times the energy.">
+
+$$
+I = \frac{p_{\text{rms}}^2}{\rho\, c}
+$$
+
+</Formula>
+
+It grows with the **square** of pressure. Doubling the pressure quadruples the intensity. This relationship is why pressure decibels use a factor of 20 and power decibels use a factor of 10, which we'll see in detail in the article on [decibels](/fundamentos/decibeis).
+
+<KeyNumbers
+  items={[
+    { value: '343 m/s', label: 'speed of sound in air at 20 °C' },
+    { value: '20 µPa', label: 'reference pressure, near the threshold of hearing at 1 kHz' },
+    { value: '1 Pa', label: '94 dB SPL, the microphone calibration level' },
+    { value: '~10⁻¹¹ m', label: 'molecular displacement at the threshold of hearing at 1 kHz' },
+  ]}
+/>
+
+## How sound spreads
+
+A small source radiating freely generates roughly spherical wavefronts. The same acoustic power spreads over a sphere whose area grows with the square of the radius, so intensity falls as $1/r^2$ and pressure falls as $1/r$. In decibels: **−6 dB each time the distance doubles**. That's the inverse-square law, valid in a free field and at distances large compared with the size of the source and the wavelength.
+
+In practice we almost never hear only the direct sound. In a room, sound reflects off walls, ceiling and furniture, and what reaches the ears is the sum of the direct sound and dozens of delayed reflections. Surfaces and objects interact with sound according to their size relative to the wavelength: objects much smaller than λ hardly disturb it (sound bends around them, or **diffracts**), while larger objects reflect it and cast "shadows." Your head, about 18 cm wide, is invisible to 100 Hz bass (λ ≈ 3.4 m) but casts a shadow for 5 kHz treble (λ ≈ 7 cm). That difference is one of the clues the brain uses to locate sounds.
+
+And here's a profound difference between speakers and IEMs. A speaker radiates into space; the sound spreads, reflects and interacts with your head and ears before reaching the eardrum. An IEM seals the ear canal and forms with it a small closed cavity of about 1 to 2 cm³. For low frequencies, whose wavelength is far larger than that cavity, there's no "propagation" in the usual sense: pressure rises and falls almost uniformly inside the chamber, like a piston compressing a closed syringe. That completely changes the physics of bass, as we'll see in [transducers](/drivers/transdutores), and explains why tiny IEMs can reproduce 20 Hz with ease.
+
+## Absorption: why treble doesn't travel as far
+
+Air isn't a perfectly elastic medium. Some of the wave's energy is converted to heat by viscosity, thermal conduction and, chiefly, molecular relaxation processes of oxygen and nitrogen (influenced by humidity). This absorption grows strongly with frequency: under typical conditions, at 10 kHz it's on the order of 0.1 to 0.2 dB per meter, while at 100 Hz it's negligible. That's why distant thunder arrives as a low rumble, and a band playing far away loses the cymbals first. The ISO 9613-1 standard tabulates these coefficients. Inside a headphone, distances are so small that this absorption doesn't matter. What matters is materials and cavities.
+
+## From the air to the ear
+
+Everything we've seen converges on one point: the eardrum is a **pressure** sensor. It doesn't "see" molecules or know where they came from. It responds to the difference between the pressure arriving through the ear canal and the pressure of the middle ear. All the information you perceive, whether pitch, timbre, direction or space, has to be encoded in the way that pressure varies over time, at each ear.
+
+This has an important consequence for audiophilia: **two systems that produce the same pressure at the eardrum, over time, sound identical**, whether that pressure came from a three-way speaker, a planar magnetic or a single balanced armature. Audible differences have to be differences in that pressure: in level, in distribution across frequencies, in distortion, in noise, in differences between the ears. That's why [frequency response](/resposta/lendo-graficos) measured on an ear simulator is so informative, and why this site insists on asking, of every claim, *what changes in the pressure reaching the eardrum?*
+
+The next step is to describe those variations precisely: [frequency, period, amplitude and wavelength](/fundamentos/frequencia-e-amplitude).
+
+<References>
+  <Ref>Kinsler, L. E.; Frey, A. R.; Coppens, A. B.; Sanders, J. V. <em>Fundamentals of Acoustics</em>. 4th ed. Wiley, 2000. Chs. 1–5: wave equation, speed of sound and acoustic impedance.</Ref>
+  <Ref>Beranek, L. L.; Mellow, T. J. <em>Acoustics: Sound Fields and Transducers</em>. Academic Press, 2012.</Ref>
+  <Ref>Cramer, O. "The variation of the specific heat ratio and the speed of sound in air with temperature, pressure, humidity, and CO₂ concentration." <em>Journal of the Acoustical Society of America</em>, 93(5), 2510–2516, 1993.</Ref>
+  <Ref>ISO 9613-1:1993. <em>Acoustics — Attenuation of sound during propagation outdoors — Part 1: Calculation of the absorption of sound by the atmosphere</em>.</Ref>
+  <Ref>Everest, F. A.; Pohlmann, K. C. <em>Master Handbook of Acoustics</em>. 7th ed. McGraw-Hill, 2021.</Ref>
+</References>

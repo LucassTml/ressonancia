@@ -2,9 +2,15 @@
 Um transdutor converte uma forma de energia em outra. Num fone, ele transforma uma corrente elétrica que varia no tempo num movimento mecânico, e esse movimento numa variação de pressão. Por trás das dezenas de tecnologias com nomes de marketing, há poucos princípios físicos — e entender esses princípios esclarece mais sobre o som de um fone do que qualquer contagem de drivers.
 </Lead>
 
+<Callout type="simples">
+Um driver é um pequeno motor que empurra o ar para a frente e para trás, seguindo o sinal elétrico. Uma surpresa: num fone vedado, grave profundo não exige grande movimento, só um espaço fechado. É como apertar o êmbolo de uma seringa tampada. Por isso um IEM minúsculo chega a 20 Hz, e qualquer vazamento de ar acaba com os graves.
+</Callout>
+
 ## Da corrente à força
 
 A maior parte dos drivers de fones usa o **eletromagnetismo**. Um condutor percorrido por uma corrente $i$, imerso num campo magnético de densidade $B$, sofre uma força perpendicular a ambos — a **força de Lorentz**. Para um fio de comprimento $l$ perpendicular ao campo:
+
+<Formula say="A força sobre o fio cresce com a intensidade do ímã, a quantidade de fio no campo e a corrente. Dobre a corrente e a força dobra.">
 
 $$
 F = B \cdot l \cdot i
@@ -19,6 +25,8 @@ $$
   ]}
 />
 
+</Formula>
+
 O produto $Bl$ é o **fator de força** do motor: quanta força se obtém por ampère. Ímãs mais fortes (neodímio) e mais fio no campo aumentam $Bl$, o que melhora a sensibilidade e o controle do movimento. A beleza da equação é a **linearidade**: dobrar a corrente dobra a força. Enquanto $B$ e $l$ permanecerem constantes ao longo do movimento, o motor não distorce.
 
 Os drivers **dinâmicos** (bobina móvel) e **planares magnéticos** usam diretamente essa força. Os **balanced armatures** usam uma variante: a corrente magnetiza uma peça de ferro, que é atraída por ímãs. Os **eletrostáticos** trocam o magnetismo por forças entre cargas elétricas, e os **piezoelétricos** usam materiais que se deformam com a tensão. Cada princípio tem um artigo próprio neste módulo.
@@ -27,15 +35,23 @@ Os drivers **dinâmicos** (bobina móvel) e **planares magnéticos** usam direta
 
 A parte móvel de qualquer driver — diafragma, bobina, membrana — tem **massa** $m$. Ela está presa por uma suspensão, que age como uma **mola** de rigidez $k$ (ou, de forma equivalente, compliância $C = 1/k$). E o movimento sofre **perdas** — atrito interno dos materiais, resistência do ar passando por aberturas — que agem como um amortecedor de resistência mecânica $R$. A equação do movimento é a de um oscilador forçado:
 
+<Formula say="A parte móvel se comporta como uma massa presa a uma mola, com um freio: três efeitos juntos resistem à força aplicada.">
+
 $$
 m\,\ddot{x} + R\,\dot{x} + k\,x = F(t)
 $$
 
+</Formula>
+
 Esse sistema tem uma **frequência de ressonância**:
+
+<Formula say="Uma mola mais rígida sobe a frequência de ressonância; uma massa maior a abaixa.">
 
 $$
 f_0 = \frac{1}{2\pi}\sqrt{\frac{k}{m}}
 $$
+
+</Formula>
 
 e um **fator Q** que descreve quão pronunciada é a ressonância, $Q = \sqrt{km}/R$. Q alto significa pouco amortecimento: um pico alto e estreito na ressonância e um decaimento lento. Q baixo significa muito amortecimento: resposta suave, sem pico.
 
@@ -59,6 +75,8 @@ Uma membrana pequena irradiando para o espaço aberto (um alto-falante numa sala
 
 Um IEM bem vedado forma, com o canal auditivo, uma cavidade fechada de cerca de 1–2 cm³. Para frequências cujo comprimento de onda é muito maior que essa cavidade — todos os graves e médios —, a pressão dentro dela sobe e desce uniformemente, como numa seringa tampada. Pela lei dos gases (compressão adiabática), a variação de pressão é proporcional à variação de **volume**, ou seja, ao **deslocamento** do diafragma:
 
+<Formula say="Num espaço pequeno e vedado, a pressão simplesmente acompanha o quanto o diafragma se desloca, em todas as frequências baixas.">
+
 $$
 p \approx \frac{\gamma P_0}{V}\,\Delta V = \frac{\rho c^2}{V}\, S_d\, x
 $$
@@ -72,13 +90,19 @@ $$
   ]}
 />
 
+</Formula>
+
 Como o deslocamento é constante **abaixo** da ressonância, um driver numa câmara vedada tem resposta plana **abaixo** da sua ressonância — em princípio, até frequências arbitrariamente baixas, enquanto a vedação se mantiver. Isso inverte a lógica dos alto-falantes: um driver de IEM pode ter a ressonância em vários quilohertz e ainda assim reproduzir 20 Hz com facilidade.
 
 Vale fazer a conta. Para produzir 100 dB SPL (2 Pa RMS) numa cavidade de 2 cm³ com um diafragma de 8 mm de diâmetro (área ≈ 50 mm²), o deslocamento necessário é da ordem de
 
+<Formula say="Para 100 dB num IEM, o diafragma só precisa se mover cerca de 0,6 micrômetro, seja em 20 Hz ou em 200 Hz.">
+
 $$
 x \approx \frac{p\,V}{\rho c^2 S_d} = \frac{2 \cdot 2\times10^{-6}}{1{,}42\times10^{5} \cdot 5\times10^{-5}} \approx 0{,}6\ \mu\text{m}
 $$
+
+</Formula>
 
 Menos de um micrômetro — e isso vale para 20 Hz como para 200 Hz. Um alto-falante de 16 cm numa sala precisaria de milímetros de excursão para o mesmo nível em 20 Hz. É por isso que IEMs minúsculos têm graves profundos, e por isso **qualquer vazamento** destrói esses graves: com uma saída de ar, a cavidade deixa de ser fechada e a pressão em baixas frequências escapa.
 

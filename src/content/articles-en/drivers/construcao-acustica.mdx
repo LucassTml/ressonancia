@@ -1,0 +1,87 @@
+<Lead>
+A driver alone isn't a headphone. What turns a transducer into a product is the acoustics around it: chambers that shape the bass, tubes that place resonances, vents that relieve pressure, filters that tame peaks and shells that define how sound reaches the ear.
+</Lead>
+
+<Callout type="simples">
+The inside of an earphone works like a tiny musical instrument. The size of its air chambers, the length of its tubes and the small vents and filters all shape the sound. That's why the same driver in two different shells can sound like two different earphones.
+</Callout>
+
+## Chambers: front and rear
+
+Every driver has two sides. The front pushes air toward the ear; the back pushes air in the opposite direction, in opposite phase. What happens to that rear wave defines much of a headphone's character.
+
+- The **front chamber** (between the diaphragm and the nozzle, plus the residual canal) is where the useful pressure is generated. Its volume and openings influence mids and treble.
+- The **rear chamber** acts as an additional air spring for the diaphragm. A small closed rear chamber "stiffens" the spring and raises the resonance; a larger or vented one softens it.
+
+In headphones, the contrast is clear: **closed-back** models have a sealed rear, which isolates from the environment and reinforces bass but can create internal resonances; **open-back** models let the rear wave escape through a grille, which reduces resonances and gives a sensation of openness but leaks sound and doesn't isolate.
+
+## Venting and pressure
+
+In dynamic IEMs, venting has important roles:
+
+- **Bass control.** A small opening (often with a mesh filter) in the rear or front chamber adjusts the level and shape of the bass. Venting the rear chamber reduces the stiffness of the air behind the diaphragm.
+- **Pressure relief.** Inserting a sealed IEM pushes air into the canal, increasing static pressure on the eardrum and diaphragm. Without venting, some dynamic drivers suffer **driver flex**: the diaphragm deforms beyond normal and crackles when inserting or removing the earphone. Vents reduce this effect, and many people also report less of a "plugged ear" sensation.
+- **Trade-off with isolation.** Vents let some sound in and out, reducing isolation, typically by a little but measurably.
+
+Balanced armatures are sealed boxes and don't need this type of relief, but BA-only IEMs usually have very little venting, which some listeners perceive as pressure.
+
+## Helmholtz resonators
+
+A chamber connected to the outside by a narrow opening is a **Helmholtz resonator**: the mass of air in the neck oscillates against the elasticity of the air in the chamber, as in a bottle you blow across. The resonant frequency is
+
+<Formula say="Like blowing across a bottle: a bigger chamber or a longer neck lowers the note, and a wider opening raises it.">
+
+$$
+f_0 = \frac{c}{2\pi}\sqrt{\frac{A}{V\, L_{\text{ef}}}}
+$$
+
+<Vars
+  items={[
+    ['A', 'cross-sectional area of the neck'],
+    ['V', 'chamber volume'],
+    ['L_ef', 'effective length of the neck (physical length plus an end correction, ≈ 1.7 times the radius for openings at both ends)'],
+  ]}
+/>
+
+</Formula>
+
+In IEMs, chambers and vents form resonators that can reinforce or attenuate specific regions, sometimes intentionally, to shape bass and lower mids, sometimes as a side effect to be corrected.
+
+## Tubes and nozzles
+
+In BA IEMs, the sound of each driver often travels through **tubes** to the nozzle. A tube has resonances that depend on its length and on the conditions at its ends (see [phase and interference](/fundamentos/fase-e-interferencia)):
+
+- closed (or open) at both ends: $f_n = n\,c/(2L)$;
+- closed at one end and open at the other: $f_n = (2n-1)\,c/(4L)$.
+
+For tubes of 5 to 20 mm, these resonances fall between 4 and 35 kHz, right in the region that defines presence, treble and extension. Diameter also matters: narrow tubes have more losses (they attenuate treble) and more **inertance** (the mass of air inside them "weighs" more at high frequencies). The IEM's **nozzle** is itself a tube that resonates with the residual canal.
+
+<Lab id="tube" />
+
+## Dampers and acoustic filters
+
+To control resonances, engineers use **dampers**: small resistive elements (metal meshes, fabrics, foams) that dissipate energy as air passes through them. Commercial dampers for IEMs (made by companies like Knowles) are specified in **acoustic ohms** and often identified by color. Swapping a damper for one of higher resistance reduces peaks and usually also the level in the affected band.
+
+Some IEMs offer **interchangeable nozzle filters** the user can swap to adjust the sound: in practice, they're different dampers or tubes. They usually change the treble by a few decibels, real and measurable changes, though smaller than marketing suggests.
+
+## Shells, materials and formats
+
+**Shell materials** (resin, aluminum, titanium, wood) have little direct influence on sound, as long as the shell is rigid and well sealed. Shell vibrations in IEMs are very small compared with those of the air chamber. The material matters more for comfort, weight, durability and, in the case of metals, for the internal shape that can be machined.
+
+**Headphone formats:**
+
+- **Over-ear:** surround the ear. They interact with the pinna, making the response dependent on placement and anatomy.
+- **On-ear:** rest on the ear. Seal and bass depend a lot on contact pressure.
+- **Earbuds:** rest in the concha without sealing the canal. Bass is limited by leakage; little isolation.
+- **IEMs:** seal the ear canal. High isolation, pressure-chamber bass, a response highly dependent on insertion and eartip (see [seal and eartips](/iems/vedacao-e-ponteiras)).
+
+## The lesson
+
+The same driver in two different shells can sound like two different headphones. The acoustics around the transducer aren't a detail: they're most of the design. That's why the next natural question is how manufacturers use all these tools to reach a curve, the subject of [tuning](/iems/tuning).
+
+<References>
+  <Ref>Kinsler, L. E. et al. <em>Fundamentals of Acoustics</em>. 4th ed. Wiley, 2000. Helmholtz resonators and tubes.</Ref>
+  <Ref>Beranek, L. L.; Mellow, T. J. <em>Acoustics: Sound Fields and Transducers</em>. Academic Press, 2012. Equivalent acoustic circuits.</Ref>
+  <Ref>Knowles Corporation. <em>Acoustic dampers — application notes</em>.</Ref>
+  <Ref>Borwick, J. (ed.). <em>Loudspeaker and Headphone Handbook</em>. 3rd ed. Focal Press, 2001.</Ref>
+</References>

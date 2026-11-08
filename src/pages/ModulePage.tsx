@@ -5,6 +5,7 @@ import { modules, type ModuleEntry } from '../content/manifest';
 import { hasArticleSource } from '../content/registry';
 import { IconArrowRight, IconFlask } from '../components/ui/controls';
 import { NotFound } from './NotFound';
+import { tr } from '../i18n';
 
 function ArticleList({ m, delay = 0 }: { m: ModuleEntry; delay?: number }) {
   return (
@@ -32,10 +33,9 @@ function ArticleList({ m, delay = 0 }: { m: ModuleEntry; delay?: number }) {
                 <span className="mt-2 flex gap-3 text-[12px] text-faint">
                   {a.labs?.length ? (
                     <span className="inline-flex items-center gap-1">
-                      <IconFlask size={13} /> interativo
-                    </span>
+                      <IconFlask size={13} />{' '}{tr("interativo")}</span>
                   ) : null}
-                  {!ready && <span>em preparação</span>}
+                  {!ready && <span>{tr("em preparação")}</span>}
                 </span>
               </span>
               <IconArrowRight
@@ -54,7 +54,7 @@ export function ModulePage() {
   const { module = '' } = useParams();
   const m = modules.find((x) => x.id === module);
   useEffect(() => {
-    if (m) document.title = `${m.title} — Ressonância`;
+    if (m) document.title = tr("{0} — Ressonância", m.title);
   }, [m]);
   if (!m) return <NotFound />;
   return (
@@ -66,7 +66,7 @@ export function ModulePage() {
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="mb-12"
           >
-            <div className="font-mono text-[13px] text-accent tabular">Módulo {m.number}</div>
+            <div className="font-mono text-[13px] text-accent tabular">{tr("Módulo")}{' '}{m.number}</div>
             <h1 className="mt-2 text-[clamp(2.1rem,4.6vw,3.1rem)] leading-[1.06] font-semibold tracking-[-0.034em] text-balance">{m.title}</h1>
             <p className="mt-4 text-[1.15rem] leading-relaxed text-muted font-serif max-w-[60ch]">{m.description}</p>
           </motion.header>
@@ -78,17 +78,14 @@ export function ModulePage() {
 
 export function ArticlesIndex() {
   useEffect(() => {
-    document.title = 'Artigos — Ressonância';
+    document.title = tr("Artigos — Ressonância");
   }, []);
   return (
     <div className="min-w-0 flex-1 pt-12 sm:pt-16 pb-24">
         <div className="mx-auto max-w-[760px]">
           <header className="mb-14">
-            <h1 className="text-[clamp(2.1rem,4.6vw,3.1rem)] leading-[1.06] font-semibold tracking-[-0.034em]">Todos os artigos</h1>
-            <p className="mt-4 text-[1.1rem] leading-relaxed text-muted font-serif max-w-[60ch]">
-              Nove módulos que vão da física do ar ao tímpano, do tímpano ao cérebro, e do cérebro de volta à engenharia dos fones.
-              Comece por onde quiser: cada artigo explica os conceitos de que precisa e aponta para onde aprofundá-los.
-            </p>
+            <h1 className="text-[clamp(2.1rem,4.6vw,3.1rem)] leading-[1.06] font-semibold tracking-[-0.034em]">{tr("Todos os artigos")}</h1>
+            <p className="mt-4 text-[1.1rem] leading-relaxed text-muted font-serif max-w-[60ch]">{tr("Onze módulos que vão da física do ar ao tímpano, do tímpano ao cérebro, e do cérebro de volta à engenharia dos fones. Comece por onde quiser: cada artigo explica os conceitos de que precisa e aponta para onde aprofundá-los.")}</p>
           </header>
           <div className="space-y-16">
             {modules.map((m) => (

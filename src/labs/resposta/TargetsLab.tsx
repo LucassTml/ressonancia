@@ -4,6 +4,7 @@ import { Segmented, Slider, fmtDb, fmtNum } from '../../components/ui/controls';
 import { FreqPlot, Legend, type PlotCurve } from '../../viz/FreqPlot';
 import { biquadCoefs, biquadDb, interpCurve } from '../../audio/dsp';
 import { harmanIE, harmanIENoBass, rigLabel, targetById, targets } from '../../data/targets';
+import { tr } from '../../i18n';
 
 const COLORS: Record<string, string> = {
   'harman-ie-2019': 'var(--c-a)',
@@ -46,16 +47,16 @@ export default function TargetsLab() {
           dash: targetById[id].rig !== '711' ? '5 4' : undefined,
         }))
       : [
-          { id: 'ref', label: 'Harman IE 2019', fn: (f) => interpCurve(harmanIE.curve, f), color: 'var(--c-target)', width: 1.4, dash: '5 4' },
-          { id: 'built', label: 'Sua variação', fn: built, color: 'var(--c-a)', width: 2.6 },
+          { id: 'ref', label: tr("Harman IE 2019"), fn: (f) => interpCurve(harmanIE.curve, f), color: 'var(--c-target)', width: 1.4, dash: '5 4' },
+          { id: 'built', label: tr("Sua variação"), fn: built, color: 'var(--c-a)', width: 2.6 },
         ];
 
   const shelfAt20 = interpCurve(harmanIE.curve, 20) - interpCurve(harmanIENoBass.curve, 20);
 
   return (
     <LabFrame
-      title="Curvas-alvo lado a lado"
-      description="Dados das curvas publicadas (via projeto AutoEq). Compare versões e referências, ou construa variações do alvo Harman ajustando o shelf de graves e a inclinação de agudos — os dois parâmetros em que as preferências mais variam."
+      title={tr("Curvas-alvo lado a lado")}
+      description={tr("Dados das curvas publicadas (via projeto AutoEq). Compare versões e referências, ou construa variações do alvo Harman ajustando o shelf de graves e a inclinação de agudos — os dois parâmetros em que as preferências mais variam.")}
       onReset={() => {
         setShown(['harman-ie-2019', 'harman-ie-2019-nobass', 'harman-ie-2017']);
         setBass(100);
@@ -68,12 +69,12 @@ export default function TargetsLab() {
           value={mode}
           onChange={setMode}
           options={[
-            { value: 'compare', label: 'Comparar alvos' },
-            { value: 'build', label: 'Variar o Harman' },
+            { value: 'compare', label: tr("Comparar alvos") },
+            { value: 'build', label: tr("Variar o Harman") },
           ]}
         />
       }
-      footer="Linhas tracejadas usam outro equipamento de referência (5128, tímpano ou cabeça com orelha) e não devem ser comparadas ponto a ponto com curvas em acoplador 711 — as diferenças acima de ~1 kHz refletem os equipamentos, não apenas os alvos."
+      footer={tr("Linhas tracejadas usam outro equipamento de referência (5128, tímpano ou cabeça com orelha) e não devem ser comparadas ponto a ponto com curvas em acoplador 711 — as diferenças acima de ~1 kHz refletem os equipamentos, não apenas os alvos.")}
     >
       {mode === 'compare' && (
         <div className="flex flex-wrap gap-1.5 mb-4">
@@ -92,14 +93,14 @@ export default function TargetsLab() {
           ))}
         </div>
       )}
-      <FreqPlot curves={curves} height={320} dbMin={-12} dbMax={18} dbStep={3} ariaLabel="Curvas-alvo" />
+      <FreqPlot curves={curves} height={320} dbMin={-12} dbMax={18} dbStep={3} ariaLabel={tr("Curvas-alvo")} />
       <div className="mt-2 mb-4">
         <Legend items={curves.map((c) => ({ label: c.label!, color: c.color, dash: !!c.dash }))} />
       </div>
       {mode === 'compare' ? (
         <>
           <Controls cols={2}>
-            <Slider label="Normalizar em" value={norm} min={200} max={2000} log onChange={(v) => setNorm(Math.round(v))} unit="Hz" hint="A escolha do ponto de normalização desloca curvas inteiras para cima ou para baixo." />
+            <Slider label={tr("Normalizar em")} value={norm} min={200} max={2000} log onChange={(v) => setNorm(Math.round(v))} unit="Hz" hint={tr("A escolha do ponto de normalização desloca curvas inteiras para cima ou para baixo.")} />
           </Controls>
           <div className="mt-4 space-y-2">
             {shown.map((id) => (
@@ -114,24 +115,20 @@ export default function TargetsLab() {
       ) : (
         <>
           <Controls cols={2}>
-            <Slider label="Quantidade do shelf de graves" value={bass} min={0} max={200} step={5} onChange={setBass} unit="%" hint={`100% = shelf original (~${fmtNum(shelfAt20, 1)} dB em 20 Hz)`} />
-            <Slider label="Inclinação de agudos (acima de ~1,5 kHz)" value={tilt} min={-6} max={6} step={0.5} onChange={setTilt} format={fmtDb} />
+            <Slider label={tr("Quantidade do shelf de graves")} value={bass} min={0} max={200} step={5} onChange={setBass} unit="%" hint={tr("100% = shelf original (~{0} dB em 20 Hz)", fmtNum(shelfAt20, 1))} />
+            <Slider label={tr("Inclinação de agudos (acima de ~1,5 kHz)")} value={tilt} min={-6} max={6} step={0.5} onChange={setTilt} format={fmtDb} />
           </Controls>
           <div className="mt-4">
             <Readout
               items={[
-                { label: 'Graves em 30 Hz', value: fmtDb(built(30)), accent: true },
-                { label: 'Pico de presença (≈3 kHz)', value: fmtDb(built(3000)) },
-                { label: 'Em 10 kHz', value: fmtDb(built(10000)) },
+                { label: tr("Graves em 30 Hz"), value: fmtDb(built(30)), accent: true },
+                { label: tr("Pico de presença (≈3 kHz)"), value: fmtDb(built(3000)) },
+                { label: tr("Em 10 kHz"), value: fmtDb(built(10000)) },
               ]}
             />
           </div>
           <div className="mt-3">
-            <Note>
-              Os estudos da Harman encontraram ouvintes que preferem, em média, o shelf original; outros, mais ou menos graves; e preferências de
-              agudos que variam com a idade e a experiência. Estas duas alavancas cobrem a maior parte dessa variação. Para encontrar os seus
-              valores, use o laboratório “Sua curva de preferência”.
-            </Note>
+            <Note>{tr("Os estudos da Harman encontraram ouvintes que preferem, em média, o shelf original; outros, mais ou menos graves; e preferências de agudos que variam com a idade e a experiência. Estas duas alavancas cobrem a maior parte dessa variação. Para encontrar os seus valores, use o laboratório “Sua curva de preferência”.")}</Note>
           </div>
         </>
       )}

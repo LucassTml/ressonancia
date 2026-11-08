@@ -1,0 +1,81 @@
+<Lead>
+"Tuning" is the word the community uses for a headphone's sound: "I liked the tuning," "the tuning is V-shaped." But tuning is, above all, an engineering process: the sequence of decisions and iterations by which a target curve, chosen on paper, becomes a physical object that reproduces it, and then thousands of objects that reproduce it the same way.
+</Lead>
+
+<Callout type="simples">
+Tuning is how a manufacturer gets an earphone to sound the way it wants: picking drivers, then adjusting chambers, tubes and filters until the measurement matches the target. The factory then tests each unit to keep them all close to the approved prototype.
+</Callout>
+
+## What tuning is
+
+**Tuning** is the process of defining a headphone's final response (and character) by choosing and adjusting all the elements that determine it: drivers, chambers, tubes, acoustic filters, venting, crossover and, in headphones with digital processing, DSP. The result of tuning is the curve you see in a measurement, and the sound you hear.
+
+It starts with a design question (what sound do we want?) and ends with a manufacturing question (how do we ensure every unit sounds like that?).
+
+## 1. The target
+
+Every project starts from a **target**. Many manufacturers have their own, their "house signature," often derived from known references such as [Harman IE](/resposta/targets-e-harman) or diffuse field, with adjustments of taste: a bit more bass, smoother presence, more or less "air." Sometimes the target is defined by an audience (stage musicians, electronic music fans), sometimes by a previous successful product.
+
+The target is defined **in the domain of the measuring equipment** the team uses, nearly always an IEC 60318-4 (711) coupler, sometimes a B&K 5128. That's important: the target is a curve on the coupler, not "in the ear."
+
+## 2. The architecture
+
+With the target set, the team chooses the architecture:
+
+- **Drivers.** A 10 mm dynamic? A planar? A bass dynamic with BAs for mids and treble? BA manufacturers offer catalogs with the responses, sensitivities and impedances of each model.
+- **Layout.** Where each driver sits, how the sound of each reaches the nozzle (separate tubes, a common tube, driver directly at the nozzle), what chambers exist behind and in front of each driver.
+- **Crossover.** Whether there will be electrical (capacitors, resistors, inductors) and/or acoustic filters.
+
+At this stage, engineers use **simulation**. Small acoustic systems can be modeled by **equivalent circuits**: cavities behave like capacitors (compliance), narrow tubes like inductors (inertance) in series with resistances (losses), dampers like resistors. BA manufacturers provide equivalent electrical models of their drivers. For complex geometries, finite element simulations are used. Simulation doesn't replace the prototype, but it reduces the number of attempts.
+
+## 3. The prototype and the tuning tools
+
+Prototypes, often with 3D-printed shells today, are measured on the coupler, compared with the target and modified. The tools are the ones we saw in [acoustic construction](/drivers/construcao-acustica):
+
+- **Venting** (holes and their mesh filters) to adjust bass and pressure relief;
+- **Dampers** (acoustic resistances) to tame resonances;
+- **Tube length and diameter** to place presence and treble peaks;
+- **Crossover capacitor and resistor values** to define where each driver comes in and at what level;
+- **Chamber volume** and **nozzle filters** for final adjustments.
+
+Each change requires a new measurement. The lab below simplifies this process: a hybrid IEM with six engineering "knobs." Try to bring the prototype close to the target and then approve it as the reference sample to see quality control.
+
+<Lab id="tuning" />
+
+Besides measurement, there's **listening**. Tuning engineers (*tuners*) evaluate prototypes with reference repertoire, sometimes in blind comparisons, and decide between versions that measure similarly. Small details, such as the exact shape of the transition between bass and mids or the smoothness of the 5 to 8 kHz region, are often decided by ear. That's why two manufacturers with "the same target" produce different headphones.
+
+## 4. Validation
+
+A nice curve on one unit isn't enough. Before releasing the product, the following are checked:
+
+- several units and several **insertions** (the tuning has to be robust to small variations in use);
+- several **eartip sizes**;
+- **distortion** at high levels, especially in the bass;
+- **impedance** and behavior with different sources;
+- **channel matching**;
+- sometimes, measurements on **real ears** with probe microphones, to see what happens beyond the coupler.
+
+## 5. Production: how a curve is "applied" at the factory
+
+Manufacturing is repeating. The tolerances of each part (BA sensitivity, typically ±2–3 dB, diaphragm variation, tube placement, amount of glue, filters) make each unit come out slightly different. To maintain consistency, the factory:
+
+1. **Specifies components with tolerances** and often **sorts drivers into sensitivity batches** (*binning*), assembling pairs with drivers from the same batch.
+2. **Measures each unit** (or each driver, before assembly) on an automated test fixture, with a coupler and a short signal. Software compares the curve with that of the approved **reference sample**, within a **tolerance window** (for example, ±2 dB between 100 Hz and 8 kHz).
+3. **Checks left-right matching**, with limits such as 1–2 dB in the important bands.
+4. **Rejects or reworks** units outside the window. Tighter tolerances increase consistency, and cost, because more units are rejected.
+
+In headphones with **DSP** (practically all wireless ones), part of the tuning is digital: an EQ in the firmware shapes the final response. This makes it possible to correct production variation with **individual calibration** (one EQ per unit, written at the factory) and to update the sound by software after launch.
+
+## What this means for buyers
+
+- **A review's measurement is of one unit.** Yours can differ within the manufacturer's tolerance, which is why differences of 1–2 dB between graphs of different units are normal.
+- **Silent revisions happen.** Manufacturers change suppliers and components over a product's life; the sound can change with no change of name.
+- **Interchangeable filters and tuning switches** are tuning tools handed to the user: alternative dampers or resistors. They produce real, measurable changes, usually of a few decibels.
+- **Tuning is neither magic nor secret**: it's acoustic engineering and a choice of taste. The result appears in the measurement and, within the limits discussed on this site, in what you hear.
+
+<References>
+  <Ref>Beranek, L. L.; Mellow, T. J. <em>Acoustics: Sound Fields and Transducers</em>. Academic Press, 2012. Equivalent acoustic circuits.</Ref>
+  <Ref>Knowles Corporation. <em>Balanced armature receivers — application notes, acoustic dampers and equivalent circuits</em>.</Ref>
+  <Ref>IEC 60318-4:2010. Occluded-ear simulator.</Ref>
+  <Ref>Borwick, J. (ed.). <em>Loudspeaker and Headphone Handbook</em>. 3rd ed. Focal Press, 2001. Chapter on headphones and production control.</Ref>
+</References>

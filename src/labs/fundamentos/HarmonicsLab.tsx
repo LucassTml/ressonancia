@@ -4,20 +4,21 @@ import { Button, Segmented, Slider, fmtHz } from '../../components/ui/controls';
 import { PlayButton, usePlayback } from '../../components/ui/audio';
 import { dbToGain } from '../../audio/engine';
 import { useElementSize } from '../../lib/hooks';
+import { tr } from '../../i18n';
 
 const N = 16;
 type Preset = { id: string; name: string; amps: number[]; note: string };
 const mk = (f: (n: number) => number) => Array.from({ length: N }, (_, i) => f(i + 1));
 
 const PRESETS: Preset[] = [
-  { id: 'sine', name: 'Senoide', amps: mk((n) => (n === 1 ? 1 : 0)), note: 'Apenas a fundamental. Soa “puro”, quase sem caráter — raro na natureza.' },
-  { id: 'square', name: 'Quadrada', amps: mk((n) => (n % 2 ? 1 / n : 0)), note: 'Só harmônicos ímpares, com amplitude 1/n. Som oco e “eletrônico”, parente do clarinete.' },
-  { id: 'saw', name: 'Dente de serra', amps: mk((n) => 1 / n), note: 'Todos os harmônicos com amplitude 1/n. Brilhante e áspero, base de sintetizadores de cordas e metais.' },
-  { id: 'tri', name: 'Triangular', amps: mk((n) => (n % 2 ? 1 / (n * n) : 0)), note: 'Ímpares caindo com 1/n²: tão fracos que o som fica suave, perto de uma senoide.' },
-  { id: 'clar', name: 'Tipo clarinete', amps: [1, 0.04, 0.75, 0.05, 0.5, 0.06, 0.32, 0.04, 0.2, 0.05, 0.12, 0.03, 0.08, 0.02, 0.05, 0.02], note: 'Tubo cilíndrico fechado numa ponta: ímpares dominam nos registros graves.' },
-  { id: 'nasal', name: 'Nasal (tipo oboé)', amps: [0.35, 0.8, 1, 0.75, 0.55, 0.3, 0.25, 0.15, 0.12, 0.08, 0.06, 0.05, 0.04, 0.03, 0.02, 0.02], note: 'Harmônicos 2–5 mais fortes que a fundamental, como um formante fixo. A altura percebida continua sendo a da fundamental.' },
-  { id: 'organ', name: 'Órgão (registros)', amps: [1, 0.8, 0.6, 0.5, 0, 0.4, 0, 0.35, 0, 0, 0, 0.2, 0, 0, 0, 0.15], note: 'Somas de tubos em oitavas e quintas, como os registros de um órgão de tubos.' },
-  { id: 'even', name: 'Só pares + fundamental', amps: mk((n) => (n === 1 ? 1 : n % 2 ? 0 : 0.6 / n)), note: 'Pares reforçam oitavas da fundamental; soam “consonantes” e encorpam o som — o tipo de distorção associado a certos amplificadores valvulados.' },
+  { id: 'sine', name: tr("Senoide"), amps: mk((n) => (n === 1 ? 1 : 0)), note: tr("Apenas a fundamental. Soa “puro”, quase sem caráter — raro na natureza.") },
+  { id: 'square', name: tr("Quadrada"), amps: mk((n) => (n % 2 ? 1 / n : 0)), note: tr("Só harmônicos ímpares, com amplitude 1/n. Som oco e “eletrônico”, parente do clarinete.") },
+  { id: 'saw', name: tr("Dente de serra"), amps: mk((n) => 1 / n), note: tr("Todos os harmônicos com amplitude 1/n. Brilhante e áspero, base de sintetizadores de cordas e metais.") },
+  { id: 'tri', name: tr("Triangular"), amps: mk((n) => (n % 2 ? 1 / (n * n) : 0)), note: tr("Ímpares caindo com 1/n²: tão fracos que o som fica suave, perto de uma senoide.") },
+  { id: 'clar', name: tr("Tipo clarinete"), amps: [1, 0.04, 0.75, 0.05, 0.5, 0.06, 0.32, 0.04, 0.2, 0.05, 0.12, 0.03, 0.08, 0.02, 0.05, 0.02], note: tr("Tubo cilíndrico fechado numa ponta: ímpares dominam nos registros graves.") },
+  { id: 'nasal', name: tr("Nasal (tipo oboé)"), amps: [0.35, 0.8, 1, 0.75, 0.55, 0.3, 0.25, 0.15, 0.12, 0.08, 0.06, 0.05, 0.04, 0.03, 0.02, 0.02], note: tr("Harmônicos 2–5 mais fortes que a fundamental, como um formante fixo. A altura percebida continua sendo a da fundamental.") },
+  { id: 'organ', name: tr("Órgão (registros)"), amps: [1, 0.8, 0.6, 0.5, 0, 0.4, 0, 0.35, 0, 0, 0, 0.2, 0, 0, 0, 0.15], note: tr("Somas de tubos em oitavas e quintas, como os registros de um órgão de tubos.") },
+  { id: 'even', name: tr("Só pares + fundamental"), amps: mk((n) => (n === 1 ? 1 : n % 2 ? 0 : 0.6 / n)), note: tr("Pares reforçam oitavas da fundamental; soam “consonantes” e encorpam o som — o tipo de distorção associado a certos amplificadores valvulados.") },
 ];
 
 export default function HarmonicsLab() {
@@ -119,8 +120,8 @@ export default function HarmonicsLab() {
 
   return (
     <LabFrame
-      title="Sintetizador de harmônicos"
-      description="Síntese aditiva exata: o som tocado é a soma dos harmônicos desenhados, gerada por uma PeriodicWave. Arraste as barras para criar timbres."
+      title={tr("Sintetizador de harmônicos")}
+      description={tr("Síntese aditiva exata: o som tocado é a soma dos harmônicos desenhados, gerada por uma PeriodicWave. Arraste as barras para criar timbres.")}
       audio
       onReset={() => {
         setAmps(PRESETS[2].amps);
@@ -146,7 +147,7 @@ export default function HarmonicsLab() {
       </div>
       <div className="grid lg:grid-cols-[1.1fr_1fr] gap-4">
         <div ref={svgWrap}>
-          <div className="text-[11px] uppercase tracking-[0.1em] text-faint font-medium mb-1">Espectro — amplitude de cada harmônico</div>
+          <div className="text-[11px] uppercase tracking-[0.1em] text-faint font-medium mb-1">{tr("Espectro — amplitude de cada harmônico")}</div>
           <svg
             width={barW * N}
             height={H}
@@ -159,7 +160,7 @@ export default function HarmonicsLab() {
             onPointerMove={(e) => dragging.current && setFromPointer(e)}
             onPointerUp={() => (dragging.current = false)}
             role="img"
-            aria-label="Barras de amplitude dos harmônicos"
+            aria-label={tr("Barras de amplitude dos harmônicos")}
           >
             {amps.map((a, k) => {
               const h = a * (H - 26);
@@ -183,13 +184,12 @@ export default function HarmonicsLab() {
               );
             })}
           </svg>
-          <div className="text-[11.5px] text-faint mt-1">
-            Harmônico n = n × {fmtHz(f0)} · o 16º está em {fmtHz(16 * f0)}
+          <div className="text-[11.5px] text-faint mt-1">{tr("Harmônico n = n ×")}{' '}{fmtHz(f0)}{' '}{tr("· o 16º está em")}{' '}{fmtHz(16 * f0)}
           </div>
         </div>
         <div>
-          <div className="text-[11px] uppercase tracking-[0.1em] text-faint font-medium mb-1">Forma de onda — dois períodos</div>
-          <svg viewBox="0 0 600 120" className="w-full h-[150px] rounded-lg bg-sunken" preserveAspectRatio="none" aria-label="Forma de onda resultante">
+          <div className="text-[11px] uppercase tracking-[0.1em] text-faint font-medium mb-1">{tr("Forma de onda — dois períodos")}</div>
+          <svg viewBox="0 0 600 120" className="w-full h-[150px] rounded-lg bg-sunken" preserveAspectRatio="none" aria-label={tr("Forma de onda resultante")}>
             <line x1="0" x2="600" y1="60" y2="60" stroke="var(--c-grid-strong)" />
             <line x1="300" x2="300" y1="0" y2="120" stroke="var(--c-grid)" />
             <path d={wavePath} fill="none" stroke="var(--fg)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
@@ -197,27 +197,25 @@ export default function HarmonicsLab() {
         </div>
       </div>
       <div className="flex flex-wrap items-center gap-2 mt-4 mb-4">
-        <PlayButton playing={pb.playing} onToggle={() => (pb.playing ? pb.stop() : play(false))} label="Tom contínuo" />
-        <Button onClick={() => play(true)}>Tocar nota</Button>
+        <PlayButton playing={pb.playing} onToggle={() => (pb.playing ? pb.stop() : play(false))} label={tr("Tom contínuo")} />
+        <Button onClick={() => play(true)}>{tr("Tocar nota")}</Button>
         <Segmented
           size="sm"
           value={env}
           onChange={setEnv}
           options={[
-            { value: 'pluck', label: 'Envelope dedilhado' },
-            { value: 'bow', label: 'Envelope arco/sopro' },
-            { value: 'sustain', label: 'Sem envelope' },
+            { value: 'pluck', label: tr("Envelope dedilhado") },
+            { value: 'bow', label: tr("Envelope arco/sopro") },
+            { value: 'sustain', label: tr("Sem envelope") },
           ]}
         />
       </div>
       <Controls cols={2}>
-        <Slider label="Frequência fundamental" value={f0} min={55} max={880} log onChange={(v) => setF0(Math.round(v))} format={fmtHz} />
+        <Slider label={tr("Frequência fundamental")} value={f0} min={55} max={880} log onChange={(v) => setF0(Math.round(v))} format={fmtHz} />
       </Controls>
       <div className="mt-3">
         <Note>
-          {p ? p.note : 'Timbre personalizado.'} Experimente o mesmo espectro com envelopes diferentes: o ataque é tão importante para o
-          reconhecimento de instrumentos quanto os harmônicos.
-        </Note>
+          {p ? p.note : tr("Timbre personalizado.")}{' '}{tr("Experimente o mesmo espectro com envelopes diferentes: o ataque é tão importante para o reconhecimento de instrumentos quanto os harmônicos.")}</Note>
       </div>
     </LabFrame>
   );

@@ -4,6 +4,7 @@ import { Button, Slider, Toggle, fmtHz, fmtNum } from '../../components/ui/contr
 import { PlayButton, usePlayback, fadeGain } from '../../components/ui/audio';
 import { FreqPlot, Legend } from '../../viz/FreqPlot';
 import { dbToGain, whiteNoiseBuffer } from '../../audio/engine';
+import { tr } from '../../i18n';
 
 /** Escala Bark (Zwicker & Terhardt, 1980). */
 export const bark = (f: number) => 13 * Math.atan(0.00076 * f) + 3.5 * Math.atan(Math.pow(f / 7500, 2));
@@ -111,11 +112,11 @@ export default function MaskingLab() {
 
   return (
     <LabFrame
-      title="Mascaramento"
-      description="Uma banda estreita de ruído (o mascarador) e um tom pulsante (o sinal). Abaixe o tom até ele desaparecer e compare com o limiar previsto pelo modelo. Mova o tom para baixo e para cima do ruído para ouvir a assimetria."
+      title={tr("Mascaramento")}
+      description={tr("Uma banda estreita de ruído (o mascarador) e um tom pulsante (o sinal). Abaixe o tom até ele desaparecer e compare com o limiar previsto pelo modelo. Mova o tom para baixo e para cima do ruído para ouvir a assimetria.")}
       audio
       onReset={() => setS(D)}
-      footer="Modelo de espalhamento simplificado baseado em Terhardt (1979) e na escala Bark de Zwicker & Terhardt (1980). Os níveis são relativos: o valor absoluto depende do seu volume. O resultado do seu ouvido é o que vale."
+      footer={tr("Modelo de espalhamento simplificado baseado em Terhardt (1979) e na escala Bark de Zwicker & Terhardt (1980). Os níveis são relativos: o valor absoluto depende do seu volume. O resultado do seu ouvido é o que vale.")}
     >
       <FreqPlot
         height={260}
@@ -126,8 +127,8 @@ export default function MaskingLab() {
         fMax={16000}
         yLabel="dB (relativo)"
         curves={[
-          { id: 'masker', label: 'Mascarador', fn: (f) => Math.max(-20, maskerShape(f)), color: 'var(--c-b)', width: 1.5, fill: true },
-          { id: 'thr', label: 'Limiar mascarado (modelo)', fn: threshold, color: 'var(--c-target)', width: 1.8, dash: '5 4' },
+          { id: 'masker', label: tr("Mascarador"), fn: (f) => Math.max(-20, maskerShape(f)), color: 'var(--c-b)', width: 1.5, fill: true },
+          { id: 'thr', label: tr("Limiar mascarado (modelo)"), fn: threshold, color: 'var(--c-target)', width: 1.8, dash: '5 4' },
         ]}
         overlay={(sc) => (
           <g>
@@ -135,40 +136,37 @@ export default function MaskingLab() {
             <circle cx={sc.x(s.fp)} cy={sc.y(s.lp)} r={5} fill={masked ? 'var(--bg-elev)' : 'var(--c-a)'} stroke={masked ? 'var(--fg-faint)' : 'var(--c-a)'} strokeWidth={2} />
           </g>
         )}
-        ariaLabel="Mascarador, limiar mascarado e tom de teste"
+        ariaLabel={tr("Mascarador, limiar mascarado e tom de teste")}
       />
       <div className="mt-2 mb-4">
-        <Legend items={[{ label: 'Mascarador', color: 'var(--c-b)' }, { label: 'Limiar mascarado (modelo)', color: 'var(--c-target)', dash: true }, { label: 'Tom de teste', color: 'var(--c-a)' }]} />
+        <Legend items={[{ label: tr("Mascarador"), color: 'var(--c-b)' }, { label: tr("Limiar mascarado (modelo)"), color: 'var(--c-target)', dash: true }, { label: tr("Tom de teste"), color: 'var(--c-a)' }]} />
       </div>
       <div className="flex flex-wrap items-center gap-3 mb-4">
         <PlayButton playing={pb.playing} onToggle={() => (pb.playing ? pb.stop() : start())} />
-        <Toggle checked={s.maskerOn} onChange={(v) => set('maskerOn', v)} label="Ruído" />
-        <Toggle checked={s.toneOn} onChange={(v) => set('toneOn', v)} label="Tom" />
-        <Toggle checked={pulse} onChange={setPulse} label="Tom pulsante" />
-        <Button size="sm" variant="ghost" onClick={() => setS((p) => ({ ...p, fp: p.fm * 0.7 }))}>Tom abaixo do ruído</Button>
-        <Button size="sm" variant="ghost" onClick={() => setS((p) => ({ ...p, fp: p.fm * 1.4 }))}>Tom acima do ruído</Button>
+        <Toggle checked={s.maskerOn} onChange={(v) => set('maskerOn', v)} label={tr("Ruído")} />
+        <Toggle checked={s.toneOn} onChange={(v) => set('toneOn', v)} label={tr("Tom")} />
+        <Toggle checked={pulse} onChange={setPulse} label={tr("Tom pulsante")} />
+        <Button size="sm" variant="ghost" onClick={() => setS((p) => ({ ...p, fp: p.fm * 0.7 }))}>{tr("Tom abaixo do ruído")}</Button>
+        <Button size="sm" variant="ghost" onClick={() => setS((p) => ({ ...p, fp: p.fm * 1.4 }))}>{tr("Tom acima do ruído")}</Button>
       </div>
       <Controls cols={4}>
-        <Slider label="Centro do ruído" value={s.fm} min={200} max={6000} log onChange={(v) => set('fm', Math.round(v))} format={fmtHz} />
-        <Slider label="Nível do ruído" value={s.lm} min={30} max={75} step={1} onChange={(v) => set('lm', v)} unit="dB" />
-        <Slider label="Frequência do tom" value={s.fp} min={100} max={16000} log onChange={(v) => set('fp', Math.round(v))} format={fmtHz} />
-        <Slider label="Nível do tom" value={s.lp} min={0} max={75} step={1} onChange={(v) => set('lp', v)} unit="dB" />
+        <Slider label={tr("Centro do ruído")} value={s.fm} min={200} max={6000} log onChange={(v) => set('fm', Math.round(v))} format={fmtHz} />
+        <Slider label={tr("Nível do ruído")} value={s.lm} min={30} max={75} step={1} onChange={(v) => set('lm', v)} unit="dB" />
+        <Slider label={tr("Frequência do tom")} value={s.fp} min={100} max={16000} log onChange={(v) => set('fp', Math.round(v))} format={fmtHz} />
+        <Slider label={tr("Nível do tom")} value={s.lp} min={0} max={75} step={1} onChange={(v) => set('lp', v)} unit="dB" />
       </Controls>
       <div className="mt-4">
         <Readout
           items={[
-            { label: 'Limiar previsto no tom', value: `${fmtNum(thrAtProbe, 0)} dB` },
-            { label: 'Previsão do modelo', value: masked ? 'Mascarado' : 'Audível', accent: !masked },
-            { label: 'Distância em bandas críticas', value: `${fmtNum(bark(s.fp) - bark(s.fm), 1)} Bark` },
-            { label: 'ERB no centro do ruído', value: fmtHz(erb(s.fm)) },
+            { label: tr("Limiar previsto no tom"), value: `${fmtNum(thrAtProbe, 0)} dB` },
+            { label: tr("Previsão do modelo"), value: masked ? tr("Mascarado") : tr("Audível"), accent: !masked },
+            { label: tr("Distância em bandas críticas"), value: `${fmtNum(bark(s.fp) - bark(s.fm), 1)} Bark` },
+            { label: tr("ERB no centro do ruído"), value: fmtHz(erb(s.fm)) },
           ]}
         />
       </div>
       <div className="mt-3">
-        <Note>
-          O limiar cai devagar para cima do mascarador e rápido para baixo dele: sons graves e fortes escondem sons agudos mais
-          fracos, mas o contrário quase não acontece. Aumente o nível do ruído e veja o lado superior se alargar.
-        </Note>
+        <Note>{tr("O limiar cai devagar para cima do mascarador e rápido para baixo dele: sons graves e fortes escondem sons agudos mais fracos, mas o contrário quase não acontece. Aumente o nível do ruído e veja o lado superior se alargar.")}</Note>
       </div>
     </LabFrame>
   );

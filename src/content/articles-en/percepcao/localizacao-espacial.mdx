@@ -1,0 +1,92 @@
+<Lead>
+With only two pressure sensors separated by a head, you know whether a sound comes from the left, from above, from behind, from near or far. The brain does this by comparing the signals of the two ears and decoding the marks the head and ears leave on the sound. Understanding those clues explains why music in headphones seems to play inside your head, and what can be done about it.
+</Lead>
+
+<Callout type="simples">
+The brain locates a sound by comparing what reaches each ear: which one heard it first, and which heard it louder. The shape of your outer ear adds fine clues for up and down, front and back. Headphones bypass most of this, which is why music seems to come from inside your head rather than from in front of you.
+</Callout>
+
+## Duplex theory
+
+<Diagram id="stereo-head" />
+
+In the early 20th century, Lord Rayleigh proposed that horizontal localization (azimuth) depends on two different cues, each effective in a frequency range. This **duplex theory** remains the basis of what we know.
+
+### Interaural time difference (ITD)
+
+A sound coming from the right reaches the right ear before the left. For a distant source and a roughly spherical head of radius $a$, the difference is well approximated by Woodworth's formula:
+
+<Formula say="The further to the side a sound comes from, the bigger the time gap between your ears, reaching about 0.7 ms.">
+
+$$
+\text{ITD}(\theta) = \frac{a}{c}\,(\theta + \sin\theta)
+$$
+
+<Vars
+  items={[
+    ['a', 'effective radius of the head, ≈ 8.75 cm'],
+    ['c', 'speed of sound, 343 m/s'],
+    ['θ', 'azimuth of the source in radians (0 = in front, π/2 = fully to the side)'],
+  ]}
+/>
+
+</Formula>
+
+The maximum, with the source fully to the side, is about **650 to 700 µs**. The auditory system detects differences of only **10 to 20 µs** for sources near the front, corresponding to a shift of 1 to 2 degrees. This is done in the brainstem, by neurons working as coincidence detectors.
+
+ITD is only unambiguous as long as the sound's period is greater than the maximum delay. Above ~1.5 kHz, the wavelength gets smaller than the diameter of the head and phase no longer unequivocally indicates which ear received it first. Even so, the brain can use the ITD of the **envelope** of modulated high sounds (the start of a note, a transient), which makes clicks and attacks easy to locate.
+
+### Interaural level difference (ILD)
+
+The head casts an acoustic shadow over the farther ear, but only where the wavelength is comparable to or smaller than the head. At 200 Hz (λ ≈ 1.7 m) the shadow is practically nil; at 5 kHz, the level difference between the ears can reach 15–20 dB. ILD is therefore the dominant cue in the treble.
+
+The lab processes the sound with these two cues, separately or together. Use headphones and drag the source around the head.
+
+<Lab id="localization" />
+
+## The cone of confusion
+
+ITD and ILD resolve left and right well, but have a blind spot. A source in front, 30° to the right, and another behind, at 150°, produce practically the same ITD and ILD. All points with the same difference in distance to the two ears form a cone (the **cone of confusion**), and with these two cues there's no way to distinguish positions within it: front from back, up from down.
+
+The brain solves this with two strategies:
+
+- **Spectral cues from the pinna.** The folds of the ear reflect and diffract sound in a direction-dependent way, imprinting characteristic patterns on the spectrum, especially dips above 5 kHz whose frequency changes with elevation. These patterns are individual (each ear is different) and learned throughout life. Classic experiments show that filling the cavities of the pinna with putty drastically degrades vertical localization and front-back distinction.
+- **Head movement.** When the head turns, a source in front and one behind change their ITDs in opposite directions. Movements of a few degrees are enough to resolve the ambiguity.
+
+## HRTF: the acoustic signature of your head
+
+Combining all the effects (shadow and diffraction from the head, reflections off the shoulders and torso, resonances and cancellations of the pinna and canal), we get the **head-related transfer function** (HRTF): for each direction, the transformation sound undergoes between the free field and the eardrum of each ear. A complete HRTF is a set of hundreds of filter pairs, one for each direction.
+
+HRTFs are measured by placing tiny microphones in a person's ear canal (or a mannequin's, such as KEMAR or the B&K 5128) and playing signals from speakers at various positions in an anechoic chamber. They vary widely between people above ~4 kHz. Using another person's HRTF usually works for left/right but worsens elevation, front-back distinction and externalization.
+
+## Why headphones sound inside your head
+
+With speakers, music reaches each ear after passing around the head and ears, coming from specific directions and with room reflections. With headphones, each channel goes directly to one ear:
+
+- There's no **acoustic crosstalk**: the left ear never hears the right speaker. Sounds panned fully to one side stay "glued" to one ear, something that doesn't happen in nature.
+- There are no **pinna cues** consistent with an external direction, especially with IEMs, which bypass the outer ear completely.
+- There are no **room reflections** or changes with head movement.
+
+The brain interprets this combination as a very close source, or one inside the head: so-called **lateralization**, in contrast with the **externalization** of natural listening. The stereo image in headphones is a line between the ears, running through the middle of the skull, instead of a stage in front.
+
+<Callout type="nota" title="Soundstage in IEMs">
+That's why the "soundstage" of any IEM is, in absolute terms, small. The differences in *soundstage* that listeners report between IEMs are real as impressions, but come from subtler factors: tonal balance (especially in the 3 to 10 kHz region, where spectral cues lie), resonances, treble level, distortion and the recording itself. See [separation and resolution](/iems/separacao-e-resolucao).
+</Callout>
+
+## What can be done
+
+**Crossfeed.** Mixes into each channel a delayed (~0.3 ms) and low-pass filtered version of the other channel, imitating the acoustic crosstalk of speakers. It doesn't externalize the sound, but it reduces the sensation of channels "glued" to the ears and makes recordings with extreme panning (like many 1960s albums) less tiring. There's a crossfeed lab in [spatial processing](/processamento/dinamica-e-espacializacao).
+
+**HRTF binauralization.** Processing each channel as if it came from a virtual speaker at ±30°, using HRTFs and, ideally, room reverberation. With personalized HRTFs and head tracking, externalization can be convincing; with generic HRTFs, results vary a lot between people.
+
+**Binaural recordings.** Made with microphones in the ears of a mannequin or a person, they already contain the cues of the head and ears. They sound astonishingly realistic in headphones, especially for those with ears similar to the mannequin's.
+
+<References>
+  <Ref>Rayleigh, Lord (J. W. Strutt). "On our perception of sound direction." <em>Philosophical Magazine</em>, 13(74), 214–232, 1907.</Ref>
+  <Ref>Blauert, J. <em>Spatial Hearing: The Psychophysics of Human Sound Localization</em>. Rev. ed. MIT Press, 1997.</Ref>
+  <Ref>Brown, C. P.; Duda, R. O. "A structural model for binaural sound synthesis." <em>IEEE Transactions on Speech and Audio Processing</em>, 6(5), 476–488, 1998.</Ref>
+  <Ref>Woodworth, R. S. <em>Experimental Psychology</em>. Holt, 1938.</Ref>
+  <Ref>Møller, H. "Fundamentals of binaural technology." <em>Applied Acoustics</em>, 36(3–4), 171–218, 1992.</Ref>
+  <Ref>Wenzel, E. M.; Arruda, M.; Kistler, D. J.; Wightman, F. L. "Localization using nonindividualized head-related transfer functions." <em>Journal of the Acoustical Society of America</em>, 94(1), 111–123, 1993.</Ref>
+  <Ref>Gardner, M. B.; Gardner, R. S. "Problem of localization in the median plane: effect of pinnae cavity occlusion." <em>Journal of the Acoustical Society of America</em>, 53(2), 400–408, 1973.</Ref>
+</References>

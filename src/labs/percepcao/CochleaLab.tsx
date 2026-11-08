@@ -5,6 +5,7 @@ import { PlayButton, usePlayback } from '../../components/ui/audio';
 import { dbToGain } from '../../audio/engine';
 import { useAnimationFrame, useInView } from '../../lib/hooks';
 import { setupCanvas, useThemeColors, withAlpha } from '../../lib/themeColors';
+import { tr } from '../../i18n';
 
 /** Função de Greenwood (1990) para humanos: x = 0 no ápice, 1 na base. */
 const greenwood = (x: number) => 165.4 * (Math.pow(10, 2.1 * x) - 0.88);
@@ -154,47 +155,43 @@ export default function CochleaLab() {
 
   return (
     <LabFrame
-      title="A cóclea desenrolada"
-      description="A membrana basilar vista como uma faixa reta. Cada frequência gera uma onda viajante que cresce, atinge o máximo num ponto específico e morre logo depois. Posição segundo a função de Greenwood (1990)."
+      title={tr("A cóclea desenrolada")}
+      description={tr("A membrana basilar vista como uma faixa reta. Cada frequência gera uma onda viajante que cresce, atinge o máximo num ponto específico e morre logo depois. Posição segundo a função de Greenwood (1990).")}
       audio
       onReset={() => {
         setF1(1000);
         setF2(1200);
         setTwo(false);
       }}
-      footer="A forma da onda é um modelo qualitativo; a posição do pico em função da frequência segue a função de Greenwood para humanos. A onda está muito desacelerada: na cóclea real ela leva poucos milissegundos para chegar ao ápice."
+      footer={tr("A forma da onda é um modelo qualitativo; a posição do pico em função da frequência segue a função de Greenwood para humanos. A onda está muito desacelerada: na cóclea real ela leva poucos milissegundos para chegar ao ápice.")}
     >
       <div ref={wrap}>
-        <canvas ref={canvasRef} className="w-full h-[230px] block" aria-label="Animação da membrana basilar" />
+        <canvas ref={canvasRef} className="w-full h-[230px] block" aria-label={tr("Animação da membrana basilar")} />
       </div>
       <div className="flex flex-wrap items-center gap-4 my-4">
         <PlayButton playing={pb.playing} onToggle={toggle} />
-        <Toggle checked={two} onChange={(v) => { setTwo(v); pb.stop(); }} label="Dois tons simultâneos" />
+        <Toggle checked={two} onChange={(v) => { setTwo(v); pb.stop(); }} label={tr("Dois tons simultâneos")} />
       </div>
       <Controls cols={2}>
-        <Slider label="Tom 1" value={f1} min={30} max={16000} log onChange={(v) => setF1(Math.round(v))} format={fmtHz} />
-        <Slider label="Tom 2" value={f2} min={30} max={16000} log onChange={(v) => setF2(Math.round(v))} format={fmtHz} disabled={!two} />
+        <Slider label={tr("Tom 1")} value={f1} min={30} max={16000} log onChange={(v) => setF1(Math.round(v))} format={fmtHz} />
+        <Slider label={tr("Tom 2")} value={f2} min={30} max={16000} log onChange={(v) => setF2(Math.round(v))} format={fmtHz} disabled={!two} />
       </Controls>
       <div className="mt-4">
         <Readout
           items={[
-            { label: 'Posição do pico (a partir da base)', value: `${fmtNum((1 - invGreenwood(f1)) * LEN_MM, 1)} mm`, accent: true },
-            { label: 'Largura do filtro auditivo (ERB)', value: fmtHz(erb(f1)) },
+            { label: tr("Posição do pico (a partir da base)"), value: `${fmtNum((1 - invGreenwood(f1)) * LEN_MM, 1)} mm`, accent: true },
+            { label: tr("Largura do filtro auditivo (ERB)"), value: fmtHz(erb(f1)) },
             ...(two
               ? [
-                  { label: 'Distância entre picos', value: `${fmtNum(sepMm, 1)} mm` },
-                  { label: 'Mesma banda crítica?', value: inBand ? 'Sim — interagem' : 'Não — resolvidos' },
+                  { label: tr("Distância entre picos"), value: `${fmtNum(sepMm, 1)} mm` },
+                  { label: tr("Mesma banda crítica?"), value: inBand ? tr("Sim — interagem") : tr("Não — resolvidos") },
                 ]
-              : [{ label: 'Frequência no ponto médio da membrana', value: fmtHz(greenwood(0.5)) }]),
+              : [{ label: tr("Frequência no ponto médio da membrana"), value: fmtHz(greenwood(0.5)) }]),
           ]}
         />
       </div>
       <div className="mt-3">
-        <Note>
-          Repare que de 20 Hz a ~500 Hz ocupam pouco espaço, enquanto cada oitava acima de 1 kHz ganha uns 4–5 mm: a cóclea é
-          aproximadamente logarítmica acima de algumas centenas de hertz. Com dois tons próximos, as ondas se sobrepõem — base do
-          mascaramento e da rugosidade.
-        </Note>
+        <Note>{tr("Repare que de 20 Hz a ~500 Hz ocupam pouco espaço, enquanto cada oitava acima de 1 kHz ganha uns 4–5 mm: a cóclea é aproximadamente logarítmica acima de algumas centenas de hertz. Com dois tons próximos, as ondas se sobrepõem — base do mascaramento e da rugosidade.")}</Note>
       </div>
     </LabFrame>
   );

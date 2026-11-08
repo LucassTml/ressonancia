@@ -1,5 +1,7 @@
 import { useId, type ReactNode } from 'react';
 import { motion } from 'motion/react';
+import { locale } from '../../i18n';
+import { tr } from '../../i18n';
 
 /* ------------------------------------------------------------------ */
 /* Slider                                                              */
@@ -64,16 +66,16 @@ export function Slider({ label, value, onChange, min, max, step, log, unit, form
 export function fmtNum(v: number, digits?: number) {
   const a = Math.abs(v);
   const d = digits ?? (a >= 100 ? 0 : a >= 10 ? 1 : a >= 1 ? 2 : 3);
-  return v.toLocaleString('pt-BR', { maximumFractionDigits: d, minimumFractionDigits: 0 });
+  return v.toLocaleString(locale, { maximumFractionDigits: d, minimumFractionDigits: 0 });
 }
 
 export function fmtHz(f: number) {
-  if (f >= 1000) return `${(f / 1000).toLocaleString('pt-BR', { maximumFractionDigits: f >= 10000 ? 1 : 2 })} kHz`;
-  return `${f.toLocaleString('pt-BR', { maximumFractionDigits: f < 100 ? 1 : 0 })} Hz`;
+  if (f >= 1000) return `${(f / 1000).toLocaleString(locale, { maximumFractionDigits: f >= 10000 ? 1 : 2 })} kHz`;
+  return `${f.toLocaleString(locale, { maximumFractionDigits: f < 100 ? 1 : 0 })} Hz`;
 }
 
 export function fmtDb(v: number, digits = 1) {
-  const s = v.toLocaleString('pt-BR', { maximumFractionDigits: digits, minimumFractionDigits: digits });
+  const s = v.toLocaleString(locale, { maximumFractionDigits: digits, minimumFractionDigits: digits });
   return `${v > 0 ? '+' : ''}${s} dB`;
 }
 
@@ -112,7 +114,7 @@ export function Segmented<T extends string>({ value, onChange, options, size = '
           >
             {active && (
               <motion.span
-                layoutId={`seg-${group}`}
+                layoutId={tr("seg-{0}", group)}
                 className="absolute inset-0 rounded-[8px] bg-elev border border-line shadow-[0_1px_2px_rgba(0,0,0,0.08)]"
                 transition={{ type: 'spring', stiffness: 500, damping: 38 }}
               />

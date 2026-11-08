@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { LabFrame, Readout, Note } from '../../components/ui/LabFrame';
 import { NumberField, Segmented, Slider, fmtNum } from '../../components/ui/controls';
+import { tr } from '../../i18n';
 
 function si(v: number, unit: string) {
   const a = Math.abs(v);
@@ -28,19 +29,19 @@ function calc(p: Phone, spl: number, vmax: number, zout: number) {
 }
 
 const PRESETS: { id: string; name: string; p: Phone }[] = [
-  { id: 'iem-ba', name: 'IEM BA sensível (16 Ω, 112 dB/mW)', p: { z: 16, sens: 112, unit: 'mW' } },
-  { id: 'iem-dd', name: 'IEM dinâmico (32 Ω, 108 dB/V)', p: { z: 32, sens: 108, unit: 'V' } },
-  { id: 'iem-planar', name: 'IEM planar (16 Ω, 98 dB/V)', p: { z: 16, sens: 98, unit: 'V' } },
-  { id: 'hp-32', name: 'Headphone 32 Ω, 90 dB/mW', p: { z: 32, sens: 90, unit: 'mW' } },
-  { id: 'hp-300', name: 'Headphone 300 Ω, 102 dB/mW', p: { z: 300, sens: 102, unit: 'mW' } },
-  { id: 'hp-planar', name: 'Headphone planar 50 Ω, 86 dB/mW', p: { z: 50, sens: 86, unit: 'mW' } },
+  { id: 'iem-ba', name: tr("IEM BA sensível (16 Ω, 112 dB/mW)"), p: { z: 16, sens: 112, unit: 'mW' } },
+  { id: 'iem-dd', name: tr("IEM dinâmico (32 Ω, 108 dB/V)"), p: { z: 32, sens: 108, unit: 'V' } },
+  { id: 'iem-planar', name: tr("IEM planar (16 Ω, 98 dB/V)"), p: { z: 16, sens: 98, unit: 'V' } },
+  { id: 'hp-32', name: tr("Headphone 32 Ω, 90 dB/mW"), p: { z: 32, sens: 90, unit: 'mW' } },
+  { id: 'hp-300', name: tr("Headphone 300 Ω, 102 dB/mW"), p: { z: 300, sens: 102, unit: 'mW' } },
+  { id: 'hp-planar', name: tr("Headphone planar 50 Ω, 86 dB/mW"), p: { z: 50, sens: 86, unit: 'mW' } },
 ];
 
 const SOURCES = [
-  { id: 'phone', name: 'Saída de celular/notebook típica', v: 0.5, z: 2 },
-  { id: 'dongle', name: 'Dongle USB típico', v: 1, z: 1 },
-  { id: 'dongle-bal', name: 'Dongle com saída balanceada', v: 2, z: 1.5 },
-  { id: 'desk', name: 'Amplificador de mesa', v: 7, z: 0.5 },
+  { id: 'phone', name: tr("Saída de celular/notebook típica"), v: 0.5, z: 2 },
+  { id: 'dongle', name: tr("Dongle USB típico"), v: 1, z: 1 },
+  { id: 'dongle-bal', name: tr("Dongle com saída balanceada"), v: 2, z: 1.5 },
+  { id: 'desk', name: tr("Amplificador de mesa"), v: 7, z: 0.5 },
 ];
 
 function PhoneEditor({ p, set, label, color }: { p: Phone; set: (p: Phone) => void; label: string; color: string }) {
@@ -55,9 +56,9 @@ function PhoneEditor({ p, set, label, color }: { p: Phone; set: (p: Phone) => vo
             const pr = PRESETS.find((x) => x.id === e.target.value);
             if (pr) set(pr.p);
           }}
-          aria-label={`Exemplo para ${label}`}
+          aria-label={tr("Exemplo para {0}", label)}
         >
-          <option value="">Exemplos…</option>
+          <option value="">{tr("Exemplos…")}</option>
           {PRESETS.map((x) => (
             <option key={x.id} value={x.id}>
               {x.name}
@@ -66,8 +67,8 @@ function PhoneEditor({ p, set, label, color }: { p: Phone; set: (p: Phone) => vo
         </select>
       </div>
       <div className="grid grid-cols-2 gap-3">
-        <NumberField label="Impedância nominal" value={p.z} onChange={(z) => set({ ...p, z: Math.max(1, z) })} unit="Ω" />
-        <NumberField label="Sensibilidade" value={p.sens} onChange={(s) => set({ ...p, sens: s })} unit={p.unit === 'mW' ? 'dB/mW' : 'dB/V'} step={0.5} />
+        <NumberField label={tr("Impedância nominal")} value={p.z} onChange={(z) => set({ ...p, z: Math.max(1, z) })} unit="Ω" />
+        <NumberField label={tr("Sensibilidade")} value={p.sens} onChange={(s) => set({ ...p, sens: s })} unit={p.unit === 'mW' ? 'dB/mW' : 'dB/V'} step={0.5} />
       </div>
       <div className="mt-2">
         <Segmented
@@ -79,8 +80,8 @@ function PhoneEditor({ p, set, label, color }: { p: Phone; set: (p: Phone) => vo
             set({ ...p, unit: u, sens: Number((u === 'V' ? p.sens + conv : p.sens - conv).toFixed(1)) });
           }}
           options={[
-            { value: 'mW', label: 'dB SPL / mW' },
-            { value: 'V', label: 'dB SPL / V' },
+            { value: 'mW', label: tr("dB SPL / mW") },
+            { value: 'V', label: tr("dB SPL / V") },
           ]}
         />
       </div>
@@ -92,11 +93,11 @@ function Results({ r, color, peak }: { r: ReturnType<typeof calc>; color: string
   return (
     <Readout
       items={[
-        { label: 'Sensibilidade equivalente', value: `${fmtNum(r.dbV, 1)} dB/V · ${fmtNum(r.dbmW, 1)} dB/mW` },
-        { label: `Tensão para ${peak} dB (pico)`, value: si(r.v, 'V'), accent: true },
-        { label: 'Corrente', value: si(r.i, 'A') },
-        { label: 'Potência', value: si(r.pw, 'W') },
-        { label: 'SPL máximo com esta fonte', value: `${fmtNum(r.maxSpl, 1)} dB`, hint: <span style={{ color: r.headroom >= 0 ? 'var(--accent)' : 'var(--myth)' }}>{r.headroom >= 0 ? `sobram ${fmtNum(r.headroom, 1)} dB` : `faltam ${fmtNum(-r.headroom, 1)} dB`}</span> },
+        { label: tr("Sensibilidade equivalente"), value: `${fmtNum(r.dbV, 1)} dB/V · ${fmtNum(r.dbmW, 1)} dB/mW` },
+        { label: tr("Tensão para {0} dB (pico)", peak), value: si(r.v, 'V'), accent: true },
+        { label: tr("Corrente"), value: si(r.i, 'A') },
+        { label: tr("Potência"), value: si(r.pw, 'W') },
+        { label: tr("SPL máximo com esta fonte"), value: `${fmtNum(r.maxSpl, 1)} dB`, hint: <span style={{ color: r.headroom >= 0 ? 'var(--accent)' : 'var(--myth)' }}>{r.headroom >= 0 ? tr("sobram {0} dB", fmtNum(r.headroom, 1)) : tr("faltam {0} dB", fmtNum(-r.headroom, 1))}</span> },
       ].map((x, i) => (i === 1 ? { ...x, label: <span style={{ color }}>{x.label}</span> } : x))}
     />
   );
@@ -117,8 +118,8 @@ export default function PowerLab() {
 
   return (
     <LabFrame
-      title="Calculadora de tensão, corrente e potência"
-      description="Quanto um fone exige para chegar a um nível sonoro — e se a sua fonte dá conta. Informe a impedância e a sensibilidade (em dB/mW ou dB/V), o volume desejado e a fonte."
+      title={tr("Calculadora de tensão, corrente e potência")}
+      description={tr("Quanto um fone exige para chegar a um nível sonoro — e se a sua fonte dá conta. Informe a impedância e a sensibilidade (em dB/mW ou dB/V), o volume desejado e a fonte.")}
       onReset={() => {
         setA(PRESETS[3].p);
         setB(PRESETS[4].p);
@@ -127,18 +128,18 @@ export default function PowerLab() {
         setVmax(1);
         setZout(1);
       }}
-      toolbar={<Segmented size="sm" value={compare ? 'two' : 'one'} onChange={(v) => setCompare(v === 'two')} options={[{ value: 'one', label: 'Um fone' }, { value: 'two', label: 'Comparar dois' }]} />}
-      footer="Limitações: a sensibilidade é especificada em 1 kHz e a impedância nominal ignora a variação com a frequência; fabricantes nem sempre informam com precisão. Fontes reais podem ter limite de corrente além do limite de tensão. Os resultados são estimativas para orientar, não garantias."
+      toolbar={<Segmented size="sm" value={compare ? 'two' : 'one'} onChange={(v) => setCompare(v === 'two')} options={[{ value: 'one', label: tr("Um fone") }, { value: 'two', label: tr("Comparar dois") }]} />}
+      footer={tr("Limitações: a sensibilidade é especificada em 1 kHz e a impedância nominal ignora a variação com a frequência; fabricantes nem sempre informam com precisão. Fontes reais podem ter limite de corrente além do limite de tensão. Os resultados são estimativas para orientar, não garantias.")}
     >
       <div className={`grid gap-3 ${compare ? 'md:grid-cols-2' : ''}`}>
-        <PhoneEditor p={a} set={setA} label="Fone A" color="var(--c-a)" />
-        {compare && <PhoneEditor p={b} set={setB} label="Fone B" color="var(--c-b)" />}
+        <PhoneEditor p={a} set={setA} label={tr("Fone A")} color="var(--c-a)" />
+        {compare && <PhoneEditor p={b} set={setB} label={tr("Fone B")} color="var(--c-b)" />}
       </div>
       <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3 mt-4">
-        <Slider label="Volume médio desejado" value={spl} min={60} max={100} step={1} onChange={setSpl} unit="dB SPL" />
-        <Slider label="Margem para picos (fator de crista)" value={crest} min={0} max={20} step={1} onChange={setCrest} unit="dB" hint="Música dinâmica: 15–20 dB. Música muito comprimida: 6–10 dB." />
+        <Slider label={tr("Volume médio desejado")} value={spl} min={60} max={100} step={1} onChange={setSpl} unit={tr("dB SPL")} />
+        <Slider label={tr("Margem para picos (fator de crista)")} value={crest} min={0} max={20} step={1} onChange={setCrest} unit="dB" hint={tr("Música dinâmica: 15–20 dB. Música muito comprimida: 6–10 dB.")} />
         <div>
-          <div className="text-[12.5px] text-muted font-medium mb-1">Fonte</div>
+          <div className="text-[12.5px] text-muted font-medium mb-1">{tr("Fonte")}</div>
           <select
             className="w-full h-9 rounded-[9px] border border-line-strong bg-elev px-2.5 text-[13.5px]"
             value=""
@@ -149,9 +150,9 @@ export default function PowerLab() {
                 setZout(s.z);
               }
             }}
-            aria-label="Exemplos de fonte"
+            aria-label={tr("Exemplos de fonte")}
           >
-            <option value="">Exemplos de fonte…</option>
+            <option value="">{tr("Exemplos de fonte…")}</option>
             {SOURCES.map((s) => (
               <option key={s.id} value={s.id}>
                 {s.name} ({s.v} V, {s.z} Ω)
@@ -160,8 +161,8 @@ export default function PowerLab() {
           </select>
         </div>
         <div className="grid grid-cols-2 gap-3">
-          <NumberField label="Tensão máx. da fonte" value={vmax} onChange={(v) => setVmax(Math.max(0.01, v))} unit="V RMS" step={0.1} />
-          <NumberField label="Impedância de saída" value={zout} onChange={(v) => setZout(Math.max(0, v))} unit="Ω" step={0.1} />
+          <NumberField label={tr("Tensão máx. da fonte")} value={vmax} onChange={(v) => setVmax(Math.max(0.01, v))} unit={tr("V RMS")} step={0.1} />
+          <NumberField label={tr("Impedância de saída")} value={zout} onChange={(v) => setZout(Math.max(0, v))} unit="Ω" step={0.1} />
         </div>
       </div>
       <div className={`grid gap-3 mt-5 ${compare ? 'md:grid-cols-2' : ''}`}>
@@ -169,15 +170,12 @@ export default function PowerLab() {
         {compare && <Results r={rb} color="var(--c-b)" peak={peak} />}
       </div>
       <div className="mt-4 space-y-2">
-        <Note>
-          Contas: dB/V = dB/mW + 10·log₁₀(1000/Z). Tensão necessária V = 10^((SPL − dB/V)/20). Corrente I = V/Z. Potência P = V²/Z. A
-          tensão que chega ao fone é reduzida pelo divisor entre a impedância de saída e a do fone.
-        </Note>
+        <Note>{tr("Contas: dB/V = dB/mW + 10·log₁₀(1000/Z). Tensão necessária V = 10^((SPL − dB/V)/20). Corrente I = V/Z. Potência P = V²/Z. A tensão que chega ao fone é reduzida pelo divisor entre a impedância de saída e a do fone.")}</Note>
         {compare && (
           <Note>
             {ra.v > rb.v && a.z < b.z
-              ? `Repare: o fone A tem impedância menor (${a.z} Ω) mas exige MAIS tensão que o B (${b.z} Ω). Baixa impedância não significa fácil de tocar — o que manda na tensão necessária é a sensibilidade em dB/V. A impedância decide quanta corrente essa tensão vai puxar.`
-              : 'Compare tensão e corrente: a sensibilidade em dB/V decide quanta tensão é necessária; a impedância decide quanta corrente (e potência) essa tensão vai exigir. Experimente o exemplo de headphone de 32 Ω contra o de 300 Ω.'}
+              ? tr("Repare: o fone A tem impedância menor ({0} Ω) mas exige MAIS tensão que o B ({1} Ω). Baixa impedância não significa fácil de tocar — o que manda na tensão necessária é a sensibilidade em dB/V. A impedância decide quanta corrente essa tensão vai puxar.", a.z, b.z)
+              : tr("Compare tensão e corrente: a sensibilidade em dB/V decide quanta tensão é necessária; a impedância decide quanta corrente (e potência) essa tensão vai exigir. Experimente o exemplo de headphone de 32 Ω contra o de 300 Ω.")}
           </Note>
         )}
       </div>

@@ -1,0 +1,108 @@
+<Lead>
+"Does this headphone need an amplifier?" The answer isn't in the impedance or in the source's advertised power, but in a simple calculation combining sensitivity, impedance, the volume you want and the voltage your source delivers. This article shows the calculation, explains each term and dismantles the most persistent myth in the field: that low impedance means easy to drive.
+</Lead>
+
+<Callout type="simples">
+Sensitivity tells you how loud a headphone plays for a given signal. If your source can deliver enough voltage for the level you want, you don't need anything else. Most earphones only need a fraction of a volt, and the calculator below does the math for you.
+</Callout>
+
+## Sensitivity: two ways of saying the same thing
+
+**Sensitivity** says how much sound a headphone produces for a reference electrical input. It appears in two forms:
+
+- **dB SPL/mW:** the level produced when the headphone receives **1 milliwatt**.
+- **dB SPL/V:** the level produced when the headphone receives **1 volt RMS**.
+
+The two are linked by impedance. With 1 V across an impedance $Z$, the power is $P = V^2/Z = 1/Z$ watts $= 1000/Z$ mW. Therefore:
+
+<Formula say="Knowing the impedance, you can convert between the two forms of sensitivity. For 32 Ω, add about 15 dB.">
+
+$$
+S_{\text{dB/V}} = S_{\text{dB/mW}} + 10\log_{10}\!\left(\frac{1000}{Z}\right)
+$$
+
+</Formula>
+
+For 32 Ω, the difference is +14.9 dB; for 16 Ω, +18 dB; for 300 Ω, +5.2 dB. A 32 Ω headphone at 100 dB/mW has 114.9 dB/V.
+
+<Callout type="chave" title="Which to use?">
+Since nearly all audio sources behave as **voltage sources** (their output tries to hold the voltage regardless of the load), sensitivity in **dB/V** is the most useful for knowing whether a source can cope: it says directly how much voltage the headphone needs. Sensitivity in dB/mW combined with impedance says the same thing, with one more calculation.
+</Callout>
+
+## The calculation: voltage, current and power required
+
+To reach a level $L$ (in dB SPL) in a headphone with sensitivity $S$ (in dB/V), the RMS voltage required is
+
+<Formula say="The further your target level is above the headphone's sensitivity, the more voltage you need.">
+
+$$
+V = 10^{\,(L - S_{\text{dB/V}})/20}
+$$
+
+</Formula>
+
+Current and power follow from Ohm's Law: $I = V/Z$ and $P = V^2/Z$.
+
+A complete example. A 32 Ω IEM at 108 dB/V. You listen at an average level of 85 dB SPL and want a margin for 15 dB peaks (music with good dynamics), that is, 100 dB SPL at peaks:
+
+- $V = 10^{(100-108)/20} = 10^{-0.4} \approx 0.40$ V
+- $I = 0.40/32 \approx 12.5$ mA
+- $P = 0.40^2/32 \approx 5$ mW
+
+Almost any phone, laptop or dongle delivers 0.4 V. This IEM doesn't need a dedicated amplifier.
+
+Now a 50 Ω planar headphone at 86 dB/mW (= 99 dB/V), with the same goal of 100 dB SPL peaks:
+
+- $V = 10^{(100-99)/20} \approx 1.12$ V
+- $I \approx 22$ mA, $P \approx 25$ mW
+
+A 0.5 V phone output doesn't get there: the peak clips or the volume stays low. A 2 V dongle handles it comfortably.
+
+<Lab id="power" />
+
+## Low impedance doesn't mean easy to drive
+
+Go back to the calculator and compare the examples of a 32 Ω headphone at 90 dB/mW and a 300 Ω one at 102 dB/mW. In dB/V, the first has 104.9 and the second 107.2: **the 300 Ω headphone needs less voltage** for the same volume. It also draws far less current (because of the high impedance). The 32 Ω headphone needs more voltage **and** ten times more current.
+
+Impedance alone says nothing about how much voltage is required. It tells you how the load behaves: low impedances require more **current** for a given voltage; high impedances require more **voltage** for a given power. What defines a "difficult" headphone is the combination of low sensitivity with the impedance, and in practice the right question is always: **does my source deliver the voltage needed, without exceeding its current limit and without distorting?**
+
+## Headroom and clipping
+
+Music isn't a constant sine wave: it has peaks well above the average level. The **crest factor** of lightly compressed music can reach 15–20 dB; of heavily mastered modern pop, 6–10 dB. Sizing the source for the average level is a mistake: the peaks will be cut off.
+
+**Headroom** is the margin between the signal peak and the source's limit. Without headroom, **clipping** occurs: the peaks are flattened, generating distortion rich in odd harmonics, perceived as harshness, "compression" or, in severe cases, crackles. Note that clipping can happen before the amplifier, in the digital domain, if an equalization raises the signal above 0 dBFS. That case is covered in [preamp and clipping](/processamento/equalizador-parametrico).
+
+## Output impedance
+
+<Diagram id="output-divider" />
+
+A real source behaves like an ideal voltage source in series with a small internal resistance: the **output impedance** $Z_{\text{out}}$. It forms a **voltage divider** with the headphone:
+
+<Formula say="The source and the headphone share the voltage in proportion to their impedances. If the source's is tiny, nearly all of it reaches the headphone.">
+
+$$
+V_{\text{hp}} = V_{\text{source}} \cdot \frac{Z_{\text{hp}}}{Z_{\text{hp}} + Z_{\text{out}}}
+$$
+
+</Formula>
+
+Two consequences:
+
+1. **Level loss**, small if $Z_{\text{out}} \ll Z_{\text{hp}}$.
+2. **Change in frequency response** if $Z_{\text{hp}}$ varies with frequency. As we saw in [impedance](/eletronica/corrente-alternada-e-impedancia), multi-BA IEMs can vary from 5 to 50 Ω across the spectrum. With a 10 Ω source, the fraction of voltage reaching the headphone changes from region to region, and the response can change by several decibels.
+
+<Lab id="output-impedance" />
+
+The most quoted rule of thumb is the **1/8 rule**: keeping output impedance below one-eighth of the headphone's lowest impedance limits the deviation to ~1 dB. For multi-BA IEMs, that usually means under 1–2 Ω, which good modern dongles and amplifiers easily meet, but some laptop outputs, old amplifiers and nearly all transformerless tube amps don't.
+
+There's another, smaller effect: output impedance also reduces the **electrical damping** of a dynamic driver at resonance (the *damping factor*), which can slightly raise the bass of dynamic headphones with an impedance peak in the bass. It's the same voltage-divider mechanism seen from another angle.
+
+## Limits of this calculation
+
+The calculator and formulas assume that sensitivity was measured correctly (at 1 kHz, on a coupler), that nominal impedance represents the load well and that the source behaves as a voltage source up to its limit. Manufacturer specs aren't always accurate; some sources limit current before voltage; and sensitivity in the bass can differ from that at 1 kHz. Even so, the calculation gets the order of magnitude right, and order of magnitude is exactly what separates "doesn't need an amplifier" from "does."
+
+<References>
+  <Ref>IEC 60268-7:2010. <em>Sound system equipment — Part 7: Headphones and earphones</em> (sensitivity and impedance).</Ref>
+  <Ref>Self, D. <em>Audio Power Amplifier Design</em>. 6th ed. Focal Press, 2013.</Ref>
+  <Ref>Horowitz, P.; Hill, W. <em>The Art of Electronics</em>. 3rd ed. Cambridge University Press, 2015. Voltage dividers and source impedance.</Ref>
+</References>

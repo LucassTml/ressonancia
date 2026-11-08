@@ -1,17 +1,24 @@
 import type { ComponentType } from 'react';
 import { allArticles } from './manifest';
+import { lang } from '../i18n';
 
 type MDXModule = { default: ComponentType<{ components?: Record<string, unknown> }> };
 
-const loaders = import.meta.glob<MDXModule>('./articles/*/*.mdx');
-const rawLoaders = import.meta.glob<string>('./articles/*/*.mdx', { query: '?raw', import: 'default' });
+const allLoaders = import.meta.glob<MDXModule>(['./articles/*/*.mdx', './articles-en/*/*.mdx']);
+const allRaw = import.meta.glob<string>(['./articles/*/*.mdx', './articles-en/*/*.mdx'], { query: '?raw', import: 'default' });
+
+/** Caminho do artigo no idioma atual; cai no português se ainda não houver tradução. */
+function pathOf(id: string) {
+  const en = `./articles-en/${id}.mdx`;
+  return lang === 'en' && en in allLoaders ? en : `./articles/${id}.mdx`;
+}
 
 export function hasArticleSource(id: string) {
-  return `./articles/${id}.mdx` in loaders;
+  return pathOf(id) in allLoaders;
 }
 
 export function loadArticle(id: string) {
-  const loader = loaders[`./articles/${id}.mdx`];
+  const loader = allLoaders[pathOf(id)];
   if (!loader) return Promise.reject(new Error(`Artigo não encontrado: ${id}`));
   return loader();
 }
@@ -23,7 +30,7 @@ export function loadAllRaw() {
     rawCache = Promise.all(
       allArticles
         .filter((a) => hasArticleSource(a.id))
-        .map(async (a) => [a.id, stripMdx(await rawLoaders[`./articles/${a.id}.mdx`]())] as const),
+        .map(async (a) => [a.id, stripMdx(await allRaw[pathOf(a.id)]())] as const),
     ).then((entries) => new Map(entries));
   }
   return rawCache;

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { LabFrame, Controls, Readout, Note } from '../../components/ui/LabFrame';
 import { Segmented, Slider, fmtNum } from '../../components/ui/controls';
 import { useElementSize } from '../../lib/hooks';
+import { tr } from '../../i18n';
 
 /** NIOSH (1998): 85 dB(A) por 8 h, taxa de troca de 3 dB. Retorna horas permitidas. */
 const niosh = (L: number) => 8 / Math.pow(2, (L - 85) / 3);
@@ -40,8 +41,8 @@ export default function ExposureLab() {
 
   return (
     <LabFrame
-      title="Calculadora de exposição sonora"
-      description="Quanto tempo de escuta cada nível permite, segundo os critérios de saúde ocupacional (NIOSH) e de escuta segura da OMS/ITU."
+      title={tr("Calculadora de exposição sonora")}
+      description={tr("Quanto tempo de escuta cada nível permite, segundo os critérios de saúde ocupacional (NIOSH) e de escuta segura da OMS/ITU.")}
       onReset={() => {
         setLevel(85);
         setHours(2);
@@ -53,30 +54,30 @@ export default function ExposureLab() {
           value={std}
           onChange={setStd}
           options={[
-            { value: 'who', label: 'OMS adultos' },
-            { value: 'who-kids', label: 'OMS crianças' },
-            { value: 'niosh', label: 'NIOSH (diário)' },
+            { value: 'who', label: tr("OMS adultos") },
+            { value: 'who-kids', label: tr("OMS crianças") },
+            { value: 'niosh', label: tr("NIOSH (diário)") },
           ]}
         />
       }
-      footer="Critérios de exposição são estatísticos: definem um risco aceitável para a população, não um limite seguro garantido para cada pessoa. Os níveis se referem ao som no ouvido, ponderado em A — o que um fone produz depende do volume, da fonte e da sensibilidade (veja o laboratório de potência)."
+      footer={tr("Critérios de exposição são estatísticos: definem um risco aceitável para a população, não um limite seguro garantido para cada pessoa. Os níveis se referem ao som no ouvido, ponderado em A — o que um fone produz depende do volume, da fonte e da sensibilidade (veja o laboratório de potência).")}
     >
       <Controls cols={2}>
-        <Slider label="Nível médio no ouvido" value={level} min={70} max={115} step={1} onChange={setLevel} unit="dB(A)" />
-        <Slider label="Horas de escuta por dia" value={hours} min={0.25} max={12} step={0.25} onChange={setHours} unit="h" />
+        <Slider label={tr("Nível médio no ouvido")} value={level} min={70} max={115} step={1} onChange={setLevel} unit={tr("dB(A)")} />
+        <Slider label={tr("Horas de escuta por dia")} value={hours} min={0.25} max={12} step={0.25} onChange={setHours} unit="h" />
       </Controls>
       <div className="mt-4">
         <Readout
           items={[
-            { label: 'Tempo diário permitido (NIOSH)', value: fmtTime(allowedDay), accent: std === 'niosh' },
-            { label: 'Tempo semanal permitido (OMS)', value: fmtTime(std === 'niosh' ? who(level, false) : allowedWeek), accent: std !== 'niosh' },
-            { label: std === 'niosh' ? 'Dose diária' : 'Dose semanal', value: `${fmtNum(dose, 0)}%`, hint: dose > 100 ? 'acima do critério' : 'dentro do critério' },
+            { label: tr("Tempo diário permitido (NIOSH)"), value: fmtTime(allowedDay), accent: std === 'niosh' },
+            { label: tr("Tempo semanal permitido (OMS)"), value: fmtTime(std === 'niosh' ? who(level, false) : allowedWeek), accent: std !== 'niosh' },
+            { label: std === 'niosh' ? tr("Dose diária") : tr("Dose semanal"), value: `${fmtNum(dose, 0)}%`, hint: dose > 100 ? tr("acima do critério") : tr("dentro do critério") },
           ]}
         />
       </div>
       <div ref={wrap} className="mt-5">
         {width > 0 && (
-          <svg width={width} height={H} role="img" aria-label="Tempo permitido por nível">
+          <svg width={width} height={H} role="img" aria-label={tr("Tempo permitido por nível")}>
             {[1 / 60, 0.25, 1, 8, 40, 168].map((h) => {
               const yy = 8 + ((Math.log10(200) - Math.log10(h)) / (Math.log10(200) - Math.log10(1 / 3600))) * (H - 30);
               return (
@@ -99,15 +100,12 @@ export default function ExposureLab() {
           </svg>
         )}
         <div className="flex gap-4 text-[11.5px] text-muted mt-1">
-          <span className="inline-flex items-center gap-1.5"><span className="w-3 h-[2px] bg-[var(--c-b)]" /> NIOSH, por dia</span>
-          <span className="inline-flex items-center gap-1.5"><span className="w-3 h-[2px] bg-[var(--c-a)]" /> OMS/ITU, por semana</span>
+          <span className="inline-flex items-center gap-1.5"><span className="w-3 h-[2px] bg-[var(--c-b)]" />{' '}{tr("NIOSH, por dia")}</span>
+          <span className="inline-flex items-center gap-1.5"><span className="w-3 h-[2px] bg-[var(--c-a)]" />{' '}{tr("OMS/ITU, por semana")}</span>
         </div>
       </div>
       <div className="mt-3">
-        <Note>
-          A cada +3 dB, o tempo permitido cai pela metade, porque a energia sonora dobra. Ouvir a 94 dB(A) por uma hora entrega a mesma
-          dose que ouvir a 85 dB(A) por oito horas.
-        </Note>
+        <Note>{tr("A cada +3 dB, o tempo permitido cai pela metade, porque a energia sonora dobra. Ouvir a 94 dB(A) por uma hora entrega a mesma dose que ouvir a 85 dB(A) por oito horas.")}</Note>
       </div>
     </LabFrame>
   );

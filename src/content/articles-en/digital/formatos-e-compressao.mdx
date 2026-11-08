@@ -1,0 +1,83 @@
+<Lead>
+WAV, FLAC, ALAC, MP3, AAC, Opus, DSD, "hi-res"… Digital audio formats fall into two families with opposite philosophies: those that keep every bit of the original and those that methodically discard what hearing probably won't notice. Understanding how each works means understanding where quality differences do and don't come from.
+</Lead>
+
+<Callout type="simples">
+Lossless formats such as FLAC keep the audio bit for bit, like a ZIP file. Lossy formats such as MP3 and AAC throw away what you probably wouldn't hear. At good bitrates, most people can't tell the difference in blind tests, and the master of the album matters far more than the file format.
+</Callout>
+
+## PCM: the fundamental format
+
+Nearly all digital audio is **PCM** (*pulse-code modulation*): a sequence of amplitude samples taken at a fixed rate, with a fixed number of bits, exactly what the articles on [sampling](/digital/amostragem) and [quantization](/digital/quantizacao-e-dither) describe. One minute of stereo PCM at 44.1 kHz and 16 bits takes up
+
+<Formula say="One minute of CD-quality stereo audio takes about 10.6 megabytes.">
+
+$$
+44\,100 \times 16 \times 2 \times 60 \approx 84.7\ \text{Mbit} \approx 10.6\ \text{MB}
+$$
+
+</Formula>
+
+that is, a **bitrate** of 1,411 kbps. **WAV** and **AIFF** files are uncompressed PCM with a header describing the format.
+
+## Lossless compression
+
+Formats such as **FLAC**, **ALAC** (Apple Lossless) and **WavPack** reduce file size without altering a single bit of the decoded audio, just as a ZIP file returns exactly the original document. They exploit the **redundancy** of audio: samples are predictable from previous ones (by linear prediction), and what's stored is the small prediction error, coded compactly (with Rice codes, in FLAC's case).
+
+The typical result is 50% to 70% of the original size. Since decoding is exact, **a FLAC and its source WAV are identical** when played: any perceived difference between them comes from something else (volume, player, expectation).
+
+## Lossy compression and perceptual coding
+
+**MP3**, **AAC**, **Vorbis** and **Opus** discard information. But not at random: they use **psychoacoustic models** to decide what to discard. The process, in broad terms:
+
+1. **Frequency analysis.** The signal is divided into short blocks and transformed into frequency components (by filter banks and the MDCT, a variant of the cosine transform).
+2. **Calculating the masking threshold.** For each block, the psychoacoustic model estimates, band by band, the level below which any noise would be **inaudible** because of the [masking](/percepcao/mascaramento) caused by the signal itself.
+3. **Bit allocation.** Each band is quantized with the minimum bits needed to keep quantization noise below that threshold. Heavily masked bands get few bits or none.
+4. **Packing** with entropy coding (Huffman, arithmetic).
+
+With sufficient bitrate, the added noise stays entirely below the threshold, and the result is **perceptually transparent** for most listeners and musical passages. With a low bitrate, the noise exceeds the threshold and **artifacts** appear:
+
+- **Pre-echo:** on a sudden attack (castanets, harpsichord), quantization noise spreads across the whole block, including before the attack, where nothing masks it. Modern codecs switch to short blocks at those moments.
+- **"Watery" or "metallic"** sounds (*birdies*): treble bands that appear and disappear from block to block.
+- **Loss of treble:** at low bitrates, encoders cut everything above 15–16 kHz.
+- **Stereo narrowing:** joint coding of the channels can reduce spatial information.
+
+### Bitrates and transparency
+
+The numbers are approximate, vary with the encoder and the music, and blind tests (such as those promoted by communities like Hydrogenaudio and by the ITU) show large variation between listeners:
+
+| Format | Bitrate at which most listeners can't tell it from the original |
+| --- | --- |
+| MP3 (LAME, VBR) | ~190–256 kbps |
+| AAC (good encoder) | ~128–192 kbps |
+| Opus | ~128–160 kbps |
+| Vorbis | ~160–192 kbps |
+
+Below that, attentive listeners start to identify artifacts in difficult passages. Far below (64 kbps stereo), even ordinary listeners notice.
+
+<Callout type="evidencia">
+Streaming services deliver AAC or Vorbis/Opus at 256–320 kbps, or lossless formats. In controlled tests, the difference between high-quality lossy and lossless is, in most cases, inaudible or very hard to detect. There are exceptions (specific passages, trained listeners), and lossless remains the best choice for **archiving and editing**, because it doesn't accumulate losses through successive conversions.
+</Callout>
+
+## High resolution
+
+"Hi-res" files use rates of 88.2–192 kHz and 24 bits. Technically, they hold a wider frequency range (up to 48–96 kHz) and a lower noise floor. For playback, what we know from the literature is discussed in [measurable vs audible](/ciencia/mensuravel-vs-audivel): when differences are found, they're small and often attributable to different masters, different filters or nonlinearities of the equipment with ultrasonic content, and not to the format itself.
+
+## DSD
+
+**DSD** (*Direct Stream Digital*), created for SACD, uses **1 bit** at a very high rate: 2.8224 MHz (64 × 44.1 kHz) in DSD64, with 128 and 256 versions. With a single bit, the quantization error is huge, but a high-order **sigma-delta** modulator pushes nearly all that noise to ultrasonic frequencies (*noise shaping*), leaving the audible band clean.
+
+DSD has particularities: ultrasonic noise grows sharply above ~20–30 kHz (in DSD64) and has to be filtered; editing and mixing can't be done directly in 1 bit (it's converted to high-resolution PCM and then back). In playback, well-made DSD and well-made high-resolution PCM are, for all practical purposes, equivalent. Many DACs convert one to the other internally.
+
+## Metadata and what really changes the sound
+
+Besides audio, files carry metadata: title, cover and sometimes **ReplayGain** information (see [loudness](/digital/loudness-e-resampling)). When two versions of a song sound different, the most frequent causes, in order, are: **different masters** (remastered versions with more compression, "hi-res" editions with other treatment), **differences in volume** (normalization on in one and not the other), **low bitrates** and, only then, the format itself.
+
+<References>
+  <Ref>Painter, T.; Spanias, A. "Perceptual coding of digital audio." <em>Proceedings of the IEEE</em>, 88(4), 451–515, 2000.</Ref>
+  <Ref>Brandenburg, K. "MP3 and AAC explained." AES 17th International Conference on High-Quality Audio Coding, 1999.</Ref>
+  <Ref>Valin, J.-M.; Maxwell, G.; Terriberry, T. B.; Vos, K. "High-quality, low-delay music coding in the Opus codec." AES 135th Convention, 2013.</Ref>
+  <Ref>ITU-R BS.1534-3 (2015). <em>Method for the subjective assessment of intermediate quality level of audio systems</em> (MUSHRA).</Ref>
+  <Ref>Xiph.Org Foundation. <em>FLAC format specification</em>. xiph.org/flac.</Ref>
+  <Ref>Reefman, D.; Janssen, E. "Signal processing for Direct Stream Digital." Philips Research, 2002.</Ref>
+</References>

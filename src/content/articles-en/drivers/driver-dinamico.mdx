@@ -1,0 +1,62 @@
+<Lead>
+The dynamic, or moving-coil, driver was patented in the 1920s and remains the most used transducer in the world, from stadium speakers to 6 mm IEMs. Its longevity isn't historical inertia: it's an elegant, robust and efficient solution whose limits are well known and carefully worked around.
+</Lead>
+
+<Callout type="simples">
+A dynamic driver is a tiny loudspeaker: a coil of wire attached to a thin dome, sitting in the field of a magnet. The signal in the coil makes it move like a piston, and that moves the air. It's simple, cheap and good at bass.
+</Callout>
+
+## Anatomy
+
+A dynamic driver has four essential parts:
+
+1. **Magnetic circuit.** A magnet (almost always neodymium today) and steel pole pieces that concentrate the field in a narrow ring-shaped space, the **gap**. There the field is radial: it points from the center outward (or vice versa) in all directions.
+2. **Voice coil.** A winding of fine wire (copper or aluminum, sometimes copper-clad) suspended inside the gap.
+3. **Diaphragm.** The surface that pushes the air, attached to the coil. In headphones, usually a dome with a flexible edge (surround), of materials like PET, PEN, polymer composites, beryllium (or beryllium coating), titanium, carbon or (bio-)cellulose, among others.
+4. **Suspension and chassis.** The flexible edge and, in some designs, a spider keep the coil centered and provide the restoring force (the "spring").
+
+When the signal current flows through the coil, it experiences the Lorentz force $F = Bli$ (see [transducers](/drivers/transdutores)). Since the field is radial and the current circulates, the force at every point of the coil points in the same direction: forward or backward, according to the direction of the current. Coil and diaphragm move together, like a piston.
+
+<Lab id="drivers" initial="dd" />
+
+## The diaphragm as a piston, and when it stops being one
+
+At low frequencies, the diaphragm moves as a whole, like a rigid body. As frequency rises, bending waves start to propagate through the diaphragm material itself. Above a certain frequency, different regions vibrate at different phases: the center moves forward while a ring moves back. These are **breakup modes**, which create peaks and dips in the response and can increase distortion.
+
+The frequency at which this starts depends on three material properties:
+
+- **Stiffness** (elastic modulus): the stiffer, the higher the first mode.
+- **Density**: the lighter, the higher the first mode and the greater the sensitivity.
+- **Internal damping**: the more the material dissipates energy, the less pronounced the resonances are when they happen.
+
+The stiffness-to-density ratio determines the speed of bending waves in the material. Beryllium is famous for its exceptional ratio; carbon and certain composites too. "Soft" materials like polymers and cellulose have lower but more damped modes. There's no ideal material: there are trade-offs, and geometry (dome, cone, ribs, variable thickness) matters as much as the raw material.
+
+<Callout type="mito" title="&quot;A beryllium diaphragm sounds better&quot;">
+Exotic materials make it possible to push breakup modes higher or keep them more controlled, but a headphone's sound is the result of the whole system: driver, chambers, venting, filters and tuning. IEMs with beryllium diaphragms can have any signature, from very bright to very dark. The material is an engineering tool, not a guarantee of sound.
+</Callout>
+
+## Strengths
+
+- **Air displacement.** An 8 to 14 mm diaphragm, with an excursion of tens of micrometers, moves much more air than a balanced armature. That makes low-distortion bass easier, especially in vented IEMs, where the cavity isn't perfectly sealed.
+- **Naturally smooth response in the bass and mids**, without a BA's internal resonances.
+- **Nearly constant impedance** across the spectrum (with a peak at the mechanical resonance), which makes the sound barely sensitive to the source's output impedance.
+- **Simplicity and cost.** A single-dynamic IEM can cover the whole audible range with good quality and no crossover.
+
+## Limitations
+
+- **Treble and breakup modes.** Above a few kilohertz, the response depends a lot on mode control; a poorly resolved driver can have aggressive treble peaks or an early roll-off.
+- **Moving mass.** The coil and diaphragm have mass, which limits sensitivity compared with BAs and electrostatics.
+- **Internal pressure and venting.** With its relatively large front-facing diaphragm, a DD is sensitive to pressure differences between its two sides. Dynamic IEMs generally need rear vents, and some suffer from **driver flex**, a crackle when inserting the earphone, when pressure pushes the diaphragm beyond normal. See [acoustic construction](/drivers/construcao-acustica).
+
+## Dynamics in IEMs, headphones and earbuds
+
+In **over-ear headphones**, 40 to 50 mm drivers are common; the rear chamber (closed or open) and pads shape the response. In **earbuds**, the 14–16 mm driver plays without a seal, which limits the bass. In **IEMs**, 6 to 12 mm drivers in small chambers with controlled venting can achieve responses very close to targets like Harman with a single driver.
+
+There are variations on the theme: **dual dynamic drivers** (two diaphragms, one behind the other or coaxial), **dual-layer diaphragms**, motors with two magnets and copper-clad aluminum voice coils (CCAW) to reduce mass. Each is an attempt to improve the trade-off between mass, stiffness, force and control, and should be judged by the measured and heard result, not by the description.
+
+<References>
+  <Ref>Beranek, L. L.; Mellow, T. J. <em>Acoustics: Sound Fields and Transducers</em>. Academic Press, 2012.</Ref>
+  <Ref>Rice, C. W.; Kellogg, E. W. "Notes on the development of a new type of hornless loud speaker." <em>Transactions of the AIEE</em>, 44, 461–480, 1925.</Ref>
+  <Ref>Borwick, J. (ed.). <em>Loudspeaker and Headphone Handbook</em>. 3rd ed. Focal Press, 2001.</Ref>
+  <Ref>Klippel, W. "Tutorial: loudspeaker nonlinearities — causes, parameters, symptoms." <em>JAES</em>, 54(10), 907–939, 2006.</Ref>
+</References>

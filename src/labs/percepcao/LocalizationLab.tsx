@@ -4,6 +4,7 @@ import { Segmented, fmtNum } from '../../components/ui/controls';
 import { PlayButton, usePlayback, fadeGain } from '../../components/ui/audio';
 import { FreqPlot } from '../../viz/FreqPlot';
 import { dbToGain, demoMusicBuffer, pinkNoiseBuffer } from '../../audio/engine';
+import { tr } from '../../i18n';
 
 const A = 0.0875; // raio da cabeça (m)
 const C = 343;
@@ -137,8 +138,8 @@ export default function LocalizationLab() {
 
   return (
     <LabFrame
-      title="Localização: ITD e ILD"
-      description="Arraste a fonte ao redor da cabeça (vista de cima). O som é processado com o atraso interaural de Woodworth e com um modelo de sombra da cabeça esférica. Use fones."
+      title={tr("Localização: ITD e ILD")}
+      description={tr("Arraste a fonte ao redor da cabeça (vista de cima). O som é processado com o atraso interaural de Woodworth e com um modelo de sombra da cabeça esférica. Use fones.")}
       audio
       onReset={() => {
         setAz(40);
@@ -158,9 +159,9 @@ export default function LocalizationLab() {
           onPointerMove={(e) => drag.current && setFromPointer(e)}
           onPointerUp={() => (drag.current = false)}
           role="slider"
-          aria-label="Direção da fonte sonora"
+          aria-label={tr("Direção da fonte sonora")}
           aria-valuenow={az}
-          aria-valuetext={`${az} graus`}
+          aria-valuetext={tr("{0} graus", az)}
           tabIndex={0}
           onKeyDown={(e) => {
             if (e.key === 'ArrowRight') setAz((a) => a + 5);
@@ -170,7 +171,7 @@ export default function LocalizationLab() {
           <circle cx="150" cy="150" r={R} fill="none" stroke="var(--line)" strokeDasharray="3 5" />
           {[0, 90, 180, 270].map((d) => (
             <text key={d} x={150 + (R + 18) * Math.sin((d * Math.PI) / 180)} y={154 - (R + 18) * Math.cos((d * Math.PI) / 180)} textAnchor="middle" className="fill-[var(--fg-faint)] text-[10px]">
-              {d === 0 ? 'frente' : d === 90 ? 'dir.' : d === 180 ? 'trás' : 'esq.'}
+              {d === 0 ? 'frente' : d === 90 ? 'dir.' : d === 180 ? tr("trás") : 'esq.'}
             </text>
           ))}
           {/* caminhos até cada ouvido */}
@@ -188,7 +189,7 @@ export default function LocalizationLab() {
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-4">
             <PlayButton playing={pb.playing} onToggle={() => (pb.playing ? pb.stop() : void start())} />
-            <Segmented size="sm" value={sig} onChange={setSig} options={[{ value: 'clicks', label: 'Cliques' }, { value: 'noise', label: 'Ruído rosa' }, { value: 'music', label: 'Música' }]} />
+            <Segmented size="sm" value={sig} onChange={setSig} options={[{ value: 'clicks', label: tr("Cliques") }, { value: 'noise', label: tr("Ruído rosa") }, { value: 'music', label: tr("Música") }]} />
           </div>
           <div className="mb-4">
             <Segmented
@@ -196,17 +197,17 @@ export default function LocalizationLab() {
               value={cues}
               onChange={setCues}
               options={[
-                { value: 'both', label: 'ITD + ILD' },
-                { value: 'itd', label: 'Só tempo (ITD)' },
-                { value: 'ild', label: 'Só nível (ILD)' },
+                { value: 'both', label: tr("ITD + ILD") },
+                { value: 'itd', label: tr("Só tempo (ITD)") },
+                { value: 'ild', label: tr("Só nível (ILD)") },
               ]}
             />
           </div>
           <Readout
             items={[
-              { label: 'Azimute', value: `${((az % 360) + 360) % 360}°` },
-              { label: 'ITD', value: `${fmtNum(Math.abs(t) * 1e6, 0)} µs`, accent: true, hint: t === 0 ? 'centro' : t > 0 ? 'chega antes à direita' : 'chega antes à esquerda' },
-              { label: 'ILD em 4 kHz', value: `${fmtNum(Math.abs(ild4k), 1)} dB` },
+              { label: tr("Azimute"), value: `${((az % 360) + 360) % 360}°` },
+              { label: tr("ITD"), value: `${fmtNum(Math.abs(t) * 1e6, 0)} µs`, accent: true, hint: t === 0 ? 'centro' : t > 0 ? tr("chega antes à direita") : tr("chega antes à esquerda") },
+              { label: tr("ILD em 4 kHz"), value: `${fmtNum(Math.abs(ild4k), 1)} dB` },
             ]}
           />
           <div className="mt-4">
@@ -217,10 +218,10 @@ export default function LocalizationLab() {
               dbStep={4}
               fMin={100}
               curves={[
-                { id: 'l', label: 'Ouvido esquerdo', fn: (f) => shadowDb(ang.L, f), color: 'var(--c-b)', width: 1.8 },
-                { id: 'r', label: 'Ouvido direito', fn: (f) => shadowDb(ang.R, f), color: 'var(--c-a)', width: 1.8 },
+                { id: 'l', label: tr("Ouvido esquerdo"), fn: (f) => shadowDb(ang.L, f), color: 'var(--c-b)', width: 1.8 },
+                { id: 'r', label: tr("Ouvido direito"), fn: (f) => shadowDb(ang.R, f), color: 'var(--c-a)', width: 1.8 },
               ]}
-              ariaLabel="Efeito de sombra da cabeça por frequência"
+              ariaLabel={tr("Efeito de sombra da cabeça por frequência")}
             />
           </div>
         </div>
@@ -228,8 +229,8 @@ export default function LocalizationLab() {
       <div className="mt-4">
         <Note>
           {behind
-            ? 'A fonte está atrás, mas o ITD e o ILD são quase os mesmos de uma fonte espelhada na frente — é o “cone de confusão”. Sem as pistas espectrais da pina (que este modelo não tem), o cérebro não consegue distinguir frente de trás, e o som tende a parecer dentro da cabeça.'
-            : 'Compare “só tempo” e “só nível”: os dois deslocam a imagem, por mecanismos diferentes. O ITD domina abaixo de ~1,5 kHz; a sombra da cabeça (ILD) só existe onde o comprimento de onda é pequeno perto da cabeça.'}
+            ? tr("A fonte está atrás, mas o ITD e o ILD são quase os mesmos de uma fonte espelhada na frente — é o “cone de confusão”. Sem as pistas espectrais da pina (que este modelo não tem), o cérebro não consegue distinguir frente de trás, e o som tende a parecer dentro da cabeça.")
+            : tr("Compare “só tempo” e “só nível”: os dois deslocam a imagem, por mecanismos diferentes. O ITD domina abaixo de ~1,5 kHz; a sombra da cabeça (ILD) só existe onde o comprimento de onda é pequeno perto da cabeça.")}
         </Note>
       </div>
     </LabFrame>

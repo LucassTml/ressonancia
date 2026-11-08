@@ -5,6 +5,7 @@ import { SourceBar, useSourcePlayer } from '../../components/ui/audio';
 import { FreqPlot, Legend } from '../../viz/FreqPlot';
 import { biquadCoefs, biquadDb, firBuffer, interpCurve } from '../../audio/dsp';
 import { harmanIE } from '../../data/targets';
+import { tr } from '../../i18n';
 
 const FS = 96000;
 const C = 343;
@@ -68,11 +69,11 @@ export default function FitLab() {
   const fl = 10 * Math.pow(40, s.leak);
   return (
     <LabFrame
-      title="Simulador de encaixe"
-      description="Um IEM hipotético afinado exatamente no alvo Harman IE 2019, e o que acontece com a resposta no seu tímpano quando a vedação, a profundidade ou a ponteira mudam."
+      title={tr("Simulador de encaixe")}
+      description={tr("Um IEM hipotético afinado exatamente no alvo Harman IE 2019, e o que acontece com a resposta no seu tímpano quando a vedação, a profundidade ou a ponteira mudam.")}
       audio
       onReset={() => setS(D)}
-      footer="Modelo didático com ordens de grandeza realistas: o vazamento é tratado como um passa-altas de 1ª ordem, a profundidade desloca a ressonância de meia onda do canal residual, e materiais/furos aplicam variações típicas relatadas em medições. Cada combinação real de IEM, ponteira e orelha é diferente."
+      footer={tr("Modelo didático com ordens de grandeza realistas: o vazamento é tratado como um passa-altas de 1ª ordem, a profundidade desloca a ressonância de meia onda do canal residual, e materiais/furos aplicam variações típicas relatadas em medições. Cada combinação real de IEM, ponteira e orelha é diferente.")}
     >
       <FreqPlot
         height={280}
@@ -80,49 +81,46 @@ export default function FitLab() {
         dbMax={16}
         dbStep={6}
         curves={[
-          { id: 'ref', label: 'Encaixe de referência', fn: base, color: 'var(--c-target)', width: 1.6, dash: '5 4' },
-          { id: 'now', label: 'Com este encaixe', fn: (f) => base(f) + delta(f), color: 'var(--c-a)', width: 2.4 },
-          { id: 'diff', label: 'Diferença', fn: delta, color: 'var(--c-diff)', width: 1.3, opacity: 0.8 },
+          { id: 'ref', label: tr("Encaixe de referência"), fn: base, color: 'var(--c-target)', width: 1.6, dash: '5 4' },
+          { id: 'now', label: tr("Com este encaixe"), fn: (f) => base(f) + delta(f), color: 'var(--c-a)', width: 2.4 },
+          { id: 'diff', label: tr("Diferença"), fn: delta, color: 'var(--c-diff)', width: 1.3, opacity: 0.8 },
         ]}
-        ariaLabel="Resposta do IEM com diferentes encaixes"
+        ariaLabel={tr("Resposta do IEM com diferentes encaixes")}
       />
       <div className="mt-2 mb-4">
-        <Legend items={[{ label: 'Referência (alvo)', color: 'var(--c-target)', dash: true }, { label: 'Com este encaixe', color: 'var(--c-a)' }, { label: 'Diferença', color: 'var(--c-diff)' }]} />
+        <Legend items={[{ label: tr("Referência (alvo)"), color: 'var(--c-target)', dash: true }, { label: tr("Com este encaixe"), color: 'var(--c-a)' }, { label: tr("Diferença"), color: 'var(--c-diff)' }]} />
       </div>
       <Controls cols={2}>
         <Slider
-          label="Vazamento da vedação"
+          label={tr("Vazamento da vedação")}
           value={s.leak}
           min={0}
           max={1}
           step={0.01}
           onChange={(v) => set('leak', v)}
           format={(v) => (v < 0.02 ? 'vedado' : v < 0.35 ? 'leve' : v < 0.7 ? 'moderado' : 'grande')}
-          hint={s.leak > 0.02 ? `Perda de −3 dB por volta de ${fmtHz(fl)}` : 'Vedação perfeita'}
+          hint={s.leak > 0.02 ? tr("Perda de −3 dB por volta de {0}", fmtHz(fl)) : tr("Vedação perfeita")}
         />
-        <Slider label="Profundidade de inserção" value={s.insertion} min={3} max={14} step={0.5} onChange={(v) => set('insertion', v)} unit="mm" hint={`Ressonância do canal residual ≈ ${fmtHz(fOcc(s.insertion))}`} />
+        <Slider label={tr("Profundidade de inserção")} value={s.insertion} min={3} max={14} step={0.5} onChange={(v) => set('insertion', v)} unit="mm" hint={tr("Ressonância do canal residual ≈ {0}", fmtHz(fOcc(s.insertion)))} />
       </Controls>
       <div className="flex flex-wrap gap-3 mt-4">
-        <Segmented size="sm" label="Material" value={s.tip} onChange={(v) => set('tip', v)} options={[{ value: 'silicone', label: 'Silicone' }, { value: 'foam', label: 'Espuma' }]} />
-        <Segmented size="sm" label="Furo" value={s.bore} onChange={(v) => set('bore', v)} options={[{ value: 'narrow', label: 'Furo estreito' }, { value: 'standard', label: 'Furo padrão' }, { value: 'wide', label: 'Furo largo' }]} />
+        <Segmented size="sm" label={tr("Material")} value={s.tip} onChange={(v) => set('tip', v)} options={[{ value: 'silicone', label: tr("Silicone") }, { value: 'foam', label: tr("Espuma") }]} />
+        <Segmented size="sm" label={tr("Furo")} value={s.bore} onChange={(v) => set('bore', v)} options={[{ value: 'narrow', label: tr("Furo estreito") }, { value: 'standard', label: tr("Furo padrão") }, { value: 'wide', label: tr("Furo largo") }]} />
       </div>
       <div className="mt-4">
         <Readout
           items={[
-            { label: 'Variação em 30 Hz', value: `${fmtNum(delta(30), 1)} dB`, accent: true },
-            { label: 'Variação em 100 Hz', value: `${fmtNum(delta(100), 1)} dB` },
-            { label: 'Variação em 8 kHz', value: `${fmtNum(delta(8000), 1)} dB` },
+            { label: tr("Variação em 30 Hz"), value: `${fmtNum(delta(30), 1)} dB`, accent: true },
+            { label: tr("Variação em 100 Hz"), value: `${fmtNum(delta(100), 1)} dB` },
+            { label: tr("Variação em 8 kHz"), value: `${fmtNum(delta(8000), 1)} dB` },
           ]}
         />
       </div>
       <div className="mt-5">
-        <SourceBar player={player} extra={<Toggle checked={s.hear} onChange={(v) => set('hear', v)} label="Aplicar efeito do encaixe" />} />
+        <SourceBar player={player} extra={<Toggle checked={s.hear} onChange={(v) => set('hear', v)} label={tr("Aplicar efeito do encaixe")} />} />
       </div>
       <div className="mt-3">
-        <Note>
-          Um vazamento pequeno, que você mal sente, já tira vários decibéis do subgrave. É a causa mais comum de alguém achar que um IEM
-          “não tem grave” — e um motivo para desconfiar de impressões feitas com a ponteira errada.
-        </Note>
+        <Note>{tr("Um vazamento pequeno, que você mal sente, já tira vários decibéis do subgrave. É a causa mais comum de alguém achar que um IEM “não tem grave” — e um motivo para desconfiar de impressões feitas com a ponteira errada.")}</Note>
       </div>
     </LabFrame>
   );

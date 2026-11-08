@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import {
   claimPlayback,
   decodeFile,
+  demoIdStore,
   demoMusicBuffer,
   getAudio,
   masterVolumeStore,
@@ -10,8 +11,10 @@ import {
   releasePlayback,
 } from '../../audio/engine';
 import { audioNoticeStore } from '../../lib/prefs';
+import type { DemoId } from '../../audio/demos';
 import { useStore } from '../../lib/storage';
 import { Button, IconAlert, IconPlay, IconStop, IconUpload, IconVolume, Segmented } from './controls';
+import { tr } from '../../i18n';
 
 /* ------------------------------------------------------------------ */
 /* Volume mestre + aviso                                               */
@@ -24,7 +27,7 @@ export function MasterVolume({ compact }: { compact?: boolean }) {
     <div className={`flex items-center gap-2 ${compact ? '' : 'min-w-[180px]'}`}>
       <IconVolume size={15} className="text-muted shrink-0" />
       <input
-        aria-label="Volume mestre"
+        aria-label={tr("Volume mestre")}
         type="range"
         className="range w-24"
         min={0}
@@ -52,12 +55,8 @@ export function AudioNotice() {
           >
             <IconAlert size={15} className="shrink-0 mt-[1px]" />
             <p className="leading-snug">
-              <strong className="font-semibold">Proteja sua audição.</strong> Antes de tocar, abaixe o volume do sistema e
-              aumente aos poucos. Tons puros e ruído soam mais altos do que parecem. O som deste site é limitado a −3 dBFS,
-              mas o nível final depende do seu aparelho e fone.{' '}
-              <button className="underline underline-offset-2 font-medium" onClick={() => audioNoticeStore.set(true)}>
-                Entendi
-              </button>
+              <strong className="font-semibold">{tr("Proteja sua audição.")}</strong>{' '}{tr("Antes de tocar, abaixe o volume do sistema e aumente aos poucos. Tons puros e ruído soam mais altos do que parecem. O som deste site é limitado a −3 dBFS, mas o nível final depende do seu aparelho e fone.")}{' '}
+              <button className="underline underline-offset-2 font-medium" onClick={() => audioNoticeStore.set(true)}>{tr("Entendi")}</button>
             </p>
           </motion.div>
         ) : null}
@@ -133,7 +132,7 @@ export function PlayButton({
       aria-pressed={playing}
       className="min-w-[96px]"
     >
-      {playing ? 'Parar' : label}
+      {playing ? tr("Parar") : label}
     </Button>
   );
 }
@@ -173,6 +172,7 @@ export interface SourcePlayer {
   loadFile: (f: File) => Promise<void>;
   loading: boolean;
   error: string | null;
+  restart: () => void;
 }
 
 /**
@@ -230,6 +230,10 @@ export function useSourcePlayer(
     [getBuffer, pb],
   );
 
+  const restart = useCallback(() => {
+    if (pb.playing) void startWith('music');
+  }, [pb.playing, startWith]);
+
   const toggle = useCallback(() => {
     if (pb.playing) pb.stop();
     else void startWith(source);
@@ -276,38 +280,64 @@ export function useSourcePlayer(
         }
       } catch {
         setLoading(false);
-        setError('Não foi possível decodificar este arquivo. Tente WAV, FLAC, MP3, AAC ou OGG.');
+        setError(tr("Não foi possível decodificar este arquivo. Tente WAV, FLAC, MP3, AAC ou OGG."));
       }
     },
     [pb],
   );
 
-  return { playing: pb.playing, toggle, stop: pb.stop, source, setSource, fileName, loadFile, loading, error };
+  return { playing: pb.playing, toggle, stop: pb.stop, source, setSource, fileName, loadFile, loading, error, restart };
 }
+
+const DEMO_NAMES: { value: DemoId; label: string }[] = [
+  { value: 'band', label: tr('Banda completa') },
+  { value: 'piano', label: tr('Piano solo') },
+  { value: 'strings', label: tr('Cordas') },
+  { value: 'guitar', label: tr('Violão dedilhado') },
+  { value: 'voices', label: tr('Vozes') },
+  { value: 'drums', label: tr('Bateria e baixo') },
+  { value: 'jazz', label: tr('Trio de jazz') },
+];
 
 export function SourceBar({ player, extra }: { player: SourcePlayer; extra?: ReactNode }) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const demo = useStore(demoIdStore);
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-wrap items-center gap-2">
         <PlayButton playing={player.playing} onToggle={player.toggle} disabled={player.loading} />
         <Segmented
           size="sm"
-          label="Fonte de áudio"
+          label={tr("Fonte de áudio")}
           value={player.source}
           onChange={(v) => {
             if (v === 'file' && !player.fileName) inputRef.current?.click();
             else player.setSource(v);
           }}
           options={[
-            { value: 'music', label: 'Música demo' },
-            { value: 'pink', label: 'Ruído rosa' },
-            { value: 'file', label: player.fileName ? truncate(player.fileName, 18) : 'Seu arquivo' },
+            { value: 'music', label: tr("Música demo") },
+            { value: 'pink', label: tr("Ruído rosa") },
+            { value: 'file', label: player.fileName ? truncate(player.fileName, 18) : tr("Seu arquivo") },
           ]}
         />
-        <Button size="sm" variant="ghost" icon={<IconUpload size={14} />} onClick={() => inputRef.current?.click()}>
-          Abrir áudio
-        </Button>
+        {player.source === 'music' && (
+          <select
+            value={demo}
+            onChange={(e) => {
+              demoIdStore.set(e.target.value as DemoId);
+              player.restart();
+            }}
+            className="h-7 rounded-md border border-line-strong bg-elev px-1.5 text-[12.5px]"
+            aria-label={tr("Trecho de demonstração")}
+          >
+            {DEMO_NAMES.map((d) => (
+              <option key={d.value} value={d.value}>
+                {d.label}
+              </option>
+            ))}
+          </select>
+        )}
+        <Button size="sm" variant="ghost" icon={<IconUpload size={14} />} onClick={() => inputRef.current?.click()}>{tr("Abrir áudio")}</Button>
         <input
           ref={inputRef}
           type="file"
@@ -321,10 +351,10 @@ export function SourceBar({ player, extra }: { player: SourcePlayer; extra?: Rea
         />
         {extra}
       </div>
-      {player.loading && <p className="text-[12px] text-muted">Preparando áudio…</p>}
+      {player.loading && <p className="text-[12px] text-muted">{tr("Preparando áudio…")}</p>}
       {player.error && <p className="text-[12px] text-[var(--myth)]">{player.error}</p>}
       {player.source === 'file' && player.fileName && (
-        <p className="text-[11.5px] text-faint">O arquivo é decodificado e processado só no seu navegador; nada é enviado.</p>
+        <p className="text-[11.5px] text-faint">{tr("O arquivo é decodificado e processado só no seu navegador; nada é enviado.")}</p>
       )}
     </div>
   );

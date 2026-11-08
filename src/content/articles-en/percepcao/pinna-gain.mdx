@@ -1,0 +1,163 @@
+<Lead>
+Between the air around you and your eardrum is an acoustic filter you've carried since birth. It amplifies the 2 to 5 kHz region by up to 15–20 dB, changes with the direction of the sound and differs from person to person. You never notice it, and that's precisely why it's the key to understanding why a "flat" headphone sounds wrong, where target curves come from and why an IEM has to artificially recreate something your ear did for free.
+</Lead>
+
+<Callout type="simples">
+Your ear naturally boosts the sounds around 3 kHz, and your brain treats that as normal. An earphone sealed in your canal skips this natural boost, so it has to build it in. That's why almost every headphone graph has a big "hill" around 3 kHz: it's not a flaw, it's what makes the sound natural.
+</Callout>
+
+## Start with the ear
+
+The outer ear has two main acoustic parts. The **pinna** (or auricle) is the visible structure of cartilage: the curled outer rim (helix), the inner fold parallel to it (antihelix), the small flap in front of the canal (tragus) and, in the center, a bowl-shaped cavity called the **concha**, about 1 to 2 cm deep, which leads to the entrance of the canal.
+
+The **ear canal** is a tube about 25 mm long and 7 mm in diameter, with a volume on the order of 1 cm³. It isn't straight: it curves in an "S," its outer third is cartilaginous and flexible, and its inner two-thirds are bony and rigid. At the far end is the **eardrum**, a conical, oblique membrane, tilted about 45° from the axis of the canal, which isn't a rigid wall but a surface that moves and absorbs acoustic energy.
+
+Each of these elements measures a few centimeters. As you saw in [frequency and wavelength](/fundamentos/frequencia-e-amplitude), those are the dimensions of wavelengths between ~2 and 15 kHz. The physics is inevitable: structures comparable to the wavelength resonate, reflect and diffract sound. The ear can't help being a filter.
+
+## A wave's path to the eardrum
+
+Imagine a plane wave arriving from the front. Before reaching the eardrum, it passes through a sequence of transformations. In the lab below, each is separated, and you can modify the dimensions and direction.
+
+<Lab id="pinna" />
+
+### 1. Torso, shoulders and head
+
+The shoulders and torso reflect some of the sound, creating small ripples in the 1 to 3 kHz range. The head diffracts sound: for frequencies whose wavelength is smaller than the head, the side facing the source works like a wall and the pressure there rises (the so-called *baffle* effect), while the opposite side is in shadow. For the ear on the source's side, that means a moderate gain of a few decibels, growing from ~500 Hz.
+
+### 2. The concha: a resonant cavity
+
+The concha is an open cavity ~1 to 1.5 cm deep. Its first resonant mode, studied in detail by Edgar Shaw in the 1960s and 1970s, is around **4 to 5 kHz**, adding a gain of several decibels. Higher concha modes, with more complex vibration patterns, appear above 7 kHz and depend strongly on the direction of arrival.
+
+### 3. The canal: a quarter-wave resonator
+
+The ear canal is a tube open at the entrance and (approximately) closed at the eardrum. As we saw in [phase and interference](/fundamentos/fase-e-interferencia), such a tube resonates when its length is a quarter of the wavelength:
+
+<Formula say="The canal resonates at the frequency whose quarter wavelength matches its length, which falls around 2.5 to 3 kHz in a typical ear.">
+
+$$
+f_{\text{canal}} \approx \frac{c}{4\,L_{\text{ef}}}
+$$
+
+<Vars
+  items={[
+    ['c', 'speed of sound, ≈ 343 m/s'],
+    ['L_ef', 'effective canal length: the physical length plus an "end correction" (the mass of air just beyond the opening also oscillates) and the effect of coupling with the concha'],
+  ]}
+/>
+
+</Formula>
+
+For L = 25 mm, the naive calculation gives 3.4 kHz; with the end correction and coupling to the concha, the real resonance usually lies between **2.5 and 3 kHz**. At that frequency, a standing wave forms with minimum pressure near the entrance and maximum at the eardrum; see the colored pattern inside the canal in the animation. Amplification at the resonance is 10 to 12 dB. It isn't a narrow peak, because the eardrum isn't rigid: it absorbs energy, which damps the resonance and makes it broad.
+
+### 4. The pinna: direction-dependent reflections
+
+Some of the sound enters the canal directly; another part reflects off the back wall of the concha and the folds of the pinna before entering. The two versions arrive with a time difference of a few tens of microseconds. Through the [comb filter](/fundamentos/fase-e-interferencia) mechanism, that difference creates a **dip** in the spectrum at the frequency where the delay equals half a cycle:
+
+<Formula say="Reflections inside the outer ear carve a dip in the treble, and its position depends on where the sound came from.">
+
+$$
+f_{\text{dip}} \approx \frac{c}{2\,\Delta d}
+$$
+
+</Formula>
+
+where $\Delta d$ is the path difference, on the order of 1.5 to 3 cm. The crucial point is that $\Delta d$ changes with the source's **elevation**: for sounds from below, the dip falls near 6 kHz; for sounds from above, it rises to 10 kHz or more. Hebrank and Wright (1974) showed that these moving dips are fundamental cues for vertical localization. Move the elevation control in the lab and watch the dip shift.
+
+### The result: the field-to-eardrum transformation
+
+Adding it all up, the pressure at the eardrum for a sound arriving from the front, compared with the pressure that would exist at the same point in space without the person, has the shape Shaw compiled in 1974 from twelve independent studies: practically flat up to ~500 Hz, rising to a maximum of **15 to 20 dB between 2.5 and 3 kHz**, a high plateau up to ~5 kHz and, above that, an irregular region of peaks and dips that depends on the direction and each person's anatomy.
+
+The dashed curve in the lab is the average transformation for a **diffuse field** (sound arriving equally from all directions) to the eardrum reference point, according to ISO 11904. It has the same general shape: the four-resonance model, simplified as it is, captures the essential physics.
+
+## Why you don't hear your own pinna gain
+
+If the ear amplifies 3 kHz by 15 dB, why doesn't the world sound shrill? Because your auditory system has been calibrated, over your whole life, with that filter always present. The brain has no access to the pressure "before the ear," only to the pressure at the eardrum. What it has learned to consider natural is *the pressure natural sources produce at your eardrum*, pinna gain included.
+
+That leads to the most important conclusion of this article:
+
+<Callout type="chave" title="Neutral doesn't mean flat at the eardrum">
+A headphone producing **flat** pressure at the eardrum, the same pressure at all frequencies, would sound dark, muffled and distant, because it would be **removing** the 2–5 kHz gain you hear in every natural sound. To sound neutral, a headphone has to produce at the eardrum something like what a neutral source (a good speaker in a room, for example) would produce there: with pinna gain. The question "how much pinna gain, and in what shape?" is exactly what [target curves](/resposta/targets-e-harman) try to answer.
+</Callout>
+
+The audio section of the lab lets you hear this directly. Your headphone already delivers some gain in the presence region. Removing it (−100%) simulates a headphone with no pinna gain: the sound goes dark, as if coming from behind a curtain. Applying it again (+100%) simulates a headphone that adds the gain a second time: shouty and tiring.
+
+## Over-ears, earbuds and IEMs
+
+<Diagram id="canal-modes" />
+
+Each type of headphone interacts with the ear differently, and that changes what the headphone needs to do.
+
+**Over-ear headphones** surround the ear. The pinna and concha remain, and some of their resonances happen naturally, but differently than when listening to a distant source: the driver is a few centimeters away, in a fixed direction (to the side), inside a closed cavity. Directional cues become inconsistent and the concha gain changes. The headphone has to fill in or correct what's missing.
+
+**Earbuds** rest in the concha without sealing the canal. They eliminate part of the pinna's action, but the canal stays open, with its quarter-wave resonance, and air leakage limits the bass.
+
+**IEMs** seal the canal. And that changes everything:
+
+1. **The pinna and concha vanish from the equation.** None of their resonances and reflections occur.
+2. **The canal stops being a tube open at one end.** It's now closed at both: by the IEM on one side and the eardrum on the other. The quarter-wave resonance at ~3 kHz **ceases to exist**.
+3. **A new half-wave resonance arises**, at a higher frequency, which depends on the length of the residual canal between the tip of the IEM and the eardrum:
+
+<Formula say="Sealing the canal removes its natural resonance and creates a new one, much higher, around 8 to 11 kHz.">
+
+$$
+f_{\text{occluded}} \approx \frac{c}{2\,L_{\text{residual,ef}}}
+$$
+
+</Formula>
+
+For a residual canal of ~15–20 mm (effective), that falls between ~8 and 11 kHz. Change the insertion depth in the lab's "With IEM inserted" mode and watch the resonance move: deeper insertions shorten the residual canal and push the resonance up.
+
+The consequence is direct: **an IEM has to generate, on its own, all the 2–5 kHz gain the ear no longer produces.** It does this through the driver itself, tubes, filters and crossovers, the process of [tuning](/iems/tuning). When you look at the graph of an IEM measured on a coupler and see a huge "hill" between 2 and 4 kHz, it isn't a defect: it's the artificial pinna gain, without which the IEM would sound dark.
+
+## What the 711 coupler is measuring
+
+IEMs are measured on occluded-ear simulators, such as the one standardized by **IEC 60318-4** (known as "711"). The coupler reproduces the volume and acoustic impedance of an average ear canal with eardrum, so that the pressure at its microphone approximates the pressure the IEM would produce at an average person's eardrum. It also has its own half-wave resonance, typically between 7 and 10 kHz, which appears in the measurements of almost all IEMs as a peak or dip in that region and varies with how deep the IEM is inserted in the coupler.
+
+That explains two facts that confuse people starting to read IEM graphs: (1) every "well-tuned" IEM has a hill between 2 and 4 kHz, and (2) the 6 to 10 kHz region is unstable and hard to compare. The details are in [how a headphone is measured](/resposta/como-se-mede).
+
+## Every ear is different
+
+Ear canals vary in length (from ~20 to ~30 mm), diameter and curvature; conchas vary in depth and volume; eardrums vary in tilt and impedance. The consequences concentrate above ~4 kHz:
+
+- The open-canal resonance can vary from ~2.3 to 3.5 kHz between people.
+- With IEMs, differences in residual canal length shift the half-wave resonance by more than 1 kHz, and the same IEM can have a peak at 7 kHz for one person and at 9 kHz for another.
+- Measurements on real ears, such as those by Hammershøi and Møller (1996), show spreads between individuals of several decibels (with peaks of 10 dB or more) above 5 kHz.
+
+That's why two listeners can sincerely disagree about whether an IEM is sibilant: the same curve measured on a coupler becomes different curves at each person's eardrums. This theme is developed in [why each person hears a headphone differently](/percepcao/percepcao-individual).
+
+## Common misconceptions
+
+<Callout type="mito" title="&quot;The ideal is a flat headphone&quot;">
+Flat where? On the coupler, at the eardrum, in the free field? A headphone measured flat on a 711 coupler would sound very dark, because it would have no pinna gain. The term "neutral" only makes sense relative to a reference that includes the ear's transformation.
+</Callout>
+
+<Callout type="mito" title="&quot;That 3 kHz peak on the graph needs fixing&quot;">
+On a coupler graph of an IEM, the hill between 2 and 4 kHz is expected. The right question isn't whether it exists but whether its height, shape and position are close to a reference that works for you. Equalizing that "peak" until the curve is flat is one of the fastest ways to ruin a good IEM.
+</Callout>
+
+<Callout type="mito" title="&quot;Pinna gain is an artifact of the measuring equipment&quot;">
+It's a physical phenomenon of the human ear, measured in people since the 1940s (Wiener and Ross, 1946) and compiled by Shaw. Ear simulators reproduce this effect because it exists in real ears. They don't invent it.
+</Callout>
+
+## Why all this matters
+
+Pinna gain is the bridge between anatomy and audiophilia. It explains:
+
+- why a headphone's frequency response is never designed flat;
+- why target curves exist, and why they differ between headphones and IEMs;
+- why the 2 to 5 kHz region is the most delicate to tune: too little gain and the sound is distant, too much and it's shouty;
+- why the region above 5 kHz is the most individual and the least reliable on graphs;
+- and why insertion depth and choice of eartips change an IEM's treble.
+
+The natural next step is to see how these ideas became concrete curves: [from flat to Harman](/resposta/targets-e-harman).
+
+<References>
+  <Ref>Shaw, E. A. G. "Transformation of sound pressure level from the free field to the eardrum in the horizontal plane." <em>Journal of the Acoustical Society of America</em>, 56(6), 1848–1861, 1974.</Ref>
+  <Ref>Shaw, E. A. G. "Acoustical features of the human external ear." In: Gilkey, R.; Anderson, T. (eds.), <em>Binaural and Spatial Hearing in Real and Virtual Environments</em>. Lawrence Erlbaum, 1997, pp. 25–47.</Ref>
+  <Ref>Wiener, F. M.; Ross, D. A. "The pressure distribution in the auditory canal in a progressive sound field." <em>Journal of the Acoustical Society of America</em>, 18(2), 401–408, 1946.</Ref>
+  <Ref>Hammershøi, D.; Møller, H. "Sound transmission to and within the human ear canal." <em>Journal of the Acoustical Society of America</em>, 100(1), 408–427, 1996.</Ref>
+  <Ref>Hebrank, J.; Wright, D. "Spectral cues used in the localization of sound sources on the median plane." <em>Journal of the Acoustical Society of America</em>, 56(6), 1829–1834, 1974.</Ref>
+  <Ref>ISO 11904-1:2002 and 11904-2:2004. <em>Acoustics — Determination of sound immission from sound sources placed close to the ear</em>.</Ref>
+  <Ref>IEC 60318-4:2010. <em>Electroacoustics — Simulators of human head and ear — Part 4: Occluded-ear simulator for the measurement of earphones coupled to the ear by means of ear inserts</em>.</Ref>
+  <Ref>Møller, H. "Fundamentals of binaural technology." <em>Applied Acoustics</em>, 36, 171–218, 1992.</Ref>
+</References>

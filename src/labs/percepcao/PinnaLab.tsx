@@ -7,6 +7,7 @@ import { biquadCoefs, biquadDb, firBuffer, interpCurve } from '../../audio/dsp';
 import { targetById } from '../../data/targets';
 import { useAnimationFrame, useInView } from '../../lib/hooks';
 import { setupCanvas, useThemeColors, withAlpha } from '../../lib/themeColors';
+import { tr } from '../../i18n';
 
 const C = 343;
 const FS = 96000;
@@ -215,8 +216,8 @@ export default function PinnaLab() {
 
   return (
     <LabFrame
-      title="Pinna gain: do campo sonoro ao tímpano"
-      description="À esquerda, um corte esquemático: frentes de onda, o caminho direto e a reflexão na concha, e a onda estacionária no canal. À direita (ou abaixo), a resposta resultante no tímpano segundo um modelo de ressonâncias, comparada à média medida em pessoas (ISO 11904)."
+      title={tr("Pinna gain: do campo sonoro ao tímpano")}
+      description={tr("À esquerda, um corte esquemático: frentes de onda, o caminho direto e a reflexão na concha, e a onda estacionária no canal. À direita (ou abaixo), a resposta resultante no tímpano segundo um modelo de ressonâncias, comparada à média medida em pessoas (ISO 11904).")}
       audio
       onReset={() => setS(D)}
       toolbar={
@@ -225,16 +226,16 @@ export default function PinnaLab() {
           value={s.mode}
           onChange={(v) => set('mode', v)}
           options={[
-            { value: 'open', label: 'Orelha livre' },
-            { value: 'iem', label: 'Com IEM inserido' },
+            { value: 'open', label: tr("Orelha livre") },
+            { value: 'iem', label: tr("Com IEM inserido") },
           ]}
         />
       }
-      footer="Modelo didático: cada mecanismo é representado por uma ressonância (ou cancelamento) independente, somadas em dB. A física real envolve modos acoplados e difração tridimensional, e varia muito entre pessoas. A curva tracejada é a transformação média de campo difuso até o ponto de referência do tímpano (ISO 11904), deslocada para 0 dB em 100 Hz."
+      footer={tr("Modelo didático: cada mecanismo é representado por uma ressonância (ou cancelamento) independente, somadas em dB. A física real envolve modos acoplados e difração tridimensional, e varia muito entre pessoas. A curva tracejada é a transformação média de campo difuso até o ponto de referência do tímpano (ISO 11904), deslocada para 0 dB em 100 Hz.")}
     >
       <div className="grid lg:grid-cols-[1fr_1.15fr] gap-4 items-center">
         <div ref={wrap} className="rounded-xl bg-sunken">
-          <canvas ref={canvasRef} className="w-full h-[240px] block" aria-label="Corte esquemático do ouvido externo" />
+          <canvas ref={canvasRef} className="w-full h-[240px] block" aria-label={tr("Corte esquemático do ouvido externo")} />
         </div>
         <div>
           <FreqPlot
@@ -245,29 +246,29 @@ export default function PinnaLab() {
             fMin={100}
             curves={[
               ...(s.mode === 'open'
-                ? [{ id: 'iso', label: 'Medido (ISO 11904, campo difuso)', fn: measured, color: 'var(--c-target)', width: 1.6, dash: '5 4' }]
+                ? [{ id: 'iso', label: tr("Medido (ISO 11904, campo difuso)"), fn: measured, color: 'var(--c-target)', width: 1.6, dash: '5 4' }]
                 : []),
               ...(parts
                 ? [
-                    { id: 'canal', label: 'Canal (¼ de onda)', fn: m.canalFn, color: 'var(--c-a)', width: 1, opacity: 0.55 },
-                    { id: 'concha', label: 'Concha', fn: m.conchaFn, color: 'var(--c-b)', width: 1, opacity: 0.55 },
-                    { id: 'notch', label: 'Reflexão da pina', fn: m.notchFn, color: 'var(--c-diff)', width: 1, opacity: 0.55 },
+                    { id: 'canal', label: tr("Canal (¼ de onda)"), fn: m.canalFn, color: 'var(--c-a)', width: 1, opacity: 0.55 },
+                    { id: 'concha', label: tr("Concha"), fn: m.conchaFn, color: 'var(--c-b)', width: 1, opacity: 0.55 },
+                    { id: 'notch', label: tr("Reflexão da pina"), fn: m.notchFn, color: 'var(--c-diff)', width: 1, opacity: 0.55 },
                   ]
                 : []),
-              { id: 'total', label: s.mode === 'open' ? 'Modelo: total' : 'Canal ocluído (½ onda)', fn: total, color: 'var(--fg)', width: 2.4 },
+              { id: 'total', label: s.mode === 'open' ? tr("Modelo: total") : tr("Canal ocluído (½ onda)"), fn: total, color: 'var(--fg)', width: 2.4 },
             ]}
-            ariaLabel="Ganho do campo ao tímpano"
+            ariaLabel={tr("Ganho do campo ao tímpano")}
           />
           <div className="mt-2">
             <Legend
               items={
                 s.mode === 'open'
                   ? [
-                      { label: 'Total (modelo)', color: 'var(--fg)' },
-                      { label: 'Média medida', color: 'var(--c-target)', dash: true },
-                      ...(parts ? [{ label: 'Canal', color: 'var(--c-a)' }, { label: 'Concha', color: 'var(--c-b)' }, { label: 'Reflexão', color: 'var(--c-diff)' }] : []),
+                      { label: tr("Total (modelo)"), color: 'var(--fg)' },
+                      { label: tr("Média medida"), color: 'var(--c-target)', dash: true },
+                      ...(parts ? [{ label: tr("Canal"), color: 'var(--c-a)' }, { label: tr("Concha"), color: 'var(--c-b)' }, { label: tr("Reflexão"), color: 'var(--c-diff)' }] : []),
                     ]
-                  : [{ label: 'Ressonância do canal fechado pelo IEM', color: 'var(--fg)' }]
+                  : [{ label: tr("Ressonância do canal fechado pelo IEM"), color: 'var(--fg)' }]
               }
             />
           </div>
@@ -277,18 +278,18 @@ export default function PinnaLab() {
       <div className="mt-5">
         {s.mode === 'open' ? (
           <Controls cols={3}>
-            <Slider label="Comprimento do canal" value={s.canal} min={18} max={32} step={0.5} onChange={(v) => set('canal', v)} unit="mm" hint={`Ressonância: ${fmtHz(m.fCanal)}`} />
-            <Slider label="Profundidade da concha" value={s.concha} min={8} max={18} step={0.5} onChange={(v) => set('concha', v)} unit="mm" hint={`Ressonância: ${fmtHz(m.fConcha)}`} />
-            <Slider label="Elevação da fonte" value={s.elev} min={-40} max={60} step={1} onChange={(v) => set('elev', v)} unit="°" hint={`Vale da reflexão: ${fmtHz(m.fNotch)}`} />
+            <Slider label={tr("Comprimento do canal")} value={s.canal} min={18} max={32} step={0.5} onChange={(v) => set('canal', v)} unit="mm" hint={tr("Ressonância: {0}", fmtHz(m.fCanal))} />
+            <Slider label={tr("Profundidade da concha")} value={s.concha} min={8} max={18} step={0.5} onChange={(v) => set('concha', v)} unit="mm" hint={tr("Ressonância: {0}", fmtHz(m.fConcha))} />
+            <Slider label={tr("Elevação da fonte")} value={s.elev} min={-40} max={60} step={1} onChange={(v) => set('elev', v)} unit="°" hint={tr("Vale da reflexão: {0}", fmtHz(m.fNotch))} />
           </Controls>
         ) : (
           <Controls cols={3}>
-            <Slider label="Comprimento do canal" value={s.canal} min={18} max={32} step={0.5} onChange={(v) => set('canal', v)} unit="mm" />
-            <Slider label="Profundidade de inserção" value={s.insertion} min={2} max={14} step={0.5} onChange={(v) => set('insertion', v)} unit="mm" hint={`Ressonância do canal fechado: ${fmtHz(fOcc)}`} />
+            <Slider label={tr("Comprimento do canal")} value={s.canal} min={18} max={32} step={0.5} onChange={(v) => set('canal', v)} unit="mm" />
+            <Slider label={tr("Profundidade de inserção")} value={s.insertion} min={2} max={14} step={0.5} onChange={(v) => set('insertion', v)} unit="mm" hint={tr("Ressonância do canal fechado: {0}", fmtHz(fOcc))} />
           </Controls>
         )}
         <div className="mt-3 flex flex-wrap gap-4">
-          {s.mode === 'open' && <Toggle checked={s.showParts} onChange={(v) => set('showParts', v)} label="Mostrar componentes" />}
+          {s.mode === 'open' && <Toggle checked={s.showParts} onChange={(v) => set('showParts', v)} label={tr("Mostrar componentes")} />}
         </div>
       </div>
 
@@ -297,37 +298,31 @@ export default function PinnaLab() {
           items={
             s.mode === 'open'
               ? [
-                  { label: 'Ganho máximo (modelo)', value: `${fmtNum(Math.max(...[2000, 2500, 3000, 3500, 4000, 5000].map(openTotal)), 1)} dB`, accent: true },
-                  { label: 'Ressonância do canal', value: fmtHz(m.fCanal) },
-                  { label: 'Ressonância da concha', value: fmtHz(m.fConcha) },
-                  { label: 'Vale direcional', value: fmtHz(m.fNotch) },
+                  { label: tr("Ganho máximo (modelo)"), value: `${fmtNum(Math.max(...[2000, 2500, 3000, 3500, 4000, 5000].map(openTotal)), 1)} dB`, accent: true },
+                  { label: tr("Ressonância do canal"), value: fmtHz(m.fCanal) },
+                  { label: tr("Ressonância da concha"), value: fmtHz(m.fConcha) },
+                  { label: tr("Vale direcional"), value: fmtHz(m.fNotch) },
                 ]
               : [
-                  { label: 'Canal residual', value: `${fmtNum(lres, 1)} mm`, accent: true },
-                  { label: 'Ressonância de ½ onda', value: fmtHz(fOcc) },
-                  { label: 'Ganho de ~3 kHz da orelha', value: 'perdido' },
+                  { label: tr("Canal residual"), value: `${fmtNum(lres, 1)} mm`, accent: true },
+                  { label: tr("Ressonância de ½ onda"), value: fmtHz(fOcc) },
+                  { label: tr("Ganho de ~3 kHz da orelha"), value: 'perdido' },
                 ]
           }
         />
       </div>
 
       <div className="mt-6 pt-5 border-t border-line">
-        <div className="text-[13px] font-medium text-fg mb-1">Ouça a importância do ganho da orelha</div>
-        <p className="text-[12.5px] text-muted mb-3 leading-relaxed">
-          Seu fone já entrega o som com algum ganho na região de presença. Este controle aplica o modelo acima ao áudio — negativo
-          remove o ganho (como se a orelha não existisse), positivo o aplica de novo (como se ele fosse contado duas vezes).
-        </p>
+        <div className="text-[13px] font-medium text-fg mb-1">{tr("Ouça a importância do ganho da orelha")}</div>
+        <p className="text-[12.5px] text-muted mb-3 leading-relaxed">{tr("Seu fone já entrega o som com algum ganho na região de presença. Este controle aplica o modelo acima ao áudio — negativo remove o ganho (como se a orelha não existisse), positivo o aplica de novo (como se ele fosse contado duas vezes).")}</p>
         <Controls cols={2}>
-          <Slider label="Ganho da orelha aplicado" value={s.amount} min={-1} max={1} step={0.05} onChange={(v) => set('amount', v)} format={(v) => `${v > 0 ? '+' : ''}${fmtNum(v * 100, 0)}%`} />
+          <Slider label={tr("Ganho da orelha aplicado")} value={s.amount} min={-1} max={1} step={0.05} onChange={(v) => set('amount', v)} format={(v) => `${v > 0 ? '+' : ''}${fmtNum(v * 100, 0)}%`} />
         </Controls>
         <div className="mt-3">
           <SourceBar player={player} />
         </div>
         <div className="mt-3">
-          <Note>
-            Em −100%, o som fica escuro, distante, “atrás de uma cortina”. Em +100%, gritado e áspero. Fones precisam acertar esse ganho
-            — e é exatamente isso que as curvas-alvo tentam definir.
-          </Note>
+          <Note>{tr("Em −100%, o som fica escuro, distante, “atrás de uma cortina”. Em +100%, gritado e áspero. Fones precisam acertar esse ganho — e é exatamente isso que as curvas-alvo tentam definir.")}</Note>
         </div>
       </div>
     </LabFrame>

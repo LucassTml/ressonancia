@@ -4,6 +4,7 @@ import { Segmented, Slider, Toggle, fmtNum } from '../../components/ui/controls'
 import { SourceBar, useSourcePlayer } from '../../components/ui/audio';
 import { dbToGain } from '../../audio/engine';
 import { useAnimationFrame } from '../../lib/hooks';
+import { tr } from '../../i18n';
 
 const PRESETS = {
   gentle: { threshold: -24, ratio: 2, knee: 10, attack: 20, release: 250, makeup: 4 },
@@ -81,8 +82,8 @@ export default function DynamicsLab() {
 
   return (
     <LabFrame
-      title="Compressão e limitação"
-      description="Um compressor reduz o ganho quando o sinal passa de um limiar, na proporção definida pela razão. Ajuste os parâmetros, veja a curva estática e ouça o efeito sobre a dinâmica da música."
+      title={tr("Compressão e limitação")}
+      description={tr("Um compressor reduz o ganho quando o sinal passa de um limiar, na proporção definida pela razão. Ajuste os parâmetros, veja a curva estática e ouça o efeito sobre a dinâmica da música.")}
       audio
       onReset={() => setP(PRESETS.gentle)}
       toolbar={
@@ -91,17 +92,17 @@ export default function DynamicsLab() {
           value={p === PRESETS.gentle ? 'gentle' : p === PRESETS.heavy ? 'heavy' : p === PRESETS.limiter ? 'limiter' : ''}
           onChange={(v) => setP(PRESETS[v as keyof typeof PRESETS])}
           options={[
-            { value: 'gentle', label: 'Suave' },
-            { value: 'heavy', label: 'Pesado' },
-            { value: 'limiter', label: 'Limitador' },
+            { value: 'gentle', label: tr("Suave") },
+            { value: 'heavy', label: tr("Pesado") },
+            { value: 'limiter', label: tr("Limitador") },
           ]}
         />
       }
-      footer="Processamento com o DynamicsCompressorNode da Web Audio API, que mede o nível de pico e aplica um joelho suave e um pequeno atraso de antecipação (lookahead). O medidor mostra a redução de ganho aplicada em tempo real."
+      footer={tr("Processamento com o DynamicsCompressorNode da Web Audio API, que mede o nível de pico e aplica um joelho suave e um pequeno atraso de antecipação (lookahead). O medidor mostra a redução de ganho aplicada em tempo real.")}
     >
       <div className="grid md:grid-cols-[auto_1fr] gap-6 items-start">
         <div>
-          <svg width={S} height={S} className="rounded-xl bg-sunken block" aria-label="Curva estática do compressor">
+          <svg width={S} height={S} className="rounded-xl bg-sunken block" aria-label={tr("Curva estática do compressor")}>
             {[-60, -40, -20, 0].map((d) => (
               <g key={d}>
                 <line x1={X(d)} x2={X(d)} y1={6} y2={S - pad} stroke="var(--c-grid)" />
@@ -113,10 +114,10 @@ export default function DynamicsLab() {
             <line x1={X(-60)} y1={Y(-60)} x2={X(0)} y2={Y(0)} stroke="var(--fg-faint)" strokeDasharray="3 3" />
             <line x1={X(p.threshold)} x2={X(p.threshold)} y1={6} y2={S - pad} stroke="var(--c-b)" strokeDasharray="2 3" />
             <path d={path} fill="none" stroke="var(--c-a)" strokeWidth={2.4} />
-            <text x={S / 2} y={S - 1} textAnchor="middle" className="fill-[var(--fg-muted)] text-[9px]">entrada (dB)</text>
+            <text x={S / 2} y={S - 1} textAnchor="middle" className="fill-[var(--fg-muted)] text-[9px]">{tr("entrada (dB)")}</text>
           </svg>
           <div className="mt-3">
-            <div className="text-[11.5px] text-muted mb-1">Redução de ganho agora</div>
+            <div className="text-[11.5px] text-muted mb-1">{tr("Redução de ganho agora")}</div>
             <div className="h-2.5 rounded-full bg-sunken overflow-hidden w-[220px]">
               <div className="h-full bg-[var(--c-b)] transition-[width] duration-75" style={{ width: `${Math.min(100, (-red / 30) * 100)}%` }} />
             </div>
@@ -125,32 +126,28 @@ export default function DynamicsLab() {
         </div>
         <div>
           <Controls cols={2}>
-            <Slider label="Limiar (threshold)" value={p.threshold} min={-60} max={0} step={1} onChange={(v) => set('threshold', v)} unit="dB" />
-            <Slider label="Razão (ratio)" value={p.ratio} min={1} max={20} step={0.5} onChange={(v) => set('ratio', v)} format={(v) => `${fmtNum(v, 1)}:1`} />
-            <Slider label="Joelho (knee)" value={p.knee} min={0} max={40} step={1} onChange={(v) => set('knee', v)} unit="dB" />
-            <Slider label="Ataque" value={p.attack} min={0} max={100} step={1} onChange={(v) => set('attack', v)} unit="ms" />
-            <Slider label="Liberação (release)" value={p.release} min={10} max={1000} log onChange={(v) => set('release', Math.round(v))} unit="ms" />
-            <Slider label="Ganho de compensação" value={p.makeup} min={0} max={20} step={0.5} onChange={(v) => set('makeup', v)} unit="dB" />
+            <Slider label={tr("Limiar (threshold)")} value={p.threshold} min={-60} max={0} step={1} onChange={(v) => set('threshold', v)} unit="dB" />
+            <Slider label={tr("Razão (ratio)")} value={p.ratio} min={1} max={20} step={0.5} onChange={(v) => set('ratio', v)} format={(v) => `${fmtNum(v, 1)}:1`} />
+            <Slider label={tr("Joelho (knee)")} value={p.knee} min={0} max={40} step={1} onChange={(v) => set('knee', v)} unit="dB" />
+            <Slider label={tr("Ataque")} value={p.attack} min={0} max={100} step={1} onChange={(v) => set('attack', v)} unit="ms" />
+            <Slider label={tr("Liberação (release)")} value={p.release} min={10} max={1000} log onChange={(v) => set('release', Math.round(v))} unit="ms" />
+            <Slider label={tr("Ganho de compensação")} value={p.makeup} min={0} max={20} step={0.5} onChange={(v) => set('makeup', v)} unit="dB" />
           </Controls>
           <div className="mt-4">
             <Readout
               items={[
-                { label: 'Acima do limiar, cada 10 dB de entrada viram', value: `${fmtNum(10 / p.ratio, 1)} dB` },
-                { label: 'Redução da faixa dinâmica (acima do limiar)', value: `${fmtNum((1 - 1 / p.ratio) * 100, 0)}%`, accent: true },
+                { label: tr("Acima do limiar, cada 10 dB de entrada viram"), value: `${fmtNum(10 / p.ratio, 1)} dB` },
+                { label: tr("Redução da faixa dinâmica (acima do limiar)"), value: `${fmtNum((1 - 1 / p.ratio) * 100, 0)}%`, accent: true },
               ]}
             />
           </div>
         </div>
       </div>
       <div className="mt-5">
-        <SourceBar player={player} extra={<Toggle checked={on} onChange={setOn} label={on ? 'Compressor ligado' : 'Original'} />} />
+        <SourceBar player={player} extra={<Toggle checked={on} onChange={setOn} label={on ? tr("Compressor ligado") : tr("Original")} />} />
       </div>
       <div className="mt-3">
-        <Note>
-          Compressão não muda a resposta em frequência: muda o <em>tempo</em> — quanto os picos sobressaem da média. Com ataque rápido, os
-          transientes perdem impacto; com liberação rápida e razão alta, surge o “bombeamento” (o volume sobe e desce com o bumbo). É o
-          processo por trás da guerra do volume.
-        </Note>
+        <Note>{tr("Compressão não muda a resposta em frequência: muda o")}{' '}<em>{tr("tempo")}</em>{' '}{tr("— quanto os picos sobressaem da média. Com ataque rápido, os transientes perdem impacto; com liberação rápida e razão alta, surge o “bombeamento” (o volume sobe e desce com o bumbo). É o processo por trás da guerra do volume.")}</Note>
       </div>
     </LabFrame>
   );

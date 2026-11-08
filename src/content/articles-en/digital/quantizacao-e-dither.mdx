@@ -1,0 +1,66 @@
+<Lead>
+If sampling decides how high a digital signal reaches, quantization decides how low its noise floor is. Bits aren't "step resolution" in the intuitive sense: they're decibels of dynamic range. And, in one of the most elegant results in signal processing, adding a little noise can make the representation of a signal more faithful.
+</Lead>
+
+<Callout type="simples">
+Bits set how quiet the background is: each bit lowers the noise by about 6 dB. A 16-bit file already has a noise floor around 98 dB below the maximum, more than enough for listening. Dither is a tiny bit of added noise that prevents very quiet sounds from turning harsh.
+</Callout>
+
+## Quantizing is rounding
+
+Each sample has to be stored as a number with a finite quantity of bits. With $N$ bits, there are $2^N$ possible values: 65,536 with 16 bits, about 16.8 million with 24 bits. To **quantize** is to round each sample to the nearest representable value. The difference between the true value and the rounded one is the **quantization error**, always between −½ and +½ of the smallest step (the *LSB*, *least significant bit*).
+
+## Bits are dynamic range
+
+If the quantization error behaves like uniform random noise, a good approximation for complex signals and rigorously true with dither, its power is constant and known. The ratio between a full-scale sine wave and that noise is
+
+<Formula say="Each extra bit lowers the noise floor by about 6 dB.">
+
+$$
+\text{SNR} \approx 6.02\,N + 1.76\ \text{dB}
+$$
+
+</Formula>
+
+Each bit adds ~6 dB of dynamic range. **16 bits ≈ 98 dB; 24 bits ≈ 146 dB.** The number of bits doesn't audibly change the "precision of the waveform" of a strong signal: it changes **how low the noise floor is**. A 16-bit digital signal is, in practical terms, the original signal plus a very low white noise, 98 dB below the maximum.
+
+For comparison: the dynamic range from a quiet room to the threshold of pain is ~100–120 dB, but no music uses that; recordings with 60 dB of effective dynamic range are already very dynamic. 16 bits well used cover playback comfortably. 24 bits are valuable in **recording and production**, where they give margin for imprecise levels and accumulated processing.
+
+## When the error stops being noise
+
+The approximation "error = random noise" fails precisely where it matters most: in **very low signals**, comparable to a few LSBs. Imagine a sine wave with an amplitude of 1.5 LSB. Quantized carelessly, it becomes a crude square wave: the error isn't random but **correlated** with the signal, and it appears as **harmonics**, that is, distortion. A signal below ½ LSB simply disappears.
+
+This happens in practice: in the decay of a piano note, in a fade-out, in the reverberation at the end of a track, or when a digital volume greatly reduces a 16-bit signal. The result sounds rough and "grainy."
+
+## Dither: noise that fixes things
+
+The solution, formalized by Lipshitz, Wannamaker and Vanderkooy (1992), is to add a small random noise **before** quantization: **dither**. With triangular probability density (**TPDF**) dither of ±1 LSB:
+
+- the quantization error becomes **statistically independent** of the signal;
+- distortion disappears completely, replaced by a constant noise unrelated to the music;
+- signals **smaller than 1 LSB** remain present in the result, on average, and audible beneath the noise.
+
+The price is a small increase in the noise floor (about 4.8 dB relative to pure quantization error). It's an excellent trade: the ear tolerates a constant, very low hiss very well, and a distortion that follows the signal very badly.
+
+<Lab id="quantization" />
+
+### Noise shaping
+
+An extension of dither is **noise shaping**: using error feedback to redistribute the noise across the spectrum, pushing it into regions where hearing is less sensitive (above ~15 kHz) and reducing it in the 2 to 5 kHz region. Done well, this increases the **perceived** dynamic range of a 16-bit signal to something equivalent to 18–20 bits. The same principle, taken to the extreme, is what sigma-delta converters and the DSD format do.
+
+## Where quantization appears in practice
+
+- **When converting from 24 to 16 bits** (mastering for CD, for example): dither should be applied.
+- **When applying gain or EQ in fixed point**: each operation may require new requantization. Modern systems process in 32- or 64-bit floating point, which makes the error negligible until the final conversion.
+- **Digital volume**: in 24-bit or floating-point systems, reducing 30 or 40 dB digitally causes no audible problem; the practical limit is the DAC's noise. In old 16-bit systems without dither, large attenuations could degrade low signals.
+
+<Callout type="chave">
+**Sampling rate determines bandwidth; bits determine the noise floor.** Neither creates "steps" at the output of a well-designed system. 44.1 kHz / 16 bits with dither covers human hearing in range and dynamics for playback; larger formats give margin in production.
+</Callout>
+
+<References>
+  <Ref>Lipshitz, S. P.; Wannamaker, R. A.; Vanderkooy, J. "Quantization and dither: a theoretical survey." <em>Journal of the Audio Engineering Society</em>, 40(5), 355–375, 1992.</Ref>
+  <Ref>Vanderkooy, J.; Lipshitz, S. P. "Resolution below the least significant bit in digital systems with dither." <em>Journal of the Audio Engineering Society</em>, 32(3), 106–113, 1984.</Ref>
+  <Ref>Gerzon, M. A.; Craven, P. G. "Optimal noise shaping and dither of digital signals." AES 87th Convention, 1989.</Ref>
+  <Ref>Watkinson, J. <em>The Art of Digital Audio</em>. 3rd ed. Focal Press, 2001.</Ref>
+</References>

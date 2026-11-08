@@ -1,0 +1,58 @@
+<Lead>
+Two songs at the same device volume can sound 10 dB apart. Streaming services correct this automatically and, in the process, change comparisons between tracks, between masters and even between formats. Understanding loudness, normalization and sampling-rate conversion avoids wrong conclusions about quality.
+</Lead>
+
+<Callout type="simples">
+Some songs are mastered much louder than others. Streaming services measure each track and even out the volume, so you don't have to keep adjusting. This matters for your ears and for fair comparisons, because a louder version nearly always seems better at first.
+</Callout>
+
+## Peak is not loudness
+
+The peak level of a track (the largest sample value, in dBFS) says little about how loud it sounds. A classical recording can reach 0 dBFS on a single timpani strike and have a very low average level; a modern pop track can sit against the ceiling the whole time. What is perceived as "volume" is the average **loudness**, weighted by hearing sensitivity; see [loudness and volume](/percepcao/sonoridade-e-volume).
+
+## LUFS and the ITU-R BS.1770 standard
+
+To measure the loudness of audio programs in a standardized way, the ITU defined a simple and effective method in the **BS.1770** recommendation:
+
+1. The signal passes through a **K** weighting filter: a shelf that boosts ~4 dB above ~2 kHz (simulating the acoustic effect of the head) and a high-pass that attenuates bass below ~100 Hz.
+2. Average energy is calculated in 400 ms blocks, adding the channels.
+3. Very quiet blocks are discarded (*gating*) so that pauses don't pull the average down.
+4. The result is expressed in **LUFS** (*Loudness Units relative to Full Scale*), where 1 LU equals 1 dB.
+
+The same standard defines **true peak**: the estimated peak of the **reconstructed analog** signal, calculated with oversampling. It can be higher than the largest sample value (so-called *inter-sample peaks*), because the smooth curve between two samples near 0 dBFS can pass above them. Very loud masters, with sample peaks at 0 dBFS, can have true peaks of +1 to +2 dBTP and cause clipping in the DAC or in lossy encoders.
+
+## The loudness war
+
+Since "louder seems better" in quick comparisons, the industry spent decades mastering music ever louder: the **loudness war**. Since the digital ceiling is fixed, that's only possible by **compressing the dynamic range**: limiters and compressors reduce the difference between peaks and average. Extreme masters reach −5 LUFS or more, with a crest factor of only a few decibels, flattened transients and sometimes audible clipping.
+
+## Normalization on streaming services
+
+Streaming services and players measure the loudness of each track and adjust the playback gain to a common target, typically around **−14 LUFS** (Spotify and YouTube) or **−16 LUFS** (Apple Music), with variations by mode and setting. A track mastered at −8 LUFS plays 6 dB quieter; a dynamic track at −18 LUFS can be raised (if there's peak margin) or left as is.
+
+Consequences:
+
+- **The loudness war loses its point** in normalized environments: mastering louder only results in more compression, with no gain in playback volume.
+- **Comparisons become fairer**, but only between tracks played in the same normalization system. Comparing a local version (not normalized) with a streaming one (normalized) is comparing different volumes.
+- When evaluating **different masters** of the same song, normalization keeps the louder one from seeming "better" just for being louder.
+
+## ReplayGain
+
+In local libraries, **ReplayGain** plays the same role: a program analyzes each track (and each album) and writes to the metadata how much gain to apply to reach a reference level (in version 2.0, based on BS.1770 and −18 LUFS). Compatible players apply that gain at playback. **Album** mode preserves the intentional volume differences between tracks on a record; **track** mode evens them all out.
+
+## Resampling: sampling-rate conversion
+
+When a 44.1 kHz file is played on a system running at 48 kHz (common on phones and computers), the system has to **convert the rate**, calculating new samples at different instants. Conceptually, this means reconstructing the continuous signal from the samples (by the Whittaker-Shannon formula) and resampling it. In practice, a high-quality digital low-pass filter interpolates the new samples.
+
+Good converters (such as SoX, libsamplerate in high-quality mode and those of modern operating systems) do this with errors below −120 dB and a flat passband up to near 20 kHz. Poor converters, common in older systems, could let aliasing through or attenuate treble. Today, resampling is rarely an audible problem, but to remove any doubt, some players offer an "exclusive" or *bit-perfect* mode, which sends audio to the DAC at the original rate, with no system mixing or conversion.
+
+<Callout type="atencao" title="Volume and EQ before resampling">
+If an equalization raises the signal and the chain works in fixed point with no margin, clipping can happen before or during the conversion. In floating-point chains (the current standard), it's enough to apply a negative **preamp** matching the largest EQ boost. See [parametric equalizer](/processamento/equalizador-parametrico).
+</Callout>
+
+<References>
+  <Ref>ITU-R BS.1770-5 (2023). <em>Algorithms to measure audio programme loudness and true-peak audio level</em>.</Ref>
+  <Ref>EBU R 128 (2020). <em>Loudness normalisation and permitted maximum level of audio signals</em>.</Ref>
+  <Ref>AES TD1008 (2021). <em>Recommendations for loudness of internet audio streaming and on-demand distribution</em>.</Ref>
+  <Ref>Vickers, E. "The loudness war: background, speculation and recommendations." AES 129th Convention, 2010.</Ref>
+  <Ref>Hydrogenaudio. <em>ReplayGain 2.0 specification</em>.</Ref>
+</References>

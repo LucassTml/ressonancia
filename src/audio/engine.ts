@@ -1,4 +1,5 @@
 import { createPersistentStore } from '../lib/storage';
+import { renderExtraDemo, type DemoId } from './demos';
 
 /**
  * Motor de áudio compartilhado.
@@ -149,17 +150,22 @@ function crossfadeLoop(d: Float32Array, len: number) {
 /* Música de demonstração (sintetizada no navegador, composição própria)*/
 /* ------------------------------------------------------------------ */
 
-let demoPromise: Promise<AudioBuffer> | null = null;
+/** Trecho de demonstração escolhido; vale para todos os laboratórios. */
+export const demoIdStore = createPersistentStore<DemoId>('demo-id', 'band');
+const demoPromises = new Map<string, Promise<AudioBuffer>>();
 
 /**
  * Renderiza um trecho musical original de ~12 s com bumbo, caixa, chimbal,
  * baixo, acordes, melodia e uma "voz" com formantes. Ocupa o espectro inteiro,
  * o que o torna útil para ouvir equalizações. Gerado com OfflineAudioContext.
  */
-export function demoMusicBuffer(sampleRate: number): Promise<AudioBuffer> {
-  if (demoPromise) return demoPromise;
-  demoPromise = renderDemo(sampleRate);
-  return demoPromise;
+export function demoMusicBuffer(sampleRate: number, id: DemoId = demoIdStore.get()): Promise<AudioBuffer> {
+  let p = demoPromises.get(id);
+  if (!p) {
+    p = id === 'band' ? renderDemo(sampleRate) : renderExtraDemo(id, sampleRate);
+    demoPromises.set(id, p);
+  }
+  return p;
 }
 
 async function renderDemo(sampleRate: number) {

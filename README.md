@@ -1,9 +1,9 @@
 # Ressonância — enciclopédia interativa de áudio
 
-Plataforma educacional sobre acústica, psicoacústica, eletrônica, áudio digital e fones IEM. Combina artigos aprofundados (escritos como um livro técnico, em português) com laboratórios interativos que fazem cálculos e processamento de áudio de verdade no navegador, via Web Audio API.
+Plataforma educacional sobre acústica, psicoacústica, eletrônica, áudio digital e fones IEM. Combina artigos aprofundados (escritos como um livro técnico, em português) com sons de fundo, onda interativa na página inicial e laboratórios interativos que fazem cálculos e processamento de áudio de verdade no navegador, via Web Audio API.
 
-- **9 módulos, 58 artigos** — de “o que é som” a “como avaliar uma alegação em áudio”.
-- **46 laboratórios** — ondas, ISO 226, pinna gain, laboratório de resposta em frequência, EQ paramétrico com seus arquivos, autoEQ, DAC, amostragem com reconstrução sinc, ABX com estatística, tuning de IEM e mais.
+- **11 módulos, 71 artigos, em português e inglês** — de “o que é som” a “como avaliar uma alegação em áudio”.
+- **49 laboratórios** — ondas, ISO 226, pinna gain, laboratório de resposta em frequência, EQ paramétrico com seus arquivos, autoEQ, DAC, amostragem com reconstrução sinc, ABX com estatística, tuning de IEM e mais.
 - **Glossário** com definições contextuais nos artigos, **busca** (Ctrl/⌘ K), **favoritos** e **tema claro (padrão) ou escuro** pelo botão no topo, salvos localmente.
 - Sem cadastro, sem quizzes, sem gamificação. Nenhum áudio é enviado a servidores.
 
@@ -68,7 +68,7 @@ Nenhum som toca automaticamente. Toda saída passa por um volume mestre (salvo l
 ## Dados e créditos
 
 - Curvas-alvo (Harman 2016–2019, campo difuso 5128 e ISO 11904): derivadas do projeto [AutoEq](https://github.com/jaakkopasanen/AutoEq), © Jaakko Pasanen, licença MIT.
-- Curvas de “assinaturas” e de IEMs nos laboratórios são sintéticas e representativas — não são medições de produtos.
+- A galeria de IEMs famosos usa medições reais de oratory1990, obtidas pelo projeto AutoEq. Curvas de “assinaturas” e os IEMs dos demais laboratórios são sintéticos e representativos.
 - Música de demonstração: composição original sintetizada no navegador; a melodia do laboratório de altura é a *Ode à Alegria* (Beethoven, domínio público).
 
 ## Publicar na Vercel

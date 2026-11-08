@@ -1,0 +1,90 @@
+<Lead>
+How much can you transform a headphone with equalization alone? Far more than most people imagine, and less than some EQ enthusiasts claim. The precise answer depends on understanding what makes one headphone different from another, and which of those differences live in the frequency response.
+</Lead>
+
+<Callout type="simples">
+EQ can reshape almost everything about a headphone's tonal balance, which is most of how it sounds. It can't fix a bad seal, comfort, isolation, distortion or noise, and it can't know the exact shape of your ear. So a comfortable, well-sealing earphone plus some EQ can go a very long way.
+</Callout>
+
+## The short answer
+
+**EQ can change almost everything that depends on a headphone's frequency response, within the range where the headphone produces clean sound.** Since frequency response is the factor that most determines a headphone's sound, that's a lot: balance of bass, mids and treble, resonances, sibilance, presence, the whole signature.
+
+**EQ can't change** what isn't in the frequency response (distortion, noise, comfort, isolation), what varies each time you put the headphone on (seal, insertion) and what it has no way of measuring (your anatomy), nor create what the driver doesn't produce.
+
+## Why EQ is so powerful
+
+### Headphones are largely linear, minimum-phase systems
+
+At normal listening levels, a headphone behaves like a linear system: the pressure at the eardrum is the headphone's frequency response applied to the signal. And much of its behavior is **minimum phase**: magnitude and phase are mathematically linked (by the Hilbert transform). An important consequence is that **time response is also determined by magnitude**. A resonance peak at 6 kHz comes with a slow decay at 6 kHz; a minimum-phase EQ filter that cuts that peak corrects the decay along with it.
+
+That's why it makes no sense to say one headphone is "slow" and another "fast" if both have the same (minimum-phase) frequency response: they'd have the same impulse response. And it's why EQ corrects more than "tonality."
+
+### The evidence from virtual headphones
+
+The best demonstration comes from Harman's own research. The **virtual headphone method** consists of equalizing a reference headphone to reproduce the response of other headphones and testing them blind. Validation studies showed that preference ratings obtained with the virtual versions closely follow those from the real headphones. In other words, **frequency response explained most of the perceived differences** between the headphones evaluated. Residual differences exist (distortion, fit, leakage), but they're smaller.
+
+## How far it goes, in practice
+
+With a reliable measurement of your model and a target, an autoEQ tool can, with 5 to 10 filters, bring the measured response within about ±1 dB of the target between 20 Hz and 10 kHz in most cases. That means you can, for example, make a V-shaped IEM very close to Harman, or turn the response of one IEM into that of another, **on the coupler**.
+
+<Lab id="autoeq" />
+
+The lab shows the process and, when you change the "usage condition," also shows where it stops.
+
+## The limits
+
+### 1. The measurement isn't your ear
+
+An EQ calculated from a measurement corrects the headphone **on the coupler**. In your ear, the response differs because of the length and shape of the canal, the impedance of the eardrum and the insertion depth, mainly above 4–5 kHz. An EQ that flattens an 8 kHz peak on the coupler can create a dip in your ear, if your resonance is somewhere else. So:
+
+- trust automatic correction up to ~5–6 kHz;
+- adjust the treble **by ear**, with wide, moderate filters;
+- be wary of narrow, deep corrections above 6 kHz.
+
+### 2. Seal and fit vary
+
+EQ is fixed; the seal isn't. A leak that changes each time you put the earphone in, or when you talk and chew, changes the bass by several decibels. No filter compensates for something that varies. Suitable eartips solve what EQ can't.
+
+### 3. Cancellations can't be filled
+
+Narrow, deep dips caused by **interference** (two acoustic paths arriving in opposition, for example between drivers in a crossover or from a reflection in the nozzle) aren't minimum phase. Boosting the frequency boosts both paths, which go on canceling. Moreover, these dips usually shift with the fit. The good news is that narrow dips are barely audible with music (Bücklein, 1981); it's usually best to leave them alone.
+
+### 4. Headroom and excursion
+
+Every boost consumes **digital headroom** (it requires a preamp) and amplifier **voltage**. Large bass boosts also demand more driver **excursion**; in vented dynamic drivers and BAs, that increases distortion and can push them to their limit at high volumes. A +6 dB shelf is usually fine; +15 dB at 30 Hz on a small BA isn't.
+
+### 5. Distortion and noise don't change (or get worse)
+
+EQ doesn't reduce the driver's distortion or the source's noise. Boosting a region also boosts the distortion products present there. A headphone with high bass distortion still has high distortion after EQ, and more of it if the bass is boosted.
+
+### 6. Extension that doesn't exist
+
+If the driver's response plummets above 14 kHz, boosting 18 kHz by 15 dB doesn't create clean output there: it increases noise, distortion and risk, with little real gain.
+
+### 7. Space and image
+
+EQ can **match the two channels** by applying different filters on each side, which improves the center image when there's an imbalance between left and right. But it doesn't create externalization: the sound in headphones stays inside your head. That would require spatial processing with HRTF (see [localization](/percepcao/localizacao-espacial)).
+
+### 8. What isn't sound
+
+Comfort, weight, isolation, durability, cable and aesthetics can't be equalized and, when buying, they often matter as much as the sound.
+
+<Callout type="evidencia" title="Summary of what's known">
+- Frequency response explains most of the differences in preference between headphones in blind tests, and EQ can alter it precisely.
+- EQ calculated from a measurement is reliable up to ~5–6 kHz; above that, it needs individual adjustment.
+- Seal, distortion, noise, excursion limits and individual anatomy are the real limits.
+- That's why "a good headphone with EQ" can get very close to "an excellent headphone," as long as the good headphone has low distortion, fits well and doesn't require extreme boosts.
+</Callout>
+
+## When EQ is the best purchase
+
+If you already have a comfortable, well-sealing, low-distortion IEM but don't like its tonal balance, EQ nearly always solves it better (and more cheaply) than changing the earphone or source. If the problem is comfort, isolation, seal or hiss, EQ doesn't help, and the solution lies elsewhere. This comparison, applied to the question "DAC/amp or EQ?", is in [DAC/amp, dongle or software EQ?](/iems/fonte-dac-amp-ou-eq).
+
+<References>
+  <Ref>Olive, S. E.; Welti, T.; McMullin, E. "A virtual headphone listening test methodology." AES 51st International Conference on Loudspeakers and Headphones, 2013.</Ref>
+  <Ref>Oppenheim, A. V.; Schafer, R. W. <em>Discrete-Time Signal Processing</em>. 3rd ed. Pearson, 2010. Minimum-phase systems.</Ref>
+  <Ref>Bücklein, R. "The audibility of frequency response irregularities." <em>Journal of the Audio Engineering Society</em>, 29(3), 126–131, 1981.</Ref>
+  <Ref>Toole, F. E.; Olive, S. E. "The modification of timbre by resonances: perception and measurement." <em>JAES</em>, 36(3), 122–142, 1988.</Ref>
+  <Ref>Pasanen, J. <em>AutoEq</em> — github.com/jaakkopasanen/AutoEq.</Ref>
+</References>

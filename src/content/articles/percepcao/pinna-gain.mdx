@@ -2,6 +2,10 @@
 Entre o ar ao seu redor e o seu tímpano existe um filtro acústico que você carrega desde que nasceu. Ele amplifica a região de 2 a 5 kHz em até 15–20 dB, muda conforme a direção do som e é diferente em cada pessoa. Você nunca o percebe — e justamente por isso ele é a chave para entender por que um fone “plano” soa errado, de onde vêm as curvas-alvo e por que um IEM precisa recriar artificialmente algo que a sua orelha fazia de graça.
 </Lead>
 
+<Callout type="simples">
+O seu ouvido reforça naturalmente os sons por volta de 3 kHz, e o cérebro trata isso como normal. Um fone vedado no canal pula esse reforço natural e, por isso, precisa embuti-lo. É por essa razão que quase todo gráfico de fone tem um grande “morro” perto de 3 kHz: não é defeito, é o que faz o som parecer natural.
+</Callout>
+
 ## Comece pela orelha
 
 A orelha externa tem duas partes acústicas principais. A **pina** (ou pavilhão auricular) é a estrutura de cartilagem visível: a borda externa enrolada (hélice), a dobra interna paralela a ela (antélice), a pequena aba à frente do canal (trago) e, no centro, uma cavidade em forma de tigela chamada **concha**, com cerca de 1 a 2 cm de profundidade, que leva à entrada do canal.
@@ -28,6 +32,8 @@ A concha é uma cavidade aberta de ~1 a 1,5 cm de profundidade. Seu primeiro mod
 
 O canal auditivo é um tubo aberto na entrada e fechado (aproximadamente) no tímpano. Como vimos em [fase e interferência](/fundamentos/fase-e-interferencia), um tubo assim ressoa quando seu comprimento vale um quarto do comprimento de onda:
 
+<Formula say="O canal ressoa na frequência cujo quarto de comprimento de onda coincide com o comprimento dele, que fica por volta de 2,5 a 3 kHz num ouvido típico.">
+
 $$
 f_{\text{canal}} \approx \frac{c}{4\,L_{\text{ef}}}
 $$
@@ -39,15 +45,21 @@ $$
   ]}
 />
 
+</Formula>
+
 Para L = 25 mm, a conta ingênua dá 3,4 kHz; com a correção de extremidade e o acoplamento com a concha, a ressonância real costuma ficar entre **2,5 e 3 kHz**. Nessa frequência, forma-se uma onda estacionária com pressão mínima perto da entrada e máxima no tímpano — veja o padrão colorido dentro do canal na animação. A amplificação na ressonância é de 10 a 12 dB. Ela não é um pico estreito, porque o tímpano não é rígido: ele absorve energia, o que amortece a ressonância e a torna larga.
 
 ### 4. A pina: reflexões que dependem da direção
 
 Parte do som entra diretamente no canal; outra parte reflete na parede posterior da concha e nas dobras da pina antes de entrar. As duas versões chegam com uma diferença de tempo de algumas dezenas de microssegundos. Pelo mecanismo de [filtro de pente](/fundamentos/fase-e-interferencia), essa diferença cria um **vale** no espectro na frequência em que o atraso vale meio ciclo:
 
+<Formula say="Reflexões dentro da orelha cavam um vale nos agudos, e a posição dele depende de onde veio o som.">
+
 $$
 f_{\text{vale}} \approx \frac{c}{2\,\Delta d}
 $$
+
+</Formula>
 
 em que $\Delta d$ é a diferença de percurso, da ordem de 1,5 a 3 cm. O ponto crucial é que $\Delta d$ muda com a **elevação** da fonte: para sons vindos de baixo, o vale cai perto de 6 kHz; para sons vindos de cima, sobe para 10 kHz ou mais. Hebrank e Wright (1974) mostraram que esses vales móveis são pistas fundamentais para a localização vertical. Mova o controle de elevação no laboratório e veja o vale se deslocar.
 
@@ -71,6 +83,8 @@ A seção de áudio do laboratório permite ouvir isso diretamente. Seu fone já
 
 ## Fones circum-auriculares, earbuds e IEMs
 
+<Diagram id="canal-modes" />
+
 Cada tipo de fone interage com a orelha de um jeito, e isso muda o que o fone precisa fazer.
 
 **Headphones circum-auriculares** (*over-ear*) envolvem a orelha. A pina e a concha continuam presentes, e parte das suas ressonâncias acontece naturalmente, mas de forma diferente da escuta de uma fonte distante: o driver está a poucos centímetros, numa direção fixa (de lado), dentro de uma cavidade fechada. As pistas direcionais ficam incoerentes e o ganho da concha muda. O fone precisa completar ou corrigir o que falta.
@@ -83,9 +97,13 @@ Cada tipo de fone interage com a orelha de um jeito, e isso muda o que o fone pr
 2. **O canal deixa de ser um tubo aberto numa ponta.** Agora está fechado nas duas: pelo IEM de um lado e pelo tímpano do outro. A ressonância de quarto de onda em ~3 kHz **deixa de existir**.
 3. **Surge uma nova ressonância de meia onda**, numa frequência mais alta, que depende do comprimento do canal residual entre a ponta do IEM e o tímpano:
 
+<Formula say="Vedar o canal elimina sua ressonância natural e cria outra, bem mais alta, por volta de 8 a 11 kHz.">
+
 $$
 f_{\text{ocluído}} \approx \frac{c}{2\,L_{\text{residual,ef}}}
 $$
+
+</Formula>
 
 Para um canal residual de ~15–20 mm (efetivos), isso cai entre ~8 e 11 kHz. Mude a profundidade de inserção no modo “Com IEM inserido” do laboratório e veja a ressonância se mover: inserções mais profundas encurtam o canal residual e empurram a ressonância para cima.
 

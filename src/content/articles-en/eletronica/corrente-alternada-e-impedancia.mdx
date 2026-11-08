@@ -1,0 +1,82 @@
+<Lead>
+An IEM's spec sheet says "16 Ω." But if you measure it, you'll find 12 Ω at 200 Hz, 40 Ω at 3 kHz and 8 Ω at 10 kHz. That single number is a simplification of a quantity that changes with frequency: impedance. Understanding why it changes explains crossovers, interaction with amplifiers and why some IEMs sound different on different sources.
+</Lead>
+
+<Callout type="simples">
+Impedance is resistance that changes with frequency. Most single-driver earphones have a nearly constant one, so any decent source treats them the same. Multi-driver models can vary a lot, and with a poor source that can change how they sound.
+</Callout>
+
+## Beyond resistance: storing energy
+
+Resistors dissipate energy. Two other fundamental components do something different: they **store** energy and return it to the circuit. That exchange of energy makes their opposition to current depend on how fast the signal varies.
+
+### Capacitors
+
+A **capacitor** is formed by two conducting surfaces separated by an insulator. When a voltage is applied, charges accumulate on the surfaces, creating an electric field that stores energy. Its capacity to store charge per volt is **capacitance** $C$, in farads (F), typically from picofarads to thousands of microfarads in audio.
+
+A capacitor blocks direct current (once charged, nothing more flows) but lets alternating current through, and more easily the faster the alternation. Its opposition to alternating current, **capacitive reactance**, is
+
+<Formula say="A capacitor opposes low frequencies and lets high frequencies through.">
+
+$$
+X_C = \frac{1}{2\pi f C}
+$$
+
+</Formula>
+
+It decreases with frequency. A 10 µF capacitor has a reactance of 796 Ω at 20 Hz and only 0.8 Ω at 20 kHz.
+
+### Inductors
+
+An **inductor** is generally a coil of wire. The current through it creates a magnetic field that stores energy; when the current tries to change, the field induces a voltage opposing the change. **Inductance** $L$ is measured in henrys (H). **Inductive reactance** is
+
+<Formula say="An inductor does the opposite of a capacitor: it lets bass through and resists treble.">
+
+$$
+X_L = 2\pi f L
+$$
+
+</Formula>
+
+It grows with frequency: the inductor lets bass through and resists treble. Every driver coil is, in part, an inductor.
+
+## Impedance
+
+**Impedance** $Z$ combines resistance and reactance. Since resistance and reactance aren't "in phase" (voltage across an inductor leads the current by 90°, and across a capacitor it lags by 90°), they don't add directly: they form a complex number with a resistive part and a reactive part. The magnitude of the impedance of a resistor in series with an inductor, for example, is
+
+<Formula say="Resistance and reactance combine like the two sides of a right triangle, not by simple addition.">
+
+$$
+|Z| = \sqrt{R^2 + X_L^2}
+$$
+
+</Formula>
+
+Ohm's Law still applies, with impedance in place of resistance, for each frequency. For audio signals, which contain many frequencies, that means **each frequency sees a different load**.
+
+<Lab id="impedance" />
+
+## A headphone's impedance
+
+A headphone combines several effects:
+
+- **Coil resistance** (or trace resistance, in a planar): the baseline, practically constant.
+- **Coil inductance**: makes impedance rise in the treble. It's small in dynamic headphones, large in balanced armatures and negligible in planars.
+- **Reflected "mechanical" impedance**: when the diaphragm moves, the coil in the magnetic field generates a voltage (back-EMF) opposing the current. This appears as an **impedance peak at the driver's mechanical resonance**, for example around 80–120 Hz in dynamic headphones.
+- **Crossovers**: capacitors and inductors in series with the drivers of a multi-driver IEM create dips and peaks in the total impedance.
+
+The **nominal impedance** declared by the manufacturer is a representative value, normally measured at 1 kHz or defined according to IEC 60268-7 (as the minimum impedance value in a band, within tolerances). For a dynamic driver, it describes the load well. For a multi-BA IEM, it's almost decorative.
+
+## Why this matters
+
+**Interaction with the source.** Every source has an [output impedance](/eletronica/potencia-e-sensibilidade). It forms a voltage divider with the headphone's impedance. If the headphone's impedance varies with frequency, the fraction of the voltage reaching it varies too, and the frequency response changes. With low output impedance (under 1 Ω, common in good dongles and amplifiers), the effect is negligible. With 10 Ω or more, multi-BA IEMs can change by several decibels.
+
+**Passive crossovers.** Since capacitors pass treble and inductors pass bass, they're the basic parts of a [crossover](/drivers/multi-driver-e-crossovers): a capacitor in series with a treble BA is already a first-order high-pass filter.
+
+**Phase and load for the amplifier.** Loads with large reactance make the current shift in phase relative to the voltage; well-designed amplifiers handle this easily at headphone power levels.
+
+<References>
+  <Ref>Horowitz, P.; Hill, W. <em>The Art of Electronics</em>. 3rd ed. Cambridge University Press, 2015. Chapter 1 (capacitors, inductors and complex impedance).</Ref>
+  <Ref>IEC 60268-7:2010. <em>Sound system equipment — Part 7: Headphones and earphones</em> (definition of nominal impedance).</Ref>
+  <Ref>Beranek, L. L.; Mellow, T. J. <em>Acoustics: Sound Fields and Transducers</em>. Academic Press, 2012. Electromechanical analogies and transducer impedance.</Ref>
+</References>

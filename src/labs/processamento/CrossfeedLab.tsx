@@ -5,6 +5,7 @@ import { PlayButton, usePlayback, fadeGain } from '../../components/ui/audio';
 import { FreqPlot, Legend } from '../../viz/FreqPlot';
 import { biquadCoefs, biquadDb } from '../../audio/dsp';
 import { dbToGain, demoMusicBuffer, decodeFile } from '../../audio/engine';
+import { tr } from '../../i18n';
 
 const D = { level: -8, cutoff: 700, delay: 0.3, on: true };
 
@@ -95,11 +96,11 @@ export default function CrossfeedLab() {
 
   return (
     <LabFrame
-      title="Crossfeed"
-      description="Em caixas de som, cada ouvido também ouve a caixa do lado oposto, atrasada e com menos agudos (a cabeça faz sombra). O crossfeed imita isso: mistura em cada canal uma cópia filtrada e atrasada do outro. Use fones."
+      title={tr("Crossfeed")}
+      description={tr("Em caixas de som, cada ouvido também ouve a caixa do lado oposto, atrasada e com menos agudos (a cabeça faz sombra). O crossfeed imita isso: mistura em cada canal uma cópia filtrada e atrasada do outro. Use fones.")}
       audio
       onReset={() => setS(D)}
-      footer="Implementação simples no espírito dos circuitos de Bauer (1961) e de crossfeeds digitais: passa-baixas de 2ª ordem, atraso de ~0,3 ms (a diferença de chegada entre os ouvidos para caixas a ±30°) e ganho ajustável. O caminho direto é levemente reduzido para manter o volume."
+      footer={tr("Implementação simples no espírito dos circuitos de Bauer (1961) e de crossfeeds digitais: passa-baixas de 2ª ordem, atraso de ~0,3 ms (a diferença de chegada entre os ouvidos para caixas a ±30°) e ganho ajustável. O caminho direto é levemente reduzido para manter o volume.")}
     >
       <FreqPlot
         height={220}
@@ -107,18 +108,18 @@ export default function CrossfeedLab() {
         dbMax={3}
         dbStep={6}
         curves={[
-          { id: 'd', label: 'Caminho direto (mesmo lado)', fn: direct, color: 'var(--c-a)', width: 2.2 },
-          { id: 'c', label: 'Caminho cruzado (lado oposto)', fn: cross, color: 'var(--c-b)', width: 2.2 },
+          { id: 'd', label: tr("Caminho direto (mesmo lado)"), fn: direct, color: 'var(--c-a)', width: 2.2 },
+          { id: 'c', label: tr("Caminho cruzado (lado oposto)"), fn: cross, color: 'var(--c-b)', width: 2.2 },
         ]}
-        ariaLabel="Respostas dos caminhos do crossfeed"
+        ariaLabel={tr("Respostas dos caminhos do crossfeed")}
       />
       <div className="mt-2 mb-4">
-        <Legend items={[{ label: 'Direto', color: 'var(--c-a)' }, { label: 'Cruzado', color: 'var(--c-b)' }]} />
+        <Legend items={[{ label: tr("Direto"), color: 'var(--c-a)' }, { label: tr("Cruzado"), color: 'var(--c-b)' }]} />
       </div>
       <Controls cols={3}>
-        <Slider label="Nível do cruzamento" value={s.level} min={-18} max={-3} step={0.5} onChange={(v) => set('level', v)} format={fmtDb} />
-        <Slider label="Corte do passa-baixas" value={s.cutoff} min={300} max={2000} log onChange={(v) => set('cutoff', Math.round(v))} format={fmtHz} />
-        <Slider label="Atraso" value={s.delay} min={0} max={0.8} step={0.01} onChange={(v) => set('delay', v)} unit="ms" />
+        <Slider label={tr("Nível do cruzamento")} value={s.level} min={-18} max={-3} step={0.5} onChange={(v) => set('level', v)} format={fmtDb} />
+        <Slider label={tr("Corte do passa-baixas")} value={s.cutoff} min={300} max={2000} log onChange={(v) => set('cutoff', Math.round(v))} format={fmtHz} />
+        <Slider label={tr("Atraso")} value={s.delay} min={0} max={0.8} step={0.01} onChange={(v) => set('delay', v)} unit="ms" />
       </Controls>
       <div className="flex flex-wrap items-center gap-2 mt-4">
         <PlayButton playing={pb.playing} onToggle={() => (pb.playing ? pb.stop() : void start())} />
@@ -134,9 +135,9 @@ export default function CrossfeedLab() {
             if (pb.playing) void start(v);
           }}
           options={[
-            { value: 'pan', label: 'Teste: pan extremo' },
-            { value: 'music', label: 'Música demo' },
-            { value: 'file', label: file ? 'Seu arquivo' : 'Abrir arquivo…' },
+            { value: 'pan', label: tr("Teste: pan extremo") },
+            { value: 'music', label: tr("Música demo") },
+            { value: 'file', label: file ? tr("Seu arquivo") : tr("Abrir arquivo…") },
           ]}
         />
         <input
@@ -153,14 +154,10 @@ export default function CrossfeedLab() {
             void start('file', b);
           }}
         />
-        <Toggle checked={s.on} onChange={(v) => set('on', v)} label={s.on ? 'Crossfeed ligado' : 'Desligado'} />
+        <Toggle checked={s.on} onChange={(v) => set('on', v)} label={s.on ? tr("Crossfeed ligado") : tr("Desligado")} />
       </div>
       <div className="mt-3">
-        <Note>
-          No teste de pan extremo, as notas saem só de um ouvido de cada vez — algo que nunca acontece com caixas. Com crossfeed, elas se
-          aproximam do centro e a sensação de “som colado no ouvido” diminui. Não espere externalização: o som continua dentro da cabeça,
-          mas fica mais confortável em gravações antigas com pan radical.
-        </Note>
+        <Note>{tr("No teste de pan extremo, as notas saem só de um ouvido de cada vez — algo que nunca acontece com caixas. Com crossfeed, elas se aproximam do centro e a sensação de “som colado no ouvido” diminui. Não espere externalização: o som continua dentro da cabeça, mas fica mais confortável em gravações antigas com pan radical.")}</Note>
       </div>
     </LabFrame>
   );

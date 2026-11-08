@@ -1,0 +1,81 @@
+<Lead>
+If you learn to read just one graph in audiophilia, make it this one. Frequency response sums up, in a single line, most of what determines a headphone's sound: how much bass, how much presence, how much brightness, where the excesses and shortfalls are. It doesn't say everything, but it says more than any other single measurement, and nearly every subjective description of sound can be translated into it.
+</Lead>
+
+<Callout type="simples">
+The graph shows how loud a headphone plays each frequency compared with the others, from low on the left to high on the right. Look at broad trends first, compare with a target rather than a straight line, and don't trust the far right of the graph too much. There's a five-step version in [How to read a headphone graph](/inicio/ler-um-grafico).
+</Callout>
+
+## What frequency response is
+
+A linear audio system, such as a headphone at normal levels, transforms each frequency independently: a 1 kHz sine wave goes in and comes out as a 1 kHz sine wave, only with possibly different amplitude and phase. **Frequency response** (FR) describes that transformation for all frequencies: how much each one is boosted or attenuated (**magnitude**) and how much it's delayed (**phase**).
+
+For headphones, usually only magnitude is shown, and for good reasons: it's what most influences timbre, as we saw in [harmonics and timbre](/fundamentos/harmonicos-e-timbre), and a headphone's phase is largely determined by the magnitude itself ([minimum-phase](/processamento/limites-da-eq) systems).
+
+To measure it, a signal containing all frequencies, typically a sine sweep or noise, is applied to the headphone coupled to an ear simulator, and the sound pressure reaching the microphone is measured. The resulting graph is pressure (in dB) as a function of frequency. The details of how this is done, and why the equipment matters so much, are in [how a headphone is measured](/resposta/como-se-mede).
+
+## The axes
+
+<Diagram id="fr-anatomy" />
+
+**The horizontal axis is frequency**, from 20 Hz to 20 kHz, on a **logarithmic scale**: the distance between 20 and 200 Hz is the same as between 2 and 20 kHz. Each decade (factor of 10) and each [octave](/inicio/o-que-e-uma-oitava) (factor of 2) occupy equal space. That isn't arbitrary: it roughly corresponds to how the [cochlea](/percepcao/anatomia-do-ouvido) organizes frequencies and how we perceive pitch. On a linear axis, everything below 2 kHz, where most music lives, would be squeezed into the first 10% of the graph.
+
+**The vertical axis is level, in decibels.** On headphone graphs, absolute values rarely matter: what matters is the **shape** of the curve. So curves are usually **normalized**, shifted vertically so they pass through 0 dB at a reference frequency (500 Hz or 1 kHz are the most common) or so that the average over a band matches that of another curve.
+
+<Callout type="atencao" title="Always check the vertical scale">
+The same headphone drawn with a ±5 dB axis looks like a roller coaster; with a ±40 dB axis it looks like a straight line. The common recommendation (adopted on this site) is that **10 vertical dB should take up about the same space as one horizontal decade**, or something close to it, so the visual shape reasonably matches perceptual importance.
+</Callout>
+
+## Reading the curve by region
+
+With the [spectrum map](/fundamentos/espectro-audivel) in mind, a graph can be read from left to right:
+
+- **Below ~200 Hz:** the bass level. A stepped rise (a *shelf*) indicates more weight and impact. A drop indicates weak bass or, in IEMs, often a measurement with an imperfect seal.
+- **200 Hz to 1 kHz:** the transition to the mids. A curve that stays high here "carries" the bass into the lower mids, which tends to sound warm or muddy.
+- **1 to 5 kHz:** the presence and **pinna gain** region. In IEMs measured on a 711 coupler, a broad "hill" peaking between 2 and 4 kHz is expected. The height, width and position of that hill are decisive for the headphone's character (see [pinna gain](/percepcao/pinna-gain)).
+- **5 to 10 kHz:** treble and sibilance. Here the measurement becomes sensitive to positioning, and coupler resonances appear. Tall, narrow peaks are suspects for sibilance.
+- **Above 10 kHz:** extension and "air." It's the least reliable region of any coupler measurement and the one that varies most between people.
+
+## Peak, dip, resonance and cancellation
+
+Different shapes of deviation are perceived differently, and not only by height.
+
+**Width matters as much as height.** Toole and Olive (1988) showed that, for ordinary music, **broad** resonances (low Q) are detected at smaller amplitudes than **narrow** ones (high Q). A 2 dB deviation covering a whole octave is more noticeable than a 6 dB peak 1/10 of an octave wide. That's why the visual impression of "spiky peaks" is often misleading: what weighs most in perception is the balance of broad regions.
+
+**Peaks are more audible than dips.** A narrow −10 dB dip can go almost unnoticed with music, because little energy falls exactly there and the brain "fills in" the gap; a +10 dB peak of the same width is quite audible. This asymmetry was documented by Bücklein (1981) and is one of the reasons equalizing narrow dips is rarely worthwhile.
+
+**Resonances have a signature in time.** In a minimum-phase system, a narrow peak in frequency response is accompanied by a slow decay at that frequency: the headphone "keeps playing" after the signal ends. This appears in cumulative spectral decay (CSD, or *waterfall*) plots. But note: in headphones, CSD and frequency response carry essentially the same information; a "clean" CSD and a smooth FR go together.
+
+**Cancellations have different causes from resonances.** A deep, narrow dip usually comes from interference (two paths arriving in opposition), for example in a poorly resolved crossover between drivers or a reflection inside the nozzle. Unlike a resonance peak, a cancellation dip often **can't** be corrected by EQ: boosting the frequency boosts both paths, which go on canceling.
+
+## Smoothing
+
+Raw measurements are full of small ripples. To make reading easier, **smoothed** curves are published: each point is the average of the curve over a window of a fraction of an octave around it. With 1/3 octave, narrow peaks disappear and the curve gets "rounded"; with 1/24 or 1/48, nearly every detail shows. Neither is "the right one": heavy smoothing hides real resonances, and light smoothing highlights details that may not be audible or that vary with positioning. What matters is **knowing which was used**, and not comparing curves with different smoothing.
+
+## The lab
+
+The lab below brings all this together. Pick a starting curve (a target or a synthetic signature), drag the points, apply a bass shelf or parametric filters, compare with a second curve and a target, and switch to the **difference** view, which shows only the deviation from the target, often the clearest way to read a headphone. The panel on the right translates the deviations into likely perceptual descriptions.
+
+<Lab id="fr" />
+
+A note on what you hear in the lab: no website can make you "hear a curve" in absolute terms, because the sound passes through your own headphone, which has its own curve. What the lab does, and it's what matters, is apply to the audio the **difference** between curve A and the chosen reference. If your headphone is close to the target, you hear something close to curve A. If not, you still correctly hear the *change* curve A represents relative to the reference, which is exactly what differentiates one headphone from another.
+
+## What the graph doesn't say
+
+Frequency response is the most informative measurement, but it isn't the only one. It doesn't show:
+
+- **distortion** (nonlinearity), which appears at high levels and in intense bass;
+- **differences between left and right channels**, which affect the stereo image;
+- **variation between units** and between placements;
+- **how the headphone interacts with your particular anatomy**, especially above 5 kHz;
+- **comfort, isolation and seal**, which change what reaches your ear.
+
+These limits are the subject of [what measurements show and don't show](/ciencia/o-que-medicoes-mostram). But within those limits, knowing how to read this graph is what lets you turn "it seemed sibilant" into "it has a 6 dB peak at 7 kHz," and decide, with information, whether a headphone suits you.
+
+<References>
+  <Ref>Toole, F. E.; Olive, S. E. "The modification of timbre by resonances: perception and measurement." <em>Journal of the Audio Engineering Society</em>, 36(3), 122–142, 1988.</Ref>
+  <Ref>Bücklein, R. "The audibility of frequency response irregularities." <em>Journal of the Audio Engineering Society</em>, 29(3), 126–131, 1981 (translation of the 1962 German original).</Ref>
+  <Ref>Olive, S. E.; Welti, T. "The relationship between perception and measurement of headphone sound quality." AES 133rd Convention, paper 8744, 2012.</Ref>
+  <Ref>IEC 60268-7:2010. <em>Sound system equipment — Part 7: Headphones and earphones</em>.</Ref>
+  <Ref>Toole, F. E. <em>Sound Reproduction: The Acoustics and Psychoacoustics of Loudspeakers and Rooms</em>. 3rd ed. Routledge, 2017.</Ref>
+</References>

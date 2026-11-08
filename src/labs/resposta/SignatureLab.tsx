@@ -8,6 +8,7 @@ import { interpCurve } from '../../audio/dsp';
 import { useCurvePlayer } from '../../audio/useCurvePlayer';
 import { harmanIE, signatureDb, signatures } from '../../data/targets';
 import { describeDelta } from '../../content/perception';
+import { tr } from '../../i18n';
 
 export default function SignatureLab() {
   const [sel, setSel] = useState('v-shape');
@@ -22,15 +23,15 @@ export default function SignatureLab() {
 
   return (
     <LabFrame
-      title="Galeria de assinaturas sonoras"
-      description="Curvas sintéticas que representam cada assinatura, desenhadas sobre o alvo Harman IE 2019. Ao ouvir, o áudio recebe a diferença entre a assinatura e o alvo; alterne para comparar."
+      title={tr("Galeria de assinaturas sonoras")}
+      description={tr("Curvas sintéticas que representam cada assinatura, desenhadas sobre o alvo Harman IE 2019. Ao ouvir, o áudio recebe a diferença entre a assinatura e o alvo; alterne para comparar.")}
       audio
       onReset={() => {
         setSel('v-shape');
         setListen('sig');
       }}
-      toolbar={<Segmented size="sm" value={view} onChange={setView} options={[{ value: 'abs', label: 'Curvas' }, { value: 'diff', label: 'Desvio do alvo' }]} />}
-      footer="Para ouvir a assinatura “de verdade”, seu fone precisaria estar perto do alvo Harman. Como ninguém sabe exatamente o que o seu fone faz, o que você ouve é a mudança relativa — que é justamente o que diferencia uma assinatura da outra."
+      toolbar={<Segmented size="sm" value={view} onChange={setView} options={[{ value: 'abs', label: tr("Curvas") }, { value: 'diff', label: tr("Desvio do alvo") }]} />}
+      footer={tr("Para ouvir a assinatura “de verdade”, seu fone precisaria estar perto do alvo Harman. Como ninguém sabe exatamente o que o seu fone faz, o que você ouve é a mudança relativa — que é justamente o que diferencia uma assinatura da outra.")}
     >
       <div className="flex flex-wrap gap-1.5 mb-4">
         {signatures.map((s) => (
@@ -51,15 +52,15 @@ export default function SignatureLab() {
         curves={
           view === 'abs'
             ? [
-                { id: 'h', label: 'Harman IE 2019', fn: harman, color: 'var(--c-target)', width: 1.5, dash: '5 4' },
+                { id: 'h', label: tr("Harman IE 2019"), fn: harman, color: 'var(--c-target)', width: 1.5, dash: '5 4' },
                 { id: 's', label: sig.name, fn: sigFn, color: 'var(--c-a)', width: 2.6 },
               ]
-            : [{ id: 'd', label: `${sig.name} − alvo`, fn: diff, color: 'var(--c-a)', width: 2.4, fill: true }]
+            : [{ id: 'd', label: tr("{0} − alvo", sig.name), fn: diff, color: 'var(--c-a)', width: 2.4, fill: true }]
         }
-        ariaLabel="Assinatura sonora sobre o alvo"
+        ariaLabel={tr("Assinatura sonora sobre o alvo")}
       />
       <div className="mt-2 mb-4">
-        <Legend items={view === 'abs' ? [{ label: 'Harman IE 2019', color: 'var(--c-target)', dash: true }, { label: sig.name, color: 'var(--c-a)' }] : [{ label: 'Desvio do alvo', color: 'var(--c-a)' }]} />
+        <Legend items={view === 'abs' ? [{ label: tr("Harman IE 2019"), color: 'var(--c-target)', dash: true }, { label: sig.name, color: 'var(--c-a)' }] : [{ label: tr("Desvio do alvo"), color: 'var(--c-a)' }]} />
       </div>
       <AnimatePresence mode="wait">
         <motion.div key={sig.id} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
@@ -84,14 +85,14 @@ export default function SignatureLab() {
           value={listen}
           onChange={setListen}
           options={[
-            { value: 'sig', label: `Ouvir: ${sig.name}` },
-            { value: 'ref', label: 'Ouvir: alvo (referência)' },
+            { value: 'sig', label: tr("Ouvir: {0}", sig.name) },
+            { value: 'ref', label: tr("Ouvir: alvo (referência)") },
           ]}
         />
         <SourceBar player={player} />
       </div>
       <div className="mt-3">
-        <Note>Troque de assinatura durante a reprodução: a mudança é instantânea. Ruído rosa revela o equilíbrio; música revela o caráter.</Note>
+        <Note>{tr("Troque de assinatura durante a reprodução: a mudança é instantânea. Ruído rosa revela o equilíbrio; música revela o caráter.")}</Note>
       </div>
     </LabFrame>
   );

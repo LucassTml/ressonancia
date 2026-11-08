@@ -1,0 +1,114 @@
+<Lead>
+The ear is a remarkable piece of engineering: it picks up pressure changes smaller than a billionth of an atmosphere, transfers that energy from air to a liquid almost without loss, splits sound into frequencies and converts it into electrical impulses, all in a volume smaller than a marble. Understanding each stage explains much of what we hear and what a headphone needs to deliver.
+</Lead>
+
+<Callout type="simples">
+Your ear works in three steps. The outer ear gathers sound and boosts the range where speech lives. The middle ear acts as a lever that passes the energy from air into liquid. The inner ear sorts the sound by frequency, with each spot responding to its own pitch, and turns that into nerve signals.
+</Callout>
+
+## Three stages, three physical problems
+
+<Diagram id="ear-path" />
+
+The ear is usually divided into **outer**, **middle** and **inner**. More useful than memorizing names is seeing each part as the solution to a different physical problem:
+
+1. **Outer ear** (pinna and ear canal): collect sound and transform it in a direction-dependent way, and amplify the band where speech information lies.
+2. **Middle ear** (eardrum and ossicles): transfer energy from a light, compressible medium (air) to a dense, almost incompressible one (the cochlear liquid), which, without help, would waste nearly all the energy.
+3. **Inner ear** (cochlea): separate frequencies, amplify faint sounds, compress loud sounds and turn motion into nerve signals.
+
+## Outer ear: an acoustic filter with a personal signature
+
+The **pinna**, the visible part of the ear, isn't a passive funnel. Its folds (helix, antihelix, tragus, concha) reflect and diffract sound in ways that depend on the direction of arrival, creating patterns of peaks and dips in the spectrum, mainly above 4–5 kHz. The brain learns those patterns and uses them to locate sounds, especially in elevation and to distinguish front from back.
+
+The **ear canal** is a tube about 7 mm in diameter and 25 mm long, slightly curved, closed by the eardrum. As we saw in [phase and interference](/fundamentos/fase-e-interferencia), a tube closed at one end resonates when its length is a quarter of the wavelength, about 3 kHz for a typical canal. Together with the concha resonance (near 5 kHz), this creates a gain of 15 to 20 dB between the sound field and the eardrum in the 2 to 5 kHz region. This is **pinna gain**, so important for understanding headphones that it has [its own article](/percepcao/pinna-gain).
+
+Notice that the outer ear already does an "equalization" before any neural processing: it boosts precisely the frequencies that carry speech intelligibility. We hear the whole world, our whole lives, through this filter, and the brain considers it "neutral."
+
+## Middle ear: an impedance transformer
+
+When a sound wave in air meets the surface of water, about 99.9% of the energy is reflected. The reason is the mismatch in [acoustic impedance](/fundamentos/o-que-e-som): water has about 3,600 times the impedance of air. If the eardrum directly pushed the cochlear liquid, we'd lose about 30 dB of sensitivity.
+
+The middle ear solves this with two mechanical means, just as an electrical transformer matches impedances:
+
+- **Area ratio.** The eardrum has an effective area of ~55 mm²; the footplate of the stapes, which pushes the oval window of the cochlea, ~3.2 mm². The same force concentrated in an area ~17 times smaller produces ~17 times more pressure.
+- **Ossicular lever.** Malleus, incus and stapes form a lever with a mechanical advantage of about 1.3.
+
+Multiplying, the pressure gain is on the order of 17 × 1.3 ≈ 22 times, or about **27 dB**. Real measurements show a smaller, frequency-dependent gain with a maximum around 1 kHz, but that's the principle: the middle ear is an impedance matcher that recovers most of the energy that would be reflected.
+
+Two further details have practical consequences:
+
+**The Eustachian tube** connects the middle ear to the throat and equalizes static pressure. When it doesn't open (on a plane, with a cold), the pressure difference tensions the eardrum and hearing gets muffled. Something similar, at a tiny scale, happens when an IEM is inserted quickly: air pushed into the canal presses on the eardrum, and some poorly vented dynamic IEMs suffer from this (*driver flex*, discussed in [acoustic construction](/drivers/construcao-acustica)).
+
+**The acoustic reflex.** Very intense sounds (above ~80–90 dB SPL) trigger contraction of the stapedius and tensor tympani muscles, which stiffen the ossicular chain and attenuate mostly low frequencies by up to 10–20 dB. The reflex has a latency of tens of milliseconds, so it doesn't protect against sudden impulses such as a gunshot.
+
+## Inner ear: the cochlea as a spectrum analyzer
+
+The **cochlea** is a ~35 mm tube coiled into a spiral (two and a half turns in humans), filled with liquid and divided lengthwise by membranous structures. One of them, the **basilar membrane**, is the centerpiece of frequency analysis.
+
+The basilar membrane isn't uniform: near the base (by the oval window) it's narrow and stiff; near the apex, wide and flexible. When the stapes pushes the liquid, a **traveling wave** arises along the membrane. Since each point has a different stiffness and effective mass, each point has a different resonant frequency. The wave grows as it travels, peaks at the point whose characteristic frequency matches that of the stimulus and dies out quickly after that. High frequencies excite the base; low frequencies, the apex. This organization is called **tonotopy**, and was described experimentally by Georg von Békésy, who received the 1961 Nobel Prize for it.
+
+<Lab id="cochlea" />
+
+The relationship between position and characteristic frequency in humans is well described by the Greenwood function:
+
+<Formula say="Each equal length along the cochlea covers about the same number of octaves, which is the physical origin of how we hear pitch.">
+
+$$
+f(x) = 165.4 \,\bigl(10^{\,2.1\,x} - 0.88\bigr)\ \text{Hz}
+$$
+
+<Vars
+  items={[
+    ['x', 'position along the basilar membrane as a fraction of its total length, measured from the apex (0 = apex, 1 = base)'],
+    ['f(x)', 'characteristic frequency of that point'],
+  ]}
+/>
+
+</Formula>
+
+The function is nearly exponential above ~500 Hz: each octave takes up about the same length of membrane (some 4 to 5 mm). It's the physiological basis of the logarithmic perception of frequency, and of why audio graphs use logarithmic axes.
+
+### Hair cells: transduction and amplification
+
+On top of the basilar membrane sits the **organ of Corti**, with two types of sensory cells:
+
+- **Inner hair cells** (~3,500 in each ear, in a single row): the true receptors. When the membrane moves, their bundles of stereocilia tilt, ion channels open and the cell releases neurotransmitter onto auditory nerve fibers. About 95% of afferent fibers come from these cells.
+- **Outer hair cells** (~12,000, in three rows): they work as **motors**. They change length in sync with the stimulus (electromotility, thanks to the protein prestin) and inject mechanical energy into the membrane's vibration, locally amplifying faint sounds by up to 40–60 dB and making the tuning much sharper.
+
+This **cochlear amplifier** is nonlinear: it greatly amplifies faint sounds and barely amplifies loud ones. The result is enormous compression of dynamic range, with more than 120 dB of pressure variation squeezed into a range neurons can encode. A curious consequence is that the cochlea generates sounds: **otoacoustic emissions**, picked up by microphones in the ear canal and used in newborn hearing screening.
+
+Outer hair cells are also the most vulnerable to excessive noise, aging and certain medications. When they're damaged, sensitivity and frequency selectivity are lost: faint sounds disappear, separation between nearby frequencies worsens and loudness recruitment (loud sounds "blowing up" quickly) appears. So hearing loss isn't just "hearing more quietly." It's hearing **worse**, with less resolution. That's the strongest argument for [taking care of your hearing](/percepcao/saude-auditiva).
+
+## Auditory filters and critical bands
+
+Since each point on the membrane responds to a range of frequencies around its characteristic frequency, the cochlea works as a bank of overlapping band-pass filters. The width of these **auditory filters** is measured in ERB (*equivalent rectangular bandwidth*). Using the Glasberg and Moore formula (1990):
+
+<Formula say="The ear's frequency filters get wider, in hertz, as frequency rises: about 133 Hz wide at 1 kHz and 456 Hz wide at 4 kHz.">
+
+$$
+\text{ERB}(f) = 24.7\,\left(\frac{4.37\, f}{1000} + 1\right)\ \text{Hz}
+$$
+
+</Formula>
+
+At 1 kHz, an auditory filter is ~133 Hz wide; at 4 kHz, ~456 Hz. Sounds falling within the same filter interact strongly: they add loudness, beat, mask each other. Sounds in different filters are processed relatively independently. This concept explains [masking](/percepcao/mascaramento), consonance, the efficiency of lossy codecs and part of what we call "separation" in a headphone.
+
+## From nerve to brain
+
+The auditory nerve carries about 30,000 fibers. Information about sound is encoded in two ways: **which** fiber fires (place on the cochlea, that is, frequency) and **when** it fires (synchronization with the phase of the wave, effective up to ~4–5 kHz). From there, the auditory pathway passes through several nuclei in the brainstem, where, for example, time and level differences between the two ears are compared with microsecond precision for [localization](/percepcao/localizacao-espacial), until reaching the auditory cortex.
+
+Along this path, the brain doesn't passively "receive" the sound. It organizes it into objects and streams, compares it with expectations, fills gaps and decides what deserves attention. Part of what we call hearing is inference. That makes hearing extraordinarily robust, and also subject to [bias and expectation](/ciencia/vies-e-placebo).
+
+## What a headphone needs to deliver to this system
+
+For sound reproduction, the fundamental lesson is that **the ear only has access to the pressure at the eardrum**, on each side, over time. Everything before that (rooms, ears, headphones) matters only for what it changes in that pressure. A headphone that delivered at the eardrum the same pressure a real performance would deliver would sound indistinguishable from it. In practice, that's impossible to do exactly (each ear is different, and headphones don't reproduce a room's directional cues), which is why there's a whole science of [target curves](/resposta/targets-e-harman) to decide what pressure a headphone should produce.
+
+<References>
+  <Ref>Pickles, J. O. <em>An Introduction to the Physiology of Hearing</em>. 4th ed. Brill, 2012.</Ref>
+  <Ref>Greenwood, D. D. "A cochlear frequency-position function for several species — 29 years later." <em>Journal of the Acoustical Society of America</em>, 87(6), 2592–2605, 1990.</Ref>
+  <Ref>Glasberg, B. R.; Moore, B. C. J. "Derivation of auditory filter shapes from notched-noise data." <em>Hearing Research</em>, 47(1–2), 103–138, 1990.</Ref>
+  <Ref>von Békésy, G. <em>Experiments in Hearing</em>. McGraw-Hill, 1960.</Ref>
+  <Ref>Brownell, W. E. et al. "Evoked mechanical responses of isolated cochlear outer hair cells." <em>Science</em>, 227(4683), 194–196, 1985.</Ref>
+  <Ref>Puria, S.; Fay, R. R.; Popper, A. N. (eds.). <em>The Middle Ear: Science, Otosurgery, and Technology</em>. Springer, 2013.</Ref>
+  <Ref>Moore, B. C. J. <em>An Introduction to the Psychology of Hearing</em>. 6th ed. Brill, 2012.</Ref>
+</References>

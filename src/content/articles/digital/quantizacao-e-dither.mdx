@@ -2,6 +2,10 @@
 Se a amostragem decide até que frequência um sinal digital chega, a quantização decide quão baixo é o seu ruído de fundo. Bits não são “resolução de degraus” no sentido intuitivo: são decibéis de faixa dinâmica. E, por um dos resultados mais elegantes do processamento de sinais, adicionar um pouco de ruído pode tornar a representação de um sinal mais fiel.
 </Lead>
 
+<Callout type="simples">
+Bits definem quão silencioso é o fundo: cada bit reduz o ruído em cerca de 6 dB. Um arquivo de 16 bits já tem o ruído de fundo cerca de 98 dB abaixo do máximo, mais do que suficiente para ouvir música. Dither é uma pequena dose de ruído que impede que sons muito baixos fiquem ásperos.
+</Callout>
+
 ## Quantizar é arredondar
 
 Cada amostra precisa ser guardada como um número com uma quantidade finita de bits. Com $N$ bits, há $2^N$ valores possíveis: 65 536 com 16 bits, cerca de 16,8 milhões com 24 bits. **Quantizar** é arredondar cada amostra ao valor representável mais próximo. A diferença entre o valor verdadeiro e o arredondado é o **erro de quantização**, que fica sempre entre −½ e +½ do menor passo (o *LSB*, *least significant bit*).
@@ -10,9 +14,13 @@ Cada amostra precisa ser guardada como um número com uma quantidade finita de b
 
 Se o erro de quantização se comporta como um ruído aleatório uniforme — o que é uma boa aproximação para sinais complexos, e passa a ser rigorosamente verdade com dither —, sua potência é constante e conhecida. A razão entre uma senoide de escala cheia e esse ruído é
 
+<Formula say="Cada bit a mais abaixa o ruído de fundo em cerca de 6 dB.">
+
 $$
 \text{SNR} \approx 6{,}02\,N + 1{,}76\ \text{dB}
 $$
+
+</Formula>
 
 Cada bit acrescenta ~6 dB de faixa dinâmica. **16 bits ≈ 98 dB; 24 bits ≈ 146 dB.** O número de bits não muda a “precisão da forma de onda” de um sinal forte de modo audível: muda **quão baixo está o ruído de fundo**. Um sinal digital de 16 bits é, em termos práticos, o sinal original mais um ruído branco muito baixo — 98 dB abaixo do máximo.
 

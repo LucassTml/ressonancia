@@ -4,16 +4,17 @@ import { LabFrame, Readout, Note } from '../../components/ui/LabFrame';
 import { Button, IconUpload, Segmented, Slider, fmtNum } from '../../components/ui/controls';
 import { usePlayback, fadeGain } from '../../components/ui/audio';
 import { dbToGain, decodeFile, demoMusicBuffer, pinkNoiseBuffer } from '../../audio/engine';
+import { tr } from '../../i18n';
 
 type Diff = 'level' | 'eq' | 'bits' | 'lowpass' | 'polarity' | 'none';
 
 const DIFFS: Record<Diff, { name: string; param?: { label: string; min: number; max: number; step: number; def: number; unit: string } }> = {
-  level: { name: 'Volume', param: { label: 'Diferença de nível', min: 0.1, max: 3, step: 0.1, def: 1, unit: 'dB' } },
-  eq: { name: 'EQ em 3 kHz', param: { label: 'Pico de EQ', min: 0.5, max: 6, step: 0.5, def: 2, unit: 'dB' } },
-  bits: { name: 'Bits (com dither)', param: { label: 'Bits de B', min: 6, max: 16, step: 1, def: 10, unit: 'bits' } },
-  lowpass: { name: 'Corte de agudos', param: { label: 'Passa-baixas em B', min: 8000, max: 20000, step: 500, def: 16000, unit: 'Hz' } },
-  polarity: { name: 'Polaridade invertida' },
-  none: { name: 'Nada (controle)' },
+  level: { name: tr("Volume"), param: { label: tr("Diferença de nível"), min: 0.1, max: 3, step: 0.1, def: 1, unit: 'dB' } },
+  eq: { name: tr("EQ em 3 kHz"), param: { label: tr("Pico de EQ"), min: 0.5, max: 6, step: 0.5, def: 2, unit: 'dB' } },
+  bits: { name: tr("Bits (com dither)"), param: { label: tr("Bits de B"), min: 6, max: 16, step: 1, def: 10, unit: 'bits' } },
+  lowpass: { name: tr("Corte de agudos"), param: { label: tr("Passa-baixas em B"), min: 8000, max: 20000, step: 500, def: 16000, unit: 'Hz' } },
+  polarity: { name: tr("Polaridade invertida") },
+  none: { name: tr("Nada (controle)") },
 };
 
 /** P(X ≥ k) para X ~ Binomial(n, 1/2): probabilidade de acertar k ou mais chutando. */
@@ -143,19 +144,19 @@ export default function ABXLab() {
   const n = trials.length;
   const k = trials.filter((t) => t.x === t.answer).length;
   const p = n ? binomialP(k, n) : 1;
-  const verdict = n < 10 ? 'Faça pelo menos 10–16 tentativas antes de tirar conclusões.' : p < 0.05 ? `Resultado improvável por acaso (p = ${fmtNum(p, 3)}): há evidência de que você distingue A de B nestas condições.` : `Resultado compatível com acaso (p = ${fmtNum(p, 2)}): não há evidência de que você distingue A de B nestas condições — o que não prova que a diferença é inaudível para todos.`;
+  const verdict = n < 10 ? tr("Faça pelo menos 10–16 tentativas antes de tirar conclusões.") : p < 0.05 ? tr("Resultado improvável por acaso (p = {0}): há evidência de que você distingue A de B nestas condições.", fmtNum(p, 3)) : tr("Resultado compatível com acaso (p = {0}): não há evidência de que você distingue A de B nestas condições — o que não prova que a diferença é inaudível para todos.", fmtNum(p, 2));
 
   return (
     <LabFrame
-      title="Teste ABX"
-      description="A é o original; B tem uma diferença escolhida por você. X é sorteado a cada tentativa como A ou B. Ouça quantas vezes quiser, troque à vontade e responda: X é A ou B? A estatística diz se o seu resultado poderia ser sorte."
+      title={tr("Teste ABX")}
+      description={tr("A é o original; B tem uma diferença escolhida por você. X é sorteado a cada tentativa como A ou B. Ouça quantas vezes quiser, troque à vontade e responda: X é A ou B? A estatística diz se o seu resultado poderia ser sorte.")}
       audio
       onReset={() => {
         resetTrials();
         setDiff('level');
         setParam(1);
       }}
-      footer="A e B tocam sincronizados e a troca é instantânea, sem pausa. Estatística: probabilidade de acertar pelo menos k de n tentativas chutando (binomial unilateral, p = 0,5 por tentativa)."
+      footer={tr("A e B tocam sincronizados e a troca é instantânea, sem pausa. Estatística: probabilidade de acertar pelo menos k de n tentativas chutando (binomial unilateral, p = 0,5 por tentativa).")}
     >
       <div className="flex flex-wrap gap-2 mb-3">
         <Segmented
@@ -201,14 +202,12 @@ export default function ABXLab() {
             setSelected(null);
           }}
           options={[
-            { value: 'music', label: 'Música demo' },
-            { value: 'pink', label: 'Ruído rosa' },
-            { value: 'file', label: fileName ? fileName.slice(0, 18) : 'Seu arquivo' },
+            { value: 'music', label: tr("Música demo") },
+            { value: 'pink', label: tr("Ruído rosa") },
+            { value: 'file', label: fileName ? fileName.slice(0, 18) : tr("Seu arquivo") },
           ]}
         />
-        <Button size="sm" variant="ghost" icon={<IconUpload size={14} />} onClick={() => inputRef.current?.click()}>
-          Abrir áudio
-        </Button>
+        <Button size="sm" variant="ghost" icon={<IconUpload size={14} />} onClick={() => inputRef.current?.click()}>{tr("Abrir áudio")}</Button>
         <input
           ref={inputRef}
           type="file"
@@ -241,28 +240,24 @@ export default function ABXLab() {
       <div className="flex flex-wrap items-center gap-2 mt-3">
         <Button onClick={() => answer('A')}>X é A</Button>
         <Button onClick={() => answer('B')}>X é B</Button>
-        <Button variant="ghost" onClick={() => pb.stop()}>
-          Parar
-        </Button>
+        <Button variant="ghost" onClick={() => pb.stop()}>{tr("Parar")}</Button>
       </div>
 
       <div className="mt-5">
         <Readout
           items={[
-            { label: 'Tentativas', value: fmtNum(n, 0) },
-            { label: 'Acertos', value: `${k} de ${n}`, accent: true },
-            { label: 'p (chance de ser sorte)', value: n ? fmtNum(p, 3) : '—' },
+            { label: tr("Tentativas"), value: fmtNum(n, 0) },
+            { label: tr("Acertos"), value: `${k} de ${n}`, accent: true },
+            { label: tr("p (chance de ser sorte)"), value: n ? fmtNum(p, 3) : '—' },
           ]}
         />
       </div>
       <p className="mt-3 text-[13.5px] text-soft">{verdict}</p>
       <div className="flex gap-2 mt-3">
         <Button size="sm" variant="ghost" onClick={() => setReveal((r) => !r)} disabled={!n}>
-          {reveal ? 'Ocultar respostas' : 'Revelar respostas'}
+          {reveal ? tr("Ocultar respostas") : tr("Revelar respostas")}
         </Button>
-        <Button size="sm" variant="ghost" onClick={resetTrials} disabled={!n}>
-          Zerar tentativas
-        </Button>
+        <Button size="sm" variant="ghost" onClick={resetTrials} disabled={!n}>{tr("Zerar tentativas")}</Button>
       </div>
       <AnimatePresence>
         {reveal && (
@@ -278,11 +273,7 @@ export default function ABXLab() {
         )}
       </AnimatePresence>
       <div className="mt-4">
-        <Note>
-          Comece com diferenças grandes (2 dB de volume, 6 dB de EQ) para sentir o método, depois diminua até não conseguir mais. Experimente o
-          “controle” (nenhuma diferença): você deve ficar perto de 50%. Isso mostra o seu limiar nestas condições — com seu fone, seu ouvido
-          e este trecho.
-        </Note>
+        <Note>{tr("Comece com diferenças grandes (2 dB de volume, 6 dB de EQ) para sentir o método, depois diminua até não conseguir mais. Experimente o “controle” (nenhuma diferença): você deve ficar perto de 50%. Isso mostra o seu limiar nestas condições — com seu fone, seu ouvido e este trecho.")}</Note>
       </div>
     </LabFrame>
   );

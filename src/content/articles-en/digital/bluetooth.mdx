@@ -1,0 +1,65 @@
+<Lead>
+In a wireless headphone, music goes through an extra stage: it's re-encoded with losses, transmitted by radio and decoded inside the headphone, where a DAC, an amplifier and nearly always a signal processor take over the role that, in a wired headphone, belonged to the source. The choice of codec matters, but less, and in different ways, than most discussions suggest.
+</Lead>
+
+<Callout type="simples">
+Bluetooth compresses the music, sends it by radio and decodes it inside the headphone. Modern codecs in good conditions are close to indistinguishable from the original for most people. How the headphone is tuned, how well it seals and the quality of its noise cancelling matter far more than the name of the codec.
+</Callout>
+
+## The path of sound in a Bluetooth headphone
+
+1. The phone decodes the file or stream (which may already be AAC, Opus, FLAC…).
+2. The system mixes sounds, applies volume and effects and **re-encodes** the result with a Bluetooth codec.
+3. The radio transmits packets at 2.4 GHz, with an available bandwidth that varies with interference, distance and obstacles (including your body).
+4. The headphone decodes, applies its own **processing** (manufacturer EQ, noise cancellation, volume compensation), converts to analog and amplifies.
+
+Two consequences stand out. First, there's nearly always **double lossy encoding** when the source is already lossy. Second, the **headphone's own tuning**, which includes the DSP, defines the sound far more than the codec.
+
+## The codecs
+
+| Codec | Typical data rate | Notes |
+| --- | --- | --- |
+| **SBC** | ~200–345 kbps | Mandatory on every A2DP device. Simple; quality depends a lot on the parameters used (bitpool). At high bitrates, it's better than its reputation. |
+| **AAC** | ~200–320 kbps | Standard on Apple devices. A good perceptual codec, but quality depends on the system's encoder: very good on iOS, variable on Android. |
+| **aptX** | 352/384 kbps | Sub-band ADPCM coding, 4:1, without a complex psychoacoustic model. Low latency, robust. |
+| **aptX HD** | 576 kbps | 24-bit version of aptX. |
+| **aptX Adaptive** | ~279–420 kbps (variable) | Adjusts bitrate and latency according to the link; recent versions have a lossless mode. |
+| **LDAC** | 330 / 660 / 990 kbps | From Sony. Supports 24 bits/96 kHz; the 990 kbps mode requires a very stable link and often drops to lower rates. |
+| **LC3** (LE Audio) | ~16–345 kbps | The Bluetooth LE Audio codec. Far more efficient than SBC; the basis of Auracast. |
+
+Real values vary with the device and conditions. And the codec used is **negotiated** between transmitter and receiver: both have to support it, and the operating system decides. Many devices let you view and force the codec in developer options.
+
+## What's audible
+
+**Modern codecs in good conditions are, in general, perceptually transparent or close to it** for most people with most music. Well-encoded 256 kbps AAC, aptX Adaptive and LDAC at high rates fall into this category; high-bitrate SBC also does well in blind tests.
+
+Audible differences appear mainly:
+
+- **In poor link conditions**, when the bitrate drops (LDAC at 330 kbps, for example, or SBC with a low bitpool) and coding artifacts appear.
+- **With double encoding** of already-lossy material at low rates.
+- **In difficult passages**: very fast attacks, harpsichord, applause, cymbals.
+
+What nearly always matters more than the codec:
+
+- **The headphone's tuning** (frequency response, including the DSP's), the dominant factor.
+- **The seal** (in wireless earbuds and IEMs, the same physics as wired IEMs).
+- **Noise cancellation**, which changes the sound measurably and reduces masking by the environment.
+- **The noise floor** of the internal amplifier, sometimes audible in silence.
+
+## Latency
+
+Total latency, from phone to ear, includes coding buffers, transmission, retransmissions and decoding. With classic Bluetooth (A2DP), values between **100 and 300 ms** are common; low-latency codecs and modes reduce this to something like 40–80 ms, and LE Audio allows lower latencies. For video, systems compensate by delaying the picture; for games and musical instruments, latency is noticeable and annoying above a few tens of milliseconds.
+
+## Practical summary
+
+1. If your headphone and phone support a high-quality codec, use it, but don't expect a transformation.
+2. In places with a lot of interference, prefer modes that **prioritize stability**; dropouts and bitrate drops are more audible than the difference between codecs.
+3. Judge wireless headphones mainly by **tuning, comfort, seal and ANC**.
+4. For critical listening or for high-sensitivity wired IEMs, the wired path (with a good dongle) remains the simplest and most predictable.
+
+<References>
+  <Ref>Bluetooth SIG. <em>Advanced Audio Distribution Profile (A2DP)</em> and <em>Low Complexity Communication Codec (LC3)</em> — specifications.</Ref>
+  <Ref>Qualcomm. <em>aptX audio codec family</em> — technical documentation.</Ref>
+  <Ref>Sony Corporation. <em>LDAC</em> — technical documentation.</Ref>
+  <Ref>Painter, T.; Spanias, A. "Perceptual coding of digital audio." <em>Proceedings of the IEEE</em>, 88(4), 451–515, 2000.</Ref>
+</References>

@@ -1,0 +1,87 @@
+<Lead>
+Spec sheets for DACs and amplifiers carry impressive numbers: THD+N of 0.0003%, SNR of 125 dB, dynamic range of 130 dB. What exactly does each one measure? When does the difference between two numbers translate into something you hear? And why, with sensitive IEMs, can a seemingly good number mean hiss?
+</Lead>
+
+<Callout type="simples">
+Distortion means extra sounds the equipment adds; noise is the hiss underneath. In modern gear, both are usually far too low to hear, so a spec of 0.001% isn't really better than 0.003%. The exception is very sensitive earphones, which can reveal the hiss of a noisy source.
+</Callout>
+
+## Total harmonic distortion (THD)
+
+A perfectly linear system returns a pure sine wave as a pure sine wave. A real system adds **harmonics**: components at frequencies 2f, 3f, 4f… that weren't in the signal. **Total harmonic distortion** is the sum (in power) of those harmonics, relative to the fundamental:
+
+<Formula say="Add up all the unwanted harmonics and compare them with the original tone.">
+
+$$
+\text{THD} = \frac{\sqrt{V_2^2 + V_3^2 + V_4^2 + \cdots}}{V_1}
+$$
+
+</Formula>
+
+Expressed in percent or decibels: 1% = −40 dB, 0.1% = −60 dB, 0.01% = −80 dB, 0.001% = −100 dB.
+
+**THD+N** includes, besides harmonics, all the **noise** in the measured band: the fundamental is filtered out and everything left is measured. In very good equipment, noise dominates, and THD+N worsens at low levels (the noise doesn't decrease along with the signal).
+
+### What the number doesn't say
+
+THD is a useful but coarse measure, for three reasons:
+
+1. **The type of harmonic matters.** Low harmonics (2nd, 3rd) fall near the fundamental and are partly [masked](/percepcao/mascaramento) by it. High-order harmonics (7th, 9th, 11th…) fall far away, in "empty" regions, and are much more audible and unpleasant for the same percentage. Geddes and Lee (2003) showed that traditional THD correlates poorly with the perception of distortion.
+2. **It depends on level and frequency.** An amplifier can have 0.001% at 1 kHz and 1 V and 0.5% at 20 Hz near clipping. A single number hides the curve.
+3. **It doesn't show intermodulation.** With two simultaneous tones, nonlinear systems generate products at the sums and differences (f₁ ± f₂, 2f₁ − f₂…): **intermodulation distortion** (IMD). These products have no harmonic relationship with the music and are more audible than simple harmonics. Measurements such as SMPTE IMD and CCIF (19 + 20 kHz) capture this behavior.
+
+<Lab id="distortion" />
+
+## Signal-to-noise ratio and dynamic range
+
+Every circuit has intrinsic **noise**: thermal, semiconductor, power supply. The **signal-to-noise ratio** (SNR) compares the level of a reference signal (usually the maximum, or a nominal level) with the noise floor, in dB. **Dynamic range** compares the largest signal without relevant distortion with the noise measured in the presence of a very low signal (−60 dBFS, for example); in practice, for DACs, the two numbers are similar.
+
+When reading those numbers, ask:
+
+- **Relative to which level?** An SNR "of 120 dB" relative to a maximum output of 4 V is very different from the same SNR relative to 0.5 V.
+- **With A-weighting?** Weighting reduces the importance of extreme bass and treble and usually improves the number by 2–3 dB.
+- **Over which frequency band?** 20 Hz–20 kHz is the standard; wider bands include more noise.
+
+Standards such as **AES17** standardize these procedures for digital audio.
+
+## What matters with IEMs: absolute noise
+
+For low-sensitivity headphones, SNR relative to the source's maximum is the relevant number. For **sensitive IEMs**, it's misleading. What matters is the **absolute noise at the output**, in microvolts, because the IEM turns those microvolts into sound pressure according to its sensitivity:
+
+<Formula say="A very sensitive earphone turns even microscopic electrical noise into audible hiss.">
+
+$$
+L_{\text{noise}} = S_{\text{dB/V}} + 20 \log_{10}(V_{\text{noise}})
+$$
+
+</Formula>
+
+An IEM at 120 dB/V (common in multi-BA) on a source with 5 µV of noise produces $120 + 20\log_{10}(5\times10^{-6}) \approx 14$ dB SPL of hiss, audible in a quiet room, between tracks or in soft passages. The same source on a 100 dB/V headphone produces −6 dB SPL: inaudible.
+
+Two sources with identical SNR can have very different absolute noise if they have different maximum voltages: a 4 V source with 120 dB SNR has 4 µV of noise; a 1 V one with 120 dB, 1 µV. For IEMs, the second is quieter. That's why sources aimed at IEMs offer **low-gain modes**, which reduce maximum voltage and noise together.
+
+<Lab id="hiss" />
+
+## Frequency response and crosstalk
+
+The **frequency response** of DACs and amplifiers is usually flat within ±0.1 dB from 20 Hz to 20 kHz, and only stops being so when the load interacts with output impedance (see [power and output impedance](/eletronica/potencia-e-sensibilidade)) or when there are slow-roll-off digital filters.
+
+**Crosstalk** is the leakage of one channel into the other. Values of −70 dB or better are typical and inaudible as image degradation; outputs with a shared ground on thin cables can worsen the number, still with room to spare.
+
+## Measurable vs audible
+
+The general rule emerging from the literature is that in modern, well-designed electronic equipment operating within its limits:
+
+- low-order THD below ~0.1% is very hard to detect with music;
+- noise below ~0 dB SPL at the ear is inaudible;
+- a flat response within ±0.1–0.2 dB is indistinguishable from perfectly flat in controlled tests.
+
+Differences far below those thresholds, 0.0005% vs 0.0003%, are engineering achievements, not audible differences. Real problems appear when the equipment is pushed to its **limit** (clipping, lack of current), when there's high **absolute noise** with sensitive headphones, or when **output impedance** interacts with the load. This theme returns in more detail in [measurable isn't the same as audible](/ciencia/mensuravel-vs-audivel).
+
+<References>
+  <Ref>AES17-2020. <em>AES standard method for digital audio engineering — Measurement of digital audio equipment</em>.</Ref>
+  <Ref>Geddes, E. R.; Lee, L. W. "Auditory perception of nonlinear distortion — theory." AES 115th Convention, 2003.</Ref>
+  <Ref>Self, D. <em>Audio Power Amplifier Design</em>. 6th ed. Focal Press, 2013.</Ref>
+  <Ref>Metzler, B. <em>Audio Measurement Handbook</em>. Audio Precision, 1993.</Ref>
+  <Ref>IEC 61606-3:2008. <em>Audio and audiovisual equipment — Digital audio parts — Basic measurement methods of audio characteristics — Part 3: Professional use</em>.</Ref>
+</References>

@@ -2,13 +2,21 @@
 WAV, FLAC, ALAC, MP3, AAC, Opus, DSD, “hi-res”… Os formatos de áudio digital se dividem em duas famílias com filosofias opostas: os que guardam cada bit do original e os que descartam, com método, o que a audição provavelmente não vai notar. Entender como cada um funciona é entender de onde vêm — e onde não vêm — as diferenças de qualidade.
 </Lead>
 
+<Callout type="simples">
+Formatos sem perdas, como o FLAC, guardam o áudio bit a bit, como um arquivo ZIP. Formatos com perdas, como MP3 e AAC, descartam o que você provavelmente não ouviria. Em bitrates bons, a maioria das pessoas não percebe a diferença em testes cegos, e a masterização do disco importa muito mais que o formato do arquivo.
+</Callout>
+
 ## PCM: o formato fundamental
 
 Quase todo áudio digital é **PCM** (*pulse-code modulation*): uma sequência de amostras de amplitude, tomadas a uma taxa fixa, com um número fixo de bits — exatamente o que descrevem os artigos sobre [amostragem](/digital/amostragem) e [quantização](/digital/quantizacao-e-dither). Um minuto de PCM estéreo a 44,1 kHz e 16 bits ocupa
 
+<Formula say="Um minuto de áudio estéreo em qualidade de CD ocupa cerca de 10,6 megabytes.">
+
 $$
 44\,100 \times 16 \times 2 \times 60 \approx 84{,}7\ \text{Mbit} \approx 10{,}6\ \text{MB}
 $$
+
+</Formula>
 
 ou seja, um **bitrate** de 1 411 kbps. Arquivos **WAV** e **AIFF** são PCM sem compressão, com um cabeçalho que descreve o formato.
 

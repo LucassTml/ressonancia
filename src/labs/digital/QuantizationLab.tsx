@@ -5,6 +5,7 @@ import { PlayButton, usePlayback, fadeGain } from '../../components/ui/audio';
 import { demoMusicBuffer } from '../../audio/engine';
 import { magnitudeSpectrum } from '../../audio/dsp';
 import { useElementSize } from '../../lib/hooks';
+import { tr } from '../../i18n';
 
 /** Quantiza para `bits` com ou sem dither TPDF (±1 LSB). */
 function quantize(x: number, bits: number, dither: boolean, rnd: () => number) {
@@ -90,32 +91,32 @@ export default function QuantizationLab() {
 
   return (
     <LabFrame
-      title="Quantização e dither"
-      description="Reduza os bits e veja o erro de arredondamento: sem dither, ele acompanha o sinal e vira distorção (harmônicos); com dither, vira um ruído constante e sem relação com a música."
+      title={tr("Quantização e dither")}
+      description={tr("Reduza os bits e veja o erro de arredondamento: sem dither, ele acompanha o sinal e vira distorção (harmônicos); com dither, vira um ruído constante e sem relação com a música.")}
       audio
       onReset={() => {
         setBits(6);
         setAmp(-20);
         setDither(false);
       }}
-      footer="Dither TPDF de ±1 LSB, a forma padrão recomendada pela literatura (Lipshitz, Wannamaker e Vanderkooy, 1992). Espectro por FFT de 8192 pontos com janela de Hann; o áudio é quantizado de verdade antes de tocar."
+      footer={tr("Dither TPDF de ±1 LSB, a forma padrão recomendada pela literatura (Lipshitz, Wannamaker e Vanderkooy, 1992). Espectro por FFT de 8192 pontos com janela de Hann; o áudio é quantizado de verdade antes de tocar.")}
     >
       <div ref={wrap} className="grid gap-3">
         <div>
-          <div className="text-[11px] uppercase tracking-[0.1em] text-faint font-medium mb-1">Forma de onda (1 kHz)</div>
-          <svg width={W} height={H} className="block rounded-xl bg-sunken" aria-label="Sinal original e quantizado">
+          <div className="text-[11px] uppercase tracking-[0.1em] text-faint font-medium mb-1">{tr("Forma de onda (1 kHz)")}</div>
+          <svg width={W} height={H} className="block rounded-xl bg-sunken" aria-label={tr("Sinal original e quantizado")}>
             <line x1={0} x2={W} y1={H / 2} y2={H / 2} stroke="var(--c-grid)" />
             <path d={wp(analysis.x)} fill="none" stroke="var(--fg-faint)" strokeWidth={3} opacity={0.5} />
             <path d={wp(analysis.q)} fill="none" stroke="var(--c-a)" strokeWidth={1.6} />
           </svg>
         </div>
         <div>
-          <div className="text-[11px] uppercase tracking-[0.1em] text-faint font-medium mb-1">Espectro do sinal quantizado (100 Hz – 20 kHz)</div>
-          <svg width={W} height={SH} className="block rounded-xl bg-sunken" aria-label="Espectro do sinal quantizado">
+          <div className="text-[11px] uppercase tracking-[0.1em] text-faint font-medium mb-1">{tr("Espectro do sinal quantizado (100 Hz – 20 kHz)")}</div>
+          <svg width={W} height={SH} className="block rounded-xl bg-sunken" aria-label={tr("Espectro do sinal quantizado")}>
             {[0, -50, -100, -150].map((d) => (
               <g key={d}>
                 <line x1={0} x2={W} y1={6 + (-d / 150) * (SH - 20)} y2={6 + (-d / 150) * (SH - 20)} stroke="var(--c-grid)" />
-                <text x={W - 4} y={4 + (-d / 150) * (SH - 20)} textAnchor="end" className="fill-[var(--fg-faint)] text-[9.5px]">{d} dBFS</text>
+                <text x={W - 4} y={4 + (-d / 150) * (SH - 20)} textAnchor="end" className="fill-[var(--fg-faint)] text-[9.5px]">{d}{' '}{tr("dBFS")}</text>
               </g>
             ))}
             <path d={specPath} fill="none" stroke={dither ? 'var(--c-a)' : 'var(--c-b)'} strokeWidth={1.2} />
@@ -124,30 +125,26 @@ export default function QuantizationLab() {
       </div>
       <div className="mt-4">
         <Controls cols={2}>
-          <Slider label="Bits por amostra" value={bits} min={2} max={16} step={1} onChange={setBits} unit="bits" />
-          <Slider label="Nível do sinal" value={amp} min={-80} max={-1} step={1} onChange={setAmp} unit="dBFS" hint="Sinais baixos sofrem mais: usam poucos níveis da escala." />
+          <Slider label={tr("Bits por amostra")} value={bits} min={2} max={16} step={1} onChange={setBits} unit="bits" />
+          <Slider label={tr("Nível do sinal")} value={amp} min={-80} max={-1} step={1} onChange={setAmp} unit={tr("dBFS")} hint={tr("Sinais baixos sofrem mais: usam poucos níveis da escala.")} />
         </Controls>
       </div>
       <div className="flex flex-wrap items-center gap-3 mt-4">
-        <Toggle checked={dither} onChange={setDither} label="Dither TPDF" />
+        <Toggle checked={dither} onChange={setDither} label={tr("Dither TPDF")} />
         <PlayButton playing={pb.playing} onToggle={() => (pb.playing ? pb.stop() : void start())} />
-        <Segmented size="sm" value={src} onChange={(v) => { setSrc(v); pb.stop(); }} options={[{ value: 'tone', label: 'Tom 440 Hz' }, { value: 'music', label: 'Música demo' }]} />
+        <Segmented size="sm" value={src} onChange={(v) => { setSrc(v); pb.stop(); }} options={[{ value: 'tone', label: tr("Tom 440 Hz") }, { value: 'music', label: tr("Música demo") }]} />
       </div>
       <div className="mt-4">
         <Readout
           items={[
-            { label: 'SNR teórica (sinal máximo): 6,02·N + 1,76', value: `${fmtNum(theoSnr, 1)} dB` },
-            { label: 'Níveis disponíveis', value: fmtNum(Math.pow(2, bits), 0) },
-            { label: 'Relação sinal/erro neste nível', value: `${fmtNum(snrHere, 1)} dB`, accent: true },
+            { label: tr("SNR teórica (sinal máximo): 6,02·N + 1,76"), value: `${fmtNum(theoSnr, 1)} dB` },
+            { label: tr("Níveis disponíveis"), value: fmtNum(Math.pow(2, bits), 0) },
+            { label: tr("Relação sinal/erro neste nível"), value: `${fmtNum(snrHere, 1)} dB`, accent: true },
           ]}
         />
       </div>
       <div className="mt-3">
-        <Note>
-          Com 4–6 bits e sem dither, o sinal baixo soa áspero e “granulado”, e o espectro mostra harmônicos. Ligue o dither: os harmônicos
-          desaparecem e sobra um chiado uniforme — que soa muito mais natural, e sob o qual sinais mais baixos que 1 bit continuam audíveis.
-          Ao tocar, o ganho é aumentado para compensar o nível baixo do sinal.
-        </Note>
+        <Note>{tr("Com 4–6 bits e sem dither, o sinal baixo soa áspero e “granulado”, e o espectro mostra harmônicos. Ligue o dither: os harmônicos desaparecem e sobra um chiado uniforme — que soa muito mais natural, e sob o qual sinais mais baixos que 1 bit continuam audíveis. Ao tocar, o ganho é aumentado para compensar o nível baixo do sinal.")}</Note>
       </div>
     </LabFrame>
   );

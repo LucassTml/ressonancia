@@ -2,13 +2,21 @@
 Com apenas dois sensores de pressão, separados por uma cabeça, você sabe se um som vem da esquerda, de cima, de trás, de perto ou de longe. O cérebro faz isso comparando os sinais dos dois ouvidos e decifrando as marcas que a cabeça e as orelhas deixam no som. Entender essas pistas explica por que a música em fones parece tocar dentro da cabeça — e o que se pode fazer a respeito.
 </Lead>
 
+<Callout type="simples">
+O cérebro localiza um som comparando o que chega a cada ouvido: qual ouviu primeiro e qual ouviu mais forte. O formato da orelha acrescenta pistas finas de cima e baixo, frente e trás. Fones contornam a maior parte disso, e por isso a música parece vir de dentro da cabeça, e não da sua frente.
+</Callout>
+
 ## A teoria duplex
+
+<Diagram id="stereo-head" />
 
 No início do século XX, Lord Rayleigh propôs que a localização horizontal (azimute) depende de duas pistas diferentes, cada uma eficiente numa faixa de frequências. Essa **teoria duplex** continua sendo a base do que sabemos.
 
 ### Diferença interaural de tempo (ITD)
 
 Um som vindo da direita chega ao ouvido direito antes do esquerdo. Para uma fonte distante e uma cabeça aproximadamente esférica de raio $a$, a diferença é bem aproximada pela fórmula de Woodworth:
+
+<Formula say="Quanto mais de lado vem o som, maior a diferença de tempo entre os ouvidos, que chega a cerca de 0,7 ms.">
 
 $$
 \text{ITD}(\theta) = \frac{a}{c}\,(\theta + \sin\theta)
@@ -21,6 +29,8 @@ $$
     ['θ', 'azimute da fonte em radianos (0 = à frente, π/2 = totalmente de lado)'],
   ]}
 />
+
+</Formula>
 
 O máximo, com a fonte totalmente de lado, é de cerca de **650 a 700 µs**. O sistema auditivo detecta diferenças de apenas **10 a 20 µs** para fontes próximas da frente — o que corresponde a um deslocamento de 1 a 2 graus. Isso é feito no tronco encefálico, por neurônios que funcionam como detectores de coincidência.
 

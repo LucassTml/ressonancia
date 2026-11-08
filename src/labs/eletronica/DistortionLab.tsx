@@ -5,15 +5,16 @@ import { PlayButton, usePlayback, fadeGain } from '../../components/ui/audio';
 import { dbToGain, demoMusicBuffer } from '../../audio/engine';
 import { magnitudeSpectrum } from '../../audio/dsp';
 import { useElementSize } from '../../lib/hooks';
+import { tr } from '../../i18n';
 
 type Kind = 'clean' | 'ss-clip' | 'tube-se' | 'tube-pp' | 'crossover';
 
 const KINDS: Record<Kind, { name: string; text: string }> = {
-  clean: { name: 'Linear (ideal)', text: 'Saída proporcional à entrada até o limite da fonte. Sem harmônicos adicionados.' },
-  'ss-clip': { name: 'Transistor com realimentação', text: 'Muito linear até o limite da alimentação; ali, corta abruptamente (clipping duro), gerando harmônicos ímpares fortes e de ordem alta. Com folga de tensão, a distorção é desprezível.' },
-  'tube-se': { name: 'Válvula single-ended', text: 'Curva de transferência assimétrica e suave: comprime um semiciclo mais que o outro. Gera principalmente 2º harmônico, que cresce gradualmente com o nível.' },
-  'tube-pp': { name: 'Válvulas em push-pull', text: 'Duas válvulas em contrafase cancelam os harmônicos pares; sobra uma compressão simétrica e suave, dominada pelo 3º harmônico.' },
-  crossover: { name: 'Classe B mal polarizada', text: 'Uma pequena “zona morta” perto de zero, onde um transistor desliga antes do outro ligar. Distorção que piora em volume BAIXO — rica em harmônicos ímpares altos e notoriamente desagradável.' },
+  clean: { name: tr("Linear (ideal)"), text: tr("Saída proporcional à entrada até o limite da fonte. Sem harmônicos adicionados.") },
+  'ss-clip': { name: tr("Transistor com realimentação"), text: tr("Muito linear até o limite da alimentação; ali, corta abruptamente (clipping duro), gerando harmônicos ímpares fortes e de ordem alta. Com folga de tensão, a distorção é desprezível.") },
+  'tube-se': { name: tr("Válvula single-ended"), text: tr("Curva de transferência assimétrica e suave: comprime um semiciclo mais que o outro. Gera principalmente 2º harmônico, que cresce gradualmente com o nível.") },
+  'tube-pp': { name: tr("Válvulas em push-pull"), text: tr("Duas válvulas em contrafase cancelam os harmônicos pares; sobra uma compressão simétrica e suave, dominada pelo 3º harmônico.") },
+  crossover: { name: tr("Classe B mal polarizada"), text: tr("Uma pequena “zona morta” perto de zero, onde um transistor desliga antes do outro ligar. Distorção que piora em volume BAIXO — rica em harmônicos ímpares altos e notoriamente desagradável.") },
 };
 
 /** Curvas de transferência (entrada −1..1 → saída). */
@@ -128,8 +129,8 @@ export default function DistortionLab() {
 
   return (
     <LabFrame
-      title="Distorção: válvula, transistor e cruzamento"
-      description="Cada tipo de amplificador se afasta da linha reta de um jeito. A curva de transferência mostra como; o espectro mostra quais harmônicos aparecem; e você pode ouvir o resultado aplicado a um tom ou à música."
+      title={tr("Distorção: válvula, transistor e cruzamento")}
+      description={tr("Cada tipo de amplificador se afasta da linha reta de um jeito. A curva de transferência mostra como; o espectro mostra quais harmônicos aparecem; e você pode ouvir o resultado aplicado a um tom ou à música.")}
       audio
       onReset={() => {
         setKind('tube-se');
@@ -137,12 +138,12 @@ export default function DistortionLab() {
         setLevel(0.7);
       }}
       toolbar={<Segmented size="sm" value={kind} onChange={setKind} options={(Object.keys(KINDS) as Kind[]).map((k) => ({ value: k, label: KINDS[k].name }))} />}
-      footer="Curvas de transferência estilizadas, que reproduzem o perfil de harmônicos típico de cada topologia. Amplificadores reais têm comportamento dependente da frequência, da carga e do nível. A análise usa uma senoide de 1 kHz processada numericamente e uma FFT de 4096 pontos."
+      footer={tr("Curvas de transferência estilizadas, que reproduzem o perfil de harmônicos típico de cada topologia. Amplificadores reais têm comportamento dependente da frequência, da carga e do nível. A análise usa uma senoide de 1 kHz processada numericamente e uma FFT de 4096 pontos.")}
     >
       <div ref={wrap} className="flex flex-wrap gap-4 items-start">
         <div>
-          <div className="text-[11px] uppercase tracking-[0.1em] text-faint font-medium mb-1">Transferência</div>
-          <svg width={TS} height={TS} className="rounded-lg bg-sunken block" aria-label="Curva de transferência">
+          <div className="text-[11px] uppercase tracking-[0.1em] text-faint font-medium mb-1">{tr("Transferência")}</div>
+          <svg width={TS} height={TS} className="rounded-lg bg-sunken block" aria-label={tr("Curva de transferência")}>
             <line x1={0} y1={TS} x2={TS} y2={0} stroke="var(--c-grid-strong)" strokeDasharray="3 3" />
             <line x1={TS / 2} y1={0} x2={TS / 2} y2={TS} stroke="var(--c-grid)" />
             <line x1={0} y1={TS / 2} x2={TS} y2={TS / 2} stroke="var(--c-grid)" />
@@ -151,7 +152,7 @@ export default function DistortionLab() {
           </svg>
         </div>
         <div className="flex-1 min-w-[140px]">
-          <div className="text-[11px] uppercase tracking-[0.1em] text-faint font-medium mb-1">Forma de onda (1 kHz)</div>
+          <div className="text-[11px] uppercase tracking-[0.1em] text-faint font-medium mb-1">{tr("Forma de onda (1 kHz)")}</div>
           <svg viewBox={`0 0 ${waveW} ${TS}`} width="100%" height={TS} preserveAspectRatio="none" className="rounded-lg bg-sunken block">
             <line x1={0} x2={waveW} y1={TS / 2} y2={TS / 2} stroke="var(--c-grid)" />
             <path
@@ -164,8 +165,8 @@ export default function DistortionLab() {
           </svg>
         </div>
         <div className="w-[240px]">
-          <div className="text-[11px] uppercase tracking-[0.1em] text-faint font-medium mb-1">Harmônicos (relativos à fundamental)</div>
-          <svg width={240} height={TS} className="rounded-lg bg-sunken block" aria-label="Espectro de harmônicos">
+          <div className="text-[11px] uppercase tracking-[0.1em] text-faint font-medium mb-1">{tr("Harmônicos (relativos à fundamental)")}</div>
+          <svg width={240} height={TS} className="rounded-lg bg-sunken block" aria-label={tr("Espectro de harmônicos")}>
             {[0, -40, -80, -120].map((d) => (
               <g key={d}>
                 <line x1={22} x2={236} y1={8 + (-d / 120) * (TS - 26)} y2={8 + (-d / 120) * (TS - 26)} stroke="var(--c-grid)" />
@@ -183,39 +184,35 @@ export default function DistortionLab() {
             })}
           </svg>
           <div className="flex gap-3 text-[10.5px] text-muted mt-1">
-            <span><span className="inline-block w-2 h-2 rounded-sm bg-[var(--c-a)] mr-1" />pares</span>
-            <span><span className="inline-block w-2 h-2 rounded-sm bg-[var(--c-b)] mr-1" />ímpares</span>
+            <span><span className="inline-block w-2 h-2 rounded-sm bg-[var(--c-a)] mr-1" />{tr("pares")}</span>
+            <span><span className="inline-block w-2 h-2 rounded-sm bg-[var(--c-b)] mr-1" />{tr("ímpares")}</span>
           </div>
         </div>
       </div>
       <div className="mt-4">
         <Controls cols={2}>
-          <Slider label="Nível do sinal na entrada" value={level} min={0.02} max={1} log onChange={(v) => setLevel(Number(v.toFixed(3)))} format={(v) => `${fmtNum(20 * Math.log10(v), 1)} dB`} hint="Repare como a distorção de cruzamento piora em nível baixo e a das outras curvas, em nível alto." />
-          <Slider label="Ganho do estágio (quanto se aproxima da saturação)" value={drive} min={0.5} max={5} step={0.05} onChange={setDrive} format={(v) => `${fmtNum(v, 2)}×`} />
+          <Slider label={tr("Nível do sinal na entrada")} value={level} min={0.02} max={1} log onChange={(v) => setLevel(Number(v.toFixed(3)))} format={(v) => `${fmtNum(20 * Math.log10(v), 1)} dB`} hint={tr("Repare como a distorção de cruzamento piora em nível baixo e a das outras curvas, em nível alto.")} />
+          <Slider label={tr("Ganho do estágio (quanto se aproxima da saturação)")} value={drive} min={0.5} max={5} step={0.05} onChange={setDrive} format={(v) => `${fmtNum(v, 2)}×`} />
         </Controls>
       </div>
       <div className="mt-4">
         <Readout
           items={[
-            { label: 'THD', value: analysis.thd < 1e-5 ? '< 0,001%' : `${fmtNum(analysis.thd * 100, analysis.thd < 0.01 ? 3 : 2)}%`, accent: true },
-            { label: 'THD em dB', value: analysis.thd < 1e-5 ? '< −100 dB' : `${fmtNum(20 * Math.log10(analysis.thd), 1)} dB` },
-            { label: '2º harmônico', value: `${fmtNum(Math.max(-140, analysis.harm[1]), 1)} dB` },
-            { label: '3º harmônico', value: `${fmtNum(Math.max(-140, analysis.harm[2]), 1)} dB` },
+            { label: tr("THD"), value: analysis.thd < 1e-5 ? '< 0,001%' : `${fmtNum(analysis.thd * 100, analysis.thd < 0.01 ? 3 : 2)}%`, accent: true },
+            { label: tr("THD em dB"), value: analysis.thd < 1e-5 ? tr("< −100 dB") : `${fmtNum(20 * Math.log10(analysis.thd), 1)} dB` },
+            { label: tr("2º harmônico"), value: `${fmtNum(Math.max(-140, analysis.harm[1]), 1)} dB` },
+            { label: tr("3º harmônico"), value: `${fmtNum(Math.max(-140, analysis.harm[2]), 1)} dB` },
           ]}
         />
       </div>
       <p className="mt-3 text-[13px] text-soft leading-relaxed">{KINDS[kind].text}</p>
       <div className="flex flex-wrap items-center gap-3 mt-4">
         <PlayButton playing={pb.playing} onToggle={() => (pb.playing ? pb.stop() : void start())} />
-        <Segmented size="sm" value={src} onChange={(v) => { setSrc(v); pb.stop(); }} options={[{ value: 'sine', label: 'Tom de 440 Hz' }, { value: 'music', label: 'Música demo' }]} />
-        <Toggle checked={bypass} onChange={setBypass} label="Sem distorção (comparar)" />
+        <Segmented size="sm" value={src} onChange={(v) => { setSrc(v); pb.stop(); }} options={[{ value: 'sine', label: tr("Tom de 440 Hz") }, { value: 'music', label: tr("Música demo") }]} />
+        <Toggle checked={bypass} onChange={setBypass} label={tr("Sem distorção (comparar)")} />
       </div>
       <div className="mt-3">
-        <Note>
-          Com a mesma THD, o 2º harmônico (uma oitava acima) costuma ser muito menos incômodo que harmônicos ímpares de ordem alta, que
-          caem longe da fundamental e não são mascarados por ela. Por isso o número de THD, sozinho, diz pouco sobre o quanto uma
-          distorção é audível.
-        </Note>
+        <Note>{tr("Com a mesma THD, o 2º harmônico (uma oitava acima) costuma ser muito menos incômodo que harmônicos ímpares de ordem alta, que caem longe da fundamental e não são mascarados por ela. Por isso o número de THD, sozinho, diz pouco sobre o quanto uma distorção é audível.")}</Note>
       </div>
     </LabFrame>
   );

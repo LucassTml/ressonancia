@@ -1,0 +1,66 @@
+<Lead>
+A planar magnetic headphone replaces the coil and cone with something more radical: a flattened wire drawn directly onto a membrane thinner than a human hair, suspended between rows of magnets. The force is no longer applied at a ring but distributed over the whole surface. This old idea came back strongly in high-fidelity headphones and has more recently reached IEMs.
+</Lead>
+
+<Callout type="simples">
+Instead of pushing a dome from a single ring, a planar pushes a very thin sheet over its entire surface, using a flat wire printed on the sheet and rows of magnets around it. The sheet moves evenly and with little distortion, but the design takes more power and is hard to tune inside a small IEM.
+</Callout>
+
+## The idea: push the whole membrane
+
+In a dynamic driver, force arises at the coil and has to be transmitted to the rest of the diaphragm. If the diaphragm isn't perfectly rigid, parts of it lag behind the coil and [breakup modes](/drivers/driver-dinamico) appear. One solution is to make the diaphragm stiffer. Another, the planar one, is to **apply the force over the whole surface at once**: if each piece of the membrane is pushed equally, it doesn't need to be rigid to move as a whole.
+
+To do this, the conductor is distributed over the membrane. Instead of a wound coil, there's a **flat conductive trace** (usually aluminum) deposited or etched onto a polymer film a few micrometers thick, drawing a zigzag or spiral that covers nearly the whole area.
+
+## The magnetic circuit
+
+The Lorentz force requires the magnetic field to be **perpendicular to the current** and the resulting force to be perpendicular to the membrane. For that, the field has to run **parallel** to the membrane at the points where the traces are.
+
+Planars achieve this with **rows of bar magnets** placed on one side of the membrane (*single-sided* design) or on both (*double-sided* or *push-pull*), with alternating polarities. Between two neighboring magnets of opposite polarity, the field lines form an arc that, at the height of the membrane, is practically parallel to it. The traces are positioned exactly in those regions, and the direction of the current alternates from one trace to the next, so that all the forces point the same way.
+
+<Lab id="drivers" initial="planar" />
+
+With magnets on both sides, the field is stronger and more symmetric, which increases force and linearity, but adds weight and obstacles to the passage of sound. With magnets on one side, the headphone is lighter and more acoustically open, at the cost of less force and a slightly less uniform field across the movement. Manufacturers also experiment with magnet arrays that concentrate the field (inspired by Halbach arrays) and trace geometries that distribute force better.
+
+## What the physics favors
+
+**Distributed force and low mass per area.** The membrane with its traces weighs little per unit area and is pushed everywhere. It tends to move like a piston over a wide range of frequencies.
+
+**Large area, small displacement.** In headphones, the membrane can be 80 to 100 mm across. To displace the same volume of air, a larger area requires less excursion, and small excursions stay in the motor's linear region. That partly explains the reputation of planars for **low distortion in the bass**, especially in open headphones, which can't count on the help of a sealed cavity.
+
+**Almost purely resistive impedance.** The flat trace has very low inductance, so the driver's impedance is practically constant across the audio band. Practical consequence: planars are **barely sensitive to the source's output impedance**, the opposite of multi-BA IEMs.
+
+**Motor linearity.** If the field is uniform over the region traveled by the traces, $Bl$ doesn't change with displacement, and the motor is linear even at high levels.
+
+## What the physics charges
+
+**Sensitivity.** The magnetic field crossing the traces, spread over a large area, is usually weaker than that of a concentrated gap. Classic planars were notoriously hard to drive, requiring powerful amplifiers. Modern ones are much more efficient but, on average, remain less sensitive than dynamics and far less than BAs.
+
+**Acoustic obstacles.** The magnets and grilles sit in front of (and behind) the membrane. Sound has to pass through slits between them, which can create reflections and resonances, and is one of the reasons some planars have treble peaks that require careful tuning.
+
+**Weight** (in headphones), because of the magnets.
+
+**The membrane also resonates.** Distributed force doesn't eliminate resonances: the membrane is tensioned like a drumhead and has its own modes, in addition to its interaction with the cavities.
+
+## Planars in IEMs
+
+Taking the principle inside the ear changes the balance of advantages and disadvantages. Planar drivers for IEMs, which began to become popular around 2021, are typically 10 to 15 mm. Some consequences:
+
+- **The large-area advantage largely disappears.** A 14 mm planar has an area comparable to a 14 mm dynamic. And in a sealed cavity, bass is produced by the pressure-chamber principle (see [transducers](/drivers/transdutores)), where any well-sealed technology does well.
+- **Distributed force and resistive impedance still apply.** IEM planars usually have flat impedance, making them insensitive to output impedance.
+- **Sensitivity is low for an IEM.** Many demand more voltage than dynamic or BA IEMs, still within what a good dongle delivers but sometimes at the limit of phone outputs, especially with very dynamic tracks.
+- **Tuning is challenging.** With little space, it's hard to control reflections between membrane, magnets and grilles; several models have shown characteristic peaks in the upper mids and treble. Communities describe a "planar timbre," an impression which, when it appears, is better explained by those peaks and by distortion (or the lack of it) than by a magical property of the technology.
+
+<Callout type="mito" title="&quot;Planars are faster and more detailed&quot;">
+Speed of response, in headphones, is linked to frequency response: a system that reproduces well up to 20 kHz responds to transients as fast as the signal requires, whatever the technology. Planars can have **less distortion** and fewer breakup resonances, and that can be perceived as clarity. But a planar with a peak at 6 kHz will seem "more detailed" for the same reason as any bright headphone: more energy in the region where details live. Judge by measurement and listening, not technology.
+</Callout>
+
+## In short
+
+A planar magnetic headphone is an electromagnetic transducer in which **the conductor is the membrane itself**: a flat trace on an ultrathin film, between magnets creating a field parallel to it. Distributed force, low mass per area and resistive impedance are its structural advantages; lower sensitivity, acoustic obstacles and difficult tuning are its costs. In headphones, those advantages often translate into clean bass and low distortion. In IEMs, the technology is promising, but implementation weighs more than principle.
+
+<References>
+  <Ref>Borwick, J. (ed.). <em>Loudspeaker and Headphone Handbook</em>. 3rd ed. Focal Press, 2001. Chapter on isodynamic and orthodynamic transducers.</Ref>
+  <Ref>Beranek, L. L.; Mellow, T. J. <em>Acoustics: Sound Fields and Transducers</em>. Academic Press, 2012.</Ref>
+  <Ref>Halbach, K. "Design of permanent multipole magnets with oriented rare earth cobalt material." <em>Nuclear Instruments and Methods</em>, 169(1), 1–10, 1980.</Ref>
+</References>

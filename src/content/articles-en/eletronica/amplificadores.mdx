@@ -1,0 +1,81 @@
+<Lead>
+"Do I need an amplifier?" is one of the most frequent questions from people buying a good headphone. To answer it, you need to know what an amplifier does, what a preamplifier does, and why, for most IEMs, the answer is surprisingly simple.
+</Lead>
+
+<Callout type="simples">
+An amplifier takes a weak signal and makes a stronger copy of it, able to drive the headphone. A preamp prepares the signal and handles volume, before the power stage. Most IEMs are so sensitive that the output of a phone or a cheap adapter is already enough.
+</Callout>
+
+## What amplifying is
+
+<Diagram id="signal-chain" />
+
+An **amplifier** is a circuit that uses energy from a power supply (a battery, the USB port, the wall socket) to produce at its output a larger copy of the input signal. The input signal doesn't "gain energy": it **controls** an active device, a transistor or tube, which regulates the flow of energy from the supply to the load. The shape of the signal is preserved; the amplitude, available voltage and ability to supply current increase.
+
+Two quantities describe an amplifier:
+
+- **Voltage gain:** the ratio between output and input voltage, usually in dB. A +20 dB gain multiplies voltage by 10.
+- **Current and power capability:** how much current the output can supply without the voltage dropping or distorting. An amplifier can have a lot of gain and little current (unsuitable for low-impedance loads) or little gain and a lot of current.
+
+And two limits:
+
+- **Voltage limit:** the output can't exceed the voltage of the power supply (the *rails*). When it tries, the signal **clips**: the peaks are cut off, creating severe distortion. The distance between the operating level and that limit is **headroom**.
+- **Current limit:** the supply and output transistors have a maximum current.
+
+<Lab id="gain" />
+
+## What a preamplifier is
+
+The term **preamplifier** has two related meanings, and it's good to separate them.
+
+**1. A stage that raises very weak signals to line level.** Microphones produce millivolts; turntable cartridges even less (about 5 mV for moving-magnet cartridges, fractions of a millivolt for moving-coil ones). A **microphone preamp** or **phono preamp** raises those signals to ~1 V with minimal noise. A phono preamp also applies **RIAA equalization**, which undoes the curve used when cutting the record (bass attenuated and treble boosted during recording, to fit the groove and reduce noise).
+
+**2. The control center of a sound system.** In speaker systems, the "pre" is the equipment that selects sources, adjusts volume and delivers a line-level signal to the **power amplifier**, which in turn drives the speakers. The preamp doesn't need to supply current; it needs to be quiet and accurate. The power amplifier doesn't need a volume control; it needs to supply current and power.
+
+In short: the preamplifier handles **small signals and control**; the power amplifier, **energy to move the load**. In a headphone amplifier, both roles are usually in the same device: a volume control and an output stage able to drive headphones.
+
+## The typical chain
+
+To listen to digital music on headphones, the chain is:
+
+1. **Digital source** (file, streaming) →
+2. **DAC**, delivering a line-level analog signal (typically 1 to 2 V RMS) →
+3. **Volume control** (digital or analog) →
+4. **Headphone amplifier**, delivering voltage and current to the headphone →
+5. **Headphone**.
+
+In a phone, a USB dongle or a "DAC/amp," stages 2 to 4 are on the same chip or board. In a desktop system, they may be separate devices.
+
+## Amplifier classes
+
+"Classes" describe how the output devices conduct:
+
+- **Class A:** the transistors (or tubes) conduct all the time, over the whole cycle. Very linear but inefficient, dissipating energy even in silence.
+- **Class B:** two devices in **push-pull**, each conducting half a cycle. Efficient, but with **crossover distortion** as the signal passes through zero, when one turns off before the other turns on.
+- **Class AB:** like B, but with a small bias current keeping both conducting near zero, eliminating crossover distortion. It's the most common class in headphone amplifiers.
+- **Class D:** the transistors work as switches turning on and off very fast (hundreds of kHz), modulating pulse width; a filter recovers the audio. Very efficient, they now achieve excellent performance and appear in wireless headphones and compact amplifiers.
+- There are also classes "G" and "H" (with variable supply) and various commercial names.
+
+Class is a means, not an audible quality in itself. A well-designed class D can measure better than a mediocre class A.
+
+## Negative feedback
+
+Nearly every modern amplifier uses **negative feedback**: part of the output is compared with the input, and the difference continually corrects the circuit. It reduces distortion and output impedance and makes the gain stable and predictable. Designs without feedback (or with little) exist, especially with tubes, and tend to have more distortion and higher output impedance, characteristics some listeners prefer. The idea that feedback "ruins dynamics" doesn't hold up in stable, well-compensated amplifiers.
+
+## When a dedicated amplifier makes a difference
+
+A separate amplifier (or a more powerful DAC/amp) improves the sound when the current source has a real limitation:
+
+- **Insufficient voltage:** the headphone doesn't reach the desired volume, or reaches it while clipping on peaks, common with high-impedance headphones or low-sensitivity planars.
+- **High output impedance** with headphones whose impedance varies a lot (multi-BA IEMs).
+- **Audible noise** (hiss) with sensitive IEMs.
+- **Insufficient current** with very low-impedance, low-sensitivity headphones.
+
+If none of these conditions exists, the source is already transparent for that headphone, and a "better" amplifier has nothing to improve. To decide in practice, use the [power calculator](/eletronica/potencia-e-sensibilidade) and see [DAC/amp, dongle or EQ?](/iems/fonte-dac-amp-ou-eq).
+
+<References>
+  <Ref>Self, D. <em>Audio Power Amplifier Design</em>. 6th ed. Focal Press, 2013.</Ref>
+  <Ref>Self, D. <em>Small Signal Audio Design</em>. 3rd ed. Focal Press, 2020. Preamplifiers, RIAA and volume control.</Ref>
+  <Ref>Horowitz, P.; Hill, W. <em>The Art of Electronics</em>. 3rd ed. Cambridge University Press, 2015.</Ref>
+  <Ref>Black, H. S. "Stabilized feedback amplifiers." <em>Bell System Technical Journal</em>, 13(1), 1–18, 1934.</Ref>
+</References>

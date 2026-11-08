@@ -3,6 +3,7 @@ import { LabFrame, Controls, Readout } from '../../components/ui/LabFrame';
 import { Segmented, Slider, Toggle, fmtHz, fmtNum } from '../../components/ui/controls';
 import { useAnimationFrame, useInView } from '../../lib/hooks';
 import { setupCanvas, useThemeColors, withAlpha } from '../../lib/themeColors';
+import { locale, tr } from '../../i18n';
 
 const RHO = 1.204; // kg/m³ a 20 °C
 const P_REF = 20e-6;
@@ -172,8 +173,8 @@ export default function WaveLab() {
 
   return (
     <LabFrame
-      title="Simulador de ondas sonoras"
-      description="Uma janela de 2 metros de ar vista em câmera lenta. Os pontos são moléculas (amostradas); os vermelhos permitem acompanhar uma molécula individual. O fundo mais escuro marca compressões."
+      title={tr("Simulador de ondas sonoras")}
+      description={tr("Uma janela de 2 metros de ar vista em câmera lenta. Os pontos são moléculas (amostradas); os vermelhos permitem acompanhar uma molécula individual. O fundo mais escuro marca compressões.")}
       onReset={() => setS(DEFAULTS)}
       toolbar={
         <Segmented
@@ -181,43 +182,39 @@ export default function WaveLab() {
           value={s.mode}
           onChange={(v) => set('mode', v)}
           options={[
-            { value: 'long', label: 'Longitudinal (ar)' },
-            { value: 'trans', label: 'Transversal (corda)' },
+            { value: 'long', label: tr("Longitudinal (ar)") },
+            { value: 'trans', label: tr("Transversal (corda)") },
           ]}
         />
       }
       footer={
-        <>
-          Deslocamento visual ampliado cerca de {fmtNum(0.03 * WINDOW_M / Math.max(phys.xi, 1e-12), 0)} vezes. Câmera lenta: 1 segundo na tela
-          equivale a {si(1 / slowFactor, 's')} reais. A pressão (verde) é máxima onde as moléculas se aglomeram; o deslocamento (laranja)
-          está 90° defasado dela.
-        </>
+        <>{tr("Deslocamento visual ampliado cerca de")}{' '}{fmtNum(0.03 * WINDOW_M / Math.max(phys.xi, 1e-12), 0)}{' '}{tr("vezes. Câmera lenta: 1 segundo na tela equivale a")}{' '}{si(1 / slowFactor, 's')}{' '}{tr("reais. A pressão (verde) é máxima onde as moléculas se aglomeram; o deslocamento (laranja) está 90° defasado dela.")}</>
       }
     >
       <div ref={wrapRef}>
-        <canvas ref={canvasRef} className="w-full h-[300px] sm:h-[340px] block" aria-label="Animação de onda sonora" />
+        <canvas ref={canvasRef} className="w-full h-[300px] sm:h-[340px] block" aria-label={tr("Animação de onda sonora")} />
       </div>
       <div className="flex flex-wrap gap-4 mt-1 mb-4 text-[12px]">
-        <Toggle checked={s.showP} onChange={(v) => set('showP', v)} label={<span className="text-accent">Pressão</span>} />
-        <Toggle checked={s.showD} onChange={(v) => set('showD', v)} label={<span style={{ color: 'var(--c-b)' }}>Deslocamento</span>} />
+        <Toggle checked={s.showP} onChange={(v) => set('showP', v)} label={<span className="text-accent">{tr("Pressão")}</span>} />
+        <Toggle checked={s.showD} onChange={(v) => set('showD', v)} label={<span style={{ color: 'var(--c-b)' }}>{tr("Deslocamento")}</span>} />
       </div>
       <Controls cols={4}>
-        <Slider label="Frequência" value={s.freq} min={100} max={4000} log onChange={(v) => set('freq', Math.round(v))} format={fmtHz} />
-        <Slider label="Nível (amplitude)" value={s.spl} min={20} max={120} step={1} onChange={(v) => set('spl', v)} unit="dB SPL" />
-        <Slider label="Fase inicial" value={s.phase} min={0} max={360} step={1} onChange={(v) => set('phase', v)} unit="°" />
-        <Slider label="Temperatura do ar" value={s.temp} min={-20} max={40} step={1} onChange={(v) => set('temp', v)} unit="°C" />
-        <Slider label="Velocidade da animação" value={s.speed} min={0} max={3} step={0.05} onChange={(v) => set('speed', v)} unit="×" />
+        <Slider label={tr("Frequência")} value={s.freq} min={100} max={4000} log onChange={(v) => set('freq', Math.round(v))} format={fmtHz} />
+        <Slider label={tr("Nível (amplitude)")} value={s.spl} min={20} max={120} step={1} onChange={(v) => set('spl', v)} unit={tr("dB SPL")} />
+        <Slider label={tr("Fase inicial")} value={s.phase} min={0} max={360} step={1} onChange={(v) => set('phase', v)} unit="°" />
+        <Slider label={tr("Temperatura do ar")} value={s.temp} min={-20} max={40} step={1} onChange={(v) => set('temp', v)} unit="°C" />
+        <Slider label={tr("Velocidade da animação")} value={s.speed} min={0} max={3} step={0.05} onChange={(v) => set('speed', v)} unit="×" />
       </Controls>
       <div className="mt-5">
         <Readout
           items={[
-            { label: 'Velocidade do som', value: `${fmtNum(phys.c, 1)} m/s` },
-            { label: 'Comprimento de onda', value: phys.lambda >= 1 ? `${fmtNum(phys.lambda, 2)} m` : `${fmtNum(phys.lambda * 100, 1)} cm`, accent: true },
-            { label: 'Período', value: si(phys.T, 's') },
-            { label: 'Pressão (RMS)', value: si(phys.p, 'Pa') },
-            { label: 'Deslocamento das moléculas (pico)', value: si(phys.xi, 'm') },
-            { label: 'Velocidade das moléculas (pico)', value: si(phys.u, 'm/s') },
-            { label: 'Intensidade', value: `${phys.I.toExponential(1).replace('.', ',')} W/m²` },
+            { label: tr("Velocidade do som"), value: `${fmtNum(phys.c, 1)} m/s` },
+            { label: tr("Comprimento de onda"), value: phys.lambda >= 1 ? `${fmtNum(phys.lambda, 2)} m` : `${fmtNum(phys.lambda * 100, 1)} cm`, accent: true },
+            { label: tr("Período"), value: si(phys.T, 's') },
+            { label: tr("Pressão (RMS)"), value: si(phys.p, tr("Pa")) },
+            { label: tr("Deslocamento das moléculas (pico)"), value: si(phys.xi, 'm') },
+            { label: tr("Velocidade das moléculas (pico)"), value: si(phys.u, 'm/s') },
+            { label: tr("Intensidade"), value: `${phys.I.toLocaleString(locale, { notation: 'scientific', maximumFractionDigits: 1 })} W/m²` },
           ]}
         />
       </div>

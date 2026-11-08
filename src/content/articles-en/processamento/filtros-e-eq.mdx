@@ -1,0 +1,87 @@
+<Lead>
+To equalize is to apply filters to a signal to change its frequency response. Behind the "bass" and "treble" knobs and the apps with ten little bars there are only a few types of filter, described by three parameters (frequency, gain and Q) and governed by simple, exact mathematics.
+</Lead>
+
+<Callout type="simples">
+An equalizer turns specific frequencies up or down. You usually control three things: where (frequency), how much (gain) and how wide the change is (Q). A low Q affects a broad region; a high Q affects a narrow slice.
+</Callout>
+
+## What EQ is
+
+**Equalization** (EQ) is the intentional alteration of a signal's frequency response. The name comes from early 20th-century telephony, when circuits were used to "equalize" (compensate for) the frequency losses of long lines. Today, EQ serves three different goals:
+
+1. **Correcting** a system: bringing a headphone or a room closer to a reference response.
+2. **Adjusting to taste**: more bass, less brightness.
+3. **Creating** (in mixing): sculpting timbres and opening up space between instruments.
+
+In all cases, the tool is the same: filters.
+
+## Graphic and parametric equalizers
+
+A **graphic equalizer** has bands with fixed frequencies (for example, 10 octave bands: 31, 63, 125… 16 kHz) and fixed width; only the gain of each is adjustable. It's intuitive, since the position of the controls draws the curve, but imprecise: a problem at 7.2 kHz falls between the 4 and 8 kHz bands.
+
+A **parametric equalizer** (PEQ) lets you freely adjust, for each filter, the **frequency**, **gain** and **width**. With a few well-placed filters, it does what a graphic EQ would need dozens of bands to approximate. It's the standard tool for correcting headphones.
+
+## Filter types
+
+<Diagram id="filter-shapes" />
+
+Nearly every digital EQ uses **biquads**: second-order filters defined by five coefficients. The most widely used formulas for calculating these coefficients from frequency, gain and Q are those of Robert Bristow-Johnson's *Audio EQ Cookbook*, the same ones the Web Audio API implements and the same ones used in the labs on this site.
+
+- **Peak (bell, *peaking*)**: boosts or attenuates a band around the center frequency. The shape is symmetric on a logarithmic scale. It's the correction filter par excellence.
+- **Low shelf**: raises or lowers everything below a frequency, like a step. Ideal for adjusting the amount of bass.
+- **High shelf**: the same for everything above a frequency; ideal for tilting the treble.
+- **Low-pass** and **high-pass**: let one side through and attenuate the other, here at 12 dB per octave. They're for cutting entire regions (low-frequency noise, for example), not for fine adjustments.
+- **Notch**: deeply removes a narrow band (mains hum, very narrow resonances).
+- **Band-pass**: lets only one band through.
+
+<Lab id="filter" />
+
+## Frequency, gain and Q
+
+**Frequency** is the center (in a peak) or the transition point (in a shelf or low-pass).
+
+**Gain**, in dB, is how much the filter boosts or attenuates at the center frequency (in a peak) or on the plateau (in a shelf).
+
+**Q** (quality factor) defines the width. For a resonator, Q is the center frequency divided by the bandwidth:
+
+<Formula say="Q is how narrow a filter is relative to its frequency: the higher the Q, the narrower the slice it affects.">
+
+$$
+Q = \frac{f_0}{\Delta f}
+$$
+
+</Formula>
+
+High Q means a narrow filter; low Q, a wide one. For peak filters, Q is commonly translated into **width in octaves** ($BW$), using the cookbook relationship:
+
+<Formula say="This converts Q into a width in octaves. A Q of about 1.4 is one octave wide, and about 4.3 is one-third of an octave.">
+
+$$
+BW = \frac{2}{\ln 2}\,\operatorname{arsinh}\!\left(\frac{1}{2Q}\right)
+$$
+
+</Formula>
+
+Some reference values: Q = 0.7 ≈ 2 octaves (very wide); Q = 1.4 ≈ 1 octave; Q = 4.3 ≈ 1/3 octave; Q = 10 ≈ 1/7 octave (quite narrow).
+
+<Callout type="atencao" title="Q isn't standardized between programs">
+Different equalizers define width in slightly different ways (width at −3 dB, width at half the gain, "proportional Q" that changes with gain). The same "Q = 2" filter can have different widths in different programs. The labs on this site and Equalizer APO follow the cookbook definition for peak filters. For shelves, this site uses the Web Audio API's default slope (S = 1, equivalent to Q ≈ 0.707).
+</Callout>
+
+## Magnitude and phase go together
+
+EQ biquads are **minimum-phase** filters: their phase response is determined by the magnitude response. A peak filter changes the phase only around the frequency where it changes the level; turn on "Show phase" in the lab to see it. That's exactly what you want when correcting a resonance in a headphone, also a minimum-phase phenomenon: the inverse filter cancels both the peak and the prolonged "ringing" associated with it. This point is central to understanding [what EQ can fix](/processamento/limites-da-eq).
+
+There are also **linear-phase** equalizers, which change magnitude without changing the relative phase between frequencies, at the cost of latency and *pre-ringing* before transients. They're useful in mastering and specific situations; for correcting headphones, minimum-phase filters are generally the more physically coherent choice.
+
+## Combined filters
+
+Filters in series add their responses in dB. A +4 dB low shelf and a −3 dB peak at 3 kHz result in a curve that's the sum of the two. That's why the total curve of a parametric EQ is simply the sum of the individual curves, which the next lab shows live in [parametric equalizer, preamp and clipping](/processamento/equalizador-parametrico).
+
+<References>
+  <Ref>Bristow-Johnson, R. <em>Cookbook formulae for audio EQ biquad filter coefficients</em>. (Incorporated into the W3C Web Audio API specification.)</Ref>
+  <Ref>W3C. <em>Web Audio API</em> — BiquadFilterNode. w3.org/TR/webaudio.</Ref>
+  <Ref>Zölzer, U. (ed.). <em>DAFX: Digital Audio Effects</em>. 2nd ed. Wiley, 2011. Chapter on filters and equalizers.</Ref>
+  <Ref>Orfanidis, S. J. "Digital parametric equalizer design with prescribed Nyquist-frequency gain." <em>Journal of the Audio Engineering Society</em>, 45(6), 444–455, 1997.</Ref>
+</References>

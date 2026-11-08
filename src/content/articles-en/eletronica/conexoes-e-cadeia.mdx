@@ -1,0 +1,72 @@
+<Lead>
+Between the music file and your ear there are connectors, cables, interfaces and sometimes speakers. Each link has well-defined physical properties, and each has accumulated a surprising amount of folklore. This article organizes what each part does and where the real differences lie.
+</Lead>
+
+<Callout type="simples">
+Connectors and cables simply carry the signal. As long as they're intact and have reasonably low resistance, they don't change the sound in any audible way. Choose them for comfort, durability and fit. A "balanced" output mostly just gives you more voltage.
+</Callout>
+
+## Headphone connectors
+
+**3.5 mm (TRS).** The universal standard. Three contacts: tip (left channel), ring (right) and sleeve (ground shared by both channels). The four-contact **TRRS** version adds a microphone. For simplicity, the ground is **shared** by the two channels.
+
+**6.35 mm.** The same logic as 3.5 mm, in a larger, sturdier size, common on professional equipment and desktop amplifiers.
+
+**2.5 mm (balanced TRRS).** Four contacts, with separate forward and return for each channel. Small and fragile; it was popular on portable players and has lost ground.
+
+**4.4 mm (Pentaconn).** A five-contact connector standardized in Japan (JEITA RC-8141C), with separate forward and return per channel and a ground contact. Sturdier than the 2.5 mm, it has become the de facto standard for portable balanced outputs.
+
+**4-pin XLR.** The balanced standard for desktop amplifiers.
+
+**Connectors on the IEM side.** IEMs with removable cables use **MMCX** (coaxial with a rotating fit) or **0.78 mm 2-pin** (often with variations like the "QDC" standard, in which the pins are recessed). The choice affects durability and fit, not sound.
+
+## What "balanced" means in headphones
+
+The term comes from professional audio, where a **balanced line** carries the signal on two conductors with opposite polarities, and the receiver amplifies only the difference between them. Interference picked up along the cable appears equally on both conductors (common mode) and is canceled. This allows cables tens of meters long in noisy environments.
+
+In headphones, "balanced output" generally means something else: each channel is driven by **two amplifiers in opposition**, one at each terminal of the driver (a *bridge-tied load* configuration), and there's no common ground between channels. The real consequences are:
+
+- **Up to twice the voltage** available (+6 dB), useful for hard-to-drive headphones.
+- **No shared ground**, which eliminates crosstalk caused by the resistance of the common return conductor.
+- Sometimes **more noise** and **higher output impedance**, because there are two amplifiers in series with the headphone, which can be worse with sensitive IEMs.
+
+There's no relevant interference rejection, since a headphone cable is short and the "receiver" is the driver itself. Audible improvements, when they exist, generally come from the greater available voltage or from design differences between the device's two outputs, and not from the connector itself.
+
+## Cables
+
+From an electrical point of view, a headphone cable is a set of conductors with:
+
+- **Resistance**, typically 0.1 to 0.5 Ω per conductor in IEM cables. It acts as a small additional output impedance.
+- **Capacitance** between conductors, 50 to 150 pF per meter. It would only have an effect at megahertz frequencies.
+- **Inductance**, equally irrelevant at audio frequencies and headphone cable lengths.
+
+<Lab id="cable" />
+
+The calculable effects are, in the vast majority of cases, hundredths of a decibel in the response and a crosstalk of −40 to −60 dB through the common ground, far from audible in music. Cables do matter for practical reasons: **comfort** and weight, **microphonics** (mechanical noise transmitted when the cable rubs on clothing), **durability** of connectors and insulation, length, and compatibility with the IEM's and source's connectors.
+
+<Callout type="mito" title="Silver cables, OCC copper and &quot;burn-in&quot;">
+Silver has about 6% lower resistivity than copper; "OCC" or single-crystal copper has fewer grain boundaries. At the lengths and currents of a headphone cable, those differences change the total resistance by milliohms, effects tens of decibels below audibility. There's no known physical mechanism by which a cable "burns in" with use. Controlled blind tests with headphone cables, when done, find no audible differences between electrically adequate cables. If two cables sound different, the first hypothesis to test is a large difference in resistance (very thin, long cables) with a multi-BA IEM; the second, the absence of a blind test.
+</Callout>
+
+## Digital interfaces
+
+**USB.** The most common means between a computer/phone and an external DAC. In asynchronous mode (USB Audio Class 2), the **DAC controls the clock** and requests the data it needs, so the computer's jitter doesn't reach the converter. Real problems with USB are electrical noise from power or ground (hum, hiss) and transmission failures (pops, dropouts), not a "subtle loss of detail."
+
+**S/PDIF (coaxial and optical).** A consumer interface in which the source controls the clock; the DAC recovers the clock from the signal. Modern DACs do this well. Optical (Toslink) electrically isolates the devices, useful against ground loops.
+
+**Bluetooth.** Involves lossy coding and a DAC inside the headphone. It has its own article: [Bluetooth](/digital/bluetooth).
+
+## The rest of the chain: interfaces, monitors and subwoofers
+
+**Audio interfaces** are DACs and ADCs aimed at recording: microphone inputs with preamps and *phantom* power (48 V for condenser microphones), high-impedance instrument inputs, balanced line outputs and low-latency drivers. For headphone listening, many have competent headphone outputs, but not always with low output impedance or noise suited to sensitive IEMs; it's worth checking measurements.
+
+**Studio monitors** are speakers designed for a flat response and good dispersion, usually **active** (amplifiers and crossover inside the cabinet). The **division of labor** between **woofer** (bass and lower mids), **tweeter** (treble) and sometimes a **midrange driver** follows the same [crossover](/drivers/multi-driver-e-crossovers) logic as multi-driver IEMs, with the difference that in a room, dispersion and reflections matter as much as the frontal response.
+
+**Subwoofers** reproduce the region below ~80–120 Hz. Since wavelengths in that band are several meters, the response in a room is dominated by **room modes**: different listener and subwoofer positions produce differences of 10–20 dB at certain frequencies. Positioning, multiple subwoofers and equalization measured at the listening position are the tools to control this. Headphones, since they don't excite the room, don't have this problem, one of the reasons it's easier to get accurate bass in headphones than in speakers.
+
+<References>
+  <Ref>JEITA RC-8141C. <em>Plugs and jacks for audio equipment</em> (includes the 4.4 mm connector).</Ref>
+  <Ref>USB Implementers Forum. <em>Universal Serial Bus Device Class Definition for Audio Devices</em>, Release 2.0.</Ref>
+  <Ref>Whitlock, B. "Balanced lines in audio systems: fact, fiction, and transformers." <em>Journal of the Audio Engineering Society</em>, 43(6), 454–464, 1995.</Ref>
+  <Ref>Toole, F. E. <em>Sound Reproduction</em>. 3rd ed. Routledge, 2017. Room modes and subwoofers.</Ref>
+</References>

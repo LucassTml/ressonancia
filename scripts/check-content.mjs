@@ -15,6 +15,8 @@ for (const line of manifest.split('\n')) {
   if (sm && cur) articles.push(`${cur}/${sm[1]}`);
 }
 const ids = new Set(articles);
+const diagramsSrc = fs.readFileSync(path.join(root, 'components/mdx/Diagrams.tsx'), 'utf8');
+const diagrams = new Set([...diagramsSrc.matchAll(/^\s+'?([a-z-]+)'?: \{/gm)].map((m) => m[1]));
 let problems = 0;
 for (const a of articles) {
   const f = path.join(root, 'content/articles', a + '.mdx');
@@ -22,6 +24,18 @@ for (const a of articles) {
   const src = fs.readFileSync(f, 'utf8');
   for (const m of src.matchAll(/<Lab id="([^"]+)"/g)) if (!labIds.has(m[1])) { console.log('LAB INEXISTENTE', m[1], 'em', a); problems++; }
   for (const m of src.matchAll(/\]\((\/[a-z-]+\/[a-z0-9-]+)\)/g)) if (!ids.has(m[1].slice(1))) { console.log('LINK QUEBRADO', m[1], 'em', a); problems++; }
+  for (const m of src.matchAll(/<Diagram id="([^"]+)"/g)) if (!diagrams.has(m[1])) { console.log('DIAGRAMA INEXISTENTE', m[1], 'em', a); problems++; }
+  const fe = path.join(root, 'content/articles-en', a + '.mdx');
+  if (!fs.existsSync(fe)) { console.log('SEM VERSÃO EM INGLÊS:', a); problems++; }
+  else {
+    const en = fs.readFileSync(fe, 'utf8');
+    const count = (t, re) => [...t.matchAll(re)].map((x) => x[1]).sort().join();
+    for (const re of [/<Lab id="([^"]+)"/g, /<Diagram id="([^"]+)"/g, /\]\((\/[a-z-]+\/[a-z0-9-]+)\)/g]) {
+      for (const x of count(en, re).split(',')) if (x && !src.includes(x)) { console.log('EN difere do PT:', a, x); problems++; }
+      for (const x of count(src, re).split(',')) if (x && !en.includes(x)) { console.log('PT difere do EN:', a, x); problems++; }
+    }
+    for (const m of en.matchAll(/\]\((\/[a-z-]+\/[a-z0-9-]+)\)/g)) if (!ids.has(m[1].slice(1))) { console.log('LINK QUEBRADO (EN)', m[1], 'em', a); problems++; }
+  }
   const words = src.replace(/<[^>]+>/g, ' ').split(/\s+/).length;
   console.log(String(words).padStart(5), a);
 }

@@ -4,6 +4,7 @@ import { Button, Slider, Toggle, fmtNum } from '../../components/ui/controls';
 import { FreqPlot, Legend } from '../../viz/FreqPlot';
 import { biquadCoefs, biquadDb, interpCurve, logFreqs } from '../../audio/dsp';
 import { harmanIE } from '../../data/targets';
+import { tr } from '../../i18n';
 
 const FS = 96000;
 const pk = (f: number, fc: number, g: number, q: number) => biquadDb(biquadCoefs({ id: '', type: 'peaking', freq: fc, gain: g, q }, FS), f, FS);
@@ -43,14 +44,14 @@ export default function VariationLab() {
 
   return (
     <LabFrame
-      title="Variação entre unidades"
-      description="Um lote de unidades do mesmo modelo de IEM, cada uma com pequenas variações independentes de componentes e montagem. Uma medição de review é uma amostra desse lote."
+      title={tr("Variação entre unidades")}
+      description={tr("Um lote de unidades do mesmo modelo de IEM, cada uma com pequenas variações independentes de componentes e montagem. Uma medição de review é uma amostra desse lote.")}
       onReset={() => {
         setN(12);
         setSigma(1);
         setSeed(3);
       }}
-      footer="Simulação: variações gaussianas em sensibilidade de drivers, ressonâncias de tubos e encaixe no acoplador. As magnitudes padrão (desvio de ~1–2 dB em algumas regiões) são compatíveis com tolerâncias comuns de fabricação de BAs e com a repetibilidade de medições."
+      footer={tr("Simulação: variações gaussianas em sensibilidade de drivers, ressonâncias de tubos e encaixe no acoplador. As magnitudes padrão (desvio de ~1–2 dB em algumas regiões) são compatíveis com tolerâncias comuns de fabricação de BAs e com a repetibilidade de medições.")}
     >
       <FreqPlot
         height={290}
@@ -62,35 +63,31 @@ export default function VariationLab() {
           ...units.map((u, i) => ({ id: `u${i}`, fn: u, color: i === 0 ? 'var(--c-a)' : i === 1 ? 'var(--c-b)' : 'var(--fg-faint)', width: i < 2 ? 2 : 1, opacity: i < 2 ? 1 : 0.55 })),
           ...(showBand ? [{ id: 'up', fn: stats.up, color: 'var(--c-target)', width: 1.4, dash: '5 4' }, { id: 'dn', fn: stats.dn, color: 'var(--c-target)', width: 1.4, dash: '5 4' }] : []),
         ]}
-        ariaLabel="Respostas de várias unidades do mesmo modelo"
+        ariaLabel={tr("Respostas de várias unidades do mesmo modelo")}
       />
       <div className="mt-2 mb-4">
-        <Legend items={[{ label: 'Unidade do review', color: 'var(--c-a)' }, { label: 'Sua unidade', color: 'var(--c-b)' }, { label: 'Outras unidades', color: 'var(--fg-faint)' }, ...(showBand ? [{ label: 'Média ± 1 desvio padrão', color: 'var(--c-target)', dash: true }] : [])]} />
+        <Legend items={[{ label: tr("Unidade do review"), color: 'var(--c-a)' }, { label: tr("Sua unidade"), color: 'var(--c-b)' }, { label: tr("Outras unidades"), color: 'var(--fg-faint)' }, ...(showBand ? [{ label: tr("Média ± 1 desvio padrão"), color: 'var(--c-target)', dash: true }] : [])]} />
       </div>
       <Controls cols={2}>
-        <Slider label="Unidades no lote" value={n} min={2} max={40} step={1} onChange={setN} />
-        <Slider label="Escala das tolerâncias" value={sigma} min={0.2} max={2.5} step={0.05} onChange={setSigma} format={(v) => `${fmtNum(v, 2)}×`} />
+        <Slider label={tr("Unidades no lote")} value={n} min={2} max={40} step={1} onChange={setN} />
+        <Slider label={tr("Escala das tolerâncias")} value={sigma} min={0.2} max={2.5} step={0.05} onChange={setSigma} format={(v) => `${fmtNum(v, 2)}×`} />
       </Controls>
       <div className="flex flex-wrap items-center gap-3 mt-4">
-        <Button onClick={() => setSeed((s) => s + 1)}>Fabricar outro lote</Button>
-        <Toggle checked={showBand} onChange={setShowBand} label="Mostrar faixa de ±1σ" />
+        <Button onClick={() => setSeed((s) => s + 1)}>{tr("Fabricar outro lote")}</Button>
+        <Toggle checked={showBand} onChange={setShowBand} label={tr("Mostrar faixa de ±1σ")} />
       </div>
       <div className="mt-4">
         <Readout
           items={[
-            { label: 'Desvio padrão em 3 kHz', value: `${fmtNum(stats.sd3k, 2)} dB` },
-            { label: 'Desvio padrão em 8 kHz', value: `${fmtNum(stats.sd8k, 2)} dB` },
-            { label: 'Maior diferença “review × sua” (até 10 kHz)', value: `${fmtNum(stats.diff12, 1)} dB`, accent: true },
-            { label: 'Maior dispersão no lote', value: `${fmtNum(stats.maxDiff, 1)} dB` },
+            { label: tr("Desvio padrão em 3 kHz"), value: `${fmtNum(stats.sd3k, 2)} dB` },
+            { label: tr("Desvio padrão em 8 kHz"), value: `${fmtNum(stats.sd8k, 2)} dB` },
+            { label: tr("Maior diferença “review × sua” (até 10 kHz)"), value: `${fmtNum(stats.diff12, 1)} dB`, accent: true },
+            { label: tr("Maior dispersão no lote"), value: `${fmtNum(stats.maxDiff, 1)} dB` },
           ]}
         />
       </div>
       <div className="mt-3">
-        <Note>
-          Conclusões sobre diferenças de 1–2 dB entre dois IEMs, baseadas em uma única unidade de cada, podem estar dentro da variação de
-          produção. Quanto mais unidades medidas (e mais reposicionamentos), mais confiável a média — exatamente como em qualquer medição
-          científica.
-        </Note>
+        <Note>{tr("Conclusões sobre diferenças de 1–2 dB entre dois IEMs, baseadas em uma única unidade de cada, podem estar dentro da variação de produção. Quanto mais unidades medidas (e mais reposicionamentos), mais confiável a média — exatamente como em qualquer medição científica.")}</Note>
       </div>
     </LabFrame>
   );

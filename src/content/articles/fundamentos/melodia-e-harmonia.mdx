@@ -2,6 +2,10 @@
 Uma melodia sobrevive a um rádio de pilha, a uma ligação telefônica e a um assovio desafinado. Ela não é feita de frequências, mas de relações entre frequências organizadas no tempo. Entender o que compõe uma melodia — e como o cérebro a extrai do som — mostra o que um fone precisa preservar e o que ele pode, surpreendentemente, perder.
 </Lead>
 
+<Callout type="simples">
+Uma melodia é um padrão de passos para cima e para baixo, com um ritmo. Como o cérebro acompanha o padrão, e não as frequências exatas, você reconhece uma música cantarolada em qualquer tom e em qualquer alto-falante. O que uma reprodução ruim prejudica não é a melodia, e sim o timbre, a textura e a capacidade de acompanhar cada instrumento.
+</Callout>
+
 ## Altura: uma percepção, não uma medida
 
 **Altura** (*pitch*) é a qualidade que permite ordenar sons do grave ao agudo. Para um tom puro, ela acompanha de perto a frequência. Mas quase nenhum som musical é um tom puro: uma nota de violão é uma pilha de harmônicos em 110, 220, 330, 440 Hz… e mesmo assim ouvimos **uma** nota, com **uma** altura, a da fundamental.
@@ -23,13 +27,19 @@ O efeito da fundamental ausente explica por que você reconhece a linha de baixo
 
 ## Notas, oitavas e afinação
 
-Duas notas separadas por uma **oitava** (razão 2:1) soam tão parecidas que recebem o mesmo nome em praticamente todas as culturas musicais. Isso tem base física: todos os harmônicos da nota mais aguda coincidem com harmônicos (pares) da mais grave. Por isso a altura tem duas dimensões: a **altura propriamente dita** (grave–agudo) e a **classe de altura** ou croma (Dó, Ré, Mi…), que se repete a cada oitava.
+<Diagram id="octave-keyboard" />
+
+Duas notas separadas por uma [**oitava**](/inicio/o-que-e-uma-oitava) (razão 2:1) soam tão parecidas que recebem o mesmo nome em praticamente todas as culturas musicais. Ouça: <Listen label="Uma oitava" f="261.6,523.3" wave="triangle" />. Isso tem base física: todos os harmônicos da nota mais aguda coincidem com harmônicos (pares) da mais grave. Por isso a altura tem duas dimensões: a **altura propriamente dita** (grave–agudo) e a **classe de altura** ou croma (Dó, Ré, Mi…), que se repete a cada oitava.
 
 A música ocidental divide a oitava em 12 semitons. No sistema de **temperamento igual**, usado em quase toda a música atual, todos os semitons correspondem à mesma razão de frequências, $2^{1/12} \approx 1{,}0595$. A frequência de qualquer nota pode ser calculada a partir da referência Lá4 = 440 Hz (padronizada na ISO 16):
+
+<Formula say="Cada semitom multiplica a frequência por cerca de 1,06, e doze deles dão exatamente o dobro.">
 
 $$
 f(n) = 440 \cdot 2^{(n - 69)/12}\ \text{Hz}
 $$
+
+</Formula>
 
 em que $n$ é o número da nota no padrão MIDI (Lá4 = 69, Dó4 = 60). Diferenças pequenas de afinação são medidas em **cents**: 100 cents por semitom, 1 200 por oitava. Ouvintes treinados percebem diferenças de 5 a 10 cents entre notas sucessivas.
 

@@ -1,0 +1,81 @@
+<Lead>
+Tube amplifiers glow, warm up and cost a lot, and many people swear they sound "warmer," "more musical," "three-dimensional." There's real physics behind some of these impressions, and there are also myths. The difference between a tube and a transistor amplifier lies in three places: how each device amplifies, how the circuits are usually designed around them and how the result interacts with the headphone.
+</Lead>
+
+<Callout type="simples">
+Both tubes and transistors make a signal bigger, but they distort differently. Tubes add a little gentle coloration and often have a high output impedance that changes how a headphone sounds. Transistors alter the signal less. Preferring the tube sound is legitimate, but it isn't more faithful to the recording.
+</Callout>
+
+## How a tube works
+
+A **thermionic valve** (or vacuum tube) is an airless glass bulb containing, in the simplest case (the **triode**), three elements:
+
+- a **cathode**, heated by a filament until it emits electrons (the thermionic effect, hence the glow);
+- a **plate** (anode), held at a high positive voltage (typically 100 to 400 V), which attracts the electrons;
+- a **grid** of fine wires between the two.
+
+The voltage on the grid controls how many electrons reach the plate: slightly more negative, less current; slightly less negative, more current. Since a small change in grid voltage produces a large change in plate current, the tube **amplifies**. Tubes with more grids (tetrodes, pentodes) have more gain and other characteristics.
+
+## How a transistor works
+
+A **transistor** does conceptually the same thing, with a small control quantity regulating a larger current, but in the solid state. In a **bipolar transistor** (BJT), a small current at the base controls the current between collector and emitter; in a **MOSFET**, a voltage at the gate controls the current between drain and source, through an electric field in a semiconductor channel. There's no filament, vacuum or high voltage; transistors are tiny, cheap, robust and can be integrated by the thousands on a chip.
+
+## Where the differences really appear
+
+### 1. Transfer curves and distortion profile
+
+No device is perfectly linear. The way the output departs from a straight line defines the **distortion profile**:
+
+- A **triode** operating on a single side of the signal (**single-ended**) has a smooth, **asymmetric** curve: it compresses one half-cycle more than the other. That mainly generates **second harmonic** (one octave up), which grows gradually with level. At moderate levels, the distortion of a single-ended tube amplifier with no feedback can be between 0.5% and several percent, orders of magnitude above a good solid-state amp.
+- In **push-pull** (two tubes in opposition), even harmonics cancel and **third harmonic** predominates, with a smooth, symmetric compression.
+- **Transistors with heavy negative feedback** are extremely linear up to the limit of the supply; there, they clip abruptly (**hard clipping**), generating high-order odd harmonics. Below the limit, distortion is typically 0.001% to 0.01%.
+- Poorly biased **class B** circuits generate **crossover distortion**, which worsens at low volume, one reason for the bad reputation of some old transistor amps.
+
+<Lab id="distortion" />
+
+The **soft saturation** of tubes also matters at the limits: when a tube amp is pushed beyond its capacity, it compresses gradually instead of cutting off suddenly. For electric guitars, where the amplifier is deliberately driven into saturation, that's an enormous and desired difference. For reproduction at normal levels, it only appears if the amplifier is working near its limit.
+
+### 2. Output impedance and transformers
+
+Tubes work with high voltages and low currents, that is, they have **high impedance**. Headphones (and speakers) need low voltages and higher currents. To match the two, tube amplifiers often use **output transformers**, or **OTL** (*output transformerless*) stages, which connect the tube directly to the headphone with a high output impedance, often 10, 50 or more than 100 Ω.
+
+That high output impedance is very probably the **largest source of audible differences** between tube and solid-state amps with headphones. As we saw in [output impedance](/eletronica/potencia-e-sensibilidade), it forms a voltage divider with the headphone's impedance. With a 300 Ω dynamic headphone with an impedance peak in the bass, this raises the bass around the resonance and reduces the driver's electrical damping, an effect described as "warmth" and "looser" bass. With multi-BA IEMs, the change can be drastic and unpredictable. With flat-impedance planars, almost nothing changes.
+
+Transformers, in turn, have their own frequency response and bass distortion at high levels, which depend a lot on quality.
+
+### 3. Noise, microphonics and maintenance
+
+Tubes require a high-voltage (dangerous) power supply, heat up, age and need to be replaced. Some are **microphonic**: mechanical vibrations modulate their current, generating noise when the device is touched. Tube circuits also tend to have more background noise and supply hum, which can be audible with sensitive IEMs.
+
+## Why many people like the tube sound
+
+Putting the pieces together, there are plausible physical reasons for the preference:
+
+- **Second harmonic at low to moderate levels** is perceived as "richness" or "warmth" rather than harshness. It reinforces the octave and the fundamental's timbre consonantly. In small doses it can be pleasant, although it is, objectively, a change to the signal.
+- **Interaction with headphone impedance** alters the frequency response, often raising bass and softening treble, a warmer signature.
+- **Soft compression** near the limit makes peaks less aggressive.
+- **Expectation, aesthetics and ritual:** the glow of the tubes, the weight of the equipment, the price and the history influence perception. This component is real and shouldn't be dismissed or treated as the only factor. See [bias and expectation](/ciencia/vies-e-placebo).
+
+<Callout type="preferencia">
+Preferring the sound of a tube amp is a legitimate choice, just like preferring a warmer headphone. What doesn't hold up is saying a tube amp is **more faithful** to the signal. In most measurements, a good solid-state amplifier alters the signal less than a good tube amp. If the goal is transparency, transistors win easily; if the goal is a specific coloration, tubes are one tool, and an equalizer and a soft-saturation processor are others, cheaper and reversible.
+</Callout>
+
+## Practical summary
+
+| Aspect | Typical tube | Typical solid-state |
+| --- | --- | --- |
+| Distortion at normal level | 0.1% to a few %, mainly 2nd/3rd harmonic | 0.001%–0.01% |
+| Behavior at the limit | Soft compression | Abrupt clipping |
+| Output impedance | Often high (10–100+ Ω) | Usually low (&lt; 1–2 Ω) |
+| Interaction with multi-BA IEMs | Strong, changes the response | Negligible |
+| Noise with sensitive IEMs | Often audible | Usually inaudible |
+| Maintenance | Tubes age | Minimal |
+
+There are also **hybrids** (tube input stage, solid-state output), which combine a tube's coloration with the low output impedance of transistors.
+
+<References>
+  <Ref>Jones, M. <em>Valve Amplifiers</em>. 4th ed. Newnes, 2012.</Ref>
+  <Ref>Self, D. <em>Audio Power Amplifier Design</em>. 6th ed. Focal Press, 2013.</Ref>
+  <Ref>Hamm, R. O. "Tubes versus transistors — is there an audible difference?" <em>Journal of the Audio Engineering Society</em>, 21(4), 267–273, 1973.</Ref>
+  <Ref>Bussey, W. S.; Haigler, R. M. "Tubes versus transistors in electric guitar amplifiers." <em>IEEE ICASSP</em>, 1981.</Ref>
+</References>

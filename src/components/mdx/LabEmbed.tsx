@@ -1,5 +1,6 @@
 import { Component, Suspense, type ReactNode } from 'react';
 import { labById } from '../../labs';
+import { tr } from '../../i18n';
 
 class LabBoundary extends Component<{ children: ReactNode; title: string }, { error: Error | null }> {
   state = { error: null as Error | null };
@@ -9,9 +10,7 @@ class LabBoundary extends Component<{ children: ReactNode; title: string }, { er
   render() {
     if (this.state.error)
       return (
-        <div className="not-prose my-8 rounded-xl border border-line px-5 py-4 font-sans text-[13.5px] text-muted">
-          Não foi possível carregar “{this.props.title}”. Seu navegador pode não suportar a Web Audio API ou o recurso necessário.
-        </div>
+        <div className="not-prose my-8 rounded-xl border border-line px-5 py-4 font-sans text-[13.5px] text-muted">{tr("Não foi possível carregar “")}{this.props.title}{tr("”. Seu navegador pode não suportar a Web Audio API ou o recurso necessário.")}</div>
       );
     return this.props.children;
   }

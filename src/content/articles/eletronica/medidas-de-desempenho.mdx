@@ -2,13 +2,21 @@
 Fichas técnicas de DACs e amplificadores trazem números impressionantes: THD+N de 0,0003%, SNR de 125 dB, faixa dinâmica de 130 dB. O que exatamente cada um mede? Quando a diferença entre dois números se traduz em algo que você ouve? E por que, com IEMs sensíveis, um número aparentemente bom pode significar chiado?
 </Lead>
 
+<Callout type="simples">
+Distorção são sons extras que o equipamento acrescenta; ruído é o chiado de fundo. Nos aparelhos atuais, os dois costumam estar muito abaixo do audível, e por isso 0,001% não é realmente melhor que 0,003%. A exceção são fones muito sensíveis, que podem revelar o chiado de uma fonte ruidosa.
+</Callout>
+
 ## Distorção harmônica total (THD)
 
 Um sistema perfeitamente linear devolve uma senoide pura como senoide pura. Um sistema real adiciona **harmônicos**: componentes nas frequências 2f, 3f, 4f… que não estavam no sinal. A **distorção harmônica total** é a soma (em potência) desses harmônicos, relativa à fundamental:
 
+<Formula say="Some todos os harmônicos indesejados e compare com o tom original.">
+
 $$
 \text{THD} = \frac{\sqrt{V_2^2 + V_3^2 + V_4^2 + \cdots}}{V_1}
 $$
+
+</Formula>
 
 Expressa em porcentagem ou em decibéis: 1% = −40 dB, 0,1% = −60 dB, 0,01% = −80 dB, 0,001% = −100 dB.
 
@@ -40,9 +48,13 @@ Normas como a **AES17** padronizam esses procedimentos para áudio digital.
 
 Para headphones pouco sensíveis, a SNR relativa ao máximo da fonte é o número relevante. Para **IEMs sensíveis**, ele engana. O que importa é o **ruído absoluto na saída**, em microvolts, porque o IEM transforma esses microvolts em pressão sonora de acordo com a sua sensibilidade:
 
+<Formula say="Um fone muito sensível transforma até ruídos elétricos microscópicos em chiado audível.">
+
 $$
 L_{\text{ruído}} = S_{\text{dB/V}} + 20 \log_{10}(V_{\text{ruído}})
 $$
+
+</Formula>
 
 Um IEM de 120 dB/V (comum em multi-BA) numa fonte com 5 µV de ruído produz $120 + 20\log_{10}(5\times10^{-6}) \approx 14$ dB SPL de chiado — audível num quarto silencioso, entre faixas ou em passagens baixas. A mesma fonte num headphone de 100 dB/V produz −6 dB SPL: inaudível.
 

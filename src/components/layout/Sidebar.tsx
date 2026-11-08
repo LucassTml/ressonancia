@@ -5,6 +5,7 @@ import { modules } from '../../content/manifest';
 import { hasArticleSource } from '../../content/registry';
 import { IconChevron, IconClose } from '../ui/controls';
 import { Logo } from './TopBar';
+import { tr } from '../../i18n';
 
 function SidebarTree({ onNavigate }: { onNavigate?: () => void }) {
   const { pathname } = useLocation();
@@ -16,7 +17,7 @@ function SidebarTree({ onNavigate }: { onNavigate?: () => void }) {
   }, [currentModule]);
 
   return (
-    <nav aria-label="Módulos e artigos" className="text-[13.5px]">
+    <nav aria-label={tr("Módulos e artigos")} className="text-[13.5px]">
       <ul className="space-y-0.5">
         {modules.map((m) => {
           const isOpen = !!open[m.id];
@@ -95,9 +96,9 @@ function SidebarTree({ onNavigate }: { onNavigate?: () => void }) {
       </ul>
       <div className="mt-6 pt-4 border-t border-line space-y-0.5">
         {[
-          ['/laboratorio', 'Laboratório'],
-          ['/glossario', 'Glossário'],
-          ['/favoritos', 'Favoritos'],
+          ['/laboratorio', tr("Laboratório")],
+          ['/glossario', tr("Glossário")],
+          ['/favoritos', tr("Favoritos")],
         ].map(([to, label]) => (
           <NavLink
             key={to}
@@ -151,7 +152,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
           <motion.div
             role="dialog"
             aria-modal="true"
-            aria-label="Navegação"
+            aria-label={tr("Navegação")}
             className="fixed inset-y-0 left-0 z-50 w-[min(320px,86vw)] bg-bg border-r border-line overflow-y-auto px-4 pb-10 lg:hidden"
             initial={{ x: '-100%' }}
             animate={{ x: 0 }}
@@ -160,14 +161,12 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
           >
             <div className="h-14 flex items-center justify-between">
               <Logo />
-              <button onClick={onClose} className="h-8 w-8 grid place-items-center rounded-lg text-muted hover:text-fg" aria-label="Fechar">
+              <button onClick={onClose} className="h-8 w-8 grid place-items-center rounded-lg text-muted hover:text-fg" aria-label={tr("Fechar")}>
                 <IconClose size={18} />
               </button>
             </div>
             <div className="mt-2">
-              <Link to="/artigos" className="block pl-6 py-1 text-muted hover:text-fg text-[13.5px] mb-2">
-                Todos os artigos
-              </Link>
+              <Link to="/artigos" className="block pl-6 py-1 text-muted hover:text-fg text-[13.5px] mb-2">{tr("Todos os artigos")}</Link>
               <SidebarTree onNavigate={onClose} />
             </div>
           </motion.div>

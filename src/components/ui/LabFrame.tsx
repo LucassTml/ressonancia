@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { motion } from 'motion/react';
 import { Button, IconReset } from './controls';
 import { AudioNotice } from './audio';
+import { tr } from '../../i18n';
 
 interface LabFrameProps {
   title: string;
@@ -19,7 +20,7 @@ interface LabFrameProps {
  * Moldura comum dos laboratórios: título, ações e área de conteúdo.
  * Integra-se à leitura (largura estendida opcional) sem virar um "card".
  */
-export function LabFrame({ title, kicker = 'Laboratório', description, onReset, audio, children, footer, toolbar, wide = true }: LabFrameProps) {
+export function LabFrame({ title, kicker = tr('Laboratório'), description, onReset, audio, children, footer, toolbar, wide = true }: LabFrameProps) {
   return (
     <motion.figure
       initial={{ opacity: 0, y: 14 }}
@@ -38,9 +39,7 @@ export function LabFrame({ title, kicker = 'Laboratório', description, onReset,
           <div className="flex items-center gap-1.5">
             {toolbar}
             {onReset && (
-              <Button size="sm" variant="ghost" onClick={onReset} icon={<IconReset size={14} />} title="Restaurar valores iniciais">
-                Restaurar
-              </Button>
+              <Button size="sm" variant="ghost" onClick={onReset} icon={<IconReset size={14} />} title={tr("Restaurar valores iniciais")}>{tr("Restaurar")}</Button>
             )}
           </div>
         </header>

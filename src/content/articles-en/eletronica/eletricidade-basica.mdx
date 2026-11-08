@@ -1,0 +1,97 @@
+<Lead>
+Before discussing DACs, amplifiers and output impedance, it's worth building from scratch the four quantities that appear in every spec: voltage, current, resistance and power. They're simple, but they're where almost all misunderstandings about what a headphone "needs" begin.
+</Lead>
+
+<Callout type="simples">
+Voltage is the push, current is the flow, and resistance is how much the path holds it back. Power is how much energy is being delivered. Most earphones need very little of any of them, which is why almost any modern device can drive them.
+</Callout>
+
+## Charge, current and voltage
+
+Matter contains electric charges: protons (positive) and electrons (negative). In metals, some electrons aren't tied to a specific atom and can move through the material. These free electrons are what make copper a good conductor.
+
+**Current** is the flow of charge per unit of time. Its unit is the **ampere** (A): one coulomb of charge passing per second. In headphones, currents are small, typically from microamperes to tens of milliamperes.
+
+**Voltage** (or potential difference) is the "pressure" pushing the charges: the energy each unit of charge gains or loses going from one point to another. Its unit is the **volt** (V): one joule per coulomb. A 1.5 V battery delivers 1.5 J of energy for every coulomb crossing the circuit.
+
+The hydraulic analogy is useful in moderation: voltage is like the difference in pressure between the two ends of a pipe, and current is the flow of water. It helps you see that without a pressure difference there's no flow, and that a narrower pipe lets through less water. It fails in several details (electricity doesn't "run down" by gravity, and capacitors and inductors have no obvious analogues), so use it as a starting point, not a model.
+
+<Callout type="nota" title="What really moves">
+In a copper wire carrying 1 A, electrons advance at an average speed of fractions of a millimeter per second. What propagates at nearly the speed of light is the **electric field** along the wire, the "message" telling all the electrons to start moving. That's why sound leaves the headphone at the same instant the signal is applied, even with such slow electrons.
+</Callout>
+
+## Resistance and Ohm's Law
+
+Moving electrons collide with the material's atomic lattice and lose energy, which becomes heat. This opposition to the flow is **resistance**, measured in **ohms** (Ω). For many materials, over a wide range of conditions, the current is proportional to the applied voltage. This is **Ohm's Law**:
+
+<Formula say="More voltage means more current; more resistance means less current.">
+
+$$
+V = R \cdot I
+$$
+
+<Vars
+  items={[
+    ['V', 'applied voltage, in volts'],
+    ['R', 'resistance, in ohms'],
+    ['I', 'resulting current, in amperes'],
+  ]}
+/>
+
+</Formula>
+
+Double the voltage and the current doubles; double the resistance and the current halves. A 32 Ω headphone with 1 V applied draws 31.25 mA. The same 1 V on a 300 Ω headphone draws only 3.3 mA.
+
+## Power
+
+**Power** is the rate of energy transfer, in **watts** (W): one joule per second. In a resistive element, the power dissipated is the product of voltage and current and, with Ohm's Law, can be written in three equivalent forms:
+
+<Formula say="At the same voltage, lower resistance takes more power. That alone doesn't tell you how loud a headphone plays.">
+
+$$
+P = V \cdot I = \frac{V^2}{R} = I^2 \cdot R
+$$
+
+</Formula>
+
+Note the consequence of the middle form: **at the same voltage, a lower resistance draws more power**. The 32 Ω headphone with 1 V draws 31 mW; the 300 Ω one, 3.3 mW. That seems to say the 32 Ω headphone "demands more," but this is where confusion begins. How much sound each produces at that voltage depends on each one's **sensitivity**, how efficiently it converts electrical energy into sound pressure. A headphone can receive more power and play more quietly than another. That's the subject of [sensitivity and power](/eletronica/potencia-e-sensibilidade).
+
+<Lab id="ohm" />
+
+## Series and parallel
+
+When resistors are **in series** (one after another), the same current crosses them all and the resistances add: $R_{\text{eq}} = R_1 + R_2$. The voltage divides between them in proportion to their resistances, the principle of the **voltage divider**, which reappears when studying the output impedance of amplifiers.
+
+When they're **in parallel** (side by side, connected to the same two points), the voltage is the same across all of them, the currents add and the equivalent resistance is lower than the smallest of them:
+
+<Formula say="Connecting two loads side by side gives a total resistance lower than either one. Two equal loads make half the resistance.">
+
+$$
+\frac{1}{R_{\text{eq}}} = \frac{1}{R_1} + \frac{1}{R_2}
+$$
+
+</Formula>
+
+Two 32 Ω headphones connected to the same output (with a "Y" adapter, for example) form a 16 Ω load.
+
+## Direct current, alternating current and RMS
+
+A battery supplies **direct current** (DC): constant voltage, current in one direction. An audio signal is an **alternating current** (AC): the voltage oscillates between positive and negative, following the waveform of the sound. The average of an audio signal is zero, so "the average" doesn't describe its strength.
+
+We use the **effective** or **RMS** (*root mean square*) value: the square root of the mean of the signal's squares. It has a precise physical meaning: an alternating voltage of 1 V RMS dissipates in a resistor exactly the same power as 1 V of DC. For a sine wave, $V_{\text{rms}} = V_{\text{peak}}/\sqrt{2}$. Audio specs (output voltage, sensitivity in dB/V, power) refer, unless stated otherwise, to RMS values.
+
+## Why this matters for headphones
+
+With these four quantities, some confusion can already be cleared up:
+
+- **"Amplifier power"** is only part of the story. A headphone needs enough **voltage** to reach a sound level (according to its sensitivity in dB/V), and the amplifier has to be able to supply the **current** that voltage will draw from the load.
+- **Nominal impedance** doesn't say whether a headphone is "easy to drive." It says how much current a given voltage will demand.
+- **Low-impedance headphones** demand current; **high-impedance headphones**, voltage. High-sensitivity headphones (IEMs) need little of either.
+
+But headphones aren't pure resistors: their opposition to current changes with frequency. That's the next step: [alternating current and impedance](/eletronica/corrente-alternada-e-impedancia).
+
+<References>
+  <Ref>Horowitz, P.; Hill, W. <em>The Art of Electronics</em>. 3rd ed. Cambridge University Press, 2015. Chapter 1.</Ref>
+  <Ref>Halliday, D.; Resnick, R.; Walker, J. <em>Fundamentals of Physics</em>, electromagnetism volume. Wiley.</Ref>
+  <Ref>Feynman, R. P.; Leighton, R. B.; Sands, M. <em>The Feynman Lectures on Physics</em>, vol. II. Addison-Wesley, 1964.</Ref>
+</References>

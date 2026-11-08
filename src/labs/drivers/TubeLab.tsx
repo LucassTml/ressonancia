@@ -3,6 +3,7 @@ import { LabFrame, Controls, Readout, Note } from '../../components/ui/LabFrame'
 import { Segmented, Slider, fmtHz, fmtNum } from '../../components/ui/controls';
 import { FreqPlot } from '../../viz/FreqPlot';
 import { biquadCoefs, biquadDb } from '../../audio/dsp';
+import { tr } from '../../i18n';
 
 const C = 343;
 
@@ -41,8 +42,8 @@ export default function TubeLab() {
 
   return (
     <LabFrame
-      title="Tubos e ressonadores"
-      description="Dentro de um IEM, o som passa por tubos, bocais e pequenas câmaras. Cada um ressoa em frequências definidas pela geometria — e um amortecedor acústico (damper) controla o quanto."
+      title={tr("Tubos e ressonadores")}
+      description={tr("Dentro de um IEM, o som passa por tubos, bocais e pequenas câmaras. Cada um ressoa em frequências definidas pela geometria — e um amortecedor acústico (damper) controla o quanto.")}
       onReset={() => {
         setLen(18);
         setEnds('closed-closed');
@@ -57,14 +58,14 @@ export default function TubeLab() {
           value={mode}
           onChange={setMode}
           options={[
-            { value: 'tube', label: 'Tubo' },
-            { value: 'helmholtz', label: 'Helmholtz' },
+            { value: 'tube', label: tr("Tubo") },
+            { value: 'helmholtz', label: tr("Helmholtz") },
           ]}
         />
       }
-      footer="Ressonâncias representadas como filtros de 2ª ordem somados, para visualizar posição e intensidade. A correção de extremidade do gargalo usa ≈1,7·raio (valor típico para aberturas flangeadas nas duas pontas)."
+      footer={tr("Ressonâncias representadas como filtros de 2ª ordem somados, para visualizar posição e intensidade. A correção de extremidade do gargalo usa ≈1,7·raio (valor típico para aberturas flangeadas nas duas pontas).")}
     >
-      <FreqPlot height={250} dbMin={-6} dbMax={24} dbStep={6} fMin={200} curves={[{ id: 'r', label: 'Efeito da ressonância', fn, color: 'var(--c-a)', width: 2.4, fill: true }]} ariaLabel="Ressonâncias acústicas" />
+      <FreqPlot height={250} dbMin={-6} dbMax={24} dbStep={6} fMin={200} curves={[{ id: 'r', label: tr("Efeito da ressonância"), fn, color: 'var(--c-a)', width: 2.4, fill: true }]} ariaLabel={tr("Ressonâncias acústicas")} />
       <div className="mt-4">
         {mode === 'tube' ? (
           <>
@@ -74,35 +75,35 @@ export default function TubeLab() {
                 value={ends}
                 onChange={setEnds}
                 options={[
-                  { value: 'closed-closed', label: 'Fechado nas duas pontas (½ onda)' },
-                  { value: 'open-closed', label: 'Aberto numa ponta (¼ de onda)' },
+                  { value: 'closed-closed', label: tr("Fechado nas duas pontas (½ onda)") },
+                  { value: 'open-closed', label: tr("Aberto numa ponta (¼ de onda)") },
                 ]}
               />
             </div>
             <Controls cols={2}>
-              <Slider label="Comprimento" value={len} min={4} max={40} step={0.5} onChange={setLen} unit="mm" />
-              <Slider label="Amortecimento (damper)" value={damp} min={0} max={1} step={0.01} onChange={setDamp} format={(v) => `${Math.round(v * 100)}%`} />
+              <Slider label={tr("Comprimento")} value={len} min={4} max={40} step={0.5} onChange={setLen} unit="mm" />
+              <Slider label={tr("Amortecimento (damper)")} value={damp} min={0} max={1} step={0.01} onChange={setDamp} format={(v) => `${Math.round(v * 100)}%`} />
             </Controls>
             <div className="mt-4">
               <Readout
-                items={tube.modes.slice(0, 3).map((m, i) => ({ label: `${i + 1}º modo`, value: fmtHz(m), accent: i === 0 }))}
+                items={tube.modes.slice(0, 3).map((m, i) => ({ label: tr("{0}º modo", i + 1), value: fmtHz(m), accent: i === 0 }))}
               />
             </div>
           </>
         ) : (
           <>
             <Controls cols={3}>
-              <Slider label="Volume da câmara" value={vol} min={10} max={400} log onChange={(v) => setVol(Math.round(v))} unit="mm³" />
-              <Slider label="Comprimento do gargalo" value={neckL} min={0.5} max={10} step={0.1} onChange={setNeckL} unit="mm" />
-              <Slider label="Diâmetro do gargalo" value={neckD} min={0.3} max={3} step={0.05} onChange={setNeckD} unit="mm" />
-              <Slider label="Amortecimento" value={damp} min={0} max={1} step={0.01} onChange={setDamp} format={(v) => `${Math.round(v * 100)}%`} />
+              <Slider label={tr("Volume da câmara")} value={vol} min={10} max={400} log onChange={(v) => setVol(Math.round(v))} unit={tr("mm³")} />
+              <Slider label={tr("Comprimento do gargalo")} value={neckL} min={0.5} max={10} step={0.1} onChange={setNeckL} unit="mm" />
+              <Slider label={tr("Diâmetro do gargalo")} value={neckD} min={0.3} max={3} step={0.05} onChange={setNeckD} unit="mm" />
+              <Slider label={tr("Amortecimento")} value={damp} min={0} max={1} step={0.01} onChange={setDamp} format={(v) => `${Math.round(v * 100)}%`} />
             </Controls>
             <div className="mt-4">
               <Readout
                 items={[
                   { label: 'f₀ = (c/2π)·√(A/(V·L))', value: fmtHz(helm.f0), accent: true },
-                  { label: 'Comprimento efetivo do gargalo', value: `${fmtNum(helm.Leff * 1000, 2)} mm` },
-                  { label: 'Q aproximado', value: fmtNum(helm.q, 1) },
+                  { label: tr("Comprimento efetivo do gargalo"), value: `${fmtNum(helm.Leff * 1000, 2)} mm` },
+                  { label: tr("Q aproximado"), value: fmtNum(helm.q, 1) },
                 ]}
               />
             </div>
@@ -112,8 +113,8 @@ export default function TubeLab() {
       <div className="mt-3">
         <Note>
           {mode === 'tube'
-            ? 'Num IEM com BA, o tubo entre o driver e o bocal costuma ter de 5 a 20 mm: suas ressonâncias caem justamente entre 4 e 20 kHz. Engenheiros escolhem comprimentos e diâmetros para posicioná-las onde ajudam (por exemplo, recriando o ganho de presença) e usam dampers para domar as que atrapalham.'
-            : 'Uma câmara pequena com uma abertura estreita vira um ressonador de Helmholtz: a massa de ar no gargalo oscila contra a “mola” do ar na câmara. Ventilações e câmaras auxiliares em IEMs com drivers dinâmicos usam esse princípio para ajustar graves e médios-graves.'}
+            ? tr("Num IEM com BA, o tubo entre o driver e o bocal costuma ter de 5 a 20 mm: suas ressonâncias caem justamente entre 4 e 20 kHz. Engenheiros escolhem comprimentos e diâmetros para posicioná-las onde ajudam (por exemplo, recriando o ganho de presença) e usam dampers para domar as que atrapalham.")
+            : tr("Uma câmara pequena com uma abertura estreita vira um ressonador de Helmholtz: a massa de ar no gargalo oscila contra a “mola” do ar na câmara. Ventilações e câmaras auxiliares em IEMs com drivers dinâmicos usam esse princípio para ajustar graves e médios-graves.")}
         </Note>
       </div>
     </LabFrame>

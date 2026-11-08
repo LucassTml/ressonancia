@@ -2,7 +2,13 @@
 O decibel é a unidade mais usada em áudio e, provavelmente, a mais mal compreendida. Ele não mede uma quantidade: mede uma razão. Entender isso — e por que usamos logaritmos — é o que permite ler especificações, gráficos e medições sem cair em armadilhas.
 </Lead>
 
+<Callout type="simples">
+Um número em decibéis diz quanto uma coisa é maior que outra. Três valores já levam longe: +3 dB é o dobro da potência, +6 dB é o dobro do sinal e +10 dB soa cerca de duas vezes mais alto. A versão do dia a dia está em [Decibel sem matemática](/inicio/decibel-sem-matematica).
+</Callout>
+
 ## O problema: grandezas que variam por milhões
+
+<Diagram id="db-ladder" />
 
 O som mais fraco que um ouvido jovem detecta a 1 kHz tem pressão de cerca de 20 µPa. O limiar da dor fica perto de 20 Pa a 200 Pa, dependendo do critério. Isso é uma razão de um milhão a dez milhões em pressão — e de um trilhão em intensidade, já que a intensidade cresce com o quadrado da pressão. Escrever “o show estava a 2 Pa e a conversa a 0,02 Pa” é exato, mas inútil para comparar coisas rapidamente, desenhar gráficos ou fazer contas de cabeça.
 
@@ -13,6 +19,8 @@ O logaritmo transforma multiplicações em somas. Uma escala logarítmica transf
 ## A definição
 
 O bel (homenagem a Alexander Graham Bell, criado por engenheiros de telefonia nos anos 1920) é o logaritmo decimal de uma razão de **potências**. O decibel é um décimo de bel:
+
+<Formula say="Compare duas potências, tire o logaritmo da razão e multiplique por dez. Dez vezes a potência são +10 dB.">
 
 $$
 L = 10 \log_{10}\!\left(\frac{P_1}{P_0}\right) \ \text{dB}
@@ -26,11 +34,17 @@ $$
   ]}
 />
 
+</Formula>
+
 Mas em áudio quase sempre medimos **amplitudes**: pressão, tensão elétrica, valores de amostra digital. Como a potência é proporcional ao quadrado da amplitude ($P \propto V^2$, $I \propto p^2$), o quadrado sai do logaritmo como fator 2:
+
+<Formula say="Para tensão ou pressão sonora, o multiplicador é vinte em vez de dez, porque a potência cresce com o quadrado dessas grandezas.">
 
 $$
 L = 10 \log_{10}\!\left(\frac{V_1^2}{V_0^2}\right) = 20 \log_{10}\!\left(\frac{V_1}{V_0}\right) \ \text{dB}
 $$
+
+</Formula>
 
 Essa é a origem da famosa confusão entre “10 log” e “20 log”. Não são duas definições diferentes: é a mesma definição aplicada a grandezas diferentes. Um aumento de **6 dB** pode ser descrito como “o dobro da tensão” ou como “quatro vezes a potência” — as duas frases descrevem a mesma mudança física.
 
@@ -52,9 +66,13 @@ Um número em decibéis só tem significado absoluto quando a referência está 
 
 **dB SPL** (*sound pressure level*): pressão acústica RMS relativa a 20 µPa. É o “volume” físico de um som num ponto. A referência foi escolhida por ser aproximadamente o limiar de audição a 1 kHz, de modo que 0 dB SPL é “quase inaudível” e quase todos os sons cotidianos ficam entre 0 e 120.
 
+<Formula say="O dB SPL compara a pressão do som com o som mais fraco que um ouvido jovem detecta em 1 kHz.">
+
 $$
 L_p = 20 \log_{10}\!\left(\frac{p_{\text{rms}}}{20\ \mu\text{Pa}}\right)\ \text{dB SPL}
 $$
+
+</Formula>
 
 **dB(A), dB(C)**: SPL medido com uma **ponderação** que imita a sensibilidade da audição, atenuando graves e agudos extremos. A curva A deriva aproximadamente da curva de igual sonoridade de 40 fons e é usada em normas de ruído e saúde ocupacional; a C é quase plana e usada para níveis altos e picos. São definidas na IEC 61672-1.
 

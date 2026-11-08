@@ -2,6 +2,7 @@ import type { AnchorHTMLAttributes } from 'react';
 import { Link } from 'react-router-dom';
 import { Callout, Figure, KeyNumbers, Lead, Ref, References, Term, Vars } from './Editorial';
 import { Lab } from './LabEmbed';
+import { Diagram, Formula, IemGallery, Listen } from './Learn';
 
 function A({ href = '', children, ...rest }: AnchorHTMLAttributes<HTMLAnchorElement>) {
   if (href.startsWith('/')) return <Link to={href}>{children}</Link>;
@@ -25,4 +26,8 @@ export const mdxComponents = {
   Term,
   Vars,
   Lab,
+  Diagram,
+  Formula,
+  Listen,
+  IemGallery,
 };

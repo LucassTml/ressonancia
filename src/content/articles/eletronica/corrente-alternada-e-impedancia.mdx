@@ -2,6 +2,10 @@
 A ficha técnica de um IEM diz “16 Ω”. Mas, se você medir, vai encontrar 12 Ω em 200 Hz, 40 Ω em 3 kHz e 8 Ω em 10 kHz. Esse número único é uma simplificação de uma grandeza que muda com a frequência — a impedância. Entender por que ela muda explica crossovers, interação com amplificadores e por que alguns IEMs soam diferentes em fontes diferentes.
 </Lead>
 
+<Callout type="simples">
+Impedância é uma resistência que muda com a frequência. A maioria dos fones de um só driver tem impedância quase constante, e qualquer fonte decente os trata igual. Modelos multi-driver podem variar muito e, com uma fonte ruim, isso pode mudar o som deles.
+</Callout>
+
 ## Além da resistência: armazenar energia
 
 Resistores dissipam energia. Dois outros componentes fundamentais fazem algo diferente: **armazenam** energia e a devolvem ao circuito. Essa troca de energia faz com que sua oposição à corrente dependa de quão rápido o sinal varia.
@@ -12,9 +16,13 @@ Um **capacitor** é formado por duas superfícies condutoras separadas por um is
 
 Um capacitor bloqueia corrente contínua (depois de carregado, nada mais flui), mas deixa passar corrente alternada, e com mais facilidade quanto mais rápida a alternância. Sua oposição à corrente alternada, a **reatância capacitiva**, é
 
+<Formula say="Um capacitor se opõe às frequências baixas e deixa passar as altas.">
+
 $$
 X_C = \frac{1}{2\pi f C}
 $$
+
+</Formula>
 
 Ela diminui com a frequência. Um capacitor de 10 µF tem reatância de 796 Ω em 20 Hz e de apenas 0,8 Ω em 20 kHz.
 
@@ -22,9 +30,13 @@ Ela diminui com a frequência. Um capacitor de 10 µF tem reatância de 796 Ω e
 
 Um **indutor** é, em geral, uma bobina de fio. A corrente que passa por ela cria um campo magnético que armazena energia; quando a corrente tenta mudar, o campo induz uma tensão que se opõe à mudança. A **indutância** $L$ é medida em henrys (H). A **reatância indutiva** é
 
+<Formula say="Um indutor faz o contrário de um capacitor: deixa passar os graves e resiste aos agudos.">
+
 $$
 X_L = 2\pi f L
 $$
+
+</Formula>
 
 Ela cresce com a frequência: o indutor deixa passar graves e resiste aos agudos. Toda bobina de driver é, em parte, um indutor.
 
@@ -32,9 +44,13 @@ Ela cresce com a frequência: o indutor deixa passar graves e resiste aos agudos
 
 A **impedância** $Z$ combina resistência e reatância. Como resistência e reatância não estão “em fase” (a tensão sobre um indutor está 90° adiantada em relação à corrente; sobre um capacitor, 90° atrasada), não se somam diretamente: compõem um número complexo, com uma parte resistiva e uma parte reativa. O módulo da impedância de um resistor em série com um indutor, por exemplo, é
 
+<Formula say="Resistência e reatância se combinam como os dois lados de um triângulo retângulo, e não por soma simples.">
+
 $$
 |Z| = \sqrt{R^2 + X_L^2}
 $$
+
+</Formula>
 
 A Lei de Ohm continua valendo, com a impedância no lugar da resistência — para cada frequência. Para sinais de áudio, que contêm muitas frequências, isso significa que **cada frequência enxerga uma carga diferente**.
 

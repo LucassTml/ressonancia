@@ -1,0 +1,60 @@
+<Lead>
+Not every headphone uses magnets to move air. Electrostatics move a membrane with forces between electric charges; piezoelectrics, with crystals that change shape under voltage. These technologies have real virtues and equally real physical limits, and in IEMs they almost always appear as treble specialists.
+</Lead>
+
+<Callout type="simples">
+Electrostatic drivers move an extremely light charged sheet by attraction and repulsion. Piezo drivers use a material that bends when a voltage is applied. Both shine in the treble and struggle with the rest, so in IEMs they mostly work as small tweeters alongside other drivers.
+</Callout>
+
+## Electrostatics
+
+### The principle
+
+An electrostatic transducer has three layers: an extremely thin, slightly conductive **membrane** positioned between two **perforated plates** (the stators). The membrane receives a high, fixed **bias voltage**, hundreds to thousands of volts in headphones, which leaves it electrically charged. The audio signal is applied to the two stators **in opposition**: when one goes positive, the other goes negative.
+
+Like charges repel and opposite charges attract. The charged membrane is therefore pushed by one stator and pulled by the other at the same time, and its movement follows the signal. Since the force acts over the whole surface, the membrane moves almost uniformly, as in planars, but without metal traces, allowing even lighter membranes.
+
+<Lab id="drivers" initial="est" />
+
+The electrostatic force on the membrane is approximately proportional to the product of the bias voltage and the signal voltage, divided by the square of the distance between membrane and stator. The *push-pull* configuration is essential: it largely cancels the nonlinearity that would exist with a single stator, because the growing attraction on one side is offset by the shrinking force on the other. Keeping the membrane's **charge** constant (using a very high resistance on the bias) also helps linearize it.
+
+### Virtues and costs
+
+**Virtues:** extremely low moving mass, distributed force, low distortion and excellent treble response. Reference electrostatic headphones have been admired for decades for their clarity.
+
+**Costs:** they require high voltages. Electrostatic headphones need a dedicated **energizer**, an amplifier that generates the bias and amplifies the signal to hundreds of volts. That makes them expensive and hardly portable. The distance between membrane and stators limits excursion, so strong bass is a challenge.
+
+### Electrostatics in IEMs
+
+In IEMs, the solution was to miniaturize: electrostatic tweeters (often called **EST**) with membranes a few millimeters across and a small **step-up transformer** built into the IEM, converting the voltage of an ordinary headphone output into higher voltages. These tweeters typically cover the region above ~8–10 kHz and appear in **hybrid** or *tribrid* designs (dynamic + BA + EST). Since the band is narrow and the area tiny, their effect is on "air" and extension, and, as always, it depends on the tuning.
+
+<Callout type="nota">
+EST tweeters in IEMs are **capacitive** components coupled by a transformer. That makes the IEM's treble impedance depend on this assembly, and the response can vary with the source. There's nothing wrong with that, but it's one more reason to evaluate the measured IEM rather than its parts list.
+</Callout>
+
+## Piezoelectrics
+
+### The principle
+
+Certain crystals (like quartz) and ceramics (like lead zirconate titanate, PZT) are **piezoelectric**: they generate electric charges when deformed and, conversely, deform when subjected to voltage. The effect was discovered by the brothers Pierre and Jacques Curie in 1880.
+
+A piezoelectric plate alone deforms very little. To amplify the movement, a **bimorph** is used: two bonded piezoelectric layers, polarized so that under voltage one expands while the other contracts. Like a bimetallic strip, the assembly **bends**, and the tip (or center, in a disc) moves much more.
+
+<Lab id="drivers" initial="piezo" />
+
+### Virtues and costs
+
+**Virtues:** very thin, with no magnet or coil, efficient at high frequencies and well behaved as super-tweeters. They're common in buzzers, alarms and some speaker tweeters.
+
+**Costs:** excursion is small and the response very resonant; the bending modes of the disc create pronounced peaks that require damping and careful filtering. Electrically, they behave like **capacitors**: current grows with frequency, which calls for care in the crossover. In IEMs, they appear as tweeters in hybrid designs from some manufacturers, and their contribution depends entirely on implementation: they can sound smooth and airy or harsh and metallic.
+
+## The recurring pattern
+
+Electrostatics and piezoelectrics illustrate a lesson that applies to every technology: **each physical principle has a range where it's strong and structural limitations outside it**. It's no accident that in IEMs both almost always appear as treble specialists within multi-driver systems, which brings us to [crossovers](/drivers/multi-driver-e-crossovers).
+
+<References>
+  <Ref>Baxandall, P. J. "Electrostatic loudspeakers." In: Borwick, J. (ed.), <em>Loudspeaker and Headphone Handbook</em>. 3rd ed. Focal Press, 2001.</Ref>
+  <Ref>Walker, P. J. "Wide range electrostatic loudspeakers." <em>Wireless World</em>, 1955 (article series).</Ref>
+  <Ref>Curie, J.; Curie, P. "Développement, par pression, de l'électricité polaire dans les cristaux hémièdres à faces inclinées." <em>Comptes rendus de l'Académie des Sciences</em>, 91, 294–295, 1880.</Ref>
+  <Ref>Beranek, L. L.; Mellow, T. J. <em>Acoustics: Sound Fields and Transducers</em>. Academic Press, 2012.</Ref>
+</References>

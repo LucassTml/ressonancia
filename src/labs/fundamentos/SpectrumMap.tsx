@@ -5,6 +5,7 @@ import { Segmented, fmtHz } from '../../components/ui/controls';
 import { PlayButton, usePlayback, fadeGain } from '../../components/ui/audio';
 import { pinkNoiseBuffer } from '../../audio/engine';
 import { useElementSize } from '../../lib/hooks';
+import { tr } from '../../i18n';
 
 interface Region {
   id: string;
@@ -18,13 +19,13 @@ interface Region {
 }
 
 const REGIONS: Region[] = [
-  { id: 'sub', name: 'Subgraves', en: 'Sub-bass', from: 20, to: 60, text: 'Mais sentidos que ouvidos: pressão, “ronco”, a sensação física de um bumbo eletrônico ou de um órgão. Pouca música tem conteúdo abaixo de 30 Hz.', excess: 'Ronco constante, sensação de pressão no ouvido, cansaço.', lack: 'Música eletrônica e trilhas perdem peso e impacto profundo.' },
-  { id: 'midbass', name: 'Graves médios', en: 'Mid-bass', from: 60, to: 250, text: 'O corpo do bumbo, do baixo elétrico e o calor das vozes masculinas. Região que define “punch” e “calor”.', excess: 'Retumbante (boomy), graves “gordos” que vazam para os médios.', lack: 'Som magro, sem corpo nem impacto.' },
-  { id: 'lowmid', name: 'Médios-graves', en: 'Low-mids', from: 250, to: 800, text: 'Fundamentais da maioria dos instrumentos e vozes. Responsável pela espessura e pelo “peso” das notas.', excess: 'Embolado (muddy), abafado, “caixa de papelão”.', lack: 'Som oco, distante, sem densidade.' },
-  { id: 'mid', name: 'Médios', en: 'Midrange', from: 800, to: 2000, text: 'Inteligibilidade e caráter: onde vivem os primeiros formantes, o “nasal” e a definição de guitarras e pianos.', excess: 'Anasalado, “buzina”, cansativo em volume alto.', lack: 'Vozes recuadas, instrumentos sem definição.' },
-  { id: 'uppermid', name: 'Médios-agudos / presença', en: 'Upper-mids / presence', from: 2000, to: 5000, text: 'A região mais sensível da audição e onde a orelha gera o maior ganho natural. Define presença, articulação e o “ataque” das notas.', excess: 'Gritado (shouty), estridente (harsh), fadiga rápida.', lack: 'Som escuro, sem presença, vozes “atrás de uma cortina”.' },
-  { id: 'treble', name: 'Agudos', en: 'Treble', from: 5000, to: 10000, text: 'Sibilantes (s, ch), pratos, cordas friccionadas, brilho e detalhe de textura.', excess: 'Sibilante, metálico, “chiado” nos pratos.', lack: 'Abafado, sem detalhe, pratos sem brilho.' },
-  { id: 'air', name: 'Ar / extensão', en: 'Air / upper treble', from: 10000, to: 20000, text: 'Harmônicos superiores, “ar” e sensação de espaço. A audição perde sensibilidade aqui com a idade.', excess: 'Aspereza fina, sensação “digital” (frequentemente em picos estreitos).', lack: 'Menos “ar” e abertura; difícil de perceber para muitos adultos.' },
+  { id: 'sub', name: tr("Subgraves"), en: 'Sub-bass', from: 20, to: 60, text: tr("Mais sentidos que ouvidos: pressão, “ronco”, a sensação física de um bumbo eletrônico ou de um órgão. Pouca música tem conteúdo abaixo de 30 Hz."), excess: tr("Ronco constante, sensação de pressão no ouvido, cansaço."), lack: tr("Música eletrônica e trilhas perdem peso e impacto profundo.") },
+  { id: 'midbass', name: tr("Graves médios"), en: 'Mid-bass', from: 60, to: 250, text: tr("O corpo do bumbo, do baixo elétrico e o calor das vozes masculinas. Região que define “punch” e “calor”."), excess: tr("Retumbante (boomy), graves “gordos” que vazam para os médios."), lack: tr("Som magro, sem corpo nem impacto.") },
+  { id: 'lowmid', name: tr("Médios-graves"), en: 'Low-mids', from: 250, to: 800, text: tr("Fundamentais da maioria dos instrumentos e vozes. Responsável pela espessura e pelo “peso” das notas."), excess: tr("Embolado (muddy), abafado, “caixa de papelão”."), lack: tr("Som oco, distante, sem densidade.") },
+  { id: 'mid', name: tr("Médios"), en: 'Midrange', from: 800, to: 2000, text: tr("Inteligibilidade e caráter: onde vivem os primeiros formantes, o “nasal” e a definição de guitarras e pianos."), excess: tr("Anasalado, “buzina”, cansativo em volume alto."), lack: tr("Vozes recuadas, instrumentos sem definição.") },
+  { id: 'uppermid', name: tr("Médios-agudos / presença"), en: 'Upper-mids / presence', from: 2000, to: 5000, text: tr("A região mais sensível da audição e onde a orelha gera o maior ganho natural. Define presença, articulação e o “ataque” das notas."), excess: tr("Gritado (shouty), estridente (harsh), fadiga rápida."), lack: tr("Som escuro, sem presença, vozes “atrás de uma cortina”.") },
+  { id: 'treble', name: tr("Agudos"), en: 'Treble', from: 5000, to: 10000, text: tr("Sibilantes (s, ch), pratos, cordas friccionadas, brilho e detalhe de textura."), excess: tr("Sibilante, metálico, “chiado” nos pratos."), lack: tr("Abafado, sem detalhe, pratos sem brilho.") },
+  { id: 'air', name: tr("Ar / extensão"), en: 'Air / upper treble', from: 10000, to: 20000, text: tr("Harmônicos superiores, “ar” e sensação de espaço. A audição perde sensibilidade aqui com a idade."), excess: tr("Aspereza fina, sensação “digital” (frequentemente em picos estreitos)."), lack: tr("Menos “ar” e abertura; difícil de perceber para muitos adultos.") },
 ];
 
 interface Source {
@@ -37,21 +38,21 @@ interface Source {
 }
 
 const SOURCES: Source[] = [
-  { name: 'Voz masculina (fala/canto)', group: 'voz', f: [85, 400], h: [400, 8000] },
-  { name: 'Voz feminina (fala/canto)', group: 'voz', f: [165, 1050], h: [1050, 10000] },
-  { name: 'Sibilantes (s, ch)', group: 'voz', f: [4000, 10000], h: [10000, 12000] },
-  { name: 'Bumbo', group: 'instrumento', f: [40, 100], h: [100, 5000] },
-  { name: 'Caixa', group: 'instrumento', f: [150, 250], h: [250, 12000] },
-  { name: 'Pratos', group: 'instrumento', f: [300, 600], h: [600, 18000] },
-  { name: 'Baixo elétrico', group: 'instrumento', f: [41, 400], h: [400, 4000] },
-  { name: 'Violão / guitarra', group: 'instrumento', f: [82, 1300], h: [1300, 8000] },
-  { name: 'Piano', group: 'instrumento', f: [27.5, 4186], h: [4186, 12000] },
-  { name: 'Violino', group: 'instrumento', f: [196, 3500], h: [3500, 14000] },
-  { name: 'Violoncelo', group: 'instrumento', f: [65, 1000], h: [1000, 8000] },
-  { name: 'Flauta', group: 'instrumento', f: [262, 2100], h: [2100, 8000] },
-  { name: 'Trompete', group: 'instrumento', f: [165, 1000], h: [1000, 12000] },
-  { name: 'Tuba', group: 'instrumento', f: [44, 350], h: [350, 3000] },
-  { name: 'Órgão de tubos', group: 'instrumento', f: [16, 8000], h: [8000, 16000] },
+  { name: tr("Voz masculina (fala/canto)"), group: 'voz', f: [85, 400], h: [400, 8000] },
+  { name: tr("Voz feminina (fala/canto)"), group: 'voz', f: [165, 1050], h: [1050, 10000] },
+  { name: tr("Sibilantes (s, ch)"), group: 'voz', f: [4000, 10000], h: [10000, 12000] },
+  { name: tr("Bumbo"), group: 'instrumento', f: [40, 100], h: [100, 5000] },
+  { name: tr("Caixa"), group: 'instrumento', f: [150, 250], h: [250, 12000] },
+  { name: tr("Pratos"), group: 'instrumento', f: [300, 600], h: [600, 18000] },
+  { name: tr("Baixo elétrico"), group: 'instrumento', f: [41, 400], h: [400, 4000] },
+  { name: tr("Violão / guitarra"), group: 'instrumento', f: [82, 1300], h: [1300, 8000] },
+  { name: tr("Piano"), group: 'instrumento', f: [27.5, 4186], h: [4186, 12000] },
+  { name: tr("Violino"), group: 'instrumento', f: [196, 3500], h: [3500, 14000] },
+  { name: tr("Violoncelo"), group: 'instrumento', f: [65, 1000], h: [1000, 8000] },
+  { name: tr("Flauta"), group: 'instrumento', f: [262, 2100], h: [2100, 8000] },
+  { name: tr("Trompete"), group: 'instrumento', f: [165, 1000], h: [1000, 12000] },
+  { name: tr("Tuba"), group: 'instrumento', f: [44, 350], h: [350, 3000] },
+  { name: tr("Órgão de tubos"), group: 'instrumento', f: [16, 8000], h: [8000, 16000] },
 ];
 
 export default function SpectrumMap() {
@@ -127,14 +128,14 @@ export default function SpectrumMap() {
 
   return (
     <LabFrame
-      title="Mapa do espectro audível"
-      description="Escala logarítmica de 16 Hz a 20 kHz: cada oitava ocupa o mesmo espaço, como na audição. Clique numa região para ler sobre ela e ouvir só aquela faixa em ruído rosa."
+      title={tr("Mapa do espectro audível")}
+      description={tr("Escala logarítmica de 16 Hz a 20 kHz: cada oitava ocupa o mesmo espaço, como na audição. Clique numa região para ler sobre ela e ouvir só aquela faixa em ruído rosa.")}
       audio
       onReset={() => setSel('uppermid')}
     >
       <div ref={wrap} className="relative">
         {width > 0 && (
-          <svg width={width} height={392} className="block overflow-visible" role="group" aria-label="Regiões do espectro">
+          <svg width={width} height={392} className="block overflow-visible" role="group" aria-label={tr("Regiões do espectro")}>
             {REGIONS.map((rg) => {
               const active = rg.id === sel;
               return (
@@ -176,9 +177,9 @@ export default function SpectrumMap() {
         )}
       </div>
       <div className="flex flex-wrap gap-x-5 gap-y-1 text-[11.5px] text-muted mt-2">
-        <span className="inline-flex items-center gap-1.5"><span className="w-4 h-2 rounded bg-[var(--c-a)]" /> fundamentais de instrumentos</span>
-        <span className="inline-flex items-center gap-1.5"><span className="w-4 h-2 rounded bg-[var(--c-b)]" /> vozes</span>
-        <span className="inline-flex items-center gap-1.5"><span className="w-4 h-1 rounded bg-[var(--c-a)] opacity-40" /> harmônicos e ruídos (aproximado)</span>
+        <span className="inline-flex items-center gap-1.5"><span className="w-4 h-2 rounded bg-[var(--c-a)]" />{' '}{tr("fundamentais de instrumentos")}</span>
+        <span className="inline-flex items-center gap-1.5"><span className="w-4 h-2 rounded bg-[var(--c-b)]" />{' '}{tr("vozes")}</span>
+        <span className="inline-flex items-center gap-1.5"><span className="w-4 h-1 rounded bg-[var(--c-a)] opacity-40" />{' '}{tr("harmônicos e ruídos (aproximado)")}</span>
       </div>
       <AnimatePresence mode="wait">
         <motion.div
@@ -200,18 +201,18 @@ export default function SpectrumMap() {
           </div>
           <dl className="text-[13px] leading-relaxed space-y-2">
             <div>
-              <dt className="text-[11.5px] uppercase tracking-[0.08em] text-[var(--myth)] font-semibold">Em excesso</dt>
+              <dt className="text-[11.5px] uppercase tracking-[0.08em] text-[var(--myth)] font-semibold">{tr("Em excesso")}</dt>
               <dd className="text-soft">{r.excess}</dd>
             </div>
             <div>
-              <dt className="text-[11.5px] uppercase tracking-[0.08em] text-muted font-semibold">Em falta</dt>
+              <dt className="text-[11.5px] uppercase tracking-[0.08em] text-muted font-semibold">{tr("Em falta")}</dt>
               <dd className="text-soft">{r.lack}</dd>
             </div>
           </dl>
         </motion.div>
       </AnimatePresence>
       <div className="flex flex-wrap items-center gap-3 mt-5">
-        <PlayButton playing={pb.playing} onToggle={() => (pb.playing ? pb.stop() : start())} label="Ouvir" />
+        <PlayButton playing={pb.playing} onToggle={() => (pb.playing ? pb.stop() : start())} label={tr("Ouvir")} />
         <Segmented
           size="sm"
           value={mode}
@@ -220,17 +221,13 @@ export default function SpectrumMap() {
             pb.stop();
           }}
           options={[
-            { value: 'band', label: 'Somente esta região' },
-            { value: 'cut', label: 'Tudo, menos esta região' },
+            { value: 'band', label: tr("Somente esta região") },
+            { value: 'cut', label: tr("Tudo, menos esta região") },
           ]}
         />
       </div>
       <div className="mt-3">
-        <Note>
-          As fronteiras entre regiões são convenções, não limites físicos — fontes diferentes usam números diferentes. E nenhum
-          instrumento ocupa uma única região: as barras mostram onde estão as fundamentais, mas os harmônicos e ruídos de ataque se
-          estendem por várias oitavas acima.
-        </Note>
+        <Note>{tr("As fronteiras entre regiões são convenções, não limites físicos — fontes diferentes usam números diferentes. E nenhum instrumento ocupa uma única região: as barras mostram onde estão as fundamentais, mas os harmônicos e ruídos de ataque se estendem por várias oitavas acima.")}</Note>
       </div>
     </LabFrame>
   );

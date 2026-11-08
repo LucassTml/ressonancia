@@ -10,6 +10,7 @@ import { IconArrowLeft, IconArrowRight, IconBookmark, IconBookmarkFilled, IconFl
 import { useFavorites } from '../lib/prefs';
 import { labById } from '../labs';
 import { NotFound } from './NotFound';
+import { tr } from '../i18n';
 
 export function ArticlePage() {
   const { module = '', slug = '' } = useParams();
@@ -46,7 +47,7 @@ export function ArticlePage() {
   }, [Content]);
 
   useEffect(() => {
-    if (entry) document.title = `${entry.title} — Ressonância`;
+    if (entry) document.title = tr("{0} — Ressonância", entry.title);
   }, [entry]);
 
   if (!entry) return <NotFound />;
@@ -81,10 +82,10 @@ export function ArticlePage() {
               </h1>
               <p className="mt-4 text-[1.16rem] leading-relaxed text-muted font-serif text-pretty">{entry.summary}</p>
               <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[12.5px] text-muted">
-                {minutes && <span>{minutes} min de leitura</span>}
+                {minutes && <span>{minutes}{' '}{tr("min de leitura")}</span>}
                 {usedLabs.length > 0 && (
                   <span className="inline-flex items-center gap-1.5">
-                    <IconFlask size={14} /> {usedLabs.length} {usedLabs.length > 1 ? 'experimentos interativos' : 'experimento interativo'}
+                    <IconFlask size={14} /> {usedLabs.length} {usedLabs.length > 1 ? tr("experimentos interativos") : tr("experimento interativo")}
                   </span>
                 )}
                 <button
@@ -97,16 +98,16 @@ export function ArticlePage() {
                   <motion.span key={String(fav)} initial={{ scale: 0.6 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 500, damping: 18 }}>
                     {fav ? <IconBookmarkFilled size={14} /> : <IconBookmark size={14} />}
                   </motion.span>
-                  {fav ? 'Salvo nos favoritos' : 'Salvar nos favoritos'}
+                  {fav ? tr("Salvo nos favoritos") : tr("Salvar nos favoritos")}
                 </button>
               </div>
             </motion.div>
           </header>
 
           <div ref={bodyRef}>
-            {error && <p className="text-muted">Não foi possível carregar este artigo.</p>}
+            {error && <p className="text-muted">{tr("Não foi possível carregar este artigo.")}</p>}
             {!hasArticleSource(id) && (
-              <p className="prose">Este artigo ainda está sendo escrito.</p>
+              <p className="prose">{tr("Este artigo ainda está sendo escrito.")}</p>
             )}
             {!Content && !error && hasArticleSource(id) && (
               <div className="space-y-3 animate-pulse" aria-hidden>
@@ -133,7 +134,7 @@ export function ArticlePage() {
             <footer className="mt-20 pt-8 border-t border-line font-sans">
               {related.length > 0 && (
                 <div className="mb-10">
-                  <div className="text-[11px] uppercase tracking-[0.12em] font-semibold text-faint mb-3">Continue explorando</div>
+                  <div className="text-[11px] uppercase tracking-[0.12em] font-semibold text-faint mb-3">{tr("Continue explorando")}</div>
                   <ul className="divide-y divide-line border-y border-line">
                     {related.map((r) => (
                       <li key={r!.id}>
@@ -155,8 +156,7 @@ export function ArticlePage() {
                 {prev ? (
                   <Link to={`/${prev.id}`} className="group rounded-xl p-3 -m-3 hover:bg-sunken transition-colors">
                     <span className="flex items-center gap-1 text-[12px] text-muted">
-                      <IconArrowLeft size={13} /> Anterior
-                    </span>
+                      <IconArrowLeft size={13} />{' '}{tr("Anterior")}</span>
                     <span className="block mt-1 text-[14px] font-medium text-fg leading-snug">{prev.title}</span>
                   </Link>
                 ) : (
@@ -164,8 +164,7 @@ export function ArticlePage() {
                 )}
                 {next && (
                   <Link to={`/${next.id}`} className="group text-right rounded-xl p-3 -m-3 hover:bg-sunken transition-colors">
-                    <span className="flex items-center justify-end gap-1 text-[12px] text-muted">
-                      Próximo <IconArrowRight size={13} />
+                    <span className="flex items-center justify-end gap-1 text-[12px] text-muted">{tr("Próximo")}{' '}<IconArrowRight size={13} />
                     </span>
                     <span className="block mt-1 text-[14px] font-medium text-fg leading-snug">{next.title}</span>
                   </Link>

@@ -6,6 +6,7 @@ import { glossary } from '../../content/glossary';
 import { loadAllRaw } from '../../content/registry';
 import { labs } from '../../labs';
 import { IconBook, IconFlask, IconGlossary, IconSearch } from '../ui/controls';
+import { tr } from '../../i18n';
 
 const norm = (s: string) =>
   s
@@ -122,7 +123,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
           <motion.div
             role="dialog"
             aria-modal="true"
-            aria-label="Buscar"
+            aria-label={tr("Buscar")}
             initial={{ y: -10, scale: 0.98, opacity: 0 }}
             animate={{ y: 0, scale: 1, opacity: 1 }}
             exit={{ y: -6, scale: 0.985, opacity: 0 }}
@@ -145,18 +146,17 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
                     setSel((s) => Math.max(0, s - 1));
                   } else if (e.key === 'Enter' && results[sel]) go(results[sel]);
                 }}
-                placeholder="Buscar artigos, termos e laboratórios…"
+                placeholder={tr("Buscar artigos, termos e laboratórios…")}
                 className="flex-1 bg-transparent outline-none text-[15px] text-fg placeholder:text-faint"
-                aria-label="Termo de busca"
+                aria-label={tr("Termo de busca")}
               />
-              <kbd className="text-[10.5px] font-mono px-1.5 py-[1px] rounded border border-line text-faint">Esc</kbd>
+              <kbd className="text-[10.5px] font-mono px-1.5 py-[1px] rounded border border-line text-faint">{tr("Esc")}</kbd>
             </div>
             <ul ref={listRef} className="max-h-[56vh] overflow-y-auto p-2" role="listbox">
-              {q && !results.length && <li className="px-3 py-6 text-center text-[13.5px] text-muted">Nada encontrado para “{q}”.</li>}
+              {q && !results.length && <li className="px-3 py-6 text-center text-[13.5px] text-muted">{tr("Nada encontrado para “")}{q}”.</li>}
               {!q && (
-                <li className="px-3 py-5 text-[13px] text-muted leading-relaxed">
-                  Experimente: <em>pinna gain</em>, <em>Harman</em>, <em>impedância</em>, <em>dither</em>, <em>planar</em>,{' '}
-                  <em>ponteiras</em>, <em>válvula</em>…
+                <li className="px-3 py-5 text-[13px] text-muted leading-relaxed">{tr("Experimente:")}{' '}<em>{tr("pinna gain")}</em>, <em>{tr("Harman")}</em>, <em>{tr("impedância")}</em>, <em>{tr("dither")}</em>, <em>{tr("planar")}</em>,{' '}
+                  <em>{tr("ponteiras")}</em>, <em>{tr("válvula")}</em>…
                 </li>
               )}
               {results.map((r, i) => {

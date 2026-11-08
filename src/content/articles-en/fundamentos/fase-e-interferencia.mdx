@@ -1,0 +1,120 @@
+<Lead>
+When two waves occupy the same place at the same time, the air doesn't choose one of them: it adds them together. That simple principle explains noise cancellation, beats between out-of-tune notes, the peaks and dips of a measured headphone and why half a millisecond of delay can erase an entire frequency.
+</Lead>
+
+<Callout type="simples">
+When two sounds meet, they add up. If their pushes line up, the result gets stronger; if one pushes while the other pulls, they cancel out. Noise-cancelling headphones work exactly this way, and it's also why two notes that are almost in tune seem to pulse.
+</Callout>
+
+## Phase: where we are in the cycle
+
+**Phase** indicates at what point in its cycle a periodic wave is at a given instant. It's usually expressed in degrees (one full cycle = 360°) or radians (2π). Two sine waves of the same frequency can be "in phase" (peaks coincide), "out of phase" or "in opposition" (180° apart: the peak of one coincides with the trough of the other), or anywhere in between.
+
+The most important concept about phase in audio is its relationship to **time**. A fixed delay Δt corresponds to a phase shift that depends on frequency:
+
+<Formula say="The same delay shifts high frequencies by more of a cycle than low ones. A delay is not a single phase shift, but a different one at each frequency.">
+
+$$
+\Delta\varphi = 360^\circ \cdot f \cdot \Delta t
+$$
+
+<Vars
+  items={[
+    ['Δφ', 'phase shift, in degrees'],
+    ['f', 'frequency of the component considered, in Hz'],
+    ['Δt', 'delay, in seconds'],
+  ]}
+/>
+
+</Formula>
+
+A 1 ms delay is a 36° shift at 100 Hz, 180° at 500 Hz and 360° (a full cycle, in other words "back in phase") at 1 kHz. **The same delay has completely different effects at different frequencies.** That property is what turns a simple reflection into a pattern of peaks and dips spread across the whole spectrum.
+
+## Superposition: pressures add up
+
+Air, at the pressure levels of music, is a **linear** medium: the pressure resulting from two waves is the sum of the pressures each would produce alone. That's the principle of superposition. For two sine waves of the same frequency with amplitudes $A_1$ and $A_2$ and phase difference Δφ, the sum is another sine wave of the same frequency with amplitude
+
+<Formula say="The result depends on how aligned the waves are: from double the size when in step, to zero when in opposition.">
+
+$$
+A = \sqrt{A_1^2 + A_2^2 + 2 A_1 A_2 \cos \Delta\varphi}
+$$
+
+</Formula>
+
+With equal amplitudes in phase, the amplitude doubles (+6 dB): **constructive interference**. In opposition, it goes to zero: **destructive interference**. At 90°, the result is √2 times the amplitude (+3 dB), the same as adding the powers of two independent sources. In the lab below, adjust the phase of the second wave and watch the sum.
+
+<Lab id="interference" />
+
+Active noise cancellation (ANC) is the ingenious application of this principle: a microphone picks up noise, a processor generates an inverted copy, and the headphone driver plays it, canceling the noise in the ear canal. It works very well in the bass and mid-bass, where wavelengths are long and small errors of position and timing don't destroy the opposition, and increasingly poorly above 1–2 kHz, where the passive isolation of the eartip has to take over.
+
+## Beats and roughness
+
+If the frequencies are slightly different, the phase difference between the waves changes continuously: at times they're in phase, at times in opposition. A trigonometric identity shows what happens:
+
+<Formula say="Two nearby notes add up to a single note at the average frequency, whose loudness swells and fades.">
+
+$$
+\sin(2\pi f_1 t) + \sin(2\pi f_2 t) = 2\cos\!\left(2\pi \tfrac{f_1 - f_2}{2} t\right)\sin\!\left(2\pi \tfrac{f_1 + f_2}{2} t\right)
+$$
+
+</Formula>
+
+The result is a sine wave at the average frequency, with an amplitude that slowly rises and falls. The envelope reaches a maximum $|f_1 - f_2|$ times per second: these are **beats**. Piano tuners have used them for centuries: while adjusting two strings that should sound in unison, the tuner listens to the beats get slower and slower until they disappear. Hear two tones 4 Hz apart: <Listen label="Beats" f="440,444" together dur={3} />.
+
+Perception changes with the speed of the beats. Up to about 10–15 Hz, we clearly hear a single sound that pulses. Above that, the pulsing becomes too fast to follow and turns into a sensation of **roughness**. With even larger separations, the cochlea starts resolving the two frequencies at different places on the basilar membrane and we hear two distinct tones. The transition is linked to [critical bands](/percepcao/mascaramento) and is one of the physical bases of the sensation of [consonance and dissonance](/fundamentos/melodia-e-harmonia).
+
+<Callout type="nota" title="Binaural beats are not beats">
+If each frequency is presented to a different ear, the waves never add in the air, so there's no physical interference. Still, with small differences (a few hertz) and low frequencies, many people perceive a subtle fluctuation: it's the brain comparing the phases of the two ears. The effect is real, but weak and entirely different from acoustic beats. You can compare the two in the lab. Claims that binaural beats induce specific mental states have no solid scientific backing.
+</Callout>
+
+## Reflections and comb filters
+
+When a sound reaches a point by two paths of different lengths (directly and reflected off a wall, for example), the reflected copy arrives late. From the relationship between delay and phase, there will be frequencies where that delay equals exactly half a cycle (or one and a half, two and a half…) and cancellation is maximal, and others where it equals whole cycles and there's reinforcement:
+
+<Formula say="A delayed copy cancels the original at a regularly spaced series of frequencies, and the longer the delay, the closer together they are.">
+
+$$
+f_{\text{dip}} = \frac{2n + 1}{2\,\Delta t}, \qquad n = 0, 1, 2, \ldots
+$$
+
+</Formula>
+
+Drawn on a linear frequency axis, the response looks like the teeth of a comb, hence the name **comb filter**. In the lab's "Reflection and comb" tab, you can hear this effect in pink noise. Delays of several milliseconds produce dense teeth, heard as a "hollow" or "metallic" timbre (it's the *flanger* effect when the delay varies). Short delays produce a few wide dips.
+
+Comb filters appear in many places that matter for audiophilia:
+
+- **Rooms and microphones:** reflections off the floor, a desk or nearby walls color both recording and listening. Headphones eliminate room reflections, one of the reasons they sound "analytical."
+- **Multi-driver designs:** when two drivers reproduce the same band (in the crossover region) from different positions or paths, there's interference. [Crossover](/drivers/multi-driver-e-crossovers) design has to consider phase, not only level.
+- **Tubes and cavities inside the earphone:** sound reflecting inside the nozzle or ear canal interferes with sound arriving directly.
+
+## Standing waves and tube resonances
+
+A special case of interference occurs in a tube, where the wave travels back and forth between the ends. The incident and reflected waves add and form a **standing wave**: a pattern with points where the pressure hardly varies (nodes) and points where it varies a lot (antinodes). This only happens strongly at frequencies where the tube's length "fits" a suitable number of half or quarter wavelengths, the **resonances**:
+
+- **Tube open at both ends** (or closed at both): $f_n = n \cdot \dfrac{c}{2L}$
+- **Tube closed at one end and open at the other:** $f_n = (2n - 1) \cdot \dfrac{c}{4L}$
+
+The ear canal is, to a first approximation, a ~25 mm tube closed by the eardrum and open to the world. Its first quarter-wave resonance is at 343/(4 × 0.025) ≈ **3.4 kHz**, and that's the main origin of the roughly 10 to 15 dB gain the ear applies near 3 kHz. When an IEM seals the entrance, the tube becomes closed at both ends (earphone at one, eardrum at the other), and the natural resonance moves to a much higher frequency, linked to the half wavelength and the insertion depth. That change is at the heart of the article on [pinna gain](/percepcao/pinna-gain) and explains why IEMs need to artificially "recreate" the lost gain.
+
+## Is phase audible?
+
+This is one of the most debated questions in audio, and the honest answer depends on what is meant by "phase."
+
+**Absolute phase (polarity).** Inverting the polarity of an entire signal, on both channels, is inaudible for the vast majority of signals and listeners. With very asymmetric signals (some voices, certain wind instruments) under attentive listening, some studies report detection, but the effect is small.
+
+**Relative phase between channels.** Time and phase differences between the ears are extremely audible: they're one of the main cues for [localization](/percepcao/localizacao-espacial). One channel with inverted polarity relative to the other destroys the center image, and the sound seems "centerless," diffuse, inside the head.
+
+**Phase distortion within a channel** (different frequencies delayed in different ways). At moderate amounts it's hard to hear with music; the work of Lipshitz, Pocock and Vanderkooy (1982) showed that phase shifts comparable to those of a typical speaker are detectable under favorable conditions (special signals, headphones), but subtle. Large group delays, especially in the bass, can be noticed.
+
+There's also a physical reason why a headphone's phase is rarely a separate matter: most parts of a headphone form a **minimum-phase** system, in which the phase response is mathematically determined by the magnitude response. Correcting magnitude with [equalization](/processamento/limites-da-eq) corrects the corresponding phase along with it. It's one of the reasons frequency response is so informative.
+
+The next step is to go from two waves to many: [harmonics, spectrum and timbre](/fundamentos/harmonicos-e-timbre).
+
+<References>
+  <Ref>Lipshitz, S. P.; Pocock, M.; Vanderkooy, J. "On the audibility of midrange phase distortion in audio systems." <em>Journal of the Audio Engineering Society</em>, 30(9), 580–595, 1982.</Ref>
+  <Ref>Kinsler, L. E. et al. <em>Fundamentals of Acoustics</em>. 4th ed. Wiley, 2000. Standing waves and resonances in tubes.</Ref>
+  <Ref>Plomp, R.; Levelt, W. J. M. "Tonal consonance and critical bandwidth." <em>Journal of the Acoustical Society of America</em>, 38(4), 548–560, 1965.</Ref>
+  <Ref>Kuo, S. M.; Morgan, D. R. "Active noise control: a tutorial review." <em>Proceedings of the IEEE</em>, 87(6), 943–973, 1999.</Ref>
+  <Ref>Oster, G. "Auditory beats in the brain." <em>Scientific American</em>, 229(4), 94–102, 1973. Classic description of binaural beats.</Ref>
+</References>

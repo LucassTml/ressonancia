@@ -1,0 +1,81 @@
+<Lead>
+Every frequency response graph is the result of a chain of decisions: which ear simulator, which microphone, which signal, how to position the headphone, how many measurements, what smoothing, where to normalize. Changing any of them changes the graph. Understanding that chain is what separates those who read graphs from those fooled by them.
+</Lead>
+
+<Callout type="simples">
+A headphone is measured with a device that imitates an ear: it plays a test sound and records what arrives at a microphone where the eardrum would be. Different devices and placements give different graphs, so only compare headphones measured the same way, by the same person.
+</Callout>
+
+## What is measured
+
+Measuring a headphone's frequency response means measuring the **sound pressure** it produces at a point representing the eardrum, as a function of frequency, for a known electrical input signal. Since you can't put a microphone at every buyer's eardrum, a **simulator** is used: a structure that imitates the acoustics of an average ear, with the volume of the canal, the impedance of the eardrum and, depending on the case, the outer ear and head.
+
+The crucial point is that the headphone and ear form a **coupled system**. An IEM pushes the air of a closed cavity; the resulting pressure depends on both the IEM and the "load" the ear presents. Measuring in open air, or in any rigid cavity, would give a result with no relationship to what you hear. The simulator has to reproduce that load.
+
+## The rigs
+
+### IEC 60318-4 coupler (the "711")
+
+The most widely used equipment for IEMs is the **occluded-ear simulator** defined in the **IEC 60318-4** standard (successor to the old IEC 711, hence the nickname). It consists of a precision microphone at the bottom of a small cavity, with a volume equivalent to that of a residual ear canal, linked to small side cavities and narrow passages that form an acoustic network. This network imitates the impedance of the eardrum and middle ear: how the eardrum "gives" and absorbs energy at each frequency.
+
+The 711 was designed to be valid, according to the standard, between ~100 Hz and 10 kHz. Below that it works well in practice; above 10 kHz, the differences between the coupler and real ears grow, and the coupler itself has resonances that depend on how deep the IEM is inserted. There are also many cheaper 711 "clones," with relevant differences above a few kilohertz among themselves and from the original.
+
+### Head and ear simulators (KEMAR, GRAS, HMS)
+
+For headphones, a coupler alone isn't enough: an ear (pinna) and a head surface are needed to support the pads. Mannequins such as **KEMAR** (GRAS 45BB), GRAS headphone test fixtures (43AG and 45CA) and heads from HEAD acoustics combine silicone pinnae with 711-type canals and couplers.
+
+### B&K 5128
+
+The **Brüel & Kjær Type 5128**, launched in the late 2010s, is a head and torso simulator (HATS) with an **anatomical ear canal**, based on measurements of real canals, and an eardrum impedance modeled up to high frequencies, with a microphone at the eardrum reference point (DRP). It better represents an average human ear above ~5 kHz and is increasingly used by reviewers and manufacturers. The downside is that **curves obtained on the 5128 aren't directly comparable with those from the 711**: the same IEM has different shapes on the two, and targets also need to be in the right domain.
+
+## How a measurement is done
+
+1. **Calibration.** The microphone is calibrated with a reference source (an acoustic calibrator generating 94 dB SPL at 1 kHz, for example). The audio interface and amplifier also have their response measured and compensated.
+2. **Excitation level.** The voltage applied to the headphone is defined, for example the one required for 94 dB SPL at 1 kHz, or a fixed value like 0.1 V. This also makes it possible to calculate **sensitivity** in dB/V.
+3. **Mounting.** The IEM is fitted to the coupler with an eartip (normally a standard silicone one of suitable size) and at a defined depth. The seal is checked: if the bass drops unexpectedly, there's a leak.
+4. **Test signal.** The most common is a **logarithmic sine sweep**: a sine wave whose frequency rises exponentially from 20 Hz to 20 kHz in a few seconds. The technique described by Angelo Farina (2000) makes it possible, by deconvolution, to obtain the system's impulse response and, as a bonus, to separate the harmonic distortion products, which appear "earlier" in time. Pink noise with FFT analysis and stepped sine waves are also used.
+5. **Repetition.** The IEM is removed and refitted several times (5 to 10 is common) and the measurements are averaged, to reduce the influence of a specific placement. The two channels are measured separately.
+6. **Post-processing.** The response is smoothed (with a stated fraction of an octave), normalized (at 500 Hz, 1 kHz or by average) and sometimes **compensated**, subtracted from a reference curve to show only the deviation.
+
+## Why two sites have different graphs
+
+Even when everything is well done, two serious reviewers measuring the same IEM model get different graphs. The causes, in approximate order of impact:
+
+- **Rig.** Original 711, 711 clone or 5128: different shapes above ~1–2 kHz.
+- **Insertion depth.** Shifts the 7–10 kHz resonance and changes the treble by several decibels.
+- **Eartip.** Material and bore diameter change the treble and sometimes the seal.
+- **Unit.** Two units of the same model differ within manufacturing tolerances; with balanced armature drivers, ±2–3 dB in some regions isn't rare.
+- **Smoothing and normalization.** They change the appearance without changing the headphone.
+- **Compensation.** A graph "compensated" by a reference curve shows the headphone relative to that curve; changing the reference changes the whole drawing.
+
+The lab below uses a synthetic measurement to show the effect of each presentation choice.
+
+<Lab id="rig-compare" />
+
+<Callout type="chave" title="Rules for comparing graphs">
+- Compare headphones **measured by the same reviewer, on the same rig**, with the same method.
+- Never compare a 711 graph with a 5128 one, or a target from one domain with a headphone measured in the other.
+- Trust the **~100 Hz to ~5 kHz** range more; treat the region above 6 kHz as indicative.
+- Check the **smoothing** and **normalization point** before concluding that "one has more bass than the other."
+- Differences of 1–2 dB between graphs from different sources mean nothing by themselves.
+</Callout>
+
+## Factory measurement
+
+The same tools appear on the production line, with another goal: ensuring each unit resembles the approved prototype.
+
+During **development**, engineers repeatedly measure prototypes on a coupler (sometimes also on a 5128 and on real ears), compare with the company's target and adjust drivers, filters and tubes until the curve converges, the process described in [tuning](/iems/tuning). The final approved curve becomes the **golden sample**.
+
+In **production**, each unit (or each driver, before assembly) goes through a fast automated test: a test fixture with a coupler, a short signal (a sweep or multitone lasting a few seconds) and software that compares the result with the reference within a **tolerance window**, for example ±2 or ±3 dB over a frequency range. **Channel matching** is also checked: the difference between left and right has to stay within a limit, often 1 to 2 dB in the most important bands. Some manufacturers sort drivers into sensitivity batches and assemble pairs from the same batch; others publish the individual measurement of each unit sold.
+
+This control doesn't eliminate variation; it only keeps it within limits set by the manufacturer. That's why a reviewer's graph represents *one* unit (or the average of a few), and yours can differ from it within tolerance. The theme of variation between units is developed in [what measurements show](/ciencia/o-que-medicoes-mostram).
+
+<References>
+  <Ref>IEC 60318-4:2010. <em>Electroacoustics — Simulators of human head and ear — Part 4: Occluded-ear simulator for the measurement of earphones coupled to the ear by means of ear inserts</em>.</Ref>
+  <Ref>ANSI/ASA S3.25-2009 (R2019). <em>American National Standard for an Occluded Ear Simulator</em>.</Ref>
+  <Ref>ITU-T P.57 (2021). <em>Artificial ears</em>.</Ref>
+  <Ref>IEC 60268-7:2010. <em>Sound system equipment — Part 7: Headphones and earphones</em>.</Ref>
+  <Ref>Farina, A. "Simultaneous measurement of impulse response and distortion with a swept-sine technique." AES 108th Convention, preprint 5093, 2000.</Ref>
+  <Ref>Brüel &amp; Kjær. <em>Head and Torso Simulator Type 5128</em> — product technical documentation.</Ref>
+  <Ref>Hammershøi, D.; Møller, H. "Sound transmission to and within the human ear canal." <em>JASA</em>, 100(1), 408–427, 1996.</Ref>
+</References>

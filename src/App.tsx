@@ -14,6 +14,7 @@ import { NotFound } from './pages/NotFound';
 import { stopAll } from './audio/engine';
 import { Logo } from './components/layout/TopBar';
 import { Link } from 'react-router-dom';
+import { tr } from './i18n';
 
 /** Layout de leitura: a barra lateral persiste; só o conteúdo transiciona. */
 function DocLayout() {
@@ -45,19 +46,16 @@ function Footer() {
       <div className="mx-auto max-w-[1180px] px-4 sm:px-6 py-10 flex flex-col sm:flex-row gap-6 sm:items-center justify-between text-[13px] text-muted">
         <div className="flex items-center gap-4">
           <Logo />
-          <span className="hidden sm:inline text-faint">Física, percepção e engenharia do som.</span>
+          <span className="hidden sm:inline text-faint">{tr("Física, percepção e engenharia do som.")}</span>
         </div>
         <nav className="flex flex-wrap gap-x-5 gap-y-2">
-          <Link to="/artigos" className="hover:text-fg">Artigos</Link>
-          <Link to="/laboratorio" className="hover:text-fg">Laboratório</Link>
-          <Link to="/glossario" className="hover:text-fg">Glossário</Link>
-          <Link to="/ciencia/avaliando-alegacoes" className="hover:text-fg">Fontes confiáveis</Link>
+          <Link to="/artigos" className="hover:text-fg">{tr("Artigos")}</Link>
+          <Link to="/laboratorio" className="hover:text-fg">{tr("Laboratório")}</Link>
+          <Link to="/glossario" className="hover:text-fg">{tr("Glossário")}</Link>
+          <Link to="/ciencia/avaliando-alegacoes" className="hover:text-fg">{tr("Fontes confiáveis")}</Link>
         </nav>
       </div>
-      <p className="mx-auto max-w-[1180px] px-4 sm:px-6 pb-10 text-[11.5px] text-faint leading-relaxed">
-        Curvas-alvo derivadas dos dados públicos do projeto AutoEq (licença MIT). Curvas de “assinatura” e de fones são sintéticas e
-        representativas, não medições de produtos. Nenhuma informação deste site substitui avaliação audiológica profissional.
-      </p>
+      <p className="mx-auto max-w-[1180px] px-4 sm:px-6 pb-10 text-[11.5px] text-faint leading-relaxed">{tr("Curvas-alvo e medições de IEMs obtidas do projeto AutoEq (licença MIT); as medições de IEMs são de oratory1990. Curvas de “assinatura” são sintéticas e representativas. Nenhuma informação deste site substitui avaliação audiológica profissional.")}</p>
     </footer>
   );
 }
@@ -93,9 +91,7 @@ export default function App() {
       <a
         href="#conteudo"
         className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[70] focus:px-3 focus:py-2 focus:rounded-lg focus:bg-elev"
-      >
-        Pular para o conteúdo
-      </a>
+      >{tr("Pular para o conteúdo")}</a>
       <TopBar onSearch={() => setSearchOpen(true)} onMenu={() => setMenuOpen(true)} />
       <MobileNav open={menuOpen} onClose={closeMenu} />
       <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />

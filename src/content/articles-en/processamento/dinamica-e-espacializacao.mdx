@@ -1,0 +1,69 @@
+<Lead>
+Not all processing touches the frequency response. Compressors and limiters work on time, on how much the peaks stand out from the average. Saturators and distortions add harmonics. Crossfeed and spatializers change the relationship between channels. Knowing the difference keeps you from using the wrong tool for the right problem.
+</Lead>
+
+<Callout type="simples">
+A compressor evens out the quiet and loud moments. Crossfeed blends a little of each channel into the other, so panned instruments feel less stuck to one ear. Spatializers try to place the sound outside your head. Each solves a different problem from EQ.
+</Callout>
+
+## Dynamic range compression
+
+A **compressor** monitors the signal's level and reduces the gain when it exceeds a **threshold**. The parameters:
+
+- **Ratio**: above the threshold, how many input decibels correspond to 1 dB of output. At 4:1, a signal 8 dB above the threshold leaves only 2 dB above.
+- **Knee**: the smoothness of the transition around the threshold.
+- **Attack**: how fast gain reduction begins when the signal rises.
+- **Release**: how fast the gain returns when the signal falls.
+- **Makeup gain**: recovers the lost volume.
+
+A **limiter** is a compressor with a very high ratio and very fast attack: it keeps the signal from going past a ceiling.
+
+<Lab id="dynamics" />
+
+Compression is indispensable in production and broadcasting (keeping voices intelligible, controlling peaks, "gluing" a mix). In **playback** it has legitimate uses, such as listening in a noisy environment without quiet passages vanishing, or at night without annoying peaks, but it alters the music: it reduces contrasts and, with fast attacks, flattens transients. Overdone, it produces audible "pumping" and was the engine of the [loudness war](/digital/loudness-e-resampling).
+
+<Callout type="nota">
+The lab on this site uses a fixed limiter on the master output, with its threshold at −3 dBFS, as protection. It almost never acts with test sounds, but it exists so that no experiment produces unexpected peaks.
+</Callout>
+
+## Distortion as an effect
+
+Distortion is, by definition, the addition of components that weren't in the signal. In high-fidelity reproduction, it's something to avoid. As an effect, it's a central creative tool: tape and tube saturation, guitar pedals, "exciters" that add treble harmonics. The [distortion lab](/eletronica/valvulas-vs-transistores) shows how different transfer curves produce different harmonic profiles.
+
+Some sound "enhancement" processors in headphones and phones apply light saturation, harmonic bass enhancement (which exploits the [missing fundamental](/fundamentos/melodia-e-harmonia) effect) or multiband compression. They can sound impressive on first listen, and tiring afterward.
+
+## EQ isn't spatialization
+
+EQ changes the balance of frequencies in each channel. **Spatialization** changes the relationship between channels and the perception of position. They're different things, though they mix: raising the treble can give the impression of more "space," and many spatial processors include EQ.
+
+### Crossfeed
+
+With speakers, each ear also hears the speaker on the opposite side, slightly delayed (~0.3 ms) and with less treble (from the head's shadow). With headphones, that doesn't happen: the left channel goes only to the left ear. The result is an "over-extended" and tiring image on recordings with extreme panning; many recordings from the 1950s and 1960s put whole instruments in one channel.
+
+**Crossfeed**, proposed by Benjamin Bauer in 1961, mixes into each channel a filtered, delayed copy of the other, imitating that condition.
+
+<Lab id="crossfeed" />
+
+Crossfeed doesn't externalize the sound, and the image stays inside the head, but it makes it more cohesive and less fatiguing. It's a matter of preference: many people dislike it and prefer full separation.
+
+### Spatializers and HRTF
+
+More ambitious processors simulate virtual speakers: they apply to each channel the **HRTF** corresponding to a speaker at ±30°, often with room reverberation and, on some systems, **head tracking** (the sound scene stays still when you turn your head). With personalized HRTFs and tracking, externalization can be convincing. With generic HRTFs, results vary a lot between people: for some the sound "leaves the head"; for others it just gets colored. The subject is covered in [spatial localization](/percepcao/localizacao-espacial).
+
+## Which tool for which problem
+
+| Problem | Suitable tool |
+| --- | --- |
+| Too much or too little bass, sibilance, harshness | EQ |
+| Inaudible quiet passages on a bus | Light compression, or better seal/ANC |
+| Tiring extreme panning | Crossfeed |
+| Sound "inside the head" | Spatialization with HRTF (variable results) |
+| Songs at very different volumes | Loudness normalization (ReplayGain) |
+| Distortion or hiss | No processing: fix it at the source or the headphone |
+
+<References>
+  <Ref>Bauer, B. B. "Stereophonic earphones and binaural loudspeakers." <em>Journal of the Audio Engineering Society</em>, 9(2), 148–151, 1961.</Ref>
+  <Ref>Giannoulis, D.; Massberg, M.; Reiss, J. D. "Digital dynamic range compressor design — a tutorial and analysis." <em>Journal of the Audio Engineering Society</em>, 60(6), 399–408, 2012.</Ref>
+  <Ref>Zölzer, U. (ed.). <em>DAFX: Digital Audio Effects</em>. 2nd ed. Wiley, 2011.</Ref>
+  <Ref>Begault, D. R. <em>3-D Sound for Virtual Reality and Multimedia</em>. Academic Press, 1994.</Ref>
+</References>

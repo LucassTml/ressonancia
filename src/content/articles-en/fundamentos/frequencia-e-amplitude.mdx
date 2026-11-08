@@ -1,0 +1,139 @@
+<Lead>
+Every technical description of sound, from a spec sheet to a frequency response graph, is built on four quantities: frequency, period, amplitude and wavelength. They look simple, and they are, but each one hides consequences that reappear throughout the rest of audiophilia.
+</Lead>
+
+<Callout type="simples">
+Frequency is how many times per second a wave repeats. Amplitude is how big it is. Wavelength is how long one repetition measures in the air. Low notes are physically huge waves, meters long, while high notes are smaller than your ear, and that explains a lot of how sound behaves.
+</Callout>
+
+## The sine wave: the atom of sound
+
+<Diagram id="wave-anatomy" />
+
+When a mass on a spring is displaced and released, it oscillates in a very specific way: its position varies as a **sine wave**. That's not an aesthetic choice of mathematics. It's the solution to the simplest possible equation for "a force that pulls back in proportion to displacement," and since nearly every physical system behaves that way for small disturbances, sine waves appear everywhere: in a tuning fork, a string, a headphone diaphragm, the air.
+
+A sinusoidal sound wave, observed at a fixed point in space, is described by:
+
+<Formula say="At each instant, the pressure is the wave's size multiplied by a smooth up-and-down that repeats f times per second.">
+
+$$
+p(t) = A \,\sin(2\pi f t + \varphi)
+$$
+
+<Vars
+  items={[
+    ['p(t)', 'acoustic pressure (deviation from atmospheric pressure) at instant t'],
+    ['A', 'amplitude: the maximum pressure deviation, in pascals'],
+    ['f', 'frequency: how many complete cycles occur per second, in hertz (Hz)'],
+    ['t', 'time, in seconds'],
+    ['φ', 'initial phase: at what point in the cycle the wave is at t = 0, in radians'],
+  ]}
+/>
+
+</Formula>
+
+There's a second, deeper reason why the sine wave is the fundamental building block. **Linear, time-invariant** systems, and much of the audio chain is approximately like that (amplifiers, cables, filters, the air, the headphone itself at moderate levels), have a remarkable property: put a sine wave in and a sine wave of the **same frequency** comes out. Only amplitude and phase can change. That means that to completely describe what a linear system does to *any* signal, you only need to say what it does to each frequency. That's exactly what a [frequency response](/resposta/lendo-graficos) is. And since any signal can be decomposed into a sum of sine waves (Fourier's theorem, the subject of [harmonics and timbre](/fundamentos/harmonicos-e-timbre)), this frequency-by-frequency description is complete.
+
+## Frequency and period
+
+**Frequency** counts cycles per second; **period** measures the duration of one cycle. One is the inverse of the other:
+
+<Formula say="If a wave repeats 100 times per second, each repetition lasts one hundredth of a second.">
+
+$$
+T = \frac{1}{f}
+$$
+
+</Formula>
+
+A 100 Hz tone has a period of 10 ms; a 1 kHz one, 1 ms; a 10 kHz one, 100 µs. Human hearing is usually said to run from 20 Hz to 20 kHz, but those numbers are a rounded convention. Below ~20 Hz, sound stops being perceived as a continuous tone and is felt as pulsation or pressure (and needs very high levels to be detected). The upper limit varies a lot: children can hear above 20 kHz, while most middle-aged adults have difficulty above 14–16 kHz. The loss starts with the treble and is called **presbycusis**. Use the sweep in the lab below to estimate your limit, bearing in mind that the result also depends on your headphones and the volume.
+
+<Lab id="tone" />
+
+The relationship between frequency and **pitch** (the sensation of low or high) is approximately logarithmic: what sounds like an equal step is an equal *multiplication* of frequency. From 100 to 200 Hz sounds like the same jump as from 1,000 to 2,000 Hz: [one octave](/inicio/o-que-e-uma-oitava). That's why all audio graphs use a logarithmic frequency axis, and why the audible range, which seems immense in hertz (from 20 to 20,000), amounts to only about ten octaves. Frequency is a physical quantity; pitch is a perception, and they aren't the same thing. Sounds with no energy at all at the perceived note's frequency can have a well-defined pitch, as you'll see in [pitch, melody and harmony](/fundamentos/melodia-e-harmonia).
+
+## Amplitude: peak, peak-to-peak and RMS
+
+Amplitude says "how much" a signal oscillates, but there are several ways to measure it, and confusing them is a constant source of errors in specifications.
+
+- **Peak:** the largest deviation from zero.
+- **Peak-to-peak:** the distance between maximum and minimum, twice the peak for a sine wave.
+- **RMS (root mean square):** the square root of the mean of the signal's squares. It's the value that determines the **power** delivered, and so it's the standard for voltages and pressures in audio.
+
+For a sine wave, the RMS value is the peak divided by √2:
+
+<Formula say="RMS is a kind of useful average of a wave. For a sine wave, it's about 71% of the peak.">
+
+$$
+A_{\text{rms}} = \frac{A_{\text{peak}}}{\sqrt{2}} \approx 0.707 \, A_{\text{peak}}
+$$
+
+</Formula>
+
+The ratio between peak and RMS is the **crest factor**. For a sine wave it's √2 (3 dB). Real music has much larger crest factors: drum peaks can be 15 to 20 dB above the average level in a lightly compressed recording. That matters directly when choosing amplifiers: an amplifier sized for the *average* level of the music will clip the peaks. This concept, [headroom](/eletronica/potencia-e-sensibilidade), comes up again in the electronics module.
+
+<Callout type="mito" title="&quot;Higher frequencies sound louder&quot;">
+Frequency and intensity are independent: a 3 kHz tone and a 100 Hz tone can have exactly the same pressure amplitude. It's just that hearing is much more sensitive near 3 kHz, so the first one *seems* far louder. This frequency dependence of the sensation of loudness is the subject of [equal-loudness contours](/percepcao/sonoridade-e-volume), and it's why a small peak at 3 kHz in a headphone is much more noticeable than the same peak at 100 Hz.
+</Callout>
+
+## Wavelength
+
+While frequency describes a wave in time, **wavelength** describes it in space: it's the distance between two consecutive compressions. Since the wave moves at the speed of sound $c$ and takes one period $T$ to complete a cycle:
+
+<Formula say="Wavelength is how far the sound travels during one repetition: speed divided by frequency.">
+
+$$
+\lambda = c \cdot T = \frac{c}{f}
+$$
+
+</Formula>
+
+In air at 20 °C (c ≈ 343 m/s), that gives a ruler worth memorizing:
+
+| Frequency | Wavelength | Comparable to… |
+| --- | --- | --- |
+| 20 Hz | 17.2 m | a 5-story building |
+| 100 Hz | 3.4 m | the height of a room |
+| 500 Hz | 69 cm | an arm |
+| 1 kHz | 34 cm | a pair of shoulders |
+| 3.4 kHz | 10 cm | four times the ear canal |
+| 10 kHz | 3.4 cm | the diameter of an ear |
+| 20 kHz | 1.7 cm | the length of an IEM |
+
+That table explains a huge number of phenomena. Objects much smaller than the wavelength hardly affect the sound; larger objects reflect, block and diffract it. Therefore:
+
+- **Bass goes around obstacles** and passes through walls easily, while treble is blocked. Your neighbor hears your subwoofer, not your cymbals.
+- **The head casts a shadow only at middle and high frequencies**, creating level differences between the ears, one of the clues for [spatial localization](/percepcao/localizacao-espacial).
+- **The outer ear and ear canal measure a few centimeters**, comparable to wavelengths between 2 and 10 kHz. That's exactly the range where they produce strong resonances, the phenomenon of [pinna gain](/percepcao/pinna-gain).
+- **A room 3 to 5 m across has resonances (modes) between ~30 and 200 Hz**, which reinforce or cancel bass depending on where the listener sits. Headphones don't suffer from that, one of the great advantages of listening with them.
+
+The wave simulator shows the relationship directly: raise the frequency and watch the wavelengths shrink inside the two-meter window.
+
+<Lab id="wave" />
+
+## Time and frequency are two sides of one coin
+
+A pure sine wave lasts, by definition, forever. A real sound starts and ends, and that has a spectral price. The shorter an event is, the wider the range of frequencies needed to represent it. An instantaneous click contains, in principle, all frequencies at equal strength; a 1 kHz tone lasting only 2 ms is no longer "a 1 kHz" but a smear of energy spread across hundreds of hertz around it. Mathematically, a signal's duration Δt and its bandwidth Δf roughly obey
+
+<Formula say="The shorter a sound is, the more frequencies it takes to describe it. The two can't both be small.">
+
+$$
+\Delta t \cdot \Delta f \gtrsim 1
+$$
+
+</Formula>
+
+This principle turns up in many places: it's why **fast attacks** (of a drumstick, of a pick) depend on well-reproduced treble; why a filter that is very narrow in frequency "rings" for longer; and why, in minimum-phase linear systems like a headphone, **time response and frequency response are the same information** seen from two angles. A headphone with a tall, narrow peak at 6 kHz will necessarily have a resonance that's slow to decay at 6 kHz. There's no "fast" headphone with a frequency response identical to a "slow" one, a topic we'll return to when discussing [separation and resolution](/iems/separacao-e-resolucao).
+
+## Putting the pieces together
+
+Frequency defines *where* in the spectrum the energy is and, perceptually, the pitch; amplitude defines *how much* energy there is and, perceptually (with many caveats), the loudness; phase defines *when* in the cycle and matters above all when waves meet; wavelength translates all of this into space and determines how sound interacts with objects, including your head.
+
+The natural next step is to learn how to talk about amplitudes that vary by factors of millions without getting lost in zeros: [decibels](/fundamentos/decibeis).
+
+<References>
+  <Ref>Hartmann, W. M. <em>Signals, Sound, and Sensation</em>. AIP Press / Springer, 1997. An excellent bridge between the mathematics of signals and perception.</Ref>
+  <Ref>Rossing, T. D.; Moore, F. R.; Wheeler, P. A. <em>The Science of Sound</em>. 3rd ed. Addison-Wesley, 2002.</Ref>
+  <Ref>ISO 7029:2017. <em>Acoustics — Statistical distribution of hearing thresholds related to age and gender</em>. Statistical basis of age-related hearing loss.</Ref>
+  <Ref>Oppenheim, A. V.; Willsky, A. S. <em>Signals and Systems</em>. 2nd ed. Prentice Hall, 1997. Linear systems, sine waves as eigenfunctions and time-frequency duality.</Ref>
+</References>

@@ -1,0 +1,99 @@
+<Lead>
+A melody survives a pocket radio, a phone call and an out-of-tune whistle. It isn't made of frequencies but of relationships between frequencies organized in time. Understanding what makes up a melody, and how the brain extracts it from sound, shows what a headphone needs to preserve and what it can, surprisingly, lose.
+</Lead>
+
+<Callout type="simples">
+A melody is a pattern of steps up and down, with a rhythm. Because the brain follows the pattern and not the exact frequencies, you can recognize a song hummed in any key on any speaker. What poor reproduction damages isn't the melody but the timbre, the texture and the ability to follow individual instruments.
+</Callout>
+
+## Pitch: a perception, not a measurement
+
+**Pitch** is the quality that lets us order sounds from low to high. For a pure tone, it closely follows frequency. But almost no musical sound is a pure tone: a guitar note is a stack of harmonics at 110, 220, 330, 440 Hz… and still we hear **one** note, with **one** pitch, that of the fundamental.
+
+That already shows the brain isn't simply reading "the lowest frequency." It's looking for a pattern. The most elegant proof is the **missing fundamental** phenomenon: if you remove the fundamental of a harmonic sound, or even the first few harmonics, the perceived pitch remains that of the fundamental, even though there's no energy at all at that frequency. The auditory system infers the common periodicity: 400, 600, 800 and 1,000 Hz are all multiples of 200 Hz, and the resulting signal repeats 200 times per second. Try it in the lab ("Missing fundamental" tab).
+
+<Lab id="pitch" />
+
+There are two big families of explanation, which complement each other:
+
+- **Place theory:** each frequency excites a specific region of the basilar membrane in the cochlea; pitch would be read from the position of the excitation.
+- **Temporal theory:** auditory neurons fire in sync with the phase of the wave (*phase locking*); pitch would be read from the periodicity of the firing.
+
+The data indicate that both mechanisms take part. Phase locking weakens greatly above 4–5 kHz, and it's no accident that **melody** perception degrades in that region: sequences of pure tones above ~5 kHz are poorly recognized as melodies, even though the frequencies are clearly distinguishable. All "melodic" music happens below that; what comes above is harmonics, brightness and texture.
+
+<Callout type="nota" title="Why this matters for small speakers">
+The missing fundamental effect explains why you recognize a song's bass line on a phone speaker that barely reproduces anything below 300 Hz: the bass harmonics arrive, and the brain reconstructs the note. Some processors (psychoacoustic "bass enhancement") exploit this deliberately, adding harmonics of bass notes the transducer can't reproduce. In good headphones this isn't necessary, but the phenomenon shows that **pitch** is very robust, while the **weight** and **timbre** of the bass are not.
+</Callout>
+
+## Notes, octaves and tuning
+
+<Diagram id="octave-keyboard" />
+
+Two notes separated by an [**octave**](/inicio/o-que-e-uma-oitava) (a 2:1 ratio) sound so alike that they get the same name in practically every musical culture. Listen: <Listen label="An octave" f="261.6,523.3" wave="triangle" />. This has a physical basis: all the harmonics of the higher note coincide with (even) harmonics of the lower one. So pitch has two dimensions: **pitch height** (low–high) and **pitch class** or chroma (C, D, E…), which repeats every octave.
+
+Western music divides the octave into 12 semitones. In **equal temperament**, used in almost all music today, all semitones correspond to the same frequency ratio, $2^{1/12} \approx 1.0595$. The frequency of any note can be calculated from the reference A4 = 440 Hz (standardized in ISO 16):
+
+<Formula say="Each semitone multiplies the frequency by about 1.06, and twelve of them make exactly double.">
+
+$$
+f(n) = 440 \cdot 2^{(n - 69)/12}\ \text{Hz}
+$$
+
+</Formula>
+
+where $n$ is the note number in the MIDI standard (A4 = 69, C4 = 60). Small tuning differences are measured in **cents**: 100 cents per semitone, 1,200 per octave. Trained listeners notice differences of 5 to 10 cents between successive notes.
+
+## Intervals, consonance and dissonance
+
+An **interval** is the relationship between two pitches. The most consonant intervals correspond to ratios of small integers: octave (2:1), fifth (3:2), fourth (4:3), major third (5:4). There are two classic physical explanations, which reinforce each other:
+
+**Coinciding harmonics** (Helmholtz). In a fifth between 200 and 300 Hz, many harmonics coincide (600, 1,200, 1,800…). Those that don't coincide are well separated. The result is an orderly spectrum.
+
+**Roughness** (Plomp and Levelt, 1965). When two partials are close together, within the same [critical band](/percepcao/mascaramento) of the cochlea but not identical, they beat rapidly and produce roughness. Maximum dissonance occurs when the separation is about a quarter of the critical band. Intervals with simple ratios minimize those close encounters of harmonics; intervals like the minor second (16:15) multiply them.
+
+Culture counts too: the degree of consonance attributed to certain intervals and chords changes with musical exposure. But the physical basis, harmonicity and roughness, is observed consistently and helps explain why distortions that create **inharmonic** partials sound so unpleasant.
+
+Equal temperament is a compromise. Stacking perfect fifths (3:2) doesn't close the cycle of octaves: twelve pure fifths overshoot seven octaves by about 23.5 cents (the *Pythagorean comma*). Just intonation yields very pure chords in one key but unusable ones in others. Equal temperament distributes the error: fifths are 2 cents narrow (imperceptible) and major thirds ~14 cents wide (perceptible as slow beating, especially on instruments with long sustain). You can compare them in the lab.
+
+## What makes up a melody
+
+A **melody** is a sequence of pitches organized in time and perceived as a unit. Taking it apart, we find several layers, each with its own perceptual importance:
+
+**Intervals.** What identifies a melody isn't the absolute frequencies but the ratios between successive notes. That's why you recognize "Happy Birthday" sung in any key: transposition multiplies all frequencies by the same factor and preserves the intervals. Very few people (estimates are under 1 in 1,000 in Western populations) have absolute pitch, the ability to name notes without a reference.
+
+**Contour.** The pattern of ups and downs. It's the first thing babies perceive and what usually stays in memory for little-known melodies. Preserving the contour while distorting the intervals produces something "similar but wrong."
+
+**Scale and key.** Notes belong to a set (a scale) and are organized around a center (the tonic). Research by Carol Krumhansl showed that listeners, even without formal training, have stable expectations about which notes "belong" to a tonal context: the tonal hierarchy. A melody is largely the play between tension (unstable notes) and resolution (return to stable ones).
+
+**Rhythm and meter.** Durations, accents and the underlying pulse. A melody with the right notes and evened-out rhythm becomes much harder to recognize, as the lab lets you test. Musical rhythm lives between roughly 0.5 and 4 pulses per second, the same time scale as body movements, which may be no coincidence.
+
+**Pitch range.** Melodies concentrated in a fairly narrow region of octaves sound coherent. Diana Deutsch's experiments showed that if each note of a familiar melody is played in a randomly chosen octave (preserving pitch class, that is, the note's "name"), recognition collapses. Pitch class alone isn't enough; proximity matters.
+
+**Timbre, dynamics and articulation.** These don't change *which* melody it is, but they profoundly change what it expresses: the same theme on an oboe, a piano or a hoarse voice has a different character. This is where the fidelity of the playback system becomes decisive again.
+
+## Harmony and texture
+
+When several notes sound at once, we enter **harmony**. A major chord in root position has frequencies in the approximate proportion 4:5:6, partials of a single harmonic series, which explains its stability. Harmony creates the context in which melody is heard: the same note can sound restful over one chord and tense over another.
+
+**Texture** describes how voices combine: a melody alone (monophony), melody with accompaniment (homophony), or several independent melodies at once (polyphony, as in a Bach fugue). Hearing polyphony requires the brain to **separate streams**: to group the notes of one voice and distinguish them from those of another. Albert Bregman called this *auditory scene analysis*. The cues the brain uses include pitch proximity, continuity of timbre, synchrony of attacks and spatial position.
+
+## What this means for reproduction
+
+Putting everything together, we can answer more precisely what matters when reproducing music:
+
+1. **The melody itself is robust.** It's encoded in relationships of pitch and time, and survives very poor reproduction. An average headphone doesn't "lose the melody."
+2. **Timbre, texture and separation are fragile.** Telling a cello from a viola playing together, or an inner line of a string arrangement, depends on spectral and temporal details. Frequency response imbalances (which mask neighboring regions), [intermodulation distortion](/eletronica/medidas-de-desempenho) (which creates inharmonic partials unrelated to the harmony) and poorly damped resonances (which smear attacks) harm exactly those cues.
+3. **Harmony is sensitive to spurious partials.** Since consonance depends on simple relationships between partials, adding components that don't belong to any harmonic series of the chord, typical of intermodulation, "dirties" the harmony in a way that simple harmonics of the fundamental (such as the second harmonic) don't.
+4. **Rhythm depends on attacks.** Well-defined transients, which depend on balanced response in the upper mids, make the pulse clear.
+
+This is the thread leading to the article on what a headphone needs for you to be able to [tell instruments and lines apart](/iems/separacao-e-resolucao), even when they're all in the same midrange region. But first, we need to understand the instrument that does all this analysis: [the ear](/percepcao/anatomia-do-ouvido).
+
+<References>
+  <Ref>Plomp, R.; Levelt, W. J. M. "Tonal consonance and critical bandwidth." <em>Journal of the Acoustical Society of America</em>, 38(4), 548–560, 1965.</Ref>
+  <Ref>Deutsch, D. "Octave generalization and tune recognition." <em>Perception &amp; Psychophysics</em>, 11(6), 411–412, 1972.</Ref>
+  <Ref>Krumhansl, C. L. <em>Cognitive Foundations of Musical Pitch</em>. Oxford University Press, 1990.</Ref>
+  <Ref>Bregman, A. S. <em>Auditory Scene Analysis: The Perceptual Organization of Sound</em>. MIT Press, 1990.</Ref>
+  <Ref>Attneave, F.; Olson, R. K. "Pitch as a medium: a new approach to psychophysical scaling." <em>American Journal of Psychology</em>, 84(2), 147–166, 1971.</Ref>
+  <Ref>Plack, C. J.; Oxenham, A. J.; Fay, R. R.; Popper, A. N. (eds.). <em>Pitch: Neural Coding and Perception</em>. Springer, 2005.</Ref>
+  <Ref>Schouten, J. F. "The residue and the mechanism of hearing." <em>Proceedings of the Koninklijke Nederlandse Akademie van Wetenschappen</em>, 43, 991–999, 1940.</Ref>
+</References>

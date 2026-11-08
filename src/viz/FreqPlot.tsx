@@ -2,6 +2,7 @@ import { useMemo, useRef, useState, type ReactNode } from 'react';
 import { logFreqs } from '../audio/dsp';
 import { useElementSize, useTweened } from '../lib/hooks';
 import { fmtHz } from '../components/ui/controls';
+import { tr } from '../i18n';
 
 export interface PlotCurve {
   id: string;
@@ -65,7 +66,7 @@ export function FreqPlot({
   regions,
   overlay,
   readout = true,
-  ariaLabel = 'Gráfico de resposta em frequência',
+  ariaLabel = tr("Gráfico de resposta em frequência"),
   className = '',
   yFormat,
 }: FreqPlotProps) {
@@ -207,7 +208,7 @@ export function FreqPlot({
           >
             {yLabel}
           </text>
-          <g clipPath={`url(#${clipId})`}>
+          <g clipPath={tr("url(#{0})", clipId)}>
             {curves.map((c, i) =>
               c.fill ? (
                 <path

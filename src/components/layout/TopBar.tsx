@@ -3,10 +3,12 @@ import { Link, NavLink } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { applyTheme, themeStore, useTheme, type Theme } from '../../lib/prefs';
 import { IconMenu, IconMoon, IconSearch, IconSun } from '../ui/controls';
+import { lang, setLang, tr } from '../../i18n';
+import { AmbientButton } from './AmbientButton';
 
 export function Logo() {
   return (
-    <Link to="/" className="group flex items-center gap-2.5 shrink-0" aria-label="Ressonância — início">
+    <Link to="/" className="group flex items-center gap-2.5 shrink-0" aria-label={tr("Ressonância — início")}>
       <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden className="shrink-0">
         <rect width="32" height="32" rx="8" fill="var(--fg)" />
         <path
@@ -18,7 +20,7 @@ export function Logo() {
           className="transition-[stroke-dashoffset] duration-700 [stroke-dasharray:60] [stroke-dashoffset:0] group-hover:[stroke-dashoffset:120]"
         />
       </svg>
-      <span className="text-[15px] font-semibold tracking-[-0.02em] text-fg">Ressonância</span>
+      <span className="text-[15px] font-semibold tracking-[-0.02em] text-fg">{tr("Ressonância")}</span>
     </Link>
   );
 }
@@ -37,12 +39,25 @@ function ThemeToggle() {
         applyTheme(n);
       }}
       className="h-8 w-8 grid place-items-center rounded-lg text-muted hover:text-fg hover:bg-sunken transition-colors"
-      title={theme === 'dark' ? 'Mudar para o tema claro' : 'Mudar para o tema escuro'}
-      aria-label={`${label[theme]} ativo. Alternar tema`}
+      title={theme === 'dark' ? tr("Mudar para o tema claro") : tr("Mudar para o tema escuro")}
+      aria-label={tr("{0} ativo. Alternar tema", label[theme])}
     >
       <motion.span key={theme} initial={{ rotate: -40, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} transition={{ duration: 0.3 }}>
         <Icon size={16} />
       </motion.span>
+    </button>
+  );
+}
+
+function LangToggle() {
+  return (
+    <button
+      onClick={() => setLang(lang === 'pt' ? 'en' : 'pt')}
+      className="h-8 px-2 grid place-items-center rounded-lg text-[12px] font-semibold text-muted hover:text-fg hover:bg-sunken transition-colors"
+      title={lang === 'pt' ? 'Switch to English' : 'Mudar para português'}
+      aria-label={lang === 'pt' ? 'Switch to English' : 'Mudar para português'}
+    >
+      {lang === 'pt' ? 'EN' : 'PT'}
     </button>
   );
 }
@@ -58,10 +73,10 @@ export function TopBar({ onSearch, onMenu }: { onSearch: () => void; onMenu: () 
   const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform);
 
   const nav = [
-    { to: '/artigos', label: 'Artigos' },
-    { to: '/laboratorio', label: 'Laboratório' },
-    { to: '/glossario', label: 'Glossário' },
-    { to: '/favoritos', label: 'Favoritos' },
+    { to: '/artigos', label: tr("Artigos") },
+    { to: '/laboratorio', label: tr("Laboratório") },
+    { to: '/glossario', label: tr("Glossário") },
+    { to: '/favoritos', label: tr("Favoritos") },
   ];
 
   return (
@@ -74,12 +89,12 @@ export function TopBar({ onSearch, onMenu }: { onSearch: () => void; onMenu: () 
         <button
           onClick={onMenu}
           className="lg:hidden -ml-1 h-8 w-8 grid place-items-center rounded-lg text-muted hover:text-fg hover:bg-sunken"
-          aria-label="Abrir navegação"
+          aria-label={tr("Abrir navegação")}
         >
           <IconMenu size={18} />
         </button>
         <Logo />
-        <nav className="hidden md:flex items-center gap-1 ml-6" aria-label="Principal">
+        <nav className="hidden md:flex items-center gap-1 ml-6" aria-label={tr("Principal")}>
           {nav.map((n) => (
             <NavLink
               key={n.to}
@@ -109,14 +124,16 @@ export function TopBar({ onSearch, onMenu }: { onSearch: () => void; onMenu: () 
           <button
             onClick={onSearch}
             className="flex items-center gap-2 h-8 pl-2.5 pr-2 rounded-lg border border-line text-muted hover:text-fg hover:border-line-strong transition-colors text-[13px]"
-            aria-label="Buscar"
+            aria-label={tr("Buscar")}
           >
             <IconSearch size={15} />
-            <span className="hidden sm:inline">Buscar</span>
+            <span className="hidden sm:inline">{tr("Buscar")}</span>
             <kbd className="hidden sm:inline text-[10.5px] font-mono px-1.5 py-[1px] rounded border border-line text-faint">
-              {isMac ? '⌘' : 'Ctrl'} K
+              {isMac ? '⌘' : tr("Ctrl")} K
             </kbd>
           </button>
+          <LangToggle />
+          <AmbientButton />
           <ThemeToggle />
         </div>
       </div>

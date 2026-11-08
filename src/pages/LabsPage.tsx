@@ -6,10 +6,11 @@ import { modules, articleById } from '../content/manifest';
 import { Lab, LabSkeleton } from '../components/mdx/LabEmbed';
 import { IconArrowLeft, IconArrowRight, IconVolume } from '../components/ui/controls';
 import { NotFound } from './NotFound';
+import { tr } from '../i18n';
 
 export function LabsPage() {
   useEffect(() => {
-    document.title = 'Laboratório — Ressonância';
+    document.title = tr("Laboratório — Ressonância");
   }, []);
   const visible = labs.filter((l) => !l.hidden);
   const featured = visible.filter((l) => l.featured);
@@ -21,19 +22,14 @@ export function LabsPage() {
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         className="max-w-[720px] mb-14"
       >
-        <div className="text-[12px] uppercase tracking-[0.12em] font-semibold text-accent">Laboratório central</div>
-        <h1 className="mt-2 text-[clamp(2.1rem,4.6vw,3.1rem)] leading-[1.06] font-semibold tracking-[-0.034em]">
-          Experimente o som com as próprias mãos
-        </h1>
-        <p className="mt-4 text-[1.12rem] leading-relaxed text-muted font-serif">
-          Todos os simuladores do site reunidos. Os cálculos são reais e o áudio é gerado e processado no seu navegador pela Web Audio
-          API — nada é enviado a servidores. Cada experimento leva ao artigo que explica o fenômeno.
-        </p>
+        <div className="text-[12px] uppercase tracking-[0.12em] font-semibold text-accent">{tr("Laboratório central")}</div>
+        <h1 className="mt-2 text-[clamp(2.1rem,4.6vw,3.1rem)] leading-[1.06] font-semibold tracking-[-0.034em]">{tr("Experimente o som com as próprias mãos")}</h1>
+        <p className="mt-4 text-[1.12rem] leading-relaxed text-muted font-serif">{tr("Todos os simuladores do site reunidos. Os cálculos são reais e o áudio é gerado e processado no seu navegador pela Web Audio API — nada é enviado a servidores. Cada experimento leva ao artigo que explica o fenômeno.")}</p>
       </motion.header>
 
       {featured.length > 0 && (
         <section className="mb-16">
-          <h2 className="text-[11px] uppercase tracking-[0.12em] font-semibold text-faint mb-4">Destaques</h2>
+          <h2 className="text-[11px] uppercase tracking-[0.12em] font-semibold text-faint mb-4">{tr("Destaques")}</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px rounded-2xl overflow-hidden border border-line bg-line">
             {featured.map((l, i) => (
               <motion.div
@@ -95,15 +91,14 @@ export function LabPage() {
   const { lab = '' } = useParams();
   const l = labById.get(lab);
   useEffect(() => {
-    if (l) document.title = `${l.title} — Laboratório — Ressonância`;
+    if (l) document.title = tr("{0} — Laboratório — Ressonância", l.title);
   }, [l]);
   if (!l) return <NotFound />;
   const art = articleById.get(l.article);
   return (
     <div className="mx-auto max-w-[1060px] px-4 sm:px-6 pt-10 pb-24">
       <Link to="/laboratorio" className="inline-flex items-center gap-1.5 text-[13px] text-muted hover:text-fg">
-        <IconArrowLeft size={14} /> Laboratório
-      </Link>
+        <IconArrowLeft size={14} />{' '}{tr("Laboratório")}</Link>
       <h1 className="mt-4 text-[clamp(1.8rem,3.8vw,2.5rem)] font-semibold tracking-[-0.03em]">{l.title}</h1>
       <p className="mt-2 text-[1.05rem] text-muted font-serif max-w-[65ch]">{l.summary}</p>
       <div className="[&_.bleed]:mx-0">
@@ -114,7 +109,7 @@ export function LabPage() {
       {art && (
         <Link to={`/${art.id}`} className="group mt-4 flex items-center justify-between gap-4 rounded-2xl border border-line px-5 py-4 hover:bg-elev transition-colors">
           <span>
-            <span className="block text-[12px] text-muted">Entenda o fenômeno</span>
+            <span className="block text-[12px] text-muted">{tr("Entenda o fenômeno")}</span>
             <span className="block text-[15.5px] font-medium text-fg group-hover:text-accent transition-colors">{art.title}</span>
           </span>
           <IconArrowRight size={17} className="text-faint group-hover:text-accent group-hover:translate-x-0.5 transition-all" />

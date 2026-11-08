@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import type { FilterSpec, FilterType } from '../../audio/dsp';
 import { qToOctaves } from '../../audio/dsp';
 import { Button, IconPlus, IconTrash, Slider, fmtHz, fmtNum } from './controls';
+import { tr } from '../../i18n';
 
 export const FILTER_LABEL: Record<FilterType, string> = {
   peaking: 'Peak (sino)',
@@ -68,7 +69,7 @@ export function FilterEditor({
                       update(f.id, { type: t, q: t === 'lowpass' || t === 'highpass' ? 0.707 : t === 'lowshelf' || t === 'highshelf' ? 0.707 : f.q });
                     }}
                     className="h-7 rounded-md border border-line-strong bg-elev px-1.5 text-[12.5px]"
-                    aria-label={`Tipo do filtro ${i + 1}`}
+                    aria-label={tr("Tipo do filtro {0}", i + 1)}
                   >
                     {types.map((t) => (
                       <option key={t} value={t}>
@@ -77,20 +78,18 @@ export function FilterEditor({
                     ))}
                   </select>
                   <label className="inline-flex items-center gap-1.5 text-[12px] text-muted ml-1 cursor-pointer">
-                    <input type="checkbox" checked={f.enabled !== false} onChange={(e) => update(f.id, { enabled: e.target.checked })} className="accent-[var(--accent)]" />
-                    ativo
-                  </label>
+                    <input type="checkbox" checked={f.enabled !== false} onChange={(e) => update(f.id, { enabled: e.target.checked })} className="accent-[var(--accent)]" />{tr("ativo")}</label>
                   <button
                     onClick={() => onChange(filters.filter((x) => x.id !== f.id))}
                     className="ml-auto h-7 w-7 grid place-items-center rounded-md text-faint hover:text-[var(--myth)] hover:bg-sunken"
-                    aria-label={`Remover filtro ${i + 1}`}
+                    aria-label={tr("Remover filtro {0}", i + 1)}
                   >
                     <IconTrash size={14} />
                   </button>
                 </div>
                 <div className={`grid grid-cols-1 ${compact ? 'sm:grid-cols-3' : 'sm:grid-cols-3'} gap-x-5 gap-y-2`}>
-                  <Slider label="Frequência" value={f.freq} min={20} max={20000} log onChange={(v) => update(f.id, { freq: Math.round(v) })} format={fmtHz} />
-                  <Slider label="Ganho" value={f.gain} min={-15} max={15} step={0.1} onChange={(v) => update(f.id, { gain: v })} format={(v) => `${v > 0 ? '+' : ''}${fmtNum(v, 1)}`} unit="dB" disabled={!hasGain(f.type)} />
+                  <Slider label={tr("Frequência")} value={f.freq} min={20} max={20000} log onChange={(v) => update(f.id, { freq: Math.round(v) })} format={fmtHz} />
+                  <Slider label={tr("Ganho")} value={f.gain} min={-15} max={15} step={0.1} onChange={(v) => update(f.id, { gain: v })} format={(v) => `${v > 0 ? '+' : ''}${fmtNum(v, 1)}`} unit="dB" disabled={!hasGain(f.type)} />
                   <Slider
                     label="Q"
                     value={f.q}
@@ -99,7 +98,7 @@ export function FilterEditor({
                     log
                     onChange={(v) => update(f.id, { q: Number(v.toFixed(2)) })}
                     format={(v) => fmtNum(v, 2)}
-                    hint={hasQ(f.type) && f.type === 'peaking' ? `≈ ${fmtNum(qToOctaves(f.q), 2)} oitava` : !hasQ(f.type) ? 'Inclinação fixa (S = 1)' : undefined}
+                    hint={hasQ(f.type) && f.type === 'peaking' ? tr("≈ {0} oitava", fmtNum(qToOctaves(f.q), 2)) : !hasQ(f.type) ? tr("Inclinação fixa (S = 1)") : undefined}
                     disabled={!hasQ(f.type)}
                   />
                 </div>
@@ -109,9 +108,7 @@ export function FilterEditor({
         </AnimatePresence>
       </ul>
       {filters.length < max && (
-        <Button size="sm" variant="ghost" className="mt-2" icon={<IconPlus size={14} />} onClick={() => onChange([...filters, newFilter()])}>
-          Adicionar filtro
-        </Button>
+        <Button size="sm" variant="ghost" className="mt-2" icon={<IconPlus size={14} />} onClick={() => onChange([...filters, newFilter()])}>{tr("Adicionar filtro")}</Button>
       )}
     </div>
   );

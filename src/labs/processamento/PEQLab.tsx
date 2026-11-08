@@ -8,13 +8,14 @@ import { FreqPlot, Legend, type PlotScales } from '../../viz/FreqPlot';
 import { biquadCoefs, biquadDb, filtersDbAt, logFreqs, type FilterSpec } from '../../audio/dsp';
 import { useBiquadChain, type ChainTaps } from '../../audio/useBiquadChain';
 import { useAnimationFrame } from '../../lib/hooks';
+import { tr } from '../../i18n';
 
 const PRESETS: { name: string; filters: Omit<FilterSpec, 'id'>[] }[] = [
-  { name: 'Mais grave', filters: [{ type: 'lowshelf', freq: 105, gain: 5, q: 0.707 }] },
-  { name: 'Menos sibilância', filters: [{ type: 'peaking', freq: 7200, gain: -5, q: 3.5 }] },
-  { name: 'Vozes mais à frente', filters: [{ type: 'peaking', freq: 2200, gain: 2.5, q: 0.9 }, { type: 'peaking', freq: 350, gain: -1.5, q: 0.9 }] },
-  { name: 'Suavizar agudos', filters: [{ type: 'highshelf', freq: 5000, gain: -3, q: 0.707 }] },
-  { name: 'Em V (diversão)', filters: [{ type: 'lowshelf', freq: 120, gain: 6, q: 0.707 }, { type: 'peaking', freq: 1500, gain: -3, q: 0.6 }, { type: 'highshelf', freq: 8000, gain: 4, q: 0.707 }] },
+  { name: tr("Mais grave"), filters: [{ type: 'lowshelf', freq: 105, gain: 5, q: 0.707 }] },
+  { name: tr("Menos sibilância"), filters: [{ type: 'peaking', freq: 7200, gain: -5, q: 3.5 }] },
+  { name: tr("Vozes mais à frente"), filters: [{ type: 'peaking', freq: 2200, gain: 2.5, q: 0.9 }, { type: 'peaking', freq: 350, gain: -1.5, q: 0.9 }] },
+  { name: tr("Suavizar agudos"), filters: [{ type: 'highshelf', freq: 5000, gain: -3, q: 0.707 }] },
+  { name: tr("Em V (diversão)"), filters: [{ type: 'lowshelf', freq: 120, gain: 6, q: 0.707 }, { type: 'peaking', freq: 1500, gain: -3, q: 0.6 }, { type: 'highshelf', freq: 8000, gain: 4, q: 0.707 }] },
 ];
 
 const INITIAL: FilterSpec[] = [
@@ -100,8 +101,8 @@ export default function PEQLab() {
 
   return (
     <LabFrame
-      title="Equalizador paramétrico"
-      description="Um EQ paramétrico real, aplicado ao áudio no seu navegador. Arraste os pontos coloridos no gráfico (frequência e ganho) ou ajuste cada filtro abaixo. Abra um arquivo seu para testar — nada é enviado a servidores."
+      title={tr("Equalizador paramétrico")}
+      description={tr("Um EQ paramétrico real, aplicado ao áudio no seu navegador. Arraste os pontos coloridos no gráfico (frequência e ganho) ou ajuste cada filtro abaixo. Abra um arquivo seu para testar — nada é enviado a servidores.")}
       audio
       onReset={() => {
         setFilters(INITIAL);
@@ -114,10 +115,10 @@ export default function PEQLab() {
           className={`text-[11px] font-semibold px-2 py-0.5 rounded-md ${clipping ? 'bg-[var(--myth)] text-white' : 'bg-sunken text-faint'}`}
           aria-live="polite"
         >
-          {clipping ? 'CLIPPING' : 'sem clipping'}
+          {clipping ? 'CLIPPING' : tr("sem clipping")}
         </motion.span>
       }
-      footer="Filtros biquad da Web Audio API (as mesmas fórmulas do gráfico). O teto digital simula a conversão final em ponto fixo: qualquer amostra acima de 0 dBFS é cortada, como num DAC real. As curvas tracejadas mostram o espectro ao vivo antes e depois da EQ."
+      footer={tr("Filtros biquad da Web Audio API (as mesmas fórmulas do gráfico). O teto digital simula a conversão final em ponto fixo: qualquer amostra acima de 0 dBFS é cortada, como num DAC real. As curvas tracejadas mostram o espectro ao vivo antes e depois da EQ.")}
     >
       <div className="flex flex-wrap gap-1.5 mb-3">
         {PRESETS.map((p) => (
@@ -134,33 +135,33 @@ export default function PEQLab() {
         curves={[
           ...(taps ? [{ id: 'pre', fn: specFn('pre'), color: 'var(--fg-faint)', width: 1, opacity: 0.6, instant: true }, { id: 'post', fn: specFn('post'), color: 'var(--c-b)', width: 1, opacity: 0.7, instant: true }] : []),
           ...filters.map((flt, i) => ({ id: flt.id, fn: (f: number) => (flt.enabled === false ? 0 : biquadDb(biquadCoefs(flt, 48000), f, 48000)), color: FILTER_COLORS[i % FILTER_COLORS.length], width: 1, opacity: 0.6, instant: drag.current != null })),
-          { id: 'total', label: 'Curva total da EQ', fn: total, color: 'var(--c-a)', width: 2.8, instant: drag.current != null },
+          { id: 'total', label: tr("Curva total da EQ"), fn: total, color: 'var(--c-a)', width: 2.8, instant: drag.current != null },
         ]}
         overlay={overlay}
-        ariaLabel="Resposta do equalizador"
+        ariaLabel={tr("Resposta do equalizador")}
       />
       <div className="mt-2 mb-4">
-        <Legend items={[{ label: 'Curva total', color: 'var(--c-a)' }, ...(taps ? [{ label: 'Espectro antes (ao vivo)', color: 'var(--fg-faint)' }, { label: 'Espectro depois', color: 'var(--c-b)' }] : [])]} />
+        <Legend items={[{ label: tr("Curva total"), color: 'var(--c-a)' }, ...(taps ? [{ label: tr("Espectro antes (ao vivo)"), color: 'var(--fg-faint)' }, { label: tr("Espectro depois"), color: 'var(--c-b)' }] : [])]} />
       </div>
       <div className="grid lg:grid-cols-[1.4fr_1fr] gap-6">
         <FilterEditor filters={filters} onChange={setFilters} max={10} />
         <div className="space-y-4">
           <div>
-            <Toggle checked={autoPre} onChange={setAutoPre} label="Preamp automático" />
+            <Toggle checked={autoPre} onChange={setAutoPre} label={tr("Preamp automático")} />
             <div className="mt-2">
-              <Slider label="Preamp" value={preamp} min={-15} max={6} step={0.1} onChange={(v) => { setAutoPre(false); setManualPre(v); }} format={fmtDb} hint={`Maior reforço da curva: ${fmtDb(maxBoost)}`} />
+              <Slider label={tr("Preamp")} value={preamp} min={-15} max={6} step={0.1} onChange={(v) => { setAutoPre(false); setManualPre(v); }} format={fmtDb} hint={tr("Maior reforço da curva: {0}", fmtDb(maxBoost))} />
             </div>
           </div>
-          <Toggle checked={hardClip} onChange={setHardClip} label="Simular teto digital de 0 dBFS" />
+          <Toggle checked={hardClip} onChange={setHardClip} label={tr("Simular teto digital de 0 dBFS")} />
           <Readout
             items={[
-              { label: 'Maior reforço', value: fmtDb(maxBoost), accent: maxBoost > 0 },
-              { label: 'Preamp aplicado', value: fmtDb(preamp) },
-              { label: 'Filtros ativos', value: fmtNum(filters.filter((f) => f.enabled !== false).length, 0) },
+              { label: tr("Maior reforço"), value: fmtDb(maxBoost), accent: maxBoost > 0 },
+              { label: tr("Preamp aplicado"), value: fmtDb(preamp) },
+              { label: tr("Filtros ativos"), value: fmtNum(filters.filter((f) => f.enabled !== false).length, 0) },
             ]}
           />
           <div>
-            <div className="text-[12.5px] text-muted font-medium mb-1.5">Exportar (Equalizer APO / Peace)</div>
+            <div className="text-[12.5px] text-muted font-medium mb-1.5">{tr("Exportar (Equalizer APO / Peace)")}</div>
             <pre className="text-[11.5px] font-mono bg-sunken border border-line rounded-xl px-3 py-2.5 overflow-x-auto leading-relaxed max-h-[160px]">{apo}</pre>
             <Button
               size="sm"
@@ -169,20 +170,16 @@ export default function PEQLab() {
               icon={<IconCopy size={14} />}
               onClick={() => void navigator.clipboard?.writeText(apo).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1500); })}
             >
-              {copied ? 'Copiado' : 'Copiar'}
+              {copied ? tr("Copiado") : tr("Copiar")}
             </Button>
           </div>
         </div>
       </div>
       <div className="mt-5 pt-4 border-t border-line">
-        <SourceBar player={player} extra={<Toggle checked={enabled} onChange={setEnabled} label={enabled ? 'EQ ligada' : 'EQ desligada'} />} />
+        <SourceBar player={player} extra={<Toggle checked={enabled} onChange={setEnabled} label={enabled ? tr("EQ ligada") : tr("EQ desligada")} />} />
       </div>
       <div className="mt-3">
-        <Note>
-          Desligue o preamp automático e coloque um shelf de +8 dB nos graves com música alta: o indicador de clipping acende e você ouve a
-          distorção. É o motivo de todo EQ que reforça precisar de um preamp negativo do mesmo tamanho do maior reforço. A comparação EQ
-          ligada/desligada usa o mesmo preamp nos dois lados, para não confundir “melhor” com “mais alto”.
-        </Note>
+        <Note>{tr("Desligue o preamp automático e coloque um shelf de +8 dB nos graves com música alta: o indicador de clipping acende e você ouve a distorção. É o motivo de todo EQ que reforça precisar de um preamp negativo do mesmo tamanho do maior reforço. A comparação EQ ligada/desligada usa o mesmo preamp nos dois lados, para não confundir “melhor” com “mais alto”.")}</Note>
       </div>
     </LabFrame>
   );

@@ -9,6 +9,7 @@ import { filtersDbAt, interpCurve, type FilterSpec } from '../../audio/dsp';
 import { useCurvePlayer } from '../../audio/useCurvePlayer';
 import { harmanIE } from '../../data/targets';
 import { createPersistentStore, useStore } from '../../lib/storage';
+import { tr } from '../../i18n';
 
 type Param = 'bass' | 'lowmid' | 'presence' | 'treble' | 'air';
 export type Preference = Record<Param, number>;
@@ -16,11 +17,11 @@ export type Preference = Record<Param, number>;
 export const preferenceStore = createPersistentStore<Preference | null>('preference-curve', null);
 
 const PARAMS: { id: Param; name: string; filter: Omit<FilterSpec, 'id' | 'gain'>; min: number; max: number; help: string }[] = [
-  { id: 'bass', name: 'Graves (shelf 105 Hz)', filter: { type: 'lowshelf', freq: 105, q: 0.707 }, min: -6, max: 12, help: 'Peso e impacto. Ajuste com música que você conhece bem; desconfie de ruído rosa aqui.' },
-  { id: 'lowmid', name: 'Médios-graves (300 Hz)', filter: { type: 'peaking', freq: 300, q: 0.8 }, min: -5, max: 5, help: 'Corpo e calor de vozes e instrumentos. Em excesso, embola.' },
-  { id: 'presence', name: 'Presença (3 kHz)', filter: { type: 'peaking', freq: 3000, q: 1.1 }, min: -6, max: 6, help: 'Articulação e proximidade. É a região mais sensível: mudanças de 1–2 dB já são audíveis.' },
-  { id: 'treble', name: 'Agudos (shelf 6 kHz)', filter: { type: 'highshelf', freq: 6000, q: 0.707 }, min: -6, max: 6, help: 'Brilho, pratos e sibilantes. Muito dependente da inserção — ajuste com o IEM bem encaixado.' },
-  { id: 'air', name: 'Ar (shelf 12 kHz)', filter: { type: 'highshelf', freq: 12000, q: 0.707 }, min: -6, max: 6, help: 'Abertura e “ar”. Sutil; se não ouvir diferença, deixe em 0.' },
+  { id: 'bass', name: tr("Graves (shelf 105 Hz)"), filter: { type: 'lowshelf', freq: 105, q: 0.707 }, min: -6, max: 12, help: 'Peso e impacto. Ajuste com música que você conhece bem; desconfie de ruído rosa aqui.' },
+  { id: 'lowmid', name: tr("Médios-graves (300 Hz)"), filter: { type: 'peaking', freq: 300, q: 0.8 }, min: -5, max: 5, help: 'Corpo e calor de vozes e instrumentos. Em excesso, embola.' },
+  { id: 'presence', name: tr("Presença (3 kHz)"), filter: { type: 'peaking', freq: 3000, q: 1.1 }, min: -6, max: 6, help: 'Articulação e proximidade. É a região mais sensível: mudanças de 1–2 dB já são audíveis.' },
+  { id: 'treble', name: tr("Agudos (shelf 6 kHz)"), filter: { type: 'highshelf', freq: 6000, q: 0.707 }, min: -6, max: 6, help: 'Brilho, pratos e sibilantes. Muito dependente da inserção — ajuste com o IEM bem encaixado.' },
+  { id: 'air', name: tr("Ar (shelf 12 kHz)"), filter: { type: 'highshelf', freq: 12000, q: 0.707 }, min: -6, max: 6, help: 'Abertura e “ar”. Sutil; se não ouvir diferença, deixe em 0.' },
 ];
 
 const ZERO: Preference = { bass: 0, lowmid: 0, presence: 0, treble: 0, air: 0 };
@@ -90,15 +91,15 @@ export default function PreferenceLab() {
 
   return (
     <LabFrame
-      title="Sua curva de preferência"
-      description="Ajuste cinco regiões, uma de cada vez, ouvindo música que você conhece. No modo cego, você só escolhe entre duas opções sem ver os números, e o laboratório converge para o seu ponto preferido por uma escada adaptativa."
+      title={tr("Sua curva de preferência")}
+      description={tr("Ajuste cinco regiões, uma de cada vez, ouvindo música que você conhece. No modo cego, você só escolhe entre duas opções sem ver os números, e o laboratório converge para o seu ponto preferido por uma escada adaptativa.")}
       audio
       onReset={() => {
         setP(ZERO);
         setStairs(Object.fromEntries(PARAMS.map((x) => [x.id, newStair(0)])) as Record<Param, Stair>);
         setStep('bass');
       }}
-      footer="Os ajustes são relativos ao fone que você está usando agora. Se ele estiver próximo do alvo Harman, a curva estimada é uma boa aproximação da sua preferência absoluta; se não, os ajustes valem como EQ para este fone."
+      footer={tr("Os ajustes são relativos ao fone que você está usando agora. Se ele estiver próximo do alvo Harman, a curva estimada é uma boa aproximação da sua preferência absoluta; se não, os ajustes valem como EQ para este fone.")}
     >
       <div className="flex flex-wrap items-center gap-2 mb-5">
         <Segmented
@@ -107,10 +108,10 @@ export default function PreferenceLab() {
           onChange={setStep}
           options={[
             ...PARAMS.map((x, i) => ({ value: x.id, label: `${i + 1}. ${x.name.split(' (')[0]}` })),
-            { value: 'result' as const, label: 'Resultado' },
+            { value: 'result' as const, label: tr("Resultado") },
           ]}
         />
-        <Toggle checked={blind} onChange={setBlind} label="Modo cego" />
+        <Toggle checked={blind} onChange={setBlind} label={tr("Modo cego")} />
       </div>
 
       <AnimatePresence mode="wait">
@@ -122,17 +123,14 @@ export default function PreferenceLab() {
                 <p className="text-[13px] text-muted leading-relaxed mt-1 mb-4">{current.help}</p>
                 {!blind ? (
                   <>
-                    <Slider label="Ajuste" value={p[current.id]} min={current.min} max={current.max} step={0.5} onChange={(v) => setP((pp) => ({ ...pp, [current.id]: v }))} format={fmtDb} />
+                    <Slider label={tr("Ajuste")} value={p[current.id]} min={current.min} max={current.max} step={0.5} onChange={(v) => setP((pp) => ({ ...pp, [current.id]: v }))} format={fmtDb} />
                     <div className="mt-3">
-                      <Toggle checked={bypass} onChange={setBypass} label="Comparar com todos os ajustes desligados" />
+                      <Toggle checked={bypass} onChange={setBypass} label={tr("Comparar com todos os ajustes desligados")} />
                     </div>
                   </>
                 ) : stair.done ? (
-                  <div className="rounded-xl bg-accent-soft px-4 py-3 text-[13.5px] text-soft">
-                    Convergiu em <strong className="text-fg">{fmtDb(stair.value)}</strong> após {stair.trials} escolhas.{' '}
-                    <button className="underline text-accent" onClick={() => setStairs((s) => ({ ...s, [current.id]: newStair(stair.value) }))}>
-                      Refazer
-                    </button>
+                  <div className="rounded-xl bg-accent-soft px-4 py-3 text-[13.5px] text-soft">{tr("Convergiu em")}{' '}<strong className="text-fg">{fmtDb(stair.value)}</strong>{' '}{tr("após")}{' '}{stair.trials}{' '}{tr("escolhas.")}{' '}
+                    <button className="underline text-accent" onClick={() => setStairs((s) => ({ ...s, [current.id]: newStair(stair.value) }))}>{tr("Refazer")}</button>
                   </div>
                 ) : (
                   <>
@@ -143,31 +141,29 @@ export default function PreferenceLab() {
                           onClick={() => setStairs((s) => ({ ...s, [current.id]: { ...stair, listening: k as 0 | 1 } }))}
                           className={`rounded-xl border px-4 py-4 text-left transition-colors ${stair.listening === k ? 'border-accent bg-accent-soft' : 'border-line hover:bg-sunken'}`}
                         >
-                          <span className="block text-[12px] text-muted">{stair.listening === k ? 'Ouvindo' : 'Ouvir'}</span>
-                          <span className="block text-[17px] font-semibold text-fg">Opção {k + 1}</span>
+                          <span className="block text-[12px] text-muted">{stair.listening === k ? tr("Ouvindo") : tr("Ouvir")}</span>
+                          <span className="block text-[17px] font-semibold text-fg">{tr("Opção")}{' '}{k + 1}</span>
                         </button>
                       ))}
                     </div>
                     <div className="grid grid-cols-2 gap-2 mt-2">
-                      <Button onClick={() => choose(0)}>Prefiro a 1</Button>
-                      <Button onClick={() => choose(1)}>Prefiro a 2</Button>
+                      <Button onClick={() => choose(0)}>{tr("Prefiro a 1")}</Button>
+                      <Button onClick={() => choose(1)}>{tr("Prefiro a 2")}</Button>
                     </div>
-                    <p className="mt-2 text-[12px] text-faint">
-                      Escolha {stair.trials + 1} · diferença atual entre as opções: {fmtNum(stair.step, 1)} dB. Alterne várias vezes antes de decidir.
-                    </p>
+                    <p className="mt-2 text-[12px] text-faint">{tr("Escolha")}{' '}{stair.trials + 1}{' '}{tr("· diferença atual entre as opções:")}{' '}{fmtNum(stair.step, 1)}{' '}{tr("dB. Alterne várias vezes antes de decidir.")}</p>
                   </>
                 )}
               </div>
               <div>
-                <FreqPlot height={200} dbMin={-9} dbMax={12} dbStep={3} readout={false} curves={[{ id: 'd', label: 'Ajustes', fn: blind ? () => 0 : delta, color: 'var(--c-a)', width: 2.2, fill: true }]} ariaLabel="Seus ajustes" />
-                {blind && <p className="text-[12px] text-faint mt-1">Curva oculta no modo cego.</p>}
+                <FreqPlot height={200} dbMin={-9} dbMax={12} dbStep={3} readout={false} curves={[{ id: 'd', label: tr("Ajustes"), fn: blind ? () => 0 : delta, color: 'var(--c-a)', width: 2.2, fill: true }]} ariaLabel={tr("Seus ajustes")} />
+                {blind && <p className="text-[12px] text-faint mt-1">{tr("Curva oculta no modo cego.")}</p>}
               </div>
             </div>
           ) : (
             <div>
               <div className="flex flex-wrap items-center gap-3 mb-3">
-                <span className="text-[13px] text-muted">Meu fone atual é:</span>
-                <Segmented size="sm" value={assume} onChange={setAssume} options={[{ value: 'harman', label: 'Próximo do Harman' }, { value: 'unknown', label: 'Não sei' }]} />
+                <span className="text-[13px] text-muted">{tr("Meu fone atual é:")}</span>
+                <Segmented size="sm" value={assume} onChange={setAssume} options={[{ value: 'harman', label: tr("Próximo do Harman") }, { value: 'unknown', label: tr("Não sei") }]} />
               </div>
               <FreqPlot
                 height={290}
@@ -177,20 +173,20 @@ export default function PreferenceLab() {
                 curves={
                   assume === 'harman'
                     ? [
-                        { id: 'h', label: 'Harman IE 2019', fn: (f) => interpCurve(harmanIE.curve, f), color: 'var(--c-target)', width: 1.5, dash: '5 4' },
-                        { id: 'me', label: 'Sua curva estimada', fn: est, color: 'var(--c-a)', width: 2.6 },
+                        { id: 'h', label: tr("Harman IE 2019"), fn: (f) => interpCurve(harmanIE.curve, f), color: 'var(--c-target)', width: 1.5, dash: '5 4' },
+                        { id: 'me', label: tr("Sua curva estimada"), fn: est, color: 'var(--c-a)', width: 2.6 },
                       ]
-                    : [{ id: 'd', label: 'Seus ajustes', fn: delta, color: 'var(--c-a)', width: 2.4, fill: true }]
+                    : [{ id: 'd', label: tr("Seus ajustes"), fn: delta, color: 'var(--c-a)', width: 2.4, fill: true }]
                 }
-                ariaLabel="Sua curva de preferência"
+                ariaLabel={tr("Sua curva de preferência")}
               />
               <div className="mt-2 mb-4">
-                <Legend items={assume === 'harman' ? [{ label: 'Harman IE 2019', color: 'var(--c-target)', dash: true }, { label: 'Sua curva estimada', color: 'var(--c-a)' }] : [{ label: 'Seus ajustes (EQ para este fone)', color: 'var(--c-a)' }]} />
+                <Legend items={assume === 'harman' ? [{ label: tr("Harman IE 2019"), color: 'var(--c-target)', dash: true }, { label: tr("Sua curva estimada"), color: 'var(--c-a)' }] : [{ label: tr("Seus ajustes (EQ para este fone)"), color: 'var(--c-a)' }]} />
               </div>
               <Readout items={PARAMS.map((x) => ({ label: x.name, value: fmtDb(p[x.id]), accent: p[x.id] !== 0 }))} />
               <div className="mt-5 grid md:grid-cols-2 gap-4">
                 <div>
-                  <div className="text-[12.5px] text-muted font-medium mb-1.5">Equalizer APO / Peace (Windows), Wavelet e outros</div>
+                  <div className="text-[12.5px] text-muted font-medium mb-1.5">{tr("Equalizer APO / Peace (Windows), Wavelet e outros")}</div>
                   <pre className="text-[12px] font-mono bg-sunken border border-line rounded-xl px-3.5 py-3 overflow-x-auto leading-relaxed">{apo}</pre>
                   <Button
                     size="sm"
@@ -204,17 +200,14 @@ export default function PreferenceLab() {
                       });
                     }}
                   >
-                    {copied ? 'Copiado' : 'Copiar'}
+                    {copied ? tr("Copiado") : tr("Copiar")}
                   </Button>
                 </div>
                 <div className="space-y-3">
                   <Button variant="primary" onClick={() => preferenceStore.set(p)}>
-                    {saved && JSON.stringify(saved) === JSON.stringify(p) ? 'Salva neste navegador' : 'Salvar minha curva'}
+                    {saved && JSON.stringify(saved) === JSON.stringify(p) ? tr("Salva neste navegador") : tr("Salvar minha curva")}
                   </Button>
-                  <Note>
-                    A curva salva fica disponível como alvo no laboratório de autoEQ (módulo de equalização). Repita o processo em outro dia, com
-                    outra música: preferências estáveis entre sessões são as confiáveis.
-                  </Note>
+                  <Note>{tr("A curva salva fica disponível como alvo no laboratório de autoEQ (módulo de equalização). Repita o processo em outro dia, com outra música: preferências estáveis entre sessões são as confiáveis.")}</Note>
                 </div>
               </div>
             </div>

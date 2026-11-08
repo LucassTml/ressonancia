@@ -9,13 +9,14 @@ import { biquadCoefs, biquadDb, filtersDbAt, interpCurve, smoothNodes, type Filt
 import { useCurvePlayer } from '../../audio/useCurvePlayer';
 import { signatureDb, signatures, targetById, targets } from '../../data/targets';
 import { describeDelta } from '../../content/perception';
+import { tr } from '../../i18n';
 
 const NODE_F = [20, 40, 80, 160, 315, 630, 1250, 2500, 5000, 8000, 12000, 18000];
 
 export const CURVE_OPTIONS = [
-  { value: 'flat', label: 'Plana (0 dB)' },
-  ...targets.filter((t) => t.rig !== 'hats-oe').map((t) => ({ value: `t:${t.id}`, label: `Alvo: ${t.short}` })),
-  ...signatures.map((s) => ({ value: `s:${s.id}`, label: `Assinatura: ${s.name}` })),
+  { value: 'flat', label: tr("Plana (0 dB)") },
+  ...targets.filter((t) => t.rig !== 'hats-oe').map((t) => ({ value: `t:${t.id}`, label: tr("Alvo: {0}", t.short) })),
+  ...signatures.map((s) => ({ value: `s:${s.id}`, label: tr("Assinatura: {0}", s.name) })),
 ];
 
 export function curveFn(id: string): (f: number) => number {
@@ -69,13 +70,13 @@ export default function FRLab() {
     s.view === 'curves'
       ? [
           ...(tgt ? [{ id: 'tgt', label: targetById[s.target].short, fn: tgt, color: 'var(--c-target)', width: 1.6, dash: '6 4' }] : []),
-          ...(cmp ? [{ id: 'b', label: 'Curva B', fn: cmp, color: 'var(--c-b)', width: 1.8 }] : []),
-          { id: 'a', label: 'Curva A', fn: A, color: 'var(--c-a)', width: 2.6, instant: dragging.current != null },
+          ...(cmp ? [{ id: 'b', label: tr("Curva B"), fn: cmp, color: 'var(--c-b)', width: 1.8 }] : []),
+          { id: 'a', label: tr("Curva A"), fn: A, color: 'var(--c-a)', width: 2.6, instant: dragging.current != null },
         ]
       : [
-          ...(cmp && tgt ? [{ id: 'bd', label: 'B − alvo', fn: (f: number) => cmp(f) - tgt(f), color: 'var(--c-b)', width: 1.6 }] : []),
+          ...(cmp && tgt ? [{ id: 'bd', label: tr("B − alvo"), fn: (f: number) => cmp(f) - tgt(f), color: 'var(--c-b)', width: 1.6 }] : []),
           ...(cmp && !tgt ? [{ id: 'ab', label: 'A − B', fn: (f: number) => A(f) - cmp(f), color: 'var(--c-diff)', width: 2 }] : []),
-          ...(tgt ? [{ id: 'ad', label: 'A − alvo', fn: (f: number) => A(f) - tgt(f), color: 'var(--c-a)', width: 2.4, fill: true, instant: dragging.current != null }] : []),
+          ...(tgt ? [{ id: 'ad', label: tr("A − alvo"), fn: (f: number) => A(f) - tgt(f), color: 'var(--c-a)', width: 2.4, fill: true, instant: dragging.current != null }] : []),
           ...(cmp && tgt ? [{ id: 'ab2', label: 'A − B', fn: (f: number) => A(f) - cmp(f), color: 'var(--c-diff)', width: 1.4, dash: '4 3' }] : []),
         ];
 
@@ -97,7 +98,7 @@ export default function FRLab() {
               style={{ touchAction: 'none' }}
               tabIndex={0}
               role="slider"
-              aria-label={`Ajuste em ${fmtHz(f)}`}
+              aria-label={tr("Ajuste em {0}", fmtHz(f))}
               aria-valuenow={Number(s.nodes[i].toFixed(1))}
               aria-valuetext={fmtDb(s.nodes[i])}
               onPointerDown={(e) => {
@@ -152,8 +153,8 @@ export default function FRLab() {
 
   return (
     <LabFrame
-      title="Laboratório de resposta em frequência"
-      description="Arraste os pontos da curva A (ou use as setas do teclado), aplique um shelf de graves e filtros paramétricos, compare com uma curva B e com um alvo, e ouça a diferença com processamento real."
+      title={tr("Laboratório de resposta em frequência")}
+      description={tr("Arraste os pontos da curva A (ou use as setas do teclado), aplique um shelf de graves e filtros paramétricos, compare com uma curva B e com um alvo, e ouça a diferença com processamento real.")}
       audio
       onReset={() => setS(D)}
       toolbar={
@@ -162,27 +163,23 @@ export default function FRLab() {
           value={s.view}
           onChange={(v) => set('view', v)}
           options={[
-            { value: 'curves', label: 'Curvas' },
-            { value: 'diff', label: 'Diferença' },
+            { value: 'curves', label: tr("Curvas") },
+            { value: 'diff', label: tr("Diferença") },
           ]}
         />
       }
       footer={
-        <>
-          As curvas estão no domínio do acoplador 711 e normalizadas em 1 kHz. Curvas de assinatura são sintéticas e representativas, não
-          medições de produtos. Ao ouvir, o laboratório aplica ao áudio a diferença entre A e a referência escolhida — você ouve o seu
-          próprio fone modificado por essa diferença, não “o som absoluto” da curva A.
-        </>
+        <>{tr("As curvas estão no domínio do acoplador 711 e normalizadas em 1 kHz. Curvas de assinatura são sintéticas e representativas, não medições de produtos. Ao ouvir, o laboratório aplica ao áudio a diferença entre A e a referência escolhida — você ouve o seu próprio fone modificado por essa diferença, não “o som absoluto” da curva A.")}</>
       }
     >
       <div className="grid sm:grid-cols-3 gap-3 mb-4">
-        <Select label={<span style={{ color: 'var(--c-a)' }}>Curva A — ponto de partida</span>} value={s.base} onChange={(v) => setS((p) => ({ ...p, base: v, nodes: NODE_F.map(() => 0) }))} options={CURVE_OPTIONS} />
-        <Select label={<span style={{ color: 'var(--c-b)' }}>Curva B — comparação</span>} value={s.compare} onChange={(v) => set('compare', v)} options={[{ value: 'none', label: 'Nenhuma' }, ...CURVE_OPTIONS]} />
+        <Select label={<span style={{ color: 'var(--c-a)' }}>{tr("Curva A — ponto de partida")}</span>} value={s.base} onChange={(v) => setS((p) => ({ ...p, base: v, nodes: NODE_F.map(() => 0) }))} options={CURVE_OPTIONS} />
+        <Select label={<span style={{ color: 'var(--c-b)' }}>{tr("Curva B — comparação")}</span>} value={s.compare} onChange={(v) => set('compare', v)} options={[{ value: 'none', label: tr("Nenhuma") }, ...CURVE_OPTIONS]} />
         <Select
-          label={<span style={{ color: 'var(--c-target)' }}>Alvo sobreposto</span>}
+          label={<span style={{ color: 'var(--c-target)' }}>{tr("Alvo sobreposto")}</span>}
           value={s.target}
           onChange={(v) => set('target', v)}
-          options={[{ value: 'none', label: 'Nenhum' }, ...targets.filter((t) => t.rig !== 'hats-oe').map((t) => ({ value: t.id, label: t.short }))]}
+          options={[{ value: 'none', label: tr("Nenhum") }, ...targets.filter((t) => t.rig !== 'hats-oe').map((t) => ({ value: t.id, label: t.short }))]}
         />
       </div>
 
@@ -194,41 +191,40 @@ export default function FRLab() {
         dbStep={5}
         overlay={overlay}
         regions={[
-          { from: 20, to: 60, label: 'sub' },
-          { from: 60, to: 250, label: 'graves' },
-          { from: 250, to: 800, label: 'méd.-graves' },
-          { from: 800, to: 2000, label: 'médios' },
-          { from: 2000, to: 5000, label: 'presença' },
-          { from: 5000, to: 10000, label: 'agudos' },
-          { from: 10000, to: 20000, label: 'ar' },
+          { from: 20, to: 60, label: tr("sub") },
+          { from: 60, to: 250, label: tr("graves") },
+          { from: 250, to: 800, label: tr("méd.-graves") },
+          { from: 800, to: 2000, label: tr("médios") },
+          { from: 2000, to: 5000, label: tr("presença") },
+          { from: 5000, to: 10000, label: tr("agudos") },
+          { from: 10000, to: 20000, label: tr("ar") },
         ]}
-        ariaLabel="Gráfico de resposta em frequência editável"
+        ariaLabel={tr("Gráfico de resposta em frequência editável")}
       />
       <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
         <Legend
           items={curves.filter((c) => c.label).map((c) => ({ label: c.label!, color: c.color, dash: !!c.dash }))}
         />
         {activeF != null && (
-          <span className="text-[12px] text-muted font-mono tabular">
-            ponto {fmtHz(activeF)}: {fmtDb(s.nodes[active!])}
+          <span className="text-[12px] text-muted font-mono tabular">{tr("ponto")}{' '}{fmtHz(activeF)}: {fmtDb(s.nodes[active!])}
           </span>
         )}
       </div>
 
       <div className="mt-5 grid lg:grid-cols-[1fr_1fr] gap-6">
         <div className="space-y-4">
-          <Slider label="Shelf de graves (105 Hz)" value={s.shelf} min={-10} max={12} step={0.5} onChange={(v) => set('shelf', v)} format={(v) => fmtDb(v)} hint="Mesma forma de shelf usada na curva Harman para ajustar graves." />
+          <Slider label={tr("Shelf de graves (105 Hz)")} value={s.shelf} min={-10} max={12} step={0.5} onChange={(v) => set('shelf', v)} format={(v) => fmtDb(v)} hint={tr("Mesma forma de shelf usada na curva Harman para ajustar graves.")} />
           <div>
-            <div className="text-[12.5px] text-muted font-medium mb-2">Filtros paramétricos</div>
+            <div className="text-[12.5px] text-muted font-medium mb-2">{tr("Filtros paramétricos")}</div>
             <FilterEditor filters={s.filters} onChange={(f) => set('filters', f)} max={6} />
           </div>
         </div>
         <div>
-          <div className="text-[11px] uppercase tracking-[0.12em] font-semibold text-faint mb-2">O que esperar ouvir {tgt ? 'em relação ao alvo' : ''}</div>
+          <div className="text-[11px] uppercase tracking-[0.12em] font-semibold text-faint mb-2">{tr("O que esperar ouvir")}{' '}{tgt ? tr("em relação ao alvo") : ''}</div>
           {!tgt ? (
-            <Note>Escolha um alvo para receber uma leitura perceptiva da curva A.</Note>
+            <Note>{tr("Escolha um alvo para receber uma leitura perceptiva da curva A.")}</Note>
           ) : insights.length === 0 ? (
-            <Note>A curva A está a menos de ~1,5 dB do alvo, em média, em todas as regiões: o equilíbrio tonal deve soar muito parecido.</Note>
+            <Note>{tr("A curva A está a menos de ~1,5 dB do alvo, em média, em todas as regiões: o equilíbrio tonal deve soar muito parecido.")}</Note>
           ) : (
             <ul className="space-y-2">
               <AnimatePresence initial={false}>
@@ -250,10 +246,7 @@ export default function FRLab() {
               </AnimatePresence>
             </ul>
           )}
-          <p className="mt-3 text-[11.5px] text-faint leading-snug">
-            Leituras baseadas no vocabulário de engenharia de áudio e em médias de cada região. Programa musical, volume e ouvinte mudam a
-            percepção.
-          </p>
+          <p className="mt-3 text-[11.5px] text-faint leading-snug">{tr("Leituras baseadas no vocabulário de engenharia de áudio e em médias de cada região. Programa musical, volume e ouvinte mudam a percepção.")}</p>
 
           <div className="mt-6 pt-4 border-t border-line">
             <div className="flex flex-wrap items-center gap-3 mb-3">
@@ -262,14 +255,14 @@ export default function FRLab() {
                 value={s.ref}
                 onChange={(v) => set('ref', v)}
                 options={[
-                  { value: 'target', label: 'A relativo ao alvo' },
-                  { value: 'compare', label: 'A relativo a B' },
+                  { value: 'target', label: tr("A relativo ao alvo") },
+                  { value: 'compare', label: tr("A relativo a B") },
                 ]}
               />
-              <Toggle checked={s.processed} onChange={(v) => set('processed', v)} label={s.processed ? 'Ouvindo A' : 'Ouvindo referência'} />
+              <Toggle checked={s.processed} onChange={(v) => set('processed', v)} label={s.processed ? tr("Ouvindo A") : tr("Ouvindo referência")} />
             </div>
             <SourceBar player={player} />
-            <p className="mt-2 text-[11.5px] text-faint">Preamp automático: {fmtNum(preampDb, 1)} dB (aplicado aos dois lados da comparação).</p>
+            <p className="mt-2 text-[11.5px] text-faint">{tr("Preamp automático:")}{' '}{fmtNum(preampDb, 1)}{' '}{tr("dB (aplicado aos dois lados da comparação).")}</p>
           </div>
         </div>
       </div>

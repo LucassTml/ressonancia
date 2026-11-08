@@ -1,0 +1,70 @@
+<Lead>
+You don't hear everything that reaches your eardrum. Loud sounds hide faint sounds close to them in frequency and time, a phenomenon called masking. It's why an MP3 can throw away much of the data without you noticing, and also why a headphone with exaggerated bass can "erase" details that are on the recording.
+</Lead>
+
+<Callout type="simples">
+A loud sound hides quieter sounds near it, like a floodlight hiding a flashlight. Bass is especially good at this: too much of it covers the voices and instruments above. That's why a headphone with bloated bass can sound less detailed even if everything else is fine.
+</Callout>
+
+## What masking is
+
+<Diagram id="masking" />
+
+**Masking** is the raising of a sound's audibility threshold (the *signal*) caused by the presence of another (the *masker*). Instead of detecting the signal at 5 dB SPL, for example, you only detect it at 40 dB SPL in the presence of noise: the masking was 35 dB.
+
+The physiological explanation comes straight from the [cochlea](/percepcao/anatomia-do-ouvido). Each frequency excites a region of the basilar membrane, but the excitation isn't a point: it's a "smear" with extent. If the smear of a loud sound covers the region where a faint sound would produce its own excitation, the additional neural response from the faint sound is too small to be noticed among the activity already present. It's like trying to see a flashlight next to a floodlight.
+
+## Critical bands
+
+Harvey Fletcher, in the 1940s, made a fundamental observation: when masking a tone with noise centered on it, widening the noise increases masking only up to a point. Noise beyond a certain width, the **critical band**, no longer contributes. That indicates the ear analyzes sound with a set of filters, and only the energy falling within the filter centered on the signal competes with it.
+
+The width of these auditory filters is described in two main ways:
+
+- **Bark scale** (Zwicker): the audible spectrum divided into about 24 contiguous critical bands. The width is ~100 Hz below 500 Hz and approximately 20% of the center frequency above that.
+- **ERB** (Glasberg and Moore): a more modern estimate, based on masking with notched noise: ERB = 24.7·(4.37·f/1000 + 1) Hz. It's narrower than the Bark band at low frequencies.
+
+In both, the idea is the same: **frequencies within one band interact; frequencies in distant bands are processed independently.**
+
+## The asymmetry: masking climbs upward
+
+The lab below presents a narrow band of noise and a pulsing tone. Place the tone below the noise and then above it, and lower the tone's level until it vanishes in each position.
+
+<Lab id="masking" />
+
+You'll notice that masking is **asymmetric**: a masker hides the frequencies above it far more than those below. The reason lies in the shape of the traveling wave on the basilar membrane: it grows gradually from the base (where the treble is) to its peak and falls off abruptly after. A low sound therefore also excites the treble region the wave passed through on its way; a high sound hardly excites the bass region, which lies beyond its peak. This effect is the **upward spread of masking**.
+
+And it grows with level. Strong maskers have shallower slopes on the high side: at 80 dB SPL, noise at 500 Hz can significantly mask sounds up to 2 or 3 kHz. The Terhardt model used in the lab reproduces this dependence: raise the noise level and watch the upper edge of the threshold widen.
+
+<Callout type="chave" title="Excess bass hides mids">
+This is the most important consequence of masking for people choosing headphones. A broad lift in mid-bass (100–300 Hz) doesn't merely add bass: through upward spread, it raises the audibility threshold in the 300 Hz to 1.5 kHz region, where the fundamentals and low harmonics of voices, guitars, pianos and strings lie. Low-level detail in that region (texture, breath, decays) gets hidden. That's why headphones with "bleeding bass" sound muddy and poorly separated, even when their mids, taken alone, are good. A bass shelf that starts below ~150 Hz and doesn't invade the lower mids preserves this information much better.
+</Callout>
+
+## Masking in time
+
+Masking doesn't only happen between simultaneous sounds.
+
+- **Forward masking:** a loud sound raises the threshold of sounds that come just after it, for up to ~100–200 ms. The effect is largest in the first few milliseconds.
+- **Backward masking:** curiously, a loud sound also masks faint sounds that come **before** it, but only for a few milliseconds (typically under 20 ms). This happens because the neural processing of the faint sound hasn't finished when the excitation of the loud sound arrives.
+
+Forward masking has an important consequence for the perception of resonances: a resonance that decays slowly after each note "prolongs" the energy and can mask the start of the next note. It's one of the mechanisms by which narrow, poorly damped peaks degrade the clarity of fast passages.
+
+## Applications: codecs, mixing and headphones
+
+**Lossy codecs.** MP3, AAC, Opus and Bluetooth codecs divide the signal into bands, calculate the masking threshold at each instant with a psychoacoustic model and quantize each band with the minimum number of bits needed to keep quantization noise below that threshold. The "hidden" information is discarded because, by definition, you wouldn't hear it. When the bitrate is too low, the noise exceeds the threshold and artifacts appear, the subject of [formats and compression](/digital/formatos-e-compressao).
+
+**Mixing.** Mixing engineers call *masking* the phenomenon of instruments competing for the same region and "erasing each other." The classic solution is complementary equalization: cutting a little from one instrument where another needs space.
+
+**Headphones and the environment.** In noisy places, external noise (usually concentrated in the bass) masks the music and, through upward spread, the mids too. The natural reaction is to raise the volume, which increases hearing risk. A well-sealed IEM or one with active noise cancellation reduces the masker and lets you hear more detail at a lower volume.
+
+## Masking and distortion
+
+Finally, masking explains why some distortions are inaudible and others aren't. A second harmonic (twice the signal frequency) falls near the region already excited by the signal itself and is partly masked by it. High-order or intermodulation distortion products can fall far from the signal, in "empty" regions of the spectrum where nothing hides them, and are much more audible for the same percentage. That's why the same THD spec can correspond to very different listening experiences, as we'll see in [performance measures](/eletronica/medidas-de-desempenho) and [measurable vs audible](/ciencia/mensuravel-vs-audivel).
+
+<References>
+  <Ref>Fletcher, H. "Auditory patterns." <em>Reviews of Modern Physics</em>, 12(1), 47–65, 1940.</Ref>
+  <Ref>Zwicker, E.; Fastl, H. <em>Psychoacoustics: Facts and Models</em>. 3rd ed. Springer, 2007.</Ref>
+  <Ref>Zwicker, E.; Terhardt, E. "Analytical expressions for critical-band rate and critical bandwidth as a function of frequency." <em>Journal of the Acoustical Society of America</em>, 68(5), 1523–1525, 1980.</Ref>
+  <Ref>Terhardt, E. "Calculating virtual pitch." <em>Hearing Research</em>, 1(2), 155–182, 1979. (Includes the formulation of spreading slopes used in the model.)</Ref>
+  <Ref>Glasberg, B. R.; Moore, B. C. J. "Derivation of auditory filter shapes from notched-noise data." <em>Hearing Research</em>, 47, 103–138, 1990.</Ref>
+  <Ref>Painter, T.; Spanias, A. "Perceptual coding of digital audio." <em>Proceedings of the IEEE</em>, 88(4), 451–515, 2000.</Ref>
+</References>

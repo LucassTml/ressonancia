@@ -1,0 +1,71 @@
+<Lead>
+IEMs advertise "4 BA + 1 DD," "tribrid," "12 drivers per side." The idea is intuitive: split the spectrum among specialists. But each additional driver creates a new interface where sounds from different origins have to add up correctly, and it's there, in the crossovers, that many designs win or lose.
+</Lead>
+
+<Callout type="simples">
+Multi-driver earphones split the sound among several small drivers, each handling its own range. The hard part is making the pieces join seamlessly where they meet. More drivers aren't automatically better, and a well-tuned single driver can beat a poorly tuned set of eight.
+</Callout>
+
+## Why split the spectrum
+
+No transducer is ideal over the whole audible range. A large driver moves a lot of air (good for bass) but tends to have breakup modes in the treble. A small, light driver does well in the treble but moves little air. Balanced armatures, in particular, are naturally specialized (see [balanced armature](/drivers/balanced-armature)). Dividing the work lets each driver operate where it's good, with less excursion, less distortion and fewer resonances in its share of the band.
+
+That gives rise to configurations such as:
+
+- **Multi-BA:** two or more balanced armatures (for example, bass, mids and treble).
+- **Hybrid:** a dynamic driver for bass and BAs for mids and treble.
+- **Tribrid:** dynamic + BA + electrostatic (or piezo, or planar), three technologies.
+- **Dual or parallel drivers:** two identical drivers playing the same band, usually to increase sensitivity or reduce distortion.
+
+## The crossover
+
+A **crossover** is the set of filters that gives each driver its part of the spectrum: a **low-pass** for the bass driver, a **high-pass** for the treble driver and, in three-way systems, a **band-pass** for the mids. The frequency at which one driver "passes the baton" to the other is the **crossover frequency**.
+
+In IEMs, crossovers are of three types, often combined:
+
+- **Electrical (passive):** tiny resistors, capacitors and inductors on a board inside the IEM. A capacitor in series with a treble BA, for example, forms a first-order high-pass. Inductors take up space, so high-order filters are rare.
+- **Acoustic:** tubes, dampers and chambers that filter mechanically. A long, narrow tube with a damper attenuates treble; a treble driver placed near the nozzle, with no tube, preserves it.
+- **Natural:** the driver's own response, which already falls off outside its band.
+
+## The sum is what matters
+
+The ear doesn't receive the separate outputs: it receives the **sum of the pressures** of all drivers at the eardrum, each with its magnitude and its **phase**. In the crossover region, the two drivers play together, and how they add depends on the phase relationship between them, exactly the phenomenon of [interference](/fundamentos/fase-e-interferencia).
+
+Filters don't change only the magnitude; they also delay the signal in a frequency-dependent way. A second-order low-pass and high-pass, for example, are **180° out of phase** at the crossover point: added with the same polarity, they cancel. That's why, in certain crossover types, the polarity of one driver is deliberately inverted.
+
+Explore in the lab: choose the crossover type, change the polarity, level and delay of the tweeter, and see (and hear) the sum.
+
+<Lab id="crossover" />
+
+The classic types behave like this:
+
+| Type | Slope | Behavior of the sum |
+| --- | --- | --- |
+| 1st order (Butterworth) | 6 dB/oct. | Flat in magnitude; large overlap between drivers |
+| 2nd order Butterworth | 12 dB/oct. | +3 dB peak with inverted polarity; deep dip without inversion |
+| 2nd order Linkwitz-Riley | 12 dB/oct. | Flat with inverted polarity |
+| 4th order Linkwitz-Riley | 24 dB/oct. | Flat with same polarity; fast transition |
+
+### Geometry and delay
+
+In speakers, the distance between the drivers and the listener differs for each driver, which adds delay. In IEMs, distances are millimetric, but **acoustic paths** can differ quite a bit: a bass BA at the back of the shell with a long tube and a treble BA by the nozzle reach the eardrum tens of microseconds apart. In the crossover region, that's enough to create peaks and dips. Try a 50 to 100 µs delay in the lab.
+
+## More drivers don't mean more quality
+
+Each additional driver brings new crossover regions, new manufacturing tolerances, new tube resonances and more impedance variation. An IEM with one well-tuned dynamic driver can have a smoother, more coherent response than one with eight poorly resolved drivers.
+
+<Callout type="mito" title="&quot;The more drivers, the more detail&quot;">
+There's no direct relationship between driver count and sound quality. What you hear is the final pressure at the eardrum: frequency response, distortion, channel matching. Additional drivers can help reduce distortion or extend the treble, but they also create more opportunities for error. In many cases, driver count is used mainly as a marketing argument, and the price follows the count, not the performance.
+</Callout>
+
+There are situations where more drivers do help: two bass BAs in parallel produce more pressure with less excursion each, reducing distortion; a dedicated tweeter can extend the response above 15 kHz where a heavier dynamic driver can't reach. The point is that the advantage has to be demonstrated **in measurement and listening**, not deduced from the spec sheet. The [gallery of famous IEMs](/famosos/ate-60) shows this with real curves.
+
+## Impedance of multi-driver systems
+
+With passive crossovers, the impedance seen by the amplifier is the combination of the impedances of the drivers and filter components, and can vary from, say, 5 Ω in one region to 40 Ω in another. Sources with high output impedance audibly alter the response of these IEMs. This effect is calculated in [sensitivity, power and output impedance](/eletronica/potencia-e-sensibilidade).
+
+<References>
+  <Ref>Linkwitz, S. H. "Active crossover networks for noncoincident drivers." <em>Journal of the Audio Engineering Society</em>, 24(1), 2–8, 1976.</Ref>
+  <Ref>Dickason, V. <em>The Loudspeaker Design Cookbook</em>. 7th ed. Audio Amateur Press, 2006.</Ref>
+  <Ref>Small, R. H. "Constant-voltage crossover network design." <em>Journal of the Audio Engineering Society</em>, 19(1), 12–19, 1971.</Ref>
+</References>

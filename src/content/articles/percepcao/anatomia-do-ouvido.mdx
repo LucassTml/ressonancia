@@ -2,7 +2,13 @@
 O ouvido é um instrumento de engenharia notável: capta variações de pressão menores que um bilionésimo da atmosfera, transfere essa energia do ar para um líquido quase sem perdas, decompõe o som em frequências e o converte em impulsos elétricos — tudo num volume menor que uma bolinha de gude. Entender cada estágio explica muito do que ouvimos, e do que um fone precisa entregar.
 </Lead>
 
+<Callout type="simples">
+O ouvido trabalha em três etapas. O ouvido externo capta o som e reforça a faixa onde está a fala. O ouvido médio funciona como uma alavanca que passa a energia do ar para um líquido. O ouvido interno separa o som por frequência, cada ponto respondendo a uma altura, e transforma isso em sinais nervosos.
+</Callout>
+
 ## Três estágios, três problemas físicos
+
+<Diagram id="ear-path" />
 
 É costume dividir o ouvido em **externo**, **médio** e **interno**. Mais útil do que decorar nomes é ver cada parte como a solução para um problema físico diferente:
 
@@ -45,6 +51,8 @@ A membrana basilar não é uniforme: perto da base (junto à janela oval) ela é
 
 A relação entre posição e frequência característica, em humanos, é bem descrita pela função de Greenwood:
 
+<Formula say="Cada trecho de mesmo comprimento ao longo da cóclea cobre aproximadamente o mesmo número de oitavas, e essa é a origem física do modo como ouvimos alturas.">
+
 $$
 f(x) = 165{,}4 \,\bigl(10^{\,2{,}1\,x} - 0{,}88\bigr)\ \text{Hz}
 $$
@@ -55,6 +63,8 @@ $$
     ['f(x)', 'frequência característica daquele ponto'],
   ]}
 />
+
+</Formula>
 
 A função é quase exponencial acima de ~500 Hz: cada oitava ocupa aproximadamente a mesma extensão da membrana (cerca de 4 a 5 mm). É a base fisiológica da percepção logarítmica de frequência — e da razão pela qual gráficos de áudio usam eixos logarítmicos.
 
@@ -73,9 +83,13 @@ As células ciliadas externas são também as mais vulneráveis a ruído excessi
 
 Como cada ponto da membrana responde a uma faixa de frequências em torno da sua frequência característica, a cóclea funciona como um banco de filtros passa-faixa sobrepostos. A largura desses **filtros auditivos** é medida em ERB (*equivalent rectangular bandwidth*). Pela fórmula de Glasberg e Moore (1990):
 
+<Formula say="Os filtros de frequência do ouvido ficam mais largos, em hertz, à medida que a frequência sobe: cerca de 133 Hz em 1 kHz e 456 Hz em 4 kHz.">
+
 $$
 \text{ERB}(f) = 24{,}7\,\left(\frac{4{,}37\, f}{1000} + 1\right)\ \text{Hz}
 $$
+
+</Formula>
 
 A 1 kHz, um filtro auditivo tem ~133 Hz de largura; a 4 kHz, ~456 Hz. Sons que caem dentro do mesmo filtro interagem fortemente — somam sonoridade, batem, se mascaram. Sons em filtros diferentes são processados de forma relativamente independente. Esse conceito explica [mascaramento](/percepcao/mascaramento), consonância, a eficiência dos codecs com perdas e parte do que chamamos de “separação” num fone.
 

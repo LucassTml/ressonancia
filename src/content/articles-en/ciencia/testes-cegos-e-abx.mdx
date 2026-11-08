@@ -1,0 +1,78 @@
+<Lead>
+When two things sound different to you, there are two separate questions: is there an audible difference? And if so, which do you prefer? Blind tests answer the first with a precision no casual listening can reach. This article explains how they work, why they're needed and how to interpret the result, with a working ABX for you to try.
+</Lead>
+
+<Callout type="simples">
+In a blind test, you don't know which option you're hearing, so your expectations can't influence you. In an ABX, you hear A, B and a mystery X, and say which one X is. If you get it right far more often than chance over many tries, the difference is real for you.
+</Callout>
+
+## Why "blind"
+
+In uncontrolled listening, what you **know** about what you're hearing influences what you **hear**. Floyd Toole and Sean Olive showed this classically with loudspeakers: listeners' preferences changed drastically when they saw the brands and speakers, and converged on the best-measuring speakers when listening was blind. Expectation, price, appearance, others' opinions and the desire for an investment to have been worthwhile are powerful forces, and they operate in anyone, experts included. See [bias and expectation](/ciencia/vies-e-placebo).
+
+A **blind** test removes that information: the listener doesn't know which option they're hearing. A **double-blind** test ensures that even the person running the test doesn't know, so as not to influence the listener unintentionally. In a software test, the computer plays both roles.
+
+## The ABX test
+
+ABX, whose modern form was popularized by David Clark in the 1980s, is the standard tool for the question "is there an audible difference?":
+
+- **A** and **B** are the two versions, known and identified.
+- **X** is, on each trial, A or B, drawn at random.
+- The listener can hear A, B and X as often as they like, switching freely, and answers whether X is A or B.
+- Several trials are repeated.
+
+If there's no audible difference, the listener gets it right, on average, half the time: they're guessing. If there is, they consistently do better.
+
+<Lab id="abx" />
+
+## Statistics: when the result isn't luck
+
+Getting 7 out of 10 right seems good, but it happens by luck fairly often: the probability of getting 7 or more by guessing is about 17%. The relevant distribution is the **binomial**: with $n$ trials and a probability of 1/2 of being right on each (if there's no difference), the chance of getting $k$ or more right is
+
+<Formula say="This calculates how likely you'd be to get at least this many right purely by guessing.">
+
+$$
+P(X \geq k) = \sum_{i=k}^{n} \binom{n}{i}\left(\tfrac{1}{2}\right)^{n}
+$$
+
+</Formula>
+
+That's the test's **p-value**. By convention, a p below 0.05 is considered evidence that the listener can tell the versions apart. Some reference points:
+
+| Trials | Correct answers needed for p &lt; 0.05 |
+| --- | --- |
+| 10 | 9 |
+| 12 | 10 |
+| 16 | 12 |
+| 20 | 15 |
+| 25 | 18 |
+
+### What the result means, and what it doesn't
+
+**A positive result** (p &lt; 0.05) indicates that, **under those conditions** (that listener, that equipment, that excerpt), there's an audible difference. It doesn't say which version is better.
+
+**A negative result** doesn't prove the difference is inaudible to everyone. It indicates that **there's no evidence** of an audible difference under those conditions. The listener may not be sensitive to that difference, the excerpt may not reveal it, the test may have too few trials to detect a small effect (low **statistical power**) or tiredness may have interfered. But if many people, with good equipment and excerpts of their own choosing, can't pass an ABX, that's strong evidence that the difference, if it exists, is very small.
+
+**Beware of selective repetition:** running several tests and reporting only what worked inflates the false-positive rate. With 20 independent tests, one of them will give p &lt; 0.05 by pure chance, on average.
+
+## Volume: requirement number one
+
+Any level difference between A and B can be detected and, as we saw in [loudness and volume](/percepcao/sonoridade-e-volume), it also biases preferences. Comparisons between equipment should match the volume to within ~0.1–0.2 dB. In the lab, the "Volume" category lets you discover your own threshold for level differences.
+
+## Preference: another type of test
+
+ABX answers "is there a difference?" For "which is better?", blind **preference** tests are used: paired comparisons (A or B, which do you prefer?), ratings on scales, or methods like **MUSHRA** (ITU-R BS.1534), in which several systems are evaluated against a reference and an anchor. For very small differences, the **ITU-R BS.1116** recommendation defines methods with a hidden reference. Harman's research on headphones used blind preference tests with trained listeners and virtual headphones.
+
+<Callout type="chave" title="How to use this in practice">
+- To find out whether two cables, DACs or formats sound different **to you**, do an ABX with matched volume. If you pass consistently, the difference is real for you.
+- To choose between two headphones, do blind preference comparisons, with matched volume and a guaranteed fit.
+- Be wary of conclusions based on casual listening, including your own.
+</Callout>
+
+<References>
+  <Ref>Clark, D. "High-resolution subjective testing using a double-blind comparator." <em>Journal of the Audio Engineering Society</em>, 30(5), 330–338, 1982.</Ref>
+  <Ref>Toole, F. E.; Olive, S. E. "Hearing is believing vs. believing is hearing: blind vs. sighted listening tests, and other interesting things." AES 97th Convention, 1994.</Ref>
+  <Ref>Leventhal, L. "Type 1 and type 2 errors in the statistical analysis of listening tests." <em>Journal of the Audio Engineering Society</em>, 34(6), 437–453, 1986.</Ref>
+  <Ref>ITU-R BS.1116-3 (2015) and ITU-R BS.1534-3 (2015).</Ref>
+  <Ref>Bech, S.; Zacharov, N. <em>Perceptual Audio Evaluation: Theory, Method and Application</em>. Wiley, 2006.</Ref>
+</References>

@@ -1,3 +1,4 @@
+import { tr } from '../i18n';
 /**
  * Tradução aproximada de desvios de resposta em frequência para descrições
  * perceptivas, baseada no vocabulário usado em engenharia de áudio. São
@@ -14,13 +15,13 @@ interface Band {
 }
 
 export const BANDS: Band[] = [
-  { id: 'sub', name: 'subgraves (20–60 Hz)', from: 20, to: 60, up: 'mais peso e “ronco”, sensação de pressão; em excesso, cansa e pode exigir muita excursão do driver', down: 'menos profundidade e impacto em músicas eletrônicas e trilhas' },
-  { id: 'midbass', name: 'graves médios (60–250 Hz)', from: 60, to: 250, up: 'mais corpo e “punch”; em excesso, retumbante (boomy) e com graves que parecem lentos', down: 'som magro, com menos impacto e calor' },
-  { id: 'lowmid', name: 'médios-graves (250–800 Hz)', from: 250, to: 800, up: 'mais densidade e calor; em excesso, embolado (muddy), com sensação de caixa fechada', down: 'som oco e distante, vozes sem corpo' },
-  { id: 'mid', name: 'médios (800 Hz–2 kHz)', from: 800, to: 2000, up: 'vozes e instrumentos mais à frente; em excesso, anasalado ou “de buzina”', down: 'vozes recuadas, instrumentos menos definidos (comum em assinaturas em V)' },
-  { id: 'presence', name: 'presença (2–5 kHz)', from: 2000, to: 5000, up: 'mais articulação e ataque; em excesso, gritado (shouty) e áspero, com fadiga rápida', down: 'som escuro e distante, “atrás de uma cortina”' },
-  { id: 'treble', name: 'agudos (5–10 kHz)', from: 5000, to: 10000, up: 'mais brilho e detalhe aparente; em excesso, sibilância e pratos metálicos', down: 'som abafado, menos textura e brilho' },
-  { id: 'air', name: '“ar” (10–20 kHz)', from: 10000, to: 20000, up: 'mais abertura e “ar”; picos estreitos aqui soam como aspereza fina', down: 'menos sensação de espaço (difícil de perceber para muitos adultos)' },
+  { id: 'sub', name: tr("subgraves (20–60 Hz)"), from: 20, to: 60, up: tr("mais peso e “ronco”, sensação de pressão; em excesso, cansa e pode exigir muita excursão do driver"), down: tr("menos profundidade e impacto em músicas eletrônicas e trilhas") },
+  { id: 'midbass', name: tr("graves médios (60–250 Hz)"), from: 60, to: 250, up: tr("mais corpo e “punch”; em excesso, retumbante (boomy) e com graves que parecem lentos"), down: tr("som magro, com menos impacto e calor") },
+  { id: 'lowmid', name: tr("médios-graves (250–800 Hz)"), from: 250, to: 800, up: tr("mais densidade e calor; em excesso, embolado (muddy), com sensação de caixa fechada"), down: tr("som oco e distante, vozes sem corpo") },
+  { id: 'mid', name: tr("médios (800 Hz–2 kHz)"), from: 800, to: 2000, up: tr("vozes e instrumentos mais à frente; em excesso, anasalado ou “de buzina”"), down: tr("vozes recuadas, instrumentos menos definidos (comum em assinaturas em V)") },
+  { id: 'presence', name: tr("presença (2–5 kHz)"), from: 2000, to: 5000, up: tr("mais articulação e ataque; em excesso, gritado (shouty) e áspero, com fadiga rápida"), down: tr("som escuro e distante, “atrás de uma cortina”") },
+  { id: 'treble', name: tr("agudos (5–10 kHz)"), from: 5000, to: 10000, up: tr("mais brilho e detalhe aparente; em excesso, sibilância e pratos metálicos"), down: tr("som abafado, menos textura e brilho") },
+  { id: 'air', name: tr("“ar” (10–20 kHz)"), from: 10000, to: 20000, up: tr("mais abertura e “ar”; picos estreitos aqui soam como aspereza fina"), down: tr("menos sensação de espaço (difícil de perceber para muitos adultos)") },
 ];
 
 export function bandAverage(fn: (f: number) => number, from: number, to: number) {

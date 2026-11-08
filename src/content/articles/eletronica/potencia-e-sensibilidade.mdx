@@ -2,6 +2,10 @@
 “Este fone precisa de amplificador?” A resposta não está na impedância nem na potência anunciada da fonte, e sim numa conta simples que combina sensibilidade, impedância, o volume que você quer e a tensão que a sua fonte entrega. Este artigo mostra a conta, explica cada termo e desmonta o mito mais persistente da área: o de que baixa impedância significa fácil de tocar.
 </Lead>
 
+<Callout type="simples">
+Sensibilidade diz quão alto um fone toca para um dado sinal. Se a sua fonte entrega tensão suficiente para o nível que você quer, não é preciso mais nada. A maioria dos fones de ouvido só precisa de uma fração de volt, e a calculadora abaixo faz a conta por você.
+</Callout>
+
 ## Sensibilidade: duas formas de dizer a mesma coisa
 
 A **sensibilidade** diz quanto som um fone produz para uma entrada elétrica de referência. Ela aparece em duas formas:
@@ -11,9 +15,13 @@ A **sensibilidade** diz quanto som um fone produz para uma entrada elétrica de 
 
 As duas estão ligadas pela impedância. Com 1 V numa impedância $Z$, a potência é $P = V^2/Z = 1/Z$ watts $= 1000/Z$ mW. Logo:
 
+<Formula say="Sabendo a impedância, dá para converter entre as duas formas de sensibilidade. Para 32 Ω, some cerca de 15 dB.">
+
 $$
 S_{\text{dB/V}} = S_{\text{dB/mW}} + 10\log_{10}\!\left(\frac{1000}{Z}\right)
 $$
+
+</Formula>
 
 Para 32 Ω, a diferença é +14,9 dB; para 16 Ω, +18 dB; para 300 Ω, +5,2 dB. Um fone de 32 Ω com 100 dB/mW tem 114,9 dB/V.
 
@@ -25,9 +33,13 @@ Como quase todas as fontes de áudio se comportam como **fontes de tensão** (su
 
 Para atingir um nível $L$ (em dB SPL) num fone com sensibilidade $S$ (em dB/V), a tensão RMS necessária é
 
+<Formula say="Quanto mais o nível desejado estiver acima da sensibilidade do fone, mais tensão você precisa.">
+
 $$
 V = 10^{\,(L - S_{\text{dB/V}})/20}
 $$
+
+</Formula>
 
 A corrente e a potência seguem pela Lei de Ohm: $I = V/Z$ e $P = V^2/Z$.
 
@@ -62,11 +74,17 @@ Música não é uma senoide constante: tem picos muito acima do nível médio. O
 
 ## Impedância de saída
 
+<Diagram id="output-divider" />
+
 Uma fonte real se comporta como uma fonte de tensão ideal em série com uma pequena resistência interna: a **impedância de saída** $Z_{\text{out}}$. Ela forma um **divisor de tensão** com o fone:
+
+<Formula say="A fonte e o fone dividem a tensão na proporção das suas impedâncias. Se a da fonte for minúscula, quase tudo chega ao fone.">
 
 $$
 V_{\text{fone}} = V_{\text{fonte}} \cdot \frac{Z_{\text{fone}}}{Z_{\text{fone}} + Z_{\text{out}}}
 $$
+
+</Formula>
 
 Duas consequências:
 

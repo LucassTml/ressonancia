@@ -2,6 +2,10 @@
 Antes de discutir DACs, amplificadores e impedância de saída, vale construir do zero as quatro grandezas que aparecem em toda especificação: tensão, corrente, resistência e potência. Elas são simples, mas é nelas que nascem quase todos os mal-entendidos sobre o que um fone “precisa”.
 </Lead>
 
+<Callout type="simples">
+Tensão é o empurrão, corrente é o fluxo, e resistência é o quanto o caminho os segura. Potência é quanta energia está sendo entregue. A maioria dos fones de ouvido precisa de muito pouco de cada uma, e por isso quase qualquer aparelho moderno consegue alimentá-los.
+</Callout>
+
 ## Carga, corrente e tensão
 
 A matéria contém cargas elétricas: prótons (positivos) e elétrons (negativos). Em metais, parte dos elétrons não está presa a um átomo específico e pode se mover pelo material — são os elétrons livres que tornam o cobre um bom condutor.
@@ -20,6 +24,8 @@ Num fio de cobre com 1 A, os elétrons avançam a uma velocidade média de fraç
 
 Os elétrons em movimento colidem com a rede atômica do material e perdem energia, que vira calor. Essa oposição ao fluxo é a **resistência**, medida em **ohms** (Ω). Para muitos materiais, num intervalo amplo de condições, a corrente é proporcional à tensão aplicada. Essa é a **Lei de Ohm**:
 
+<Formula say="Mais tensão significa mais corrente; mais resistência significa menos corrente.">
+
 $$
 V = R \cdot I
 $$
@@ -32,15 +38,21 @@ $$
   ]}
 />
 
+</Formula>
+
 Dobre a tensão e a corrente dobra; dobre a resistência e a corrente cai pela metade. Um fone de 32 Ω com 1 V aplicado conduz 31,25 mA. O mesmo 1 V num fone de 300 Ω conduz apenas 3,3 mA.
 
 ## Potência
 
 **Potência** é a taxa de transferência de energia, em **watts** (W): um joule por segundo. Num elemento resistivo, a potência dissipada é o produto da tensão pela corrente, e com a Lei de Ohm pode ser escrita de três formas equivalentes:
 
+<Formula say="Na mesma tensão, uma resistência menor consome mais potência. Isso, sozinho, não diz quão alto um fone toca.">
+
 $$
 P = V \cdot I = \frac{V^2}{R} = I^2 \cdot R
 $$
+
+</Formula>
 
 Note a consequência da forma do meio: **com a mesma tensão, uma resistência menor consome mais potência**. O fone de 32 Ω com 1 V consome 31 mW; o de 300 Ω, 3,3 mW. Isso parece dizer que o fone de 32 Ω “exige mais”, mas é aqui que começa a confusão. Quanto som cada um produz com essa tensão depende da **sensibilidade** de cada um — de quão eficiente é a conversão de energia elétrica em pressão sonora. Um fone pode receber mais potência e tocar mais baixo que outro. Esse é o assunto de [sensibilidade e potência](/eletronica/potencia-e-sensibilidade).
 
@@ -52,9 +64,13 @@ Quando resistores estão **em série** (um depois do outro), a mesma corrente at
 
 Quando estão **em paralelo** (lado a lado, ligados aos mesmos dois pontos), a tensão é a mesma em todos, as correntes se somam, e a resistência equivalente é menor que a menor delas:
 
+<Formula say="Ligar duas cargas lado a lado dá uma resistência total menor que a de qualquer uma delas. Duas cargas iguais resultam na metade da resistência.">
+
 $$
 \frac{1}{R_{\text{eq}}} = \frac{1}{R_1} + \frac{1}{R_2}
 $$
+
+</Formula>
 
 Dois fones de 32 Ω ligados à mesma saída (com um adaptador “Y”, por exemplo) formam uma carga de 16 Ω.
 

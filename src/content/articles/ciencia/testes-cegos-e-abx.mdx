@@ -2,6 +2,10 @@
 Quando duas coisas soam diferentes para você, há duas perguntas distintas: existe uma diferença audível? E, se existe, qual você prefere? Testes cegos respondem à primeira com uma precisão que nenhuma escuta casual alcança. Este artigo explica como funcionam, por que são necessários e como interpretar o resultado — com um ABX funcional para você experimentar.
 </Lead>
 
+<Callout type="simples">
+Num teste cego, você não sabe qual opção está ouvindo, e por isso as expectativas não influenciam. Num ABX, você ouve A, B e um X misterioso, e diz qual dos dois é o X. Se acertar muito mais do que o acaso, em muitas tentativas, a diferença é real para você.
+</Callout>
+
 ## Por que “cego”
 
 Em escuta não controlada, o que você **sabe** sobre o que está ouvindo influencia o que você **ouve**. Floyd Toole e Sean Olive mostraram isso de forma clássica com caixas acústicas: as preferências de ouvintes mudavam drasticamente quando eles viam as marcas e as caixas, e convergiam para as caixas com melhores medições quando a escuta era cega. Expectativa, preço, aparência, opinião de terceiros e o próprio desejo de que um investimento tenha valido a pena são forças poderosas — e operam em qualquer pessoa, inclusive em especialistas. Ver [viés e expectativa](/ciencia/vies-e-placebo).
@@ -25,9 +29,13 @@ Se não houver diferença audível, o ouvinte acerta, em média, metade das veze
 
 Acertar 7 de 10 parece bom, mas é sorte com relativa frequência: a probabilidade de acertar 7 ou mais chutando é de cerca de 17%. A distribuição relevante é a **binomial**: com $n$ tentativas e probabilidade 1/2 de acerto em cada uma (se não houver diferença), a chance de acertar $k$ ou mais é
 
+<Formula say="Esta conta mostra qual seria a chance de acertar pelo menos esse tanto apenas chutando.">
+
 $$
 P(X \geq k) = \sum_{i=k}^{n} \binom{n}{i}\left(\tfrac{1}{2}\right)^{n}
 $$
+
+</Formula>
 
 Esse é o **valor p** do teste. Por convenção, um p abaixo de 0,05 é considerado evidência de que o ouvinte distingue as versões. Alguns pontos de referência:
 

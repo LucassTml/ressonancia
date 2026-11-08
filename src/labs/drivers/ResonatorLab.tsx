@@ -4,6 +4,7 @@ import { Segmented, Slider, fmtHz, fmtNum } from '../../components/ui/controls';
 import { FreqPlot, Legend } from '../../viz/FreqPlot';
 import { useAnimationFrame, useInView } from '../../lib/hooks';
 import { setupCanvas, useThemeColors, withAlpha } from '../../lib/themeColors';
+import { tr } from '../../i18n';
 
 /**
  * Oscilador harmônico forçado: m·x'' + R·x' + k·x = F·sin(ωt).
@@ -138,8 +139,8 @@ export default function ResonatorLab() {
 
   return (
     <LabFrame
-      title="Ressonância de um diafragma"
-      description="Todo driver é, em essência, uma massa presa a uma mola, com algum atrito. A mesma física produz respostas opostas conforme o ambiente: no ar livre, a pressão acompanha a aceleração; numa câmara vedada pequena — como um canal com IEM —, acompanha o deslocamento."
+      title={tr("Ressonância de um diafragma")}
+      description={tr("Todo driver é, em essência, uma massa presa a uma mola, com algum atrito. A mesma física produz respostas opostas conforme o ambiente: no ar livre, a pressão acompanha a aceleração; numa câmara vedada pequena — como um canal com IEM —, acompanha o deslocamento.")}
       onReset={() => setS(D)}
       toolbar={
         <Segmented
@@ -147,15 +148,15 @@ export default function ResonatorLab() {
           value={s.view}
           onChange={(v) => set('view', v)}
           options={[
-            { value: 'both', label: 'Comparar' },
-            { value: 'free', label: 'Campo livre' },
-            { value: 'sealed', label: 'Câmara vedada' },
+            { value: 'both', label: tr("Comparar") },
+            { value: 'free', label: tr("Campo livre") },
+            { value: 'sealed', label: tr("Câmara vedada") },
           ]}
         />
       }
     >
       <div ref={wrap}>
-        <canvas ref={ref} className="w-full h-[150px] block rounded-xl bg-sunken" aria-label="Animação do sistema massa-mola" />
+        <canvas ref={ref} className="w-full h-[150px] block rounded-xl bg-sunken" aria-label={tr("Animação do sistema massa-mola")} />
       </div>
       <div className="mt-4">
         <FreqPlot
@@ -165,43 +166,39 @@ export default function ResonatorLab() {
           dbStep={10}
           yLabel="dB (relativo)"
           curves={[
-            ...(s.view !== 'sealed' ? [{ id: 'free', label: 'Pressão em campo livre (∝ aceleração)', fn: resp.acc, color: 'var(--c-b)', width: 2.2 }] : []),
-            ...(s.view !== 'free' ? [{ id: 'sealed', label: 'Pressão em câmara vedada (∝ deslocamento)', fn: resp.disp, color: 'var(--c-a)', width: 2.4 }] : []),
+            ...(s.view !== 'sealed' ? [{ id: 'free', label: tr("Pressão em campo livre (∝ aceleração)"), fn: resp.acc, color: 'var(--c-b)', width: 2.2 }] : []),
+            ...(s.view !== 'free' ? [{ id: 'sealed', label: tr("Pressão em câmara vedada (∝ deslocamento)"), fn: resp.disp, color: 'var(--c-a)', width: 2.4 }] : []),
           ]}
           overlay={(sc) => <line x1={sc.x(s.drive)} x2={sc.x(s.drive)} y1={sc.top} y2={sc.top + sc.innerH} stroke="var(--fg-faint)" strokeDasharray="3 3" />}
-          ariaLabel="Resposta do oscilador"
+          ariaLabel={tr("Resposta do oscilador")}
         />
         <div className="mt-2">
           <Legend
             items={[
-              ...(s.view !== 'sealed' ? [{ label: 'Campo livre (alto-falante)', color: 'var(--c-b)' }] : []),
-              ...(s.view !== 'free' ? [{ label: 'Câmara vedada (IEM)', color: 'var(--c-a)' }] : []),
+              ...(s.view !== 'sealed' ? [{ label: tr("Campo livre (alto-falante)"), color: 'var(--c-b)' }] : []),
+              ...(s.view !== 'free' ? [{ label: tr("Câmara vedada (IEM)"), color: 'var(--c-a)' }] : []),
             ]}
           />
         </div>
       </div>
       <div className="mt-4">
         <Controls cols={3}>
-          <Slider label="Frequência de ressonância" value={s.f0} min={30} max={8000} log onChange={(v) => set('f0', Math.round(v))} format={fmtHz} />
-          <Slider label="Fator Q (amortecimento)" value={s.q} min={0.3} max={8} log onChange={(v) => set('q', Number(v.toFixed(2)))} format={(v) => `${fmtNum(v, 2)} · ${qLabel}`} />
-          <Slider label="Frequência da força (animação)" value={s.drive} min={20} max={20000} log onChange={(v) => set('drive', Math.round(v))} format={fmtHz} />
+          <Slider label={tr("Frequência de ressonância")} value={s.f0} min={30} max={8000} log onChange={(v) => set('f0', Math.round(v))} format={fmtHz} />
+          <Slider label={tr("Fator Q (amortecimento)")} value={s.q} min={0.3} max={8} log onChange={(v) => set('q', Number(v.toFixed(2)))} format={(v) => `${fmtNum(v, 2)} · ${qLabel}`} />
+          <Slider label={tr("Frequência da força (animação)")} value={s.drive} min={20} max={20000} log onChange={(v) => set('drive', Math.round(v))} format={fmtHz} />
         </Controls>
       </div>
       <div className="mt-4">
         <Readout
           items={[
             { label: 'f₀ = (1/2π)·√(k/m)', value: fmtHz(s.f0), accent: true },
-            { label: 'Ganho na ressonância', value: `${fmtNum(20 * Math.log10(s.q), 1)} dB` },
-            { label: 'Região de controle em ' + fmtHz(s.drive), value: s.drive < s.f0 / 2 ? 'rigidez (mola)' : s.drive > s.f0 * 2 ? 'massa' : 'ressonância' },
+            { label: tr("Ganho na ressonância"), value: `${fmtNum(20 * Math.log10(s.q), 1)} dB` },
+            { label: tr("Região de controle em ") + fmtHz(s.drive), value: s.drive < s.f0 / 2 ? tr("rigidez (mola)") : s.drive > s.f0 * 2 ? 'massa' : tr("ressonância") },
           ]}
         />
       </div>
       <div className="mt-3">
-        <Note>
-          Abaixo de f₀, a mola domina: o deslocamento é constante e a massa segue a força em fase. Acima, a massa domina: o deslocamento cai
-          12 dB por oitava, mas a aceleração fica constante. Por isso alto-falantes ficam com a ressonância no limite inferior da faixa útil, e
-          drivers de IEM podem ter a ressonância lá em cima: na câmara vedada, tudo abaixo dela é plano até frequências muito baixas.
-        </Note>
+        <Note>{tr("Abaixo de f₀, a mola domina: o deslocamento é constante e a massa segue a força em fase. Acima, a massa domina: o deslocamento cai 12 dB por oitava, mas a aceleração fica constante. Por isso alto-falantes ficam com a ressonância no limite inferior da faixa útil, e drivers de IEM podem ter a ressonância lá em cima: na câmara vedada, tudo abaixo dela é plano até frequências muito baixas.")}</Note>
       </div>
     </LabFrame>
   );

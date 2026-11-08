@@ -3,21 +3,22 @@ import { LabFrame, Readout, Note } from '../../components/ui/LabFrame';
 import { Button, Segmented, Toggle, fmtHz, fmtNum } from '../../components/ui/controls';
 import { PlayButton, usePlayback } from '../../components/ui/audio';
 import { dbToGain } from '../../audio/engine';
+import { NOTE_NAMES, tr } from '../../i18n';
 
-const NAMES = ['Dó', 'Dó♯', 'Ré', 'Ré♯', 'Mi', 'Fá', 'Fá♯', 'Sol', 'Sol♯', 'Lá', 'Lá♯', 'Si'];
+const NAMES = NOTE_NAMES;
 const midiF = (n: number) => 440 * Math.pow(2, (n - 69) / 12);
 
 const INTERVALS = [
-  { st: 0, name: 'Uníssono', just: [1, 1] },
-  { st: 3, name: 'Terça menor', just: [6, 5] },
-  { st: 4, name: 'Terça maior', just: [5, 4] },
-  { st: 5, name: 'Quarta justa', just: [4, 3] },
-  { st: 6, name: 'Trítono', just: [45, 32] },
-  { st: 7, name: 'Quinta justa', just: [3, 2] },
-  { st: 9, name: 'Sexta maior', just: [5, 3] },
-  { st: 11, name: 'Sétima maior', just: [15, 8] },
-  { st: 12, name: 'Oitava', just: [2, 1] },
-  { st: 1, name: 'Segunda menor', just: [16, 15] },
+  { st: 0, name: tr("Uníssono"), just: [1, 1] },
+  { st: 3, name: tr("Terça menor"), just: [6, 5] },
+  { st: 4, name: tr("Terça maior"), just: [5, 4] },
+  { st: 5, name: tr("Quarta justa"), just: [4, 3] },
+  { st: 6, name: tr("Trítono"), just: [45, 32] },
+  { st: 7, name: tr("Quinta justa"), just: [3, 2] },
+  { st: 9, name: tr("Sexta maior"), just: [5, 3] },
+  { st: 11, name: tr("Sétima maior"), just: [15, 8] },
+  { st: 12, name: tr("Oitava"), just: [2, 1] },
+  { st: 1, name: tr("Segunda menor"), just: [16, 15] },
 ];
 
 /** Nota com timbre de cordas dedilhadas (harmônicos decrescentes). */
@@ -57,7 +58,9 @@ export default function PitchLab() {
     setLast(n);
     pb.start((ctx, out) => {
       const o = pluck(ctx, out, midiF(n), ctx.currentTime + 0.01);
+      const id = window.setTimeout(() => pb.stop(), 1700);
       return () => {
+        window.clearTimeout(id);
         try {
           o.stop();
         } catch {
@@ -78,7 +81,11 @@ export default function PitchLab() {
       const f2 = f1 * (just ? jRatio : etRatio);
       const t = ctx.currentTime + 0.02;
       const os = mode === 'seq' ? [pluck(ctx, out, f1, t, 1), pluck(ctx, out, f2, t + 0.7, 1.2)] : [pluck(ctx, out, f1, t, 3, -24, undefined, true), pluck(ctx, out, f2, t, 3, -24, undefined, true)];
-      return () => os.forEach((o) => { try { o.stop(); } catch { /* ok */ } });
+      const id = window.setTimeout(() => pb.stop(), mode === 'seq' ? 2400 : 3400);
+      return () => {
+        window.clearTimeout(id);
+        os.forEach((o) => { try { o.stop(); } catch { /* ok */ } });
+      };
     });
 
   // Fundamental ausente: harmônicos 1..10, removendo os graves
@@ -138,8 +145,8 @@ export default function PitchLab() {
 
   return (
     <LabFrame
-      title="Altura, intervalos e melodia"
-      description="Frequência é física; altura é percepção. Explore como o cérebro organiza frequências em notas, intervalos e melodias."
+      title={tr("Altura, intervalos e melodia")}
+      description={tr("Frequência é física; altura é percepção. Explore como o cérebro organiza frequências em notas, intervalos e melodias.")}
       audio
       toolbar={
         <Segmented
@@ -150,9 +157,9 @@ export default function PitchLab() {
             setTab(v);
           }}
           options={[
-            { value: 'keys', label: 'Notas e intervalos' },
-            { value: 'missing', label: 'Fundamental ausente' },
-            { value: 'melody', label: 'O que é melodia' },
+            { value: 'keys', label: tr("Notas e intervalos") },
+            { value: 'missing', label: tr("Fundamental ausente") },
+            { value: 'melody', label: tr("O que é melodia") },
           ]}
         />
       }
@@ -194,12 +201,12 @@ export default function PitchLab() {
               items={
                 last != null
                   ? [
-                      { label: 'Nota', value: `${NAMES[last % 12]}${Math.floor(last / 12) - 1}`, accent: true },
-                      { label: 'Frequência fundamental', value: fmtHz(midiF(last)) },
-                      { label: 'Razão para a nota de baixo', value: `× ${fmtNum(Math.pow(2, 1 / 12), 5)}` },
-                      { label: 'Uma oitava acima', value: fmtHz(midiF(last + 12)) },
+                      { label: tr("Nota"), value: `${NAMES[last % 12]}${Math.floor(last / 12) - 1}`, accent: true },
+                      { label: tr("Frequência fundamental"), value: fmtHz(midiF(last)) },
+                      { label: tr("Razão para a nota de baixo"), value: `× ${fmtNum(Math.pow(2, 1 / 12), 5)}` },
+                      { label: tr("Uma oitava acima"), value: fmtHz(midiF(last + 12)) },
                     ]
-                  : [{ label: 'Toque uma tecla', value: '—' }]
+                  : [{ label: tr("Toque uma tecla"), value: '—' }]
               }
             />
           </div>
@@ -216,18 +223,17 @@ export default function PitchLab() {
               ))}
             </div>
             <div className="flex flex-wrap items-center gap-2 mb-4">
-              <Button onClick={() => playInterval('seq')}>Ouvir em sequência</Button>
-              <Button onClick={() => playInterval('chord')}>Ouvir juntas</Button>
-              <Toggle checked={just} onChange={setJust} label="Afinação justa (razões inteiras)" />
+              <Button onClick={() => playInterval('seq')}>{tr("Ouvir em sequência")}</Button>
+              <Button onClick={() => playInterval('chord')}>{tr("Ouvir juntas")}</Button>
+              <Toggle checked={just} onChange={setJust} label={tr("Afinação justa (razões inteiras)")} />
               <select
                 value={root}
                 onChange={(e) => setRoot(Number(e.target.value))}
                 className="h-8 rounded-lg border border-line-strong bg-elev px-2 text-[13px]"
-                aria-label="Nota de base"
+                aria-label={tr("Nota de base")}
               >
                 {[48, 55, 60, 64, 69].map((n) => (
-                  <option key={n} value={n}>
-                    Base: {NAMES[n % 12]}
+                  <option key={n} value={n}>{tr("Base:")}{' '}{NAMES[n % 12]}
                     {Math.floor(n / 12) - 1}
                   </option>
                 ))}
@@ -235,17 +241,13 @@ export default function PitchLab() {
             </div>
             <Readout
               items={[
-                { label: 'Temperamento igual', value: `× ${fmtNum(etRatio, 4)}` },
-                { label: 'Razão justa', value: `${iv.just[0]}:${iv.just[1]} = ${fmtNum(jRatio, 4)}`, accent: true },
-                { label: 'Diferença', value: `${cents > 0 ? '+' : ''}${fmtNum(cents, 1)} cents` },
+                { label: tr("Temperamento igual"), value: `× ${fmtNum(etRatio, 4)}` },
+                { label: tr("Razão justa"), value: `${iv.just[0]}:${iv.just[1]} = ${fmtNum(jRatio, 4)}`, accent: true },
+                { label: tr("Diferença"), value: `${cents > 0 ? '+' : ''}${fmtNum(cents, 1)} cents` },
               ]}
             />
             <div className="mt-3">
-              <Note>
-                Intervalos com razões simples (2:1, 3:2, 4:3) têm muitos harmônicos coincidentes e soam consonantes. No temperamento igual,
-                todos os semitons são iguais (2^(1/12)), o que permite tocar em qualquer tonalidade, ao custo de terças ~14 cents mais
-                largas que a razão 5:4 — ouça juntas, com e sem afinação justa, e repare nos batimentos lentos da terça temperada.
-              </Note>
+              <Note>{tr("Intervalos com razões simples (2:1, 3:2, 4:3) têm muitos harmônicos coincidentes e soam consonantes. No temperamento igual, todos os semitons são iguais (2^(1/12)), o que permite tocar em qualquer tonalidade, ao custo de terças ~14 cents mais largas que a razão 5:4 — ouça juntas, com e sem afinação justa, e repare nos batimentos lentos da terça temperada.")}</Note>
             </div>
           </div>
         </>
@@ -253,7 +255,7 @@ export default function PitchLab() {
 
       {tab === 'missing' && (
         <>
-          <svg viewBox="0 0 400 110" className="w-full h-[150px]" aria-label="Harmônicos presentes">
+          <svg viewBox="0 0 400 110" className="w-full h-[150px]" aria-label={tr("Harmônicos presentes")}>
             {Array.from({ length: 10 }, (_, i) => {
               const on = i >= lowCut;
               const h = (on ? 1 / Math.sqrt(i + 1) : 0) * 80;
@@ -270,13 +272,9 @@ export default function PitchLab() {
           </svg>
           <div className="flex flex-wrap items-center gap-2 my-4">
             <PlayButton playing={pb.playing} onToggle={() => (pb.playing ? pb.stop() : playMissing())} />
-            <Button onClick={() => setLowCut((c) => Math.min(6, c + 1))} disabled={lowCut >= 6}>
-              Remover harmônico mais grave
-            </Button>
-            <Button variant="ghost" onClick={() => setLowCut(0)}>
-              Restaurar todos
-            </Button>
-            <select value={mf0} onChange={(e) => setMf0(Number(e.target.value))} className="h-8 rounded-lg border border-line-strong bg-elev px-2 text-[13px]" aria-label="Fundamental">
+            <Button onClick={() => setLowCut((c) => Math.min(6, c + 1))} disabled={lowCut >= 6}>{tr("Remover harmônico mais grave")}</Button>
+            <Button variant="ghost" onClick={() => setLowCut(0)}>{tr("Restaurar todos")}</Button>
+            <select value={mf0} onChange={(e) => setMf0(Number(e.target.value))} className="h-8 rounded-lg border border-line-strong bg-elev px-2 text-[13px]" aria-label={tr("Fundamental")}>
               {[100, 150, 200, 300].map((f) => (
                 <option key={f} value={f}>
                   f₀ = {f} Hz
@@ -286,18 +284,14 @@ export default function PitchLab() {
           </div>
           <Readout
             items={[
-              { label: 'Componente mais grave presente', value: fmtHz(mf0 * (lowCut + 1)), accent: true },
-              { label: 'Altura que a maioria ouve', value: fmtHz(mf0) },
-              { label: 'Espaçamento entre harmônicos', value: fmtHz(mf0) },
+              { label: tr("Componente mais grave presente"), value: fmtHz(mf0 * (lowCut + 1)), accent: true },
+              { label: tr("Altura que a maioria ouve"), value: fmtHz(mf0) },
+              { label: tr("Espaçamento entre harmônicos"), value: fmtHz(mf0) },
             ]}
           />
           <div className="mt-3">
             <Note>
-              {pb.playing ? 'Toque e vá removendo os harmônicos graves. ' : ''}O timbre fica mais fino, mas a altura continua sendo a de f₀,
-              mesmo sem nenhuma energia em f₀. O sistema auditivo infere a periodicidade comum aos harmônicos. É por isso que você
-              “ouve” a nota de um baixo num celular que não reproduz aquela frequência. (Se você ouvir a nota subir, tudo bem: a
-              percepção dessa ilusão varia entre pessoas.)
-            </Note>
+              {pb.playing ? tr("Toque e vá removendo os harmônicos graves. ") : ''}{tr("O timbre fica mais fino, mas a altura continua sendo a de f₀, mesmo sem nenhuma energia em f₀. O sistema auditivo infere a periodicidade comum aos harmônicos. É por isso que você “ouve” a nota de um baixo num celular que não reproduz aquela frequência. (Se você ouvir a nota subir, tudo bem: a percepção dessa ilusão varia entre pessoas.)")}</Note>
           </div>
         </>
       )}
@@ -306,12 +300,12 @@ export default function PitchLab() {
         <>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
             {([
-              ['orig', 'Original', 'Ode à Alegria (Beethoven), em Mi.'],
-              ['transp', 'Transposta', 'Todas as frequências multiplicadas por 1,335 (+5 semitons). Continua a mesma melodia.'],
-              ['timbre', 'Outro timbre', 'Mesmas notas e ritmo, espectro diferente. Continua reconhecível.'],
-              ['rhythm', 'Sem ritmo', 'Mesmas notas, todas com a mesma duração. Fica bem mais difícil reconhecer.'],
-              ['octaves', 'Oitavas embaralhadas', 'Mesmas notas (classes de altura), mas cada uma numa oitava aleatória. O contorno se perde.'],
-              ['contour', 'Mesmo contorno, outros intervalos', 'Sobe e desce nos mesmos lugares, mas com intervalos distorcidos.'],
+              ['orig', tr("Original"), tr("Ode à Alegria (Beethoven), em Mi.")],
+              ['transp', tr("Transposta"), tr("Todas as frequências multiplicadas por 1,335 (+5 semitons). Continua a mesma melodia.")],
+              ['timbre', tr("Outro timbre"), tr("Mesmas notas e ritmo, espectro diferente. Continua reconhecível.")],
+              ['rhythm', tr("Sem ritmo"), tr("Mesmas notas, todas com a mesma duração. Fica bem mais difícil reconhecer.")],
+              ['octaves', tr("Oitavas embaralhadas"), tr("Mesmas notas (classes de altura), mas cada uma numa oitava aleatória. O contorno se perde.")],
+              ['contour', tr("Mesmo contorno, outros intervalos"), tr("Sobe e desce nos mesmos lugares, mas com intervalos distorcidos.")],
             ] as const).map(([id, name, desc]) => (
               <button key={id} onClick={() => playMelody(id)} className="text-left rounded-xl border border-line px-3.5 py-3 hover:bg-sunken hover:border-line-strong transition-colors">
                 <span className="block text-[13.5px] font-medium text-fg">▸ {name}</span>
@@ -320,11 +314,7 @@ export default function PitchLab() {
             ))}
           </div>
           <div className="mt-4">
-            <Note>
-              Uma melodia não é uma lista de frequências, é um padrão de <em>relações</em>: intervalos (razões entre frequências), contorno
-              (sobe/desce) e ritmo. Por isso sobrevive à transposição e à troca de timbre, mas sofre muito quando ritmo ou oitavas são
-              alterados — um efeito estudado por Diana Deutsch desde os anos 1970.
-            </Note>
+            <Note>{tr("Uma melodia não é uma lista de frequências, é um padrão de")}{' '}<em>{tr("relações")}</em>{tr(": intervalos (razões entre frequências), contorno (sobe/desce) e ritmo. Por isso sobrevive à transposição e à troca de timbre, mas sofre muito quando ritmo ou oitavas são alterados — um efeito estudado por Diana Deutsch desde os anos 1970.")}</Note>
           </div>
         </>
       )}

@@ -3,6 +3,7 @@ import { LabFrame, Readout, Note } from '../../components/ui/LabFrame';
 import { Button, NumberField, Segmented, fmtDb, fmtNum } from '../../components/ui/controls';
 import { usePlayback, fadeGain } from '../../components/ui/audio';
 import { dbToGain, demoMusicBuffer } from '../../audio/engine';
+import { tr } from '../../i18n';
 
 interface Trial {
   louder: 'A' | 'B';
@@ -66,22 +67,18 @@ export default function LevelMatchLab() {
 
   return (
     <LabFrame
-      title="Volume compatibilizado"
-      description="Duas ferramentas: um experimento que mostra como pequenas diferenças de volume influenciam o julgamento, e uma calculadora da diferença de volume entre dois IEMs ligados à mesma fonte."
+      title={tr("Volume compatibilizado")}
+      description={tr("Duas ferramentas: um experimento que mostra como pequenas diferenças de volume influenciam o julgamento, e uma calculadora da diferença de volume entre dois IEMs ligados à mesma fonte.")}
       audio={tab === 'bias'}
       onReset={() => {
         setTrials([]);
         setDiffDb(0.7);
       }}
-      toolbar={<Segmented size="sm" value={tab} onChange={(v) => { pb.stop(); setTab(v); }} options={[{ value: 'bias', label: 'Experimento do viés' }, { value: 'calc', label: 'Calculadora' }]} />}
+      toolbar={<Segmented size="sm" value={tab} onChange={(v) => { pb.stop(); setTab(v); }} options={[{ value: 'bias', label: tr("Experimento do viés") }, { value: 'calc', label: tr("Calculadora") }]} />}
     >
       {tab === 'bias' ? (
         <>
-          <p className="text-[13.5px] text-soft leading-relaxed mb-4">
-            A e B tocam <strong className="text-fg">exatamente o mesmo áudio</strong>, sem nenhum processamento — exceto que um deles está {fmtNum(diffDb, 1)} dB mais baixo,
-            sorteado a cada rodada. Ouça os dois, alternando, e escolha o que soa <em>melhor</em> (mais detalhado, mais encorpado, mais claro). Não tente
-            adivinhar o volume.
-          </p>
+          <p className="text-[13.5px] text-soft leading-relaxed mb-4">{tr("A e B tocam")}{' '}<strong className="text-fg">{tr("exatamente o mesmo áudio")}</strong>{tr(", sem nenhum processamento — exceto que um deles está")}{' '}{fmtNum(diffDb, 1)}{' '}{tr("dB mais baixo, sorteado a cada rodada. Ouça os dois, alternando, e escolha o que soa")}{' '}<em>{tr("melhor")}</em>{' '}{tr("(mais detalhado, mais encorpado, mais claro). Não tente adivinhar o volume.")}</p>
           <div className="grid grid-cols-2 gap-2 max-w-[420px]">
             {(['A', 'B'] as const).map((k) => (
               <button
@@ -89,31 +86,28 @@ export default function LevelMatchLab() {
                 onClick={() => void listen(k)}
                 className={`rounded-xl border px-4 py-4 text-left transition-colors ${listening === k ? 'border-accent bg-accent-soft' : 'border-line hover:bg-sunken'}`}
               >
-                <span className="block text-[12px] text-muted">{listening === k ? 'Ouvindo' : 'Ouvir'}</span>
+                <span className="block text-[12px] text-muted">{listening === k ? tr("Ouvindo") : tr("Ouvir")}</span>
                 <span className="block text-[18px] font-semibold text-fg">{k}</span>
               </button>
             ))}
-            <Button onClick={() => choose('A')} disabled={!listening}>A soa melhor</Button>
-            <Button onClick={() => choose('B')} disabled={!listening}>B soa melhor</Button>
+            <Button onClick={() => choose('A')} disabled={!listening}>{tr("A soa melhor")}</Button>
+            <Button onClick={() => choose('B')} disabled={!listening}>{tr("B soa melhor")}</Button>
           </div>
           <div className="mt-4 flex flex-wrap gap-2 items-center">
-            <span className="text-[12.5px] text-muted">Diferença oculta:</span>
+            <span className="text-[12.5px] text-muted">{tr("Diferença oculta:")}</span>
             <Segmented size="sm" value={String(diffDb)} onChange={(v) => setDiffDb(Number(v))} options={[{ value: '0.3', label: '0,3 dB' }, { value: '0.7', label: '0,7 dB' }, { value: '1.5', label: '1,5 dB' }]} />
           </div>
           <div className="mt-4">
             <Readout
               items={[
-                { label: 'Rodadas', value: fmtNum(trials.length, 0) },
-                { label: 'Vezes em que você preferiu o mais alto', value: trials.length ? `${pickedLouder} (${fmtNum((pickedLouder / trials.length) * 100, 0)}%)` : '—', accent: true },
-                { label: 'Esperado se o volume não influenciasse', value: '50%' },
+                { label: tr("Rodadas"), value: fmtNum(trials.length, 0) },
+                { label: tr("Vezes em que você preferiu o mais alto"), value: trials.length ? `${pickedLouder} (${fmtNum((pickedLouder / trials.length) * 100, 0)}%)` : '—', accent: true },
+                { label: tr("Esperado se o volume não influenciasse"), value: '50%' },
               ]}
             />
           </div>
           <div className="mt-3">
-            <Note>
-              Com 10 ou mais rodadas, se você preferiu o mais alto bem mais que 50% das vezes, acabou de medir o próprio viés de volume: o som era
-              idêntico. É por isso que comparações entre fones, cabos, DACs ou amplificadores precisam de volumes iguais com precisão de ~0,1–0,2 dB.
-            </Note>
+            <Note>{tr("Com 10 ou mais rodadas, se você preferiu o mais alto bem mais que 50% das vezes, acabou de medir o próprio viés de volume: o som era idêntico. É por isso que comparações entre fones, cabos, DACs ou amplificadores precisam de volumes iguais com precisão de ~0,1–0,2 dB.")}</Note>
           </div>
         </>
       ) : (
@@ -126,11 +120,11 @@ export default function LevelMatchLab() {
               <div key={x.n} className="rounded-xl border border-line px-4 py-3">
                 <div className="text-[13px] font-semibold mb-2">{x.n}</div>
                 <div className="grid grid-cols-2 gap-3">
-                  <NumberField label="Sensibilidade" value={x.s} onChange={x.setS} unit={x.u === 'V' ? 'dB/V' : 'dB/mW'} step={0.5} />
-                  <NumberField label="Impedância" value={x.z} onChange={(v) => x.setZ(Math.max(1, v))} unit="Ω" />
+                  <NumberField label={tr("Sensibilidade")} value={x.s} onChange={x.setS} unit={x.u === 'V' ? 'dB/V' : 'dB/mW'} step={0.5} />
+                  <NumberField label={tr("Impedância")} value={x.z} onChange={(v) => x.setZ(Math.max(1, v))} unit="Ω" />
                 </div>
                 <div className="mt-2">
-                  <Segmented size="sm" value={x.u} onChange={x.setU} options={[{ value: 'V', label: 'dB/V' }, { value: 'mW', label: 'dB/mW' }]} />
+                  <Segmented size="sm" value={x.u} onChange={x.setU} options={[{ value: 'V', label: tr("dB/V") }, { value: 'mW', label: tr("dB/mW") }]} />
                 </div>
               </div>
             ))}
@@ -138,18 +132,14 @@ export default function LevelMatchLab() {
           <div className="mt-4">
             <Readout
               items={[
-                { label: 'IEM A em dB/V', value: `${fmtNum(dbv(sa, ua, za), 1)} dB/V` },
-                { label: 'IEM B em dB/V', value: `${fmtNum(dbv(sb, ub, zb), 1)} dB/V` },
-                { label: 'Na mesma fonte, A toca', value: `${fmtDb(diff)} ${diff >= 0 ? 'mais alto' : 'mais baixo'}`, accent: true },
+                { label: tr("IEM A em dB/V"), value: `${fmtNum(dbv(sa, ua, za), 1)} dB/V` },
+                { label: tr("IEM B em dB/V"), value: `${fmtNum(dbv(sb, ub, zb), 1)} dB/V` },
+                { label: tr("Na mesma fonte, A toca"), value: `${fmtDb(diff)} ${diff >= 0 ? 'mais alto' : 'mais baixo'}`, accent: true },
               ]}
             />
           </div>
           <div className="mt-3">
-            <Note>
-              A sensibilidade de fábrica é um ponto de partida: é medida em 1 kHz, com tolerância. Para comparações sérias, iguale o volume
-              medindo — com um acoplador e um medidor de SPL, ou com um ruído rosa e um microfone colocado igualmente nos dois casos — e ajuste
-              com precisão de 0,1–0,2 dB.
-            </Note>
+            <Note>{tr("A sensibilidade de fábrica é um ponto de partida: é medida em 1 kHz, com tolerância. Para comparações sérias, iguale o volume medindo — com um acoplador e um medidor de SPL, ou com um ruído rosa e um microfone colocado igualmente nos dois casos — e ajuste com precisão de 0,1–0,2 dB.")}</Note>
           </div>
         </>
       )}

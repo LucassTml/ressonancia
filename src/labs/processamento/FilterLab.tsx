@@ -6,6 +6,7 @@ import { FILTER_LABEL } from '../../components/ui/FilterEditor';
 import { FreqPlot } from '../../viz/FreqPlot';
 import { biquadCoefs, biquadDb, qToOctaves, type FilterSpec, type FilterType } from '../../audio/dsp';
 import { useBiquadChain } from '../../audio/useBiquadChain';
+import { tr } from '../../i18n';
 
 const TYPES: FilterType[] = ['peaking', 'lowshelf', 'highshelf', 'lowpass', 'highpass', 'notch', 'bandpass'];
 const TEXT: Record<FilterType, string> = {
@@ -46,8 +47,8 @@ export default function FilterLab() {
 
   return (
     <LabFrame
-      title="Explorador de filtros"
-      description="Um único filtro biquad, com a resposta calculada pelas mesmas fórmulas que a Web Audio API usa para processar o áudio que você ouve."
+      title={tr("Explorador de filtros")}
+      description={tr("Um único filtro biquad, com a resposta calculada pelas mesmas fórmulas que a Web Audio API usa para processar o áudio que você ouve.")}
       audio
       onReset={() => {
         setF(D);
@@ -61,39 +62,36 @@ export default function FilterLab() {
         dbMax={showPhase ? 180 : 15}
         dbStep={showPhase ? 45 : 3}
         yFormat={showPhase ? (v) => `${v}°` : undefined}
-        curves={[showPhase ? { id: 'p', label: 'Fase', fn: (fr) => phaseDeg(f, fr), color: 'var(--c-target)', width: 2 } : { id: 'm', label: FILTER_LABEL[f.type], fn: mag, color: 'var(--c-a)', width: 2.6, fill: true }]}
+        curves={[showPhase ? { id: 'p', label: tr("Fase"), fn: (fr) => phaseDeg(f, fr), color: 'var(--c-target)', width: 2 } : { id: 'm', label: FILTER_LABEL[f.type], fn: mag, color: 'var(--c-a)', width: 2.6, fill: true }]}
         overlay={(sc) => <line x1={sc.x(f.freq)} x2={sc.x(f.freq)} y1={sc.top} y2={sc.top + sc.innerH} stroke="var(--fg-faint)" strokeDasharray="3 3" />}
-        ariaLabel="Resposta do filtro"
+        ariaLabel={tr("Resposta do filtro")}
       />
       <div className="mt-4">
         <Controls cols={3}>
-          <Slider label="Frequência" value={f.freq} min={20} max={20000} log onChange={(v) => setF((p) => ({ ...p, freq: Math.round(v) }))} format={fmtHz} />
-          <Slider label="Ganho" value={f.gain} min={-15} max={15} step={0.5} onChange={(v) => setF((p) => ({ ...p, gain: v }))} format={fmtDb} disabled={!hasGain} />
-          <Slider label="Q" value={f.q} min={0.2} max={20} log onChange={(v) => setF((p) => ({ ...p, q: Number(v.toFixed(2)) }))} format={(v) => fmtNum(v, 2)} disabled={!hasQ} hint={!hasQ ? 'Shelves com inclinação fixa (S = 1), como na Web Audio.' : undefined} />
+          <Slider label={tr("Frequência")} value={f.freq} min={20} max={20000} log onChange={(v) => setF((p) => ({ ...p, freq: Math.round(v) }))} format={fmtHz} />
+          <Slider label={tr("Ganho")} value={f.gain} min={-15} max={15} step={0.5} onChange={(v) => setF((p) => ({ ...p, gain: v }))} format={fmtDb} disabled={!hasGain} />
+          <Slider label="Q" value={f.q} min={0.2} max={20} log onChange={(v) => setF((p) => ({ ...p, q: Number(v.toFixed(2)) }))} format={(v) => fmtNum(v, 2)} disabled={!hasQ} hint={!hasQ ? tr("Shelves com inclinação fixa (S = 1), como na Web Audio.") : undefined} />
         </Controls>
       </div>
       <div className="flex flex-wrap gap-4 mt-3">
-        <Toggle checked={showPhase} onChange={setShowPhase} label="Mostrar fase" />
+        <Toggle checked={showPhase} onChange={setShowPhase} label={tr("Mostrar fase")} />
       </div>
       <div className="mt-4">
         <Readout
           items={[
-            { label: 'Largura (peak)', value: f.type === 'peaking' || f.type === 'notch' || f.type === 'bandpass' ? `${fmtNum(bw, 2)} oitava` : '—' },
-            { label: 'Q ↔ largura', value: `Q = ${fmtNum(f.q, 2)}` },
-            { label: `Em ${fmtHz(f.freq)}`, value: fmtDb(mag(f.freq)), accent: true },
-            { label: 'Uma oitava acima', value: fmtDb(mag(Math.min(20000, f.freq * 2))) },
+            { label: tr("Largura (peak)"), value: f.type === 'peaking' || f.type === 'notch' || f.type === 'bandpass' ? tr("{0} oitava", fmtNum(bw, 2)) : '—' },
+            { label: tr("Q ↔ largura"), value: `Q = ${fmtNum(f.q, 2)}` },
+            { label: tr("Em {0}", fmtHz(f.freq)), value: fmtDb(mag(f.freq)), accent: true },
+            { label: tr("Uma oitava acima"), value: fmtDb(mag(Math.min(20000, f.freq * 2))) },
           ]}
         />
       </div>
       <p className="mt-3 text-[13px] text-soft leading-relaxed">{TEXT[f.type]}</p>
       <div className="mt-4">
-        <SourceBar player={player} extra={<Toggle checked={on} onChange={setOn} label={on ? 'Filtro ligado' : 'Original'} />} />
+        <SourceBar player={player} extra={<Toggle checked={on} onChange={setOn} label={on ? tr("Filtro ligado") : tr("Original")} />} />
       </div>
       <div className="mt-3">
-        <Note>
-          Com fase visível, note que um filtro de EQ comum (“fase mínima”) altera a fase justamente onde altera a magnitude — e em nenhum
-          outro lugar. Magnitude e fase andam juntas: é por isso que a EQ corrige também o comportamento temporal de uma ressonância.
-        </Note>
+        <Note>{tr("Com fase visível, note que um filtro de EQ comum (“fase mínima”) altera a fase justamente onde altera a magnitude — e em nenhum outro lugar. Magnitude e fase andam juntas: é por isso que a EQ corrige também o comportamento temporal de uma ressonância.")}</Note>
       </div>
     </LabFrame>
   );

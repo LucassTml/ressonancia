@@ -1,0 +1,60 @@
+<Lead>
+The balanced armature was born in the telephone and matured in hearing aids, where every cubic millimeter and every microwatt matters. When it reached IEMs, it brought along two traits that shaped the whole market: a tiny size, which lets you put several drivers in one earphone, and a naturally irregular response, which forced manufacturers to master tubes, filters and crossovers.
+</Lead>
+
+<Callout type="simples">
+A balanced armature is a very small sealed box with a tiny metal reed that tips back and forth between two magnets. It's minuscule and efficient, but each one works best in a narrow range, which is why you'll often see several of them in one earphone.
+</Callout>
+
+## How it works
+
+In a dynamic driver, the wire moves inside a fixed field. In a **balanced armature** (BA), almost nothing electrical moves: the moving part is a small reed of soft magnetic alloy, the **armature**.
+
+1. The armature passes through a fixed **coil** and has its free tip positioned between two permanent **magnets**, one on each side.
+2. With no signal, the attractions of the two magnets balance and the armature stays still in the center, hence "balanced armature."
+3. When the signal current passes through the coil, it **magnetizes** the armature. Its tip becomes, say, a north pole: it's attracted by one magnet and repelled by the other, and it moves. Reversing the current moves it to the other side.
+4. A **drive pin** connects the tip of the armature to a very light **diaphragm**, usually aluminum, which pushes the air inside a small sealed box. The sound leaves through a narrow spout.
+
+<Lab id="drivers" initial="ba" />
+
+The balance is both the secret and the limit of the BA. Since the armature sits at an unstable equilibrium between two magnets, small forces produce useful movements, making the BA very **efficient**. But the movement has to be small: away from the center, magnetic attraction grows nonlinearly and, at the limit, the armature "sticks" to one of the magnets. Typical excursion is on the order of micrometers.
+
+## Why BA IEMs use several drivers
+
+An individual BA is optimized for a band. Its natural response has one pronounced main resonance (typically between 2 and 5 kHz, depending on the model) and falls rapidly above it. Manufacturers like Knowles and Sonion produce dozens of models: some aimed at bass (with larger diaphragms and lower resonances), others at mids, others at treble.
+
+That made the idea of **multi-driver** natural: one BA for bass, another for mids, another for treble, combined by a [crossover](/drivers/multi-driver-e-crossovers). The first popular multi-driver IEM, in the 1990s, came from the needs of professional musicians, and the logic spread to the consumer market, sometimes to excess, with IEMs of 10 or more drivers.
+
+## Tubes, filters and a BA's response
+
+A BA's response depends heavily on what comes after the spout. Sound passes through **tubes** a few millimeters in diameter to the IEM's nozzle, and those tubes resonate (see [acoustic construction](/drivers/construcao-acustica)). Engineers use this to their advantage:
+
+- **Tube length and diameter** place resonances where they help, for example recreating presence gain.
+- **Dampers** (small mesh or fabric filters, often color-coded and specified in "acoustic ohms") attenuate peaks.
+- **Chambers** and **vents** shape the bass.
+
+That's why two IEMs with exactly the same BAs can sound completely different: the acoustic tuning around the driver is part of the driver.
+
+## Impedance and sensitivity
+
+Since a BA's coil is much more inductive than a dynamic's, its **impedance rises with frequency**. A treble BA can have 10 Ω at 1 kHz and 80 Ω at 10 kHz. In an IEM with several BAs and a passive crossover, the total impedance curve can have huge dips and peaks.
+
+This has an important practical consequence: if the source has high **output impedance** (several ohms), it forms a voltage divider with that varying impedance, and the IEM's frequency response changes, in some cases by several decibels. It's one of the few cases where changing the source changes the sound in a clearly measurable way. The [output impedance](/eletronica/potencia-e-sensibilidade) lab shows the effect.
+
+BAs also tend to be **very sensitive**: they produce high levels with little power. That's great for batteries, but it makes the **background noise** (hiss) of noisy sources audible; see [performance measures](/eletronica/medidas-de-desempenho).
+
+## Strengths and limitations
+
+**Strengths:** minimal size (a few millimeters), high sensitivity, low sensitivity to pressure differences (they're sealed boxes, with no driver flex), ease of combining specialized drivers, often good treble response with dedicated BAs.
+
+**Limitations:** small excursion (BA bass tends to have less "weight" and more distortion at high levels than a good dynamic's, although modern bass BAs are capable); a naturally resonant response requiring a lot of acoustic work; highly variable impedance; manufacturing tolerances that can lead to differences between units.
+
+<Callout type="mito" title="&quot;BAs sound analytical; dynamics sound musical&quot;">
+This generalization mixes technology with tuning. Many BA IEMs were tuned with prominent treble, which created the association. But the perception of "texture" or "natural timbre" comes mainly from the frequency response and distortion the whole design produces. A well-tuned BA IEM can sound as natural as a dynamic; a badly tuned dynamic can sound as "cold" as anything.
+</Callout>
+
+<References>
+  <Ref>Knowles Electronics. <em>Balanced armature receivers — technical notes and datasheets</em>. Knowles Corporation.</Ref>
+  <Ref>Killion, M. C. "Design and evaluation of high-fidelity hearing aids." Doctoral thesis, Northwestern University, 1979.</Ref>
+  <Ref>Borwick, J. (ed.). <em>Loudspeaker and Headphone Handbook</em>. 3rd ed. Focal Press, 2001.</Ref>
+</References>

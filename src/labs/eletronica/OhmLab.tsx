@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { LabFrame, Controls, Readout, Note } from '../../components/ui/LabFrame';
 import { Segmented, Slider, fmtNum } from '../../components/ui/controls';
 import { useAnimationFrame, useInView } from '../../lib/hooks';
+import { tr } from '../../i18n';
 
 function si(v: number, unit: string) {
   const a = Math.abs(v);
@@ -35,8 +36,8 @@ export default function OhmLab() {
   const path = topo === 'parallel' ? 'M60,40 H340 V180 H60 Z' : 'M60,40 H340 V180 H60 Z';
   return (
     <LabFrame
-      title="Lei de Ohm em um circuito"
-      description="Uma fonte de tensão alimenta um ou dois resistores (pense neles como fones). Os pontos representam o fluxo de carga: a velocidade é proporcional à corrente."
+      title={tr("Lei de Ohm em um circuito")}
+      description={tr("Uma fonte de tensão alimenta um ou dois resistores (pense neles como fones). Os pontos representam o fluxo de carga: a velocidade é proporcional à corrente.")}
       onReset={() => {
         setV(1);
         setR1(32);
@@ -49,16 +50,16 @@ export default function OhmLab() {
           value={topo}
           onChange={setTopo}
           options={[
-            { value: 'single', label: 'Um resistor' },
-            { value: 'series', label: 'Série' },
-            { value: 'parallel', label: 'Paralelo' },
+            { value: 'single', label: tr("Um resistor") },
+            { value: 'series', label: tr("Série") },
+            { value: 'parallel', label: tr("Paralelo") },
           ]}
         />
       }
-      footer="Na realidade, os elétrons individuais andam muito devagar (frações de milímetro por segundo); o que viaja quase à velocidade da luz é o sinal — o campo elétrico ao longo do fio. A animação representa a intensidade da corrente, não a velocidade real dos elétrons."
+      footer={tr("Na realidade, os elétrons individuais andam muito devagar (frações de milímetro por segundo); o que viaja quase à velocidade da luz é o sinal — o campo elétrico ao longo do fio. A animação representa a intensidade da corrente, não a velocidade real dos elétrons.")}
     >
       <div ref={wrap} className="rounded-xl bg-sunken">
-        <svg viewBox="0 0 400 220" className="w-full max-h-[260px]" role="img" aria-label="Circuito elétrico">
+        <svg viewBox="0 0 400 220" className="w-full max-h-[260px]" role="img" aria-label={tr("Circuito elétrico")}>
           <path d={path} fill="none" stroke="var(--line-strong)" strokeWidth={3} />
           <path d={path} fill="none" stroke="var(--accent)" strokeWidth={3} strokeDasharray="2 22" strokeDashoffset={-offset} strokeLinecap="round" opacity={0.9} />
           {/* fonte */}
@@ -93,7 +94,7 @@ export default function OhmLab() {
       </div>
       <div className="mt-4">
         <Controls cols={3}>
-          <Slider label="Tensão da fonte" value={v} min={0.01} max={10} log onChange={(x) => setV(Number(x.toFixed(3)))} unit="V" />
+          <Slider label={tr("Tensão da fonte")} value={v} min={0.01} max={10} log onChange={(x) => setV(Number(x.toFixed(3)))} unit="V" />
           <Slider label="R₁" value={r1} min={1} max={600} log onChange={(x) => setR1(Math.round(x))} unit="Ω" />
           <Slider label="R₂" value={r2} min={1} max={600} log onChange={(x) => setR2(Math.round(x))} unit="Ω" disabled={topo === 'single'} />
         </Controls>
@@ -101,20 +102,16 @@ export default function OhmLab() {
       <div className="mt-4">
         <Readout
           items={[
-            { label: 'Resistência equivalente', value: `${fmtNum(req, 2)} Ω` },
-            { label: 'Corrente total  I = V/R', value: si(i, 'A'), accent: true },
-            { label: 'Potência total  P = V·I', value: si(p, 'W') },
-            ...(topo === 'series' ? [{ label: 'Tensão sobre R₁', value: si(v1, 'V') }] : []),
-            ...(topo === 'parallel' ? [{ label: 'Corrente em R₁ / R₂', value: `${si(i1, 'A')} / ${si(i2, 'A')}` }] : []),
+            { label: tr("Resistência equivalente"), value: `${fmtNum(req, 2)} Ω` },
+            { label: tr("Corrente total  I = V/R"), value: si(i, 'A'), accent: true },
+            { label: tr("Potência total  P = V·I"), value: si(p, 'W') },
+            ...(topo === 'series' ? [{ label: tr("Tensão sobre R₁"), value: si(v1, 'V') }] : []),
+            ...(topo === 'parallel' ? [{ label: tr("Corrente em R₁ / R₂"), value: `${si(i1, 'A')} / ${si(i2, 'A')}` }] : []),
           ]}
         />
       </div>
       <div className="mt-3">
-        <Note>
-          Com a mesma tensão, uma resistência menor puxa mais corrente e consome mais potência: P = V²/R. É por isso que, para uma mesma
-          tensão, um fone de 16 Ω exige 2× mais corrente e potência que um de 32 Ω — o que não significa que ele precise de mais tensão para
-          tocar alto (isso depende da sensibilidade).
-        </Note>
+        <Note>{tr("Com a mesma tensão, uma resistência menor puxa mais corrente e consome mais potência: P = V²/R. É por isso que, para uma mesma tensão, um fone de 16 Ω exige 2× mais corrente e potência que um de 32 Ω — o que não significa que ele precise de mais tensão para tocar alto (isso depende da sensibilidade).")}</Note>
       </div>
     </LabFrame>
   );

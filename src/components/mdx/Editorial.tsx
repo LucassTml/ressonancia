@@ -3,22 +3,24 @@ import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import { glossaryById } from '../../content/glossary';
 import { articleById } from '../../content/manifest';
+import { tr } from '../../i18n';
 
 /* ------------------------------------------------------------------ */
 /* Notas laterais                                                      */
 /* ------------------------------------------------------------------ */
 
-type CalloutKind = 'nota' | 'mito' | 'atencao' | 'aprofundar' | 'chave' | 'evidencia' | 'simplificacao' | 'preferencia';
+type CalloutKind = 'simples' | 'nota' | 'mito' | 'atencao' | 'aprofundar' | 'chave' | 'evidencia' | 'simplificacao' | 'preferencia';
 
 const CALLOUT: Record<CalloutKind, { label: string; color: string; bg: string }> = {
-  nota: { label: 'Nota', color: 'var(--fg-muted)', bg: 'var(--bg-sunken)' },
-  chave: { label: 'Ideia central', color: 'var(--accent)', bg: 'var(--accent-soft)' },
-  mito: { label: 'Equívoco comum', color: 'var(--myth)', bg: 'var(--myth-soft)' },
-  atencao: { label: 'Atenção', color: 'var(--warn)', bg: 'var(--warn-soft)' },
-  aprofundar: { label: 'Para aprofundar', color: 'var(--c-target)', bg: 'var(--info-soft)' },
-  evidencia: { label: 'O que diz a evidência', color: 'var(--accent)', bg: 'var(--accent-soft)' },
-  simplificacao: { label: 'Simplificação didática', color: 'var(--c-target)', bg: 'var(--info-soft)' },
-  preferencia: { label: 'Preferência, não fato', color: 'var(--c-b)', bg: 'var(--warn-soft)' },
+  simples: { label: tr('Em palavras simples'), color: 'var(--accent)', bg: 'var(--accent-soft)' },
+  nota: { label: tr("Nota"), color: 'var(--fg-muted)', bg: 'var(--bg-sunken)' },
+  chave: { label: tr("Ideia central"), color: 'var(--accent)', bg: 'var(--accent-soft)' },
+  mito: { label: tr("Equívoco comum"), color: 'var(--myth)', bg: 'var(--myth-soft)' },
+  atencao: { label: tr("Atenção"), color: 'var(--warn)', bg: 'var(--warn-soft)' },
+  aprofundar: { label: tr("Para aprofundar"), color: 'var(--c-target)', bg: 'var(--info-soft)' },
+  evidencia: { label: tr("O que diz a evidência"), color: 'var(--accent)', bg: 'var(--accent-soft)' },
+  simplificacao: { label: tr("Simplificação didática"), color: 'var(--c-target)', bg: 'var(--info-soft)' },
+  preferencia: { label: tr("Preferência, não fato"), color: 'var(--c-b)', bg: 'var(--warn-soft)' },
 };
 
 export function Callout({ type = 'nota', title, children }: { type?: CalloutKind; title?: string; children: ReactNode }) {
@@ -100,9 +102,7 @@ export function Term({ id, children }: { id: string; children?: ReactNode }) {
             <span className="block text-[13px] font-semibold text-fg mb-1">{entry.term}</span>
             <span className="block text-[13px] leading-relaxed text-soft font-normal">{entry.def}</span>
             <span className="mt-2 flex gap-3 text-[12px]">
-              <Link to={`/glossario#${entry.id}`} className="text-accent hover:underline">
-                Glossário
-              </Link>
+              <Link to={`/glossario#${entry.id}`} className="text-accent hover:underline">{tr("Glossário")}</Link>
               {entry.see && articleById.get(entry.see) && (
                 <Link to={`/${entry.see}`} className="text-accent hover:underline truncate">
                   {articleById.get(entry.see)!.title}
@@ -152,9 +152,7 @@ export function Vars({ items }: { items: [ReactNode, ReactNode][] }) {
 export function References({ children }: { children: ReactNode }) {
   return (
     <section className="not-prose mt-16 pt-6 border-t border-line font-sans" aria-labelledby="refs">
-      <h2 id="refs" className="text-[13px] uppercase tracking-[0.12em] font-semibold text-muted mb-4">
-        Referências e leituras
-      </h2>
+      <h2 id="refs" className="text-[13px] uppercase tracking-[0.12em] font-semibold text-muted mb-4">{tr("Referências e leituras")}</h2>
       <ol className="refs space-y-2.5 text-[13.5px] leading-relaxed text-soft list-decimal pl-5 marker:text-faint [&_em]:italic [&_a]:text-accent [&_a]:break-all">
         {children}
       </ol>

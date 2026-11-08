@@ -2,7 +2,13 @@
 Como é possível que 44 100 números por segundo representem perfeitamente uma onda contínua, com infinitos valores entre eles? A intuição diz que algo se perde entre as amostras. A matemática diz que não — desde que uma condição precisa seja respeitada. Este artigo mostra qual é essa condição, por que ela funciona e o que acontece quando é violada.
 </Lead>
 
+<Callout type="simples">
+O áudio digital registra a altura da onda dezenas de milhares de vezes por segundo. Desde que se façam mais de duas medidas por ciclo da nota mais aguda, a onda original pode ser reconstruída exatamente, e não de forma aproximada. O áudio em qualidade de CD faz isso para tudo o que o ser humano ouve.
+</Callout>
+
 ## Amostrar é medir em instantes regulares
+
+<Diagram id="sampling-steps" />
 
 **Amostrar** um sinal contínuo $x(t)$ é registrar seus valores em instantes espaçados de $T_s$ segundos: $x[n] = x(nT_s)$. A **taxa de amostragem** é $f_s = 1/T_s$. No CD, $f_s$ = 44,1 kHz: uma medida a cada 22,7 µs.
 
@@ -22,6 +28,8 @@ A palavra-chave é **exatamente**. Não se trata de uma boa aproximação: para 
 
 A fórmula de reconstrução de Whittaker-Shannon diz como recuperar o sinal:
 
+<Formula say="Cada amostra contribui com uma pequena curva suave, centrada no próprio instante, e a soma de todas devolve a onda original.">
+
 $$
 x(t) = \sum_{n=-\infty}^{\infty} x[n]\;\text{sinc}\!\left(\frac{t - nT_s}{T_s}\right), \qquad \text{sinc}(u) = \frac{\sin(\pi u)}{\pi u}
 $$
@@ -33,6 +41,8 @@ $$
     ['sinc', 'função que vale 1 no instante da sua amostra, 0 nos instantes de todas as outras amostras, e oscila suavemente entre eles'],
   ]}
 />
+
+</Formula>
 
 Cada amostra contribui com uma função sinc centrada no seu instante, com altura igual ao seu valor. Como cada sinc é zero nos instantes das outras amostras, a soma passa exatamente por todos os pontos; e, entre eles, a soma das contribuições produz a única curva limitada em banda compatível com aquelas amostras. Ative “Mostrar funções sinc” no laboratório para ver as contribuições individuais.
 

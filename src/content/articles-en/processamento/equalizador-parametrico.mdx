@@ -1,0 +1,62 @@
+<Lead>
+A parametric equalizer is the most powerful and cheapest tool in audiophilia: with four or five well-chosen filters, it transforms a headphone's balance. To use it well, you need to understand not only the filters but also what happens to the signal level when you boost something, and why every boost calls for a negative preamp.
+</Lead>
+
+<Callout type="simples">
+Use a few wide filters instead of many narrow ones, and prefer cutting what bothers you to boosting what's missing. If you boost anything, turn the overall level (the preamp) down by the same amount, or the loudest moments will distort.
+</Callout>
+
+## The lab
+
+The equalizer below really works: the filters are applied to the audio in real time, in your browser. Open a file of your own (WAV, FLAC, MP3, AAC…); it's decoded and processed locally, without leaving your computer. Drag the colored points on the graph to change frequency and gain, or use each filter's controls. The thin live lines show the music's spectrum before and after EQ.
+
+<Lab id="peq" />
+
+## A working method
+
+1. **Start with the diagnosis**, not the EQ. Compare your headphone's measurement with a target (see [reading graphs](/resposta/lendo-graficos)) or identify by ear what bothers you (muddy bass, sibilance). Adjust with a purpose.
+2. **Adjust the broad balance first**: a low shelf for bass, a high shelf or wide peak for presence/treble. This resolves most of the difference between headphones.
+3. **Then treat specific resonances** with narrower peaks, preferably **cutting** peaks rather than boosting dips.
+4. **Use few filters.** Each additional filter has to justify its existence. Many narrow filters usually correct details of a measurement that don't exist in your ear.
+5. **Compare at the same level** (the lab does this) and for long enough.
+
+## Preamp and digital headroom
+
+In a digital system, the largest representable value is **0 dBFS**. A song mastered with peaks at −0.5 dBFS (common) has only half a decibel of margin. If a filter boosts a region by +6 dB, any peak containing energy in that region goes past 0 dBFS. On conversion to the output format, as at some point there's always a fixed-point conversion, at the latest in the DAC, values above the ceiling are cut off: this is **digital clipping**. It sounds like crackles, roughness or a strange "compression" on the peaks.
+
+The solution is the **preamp**: a negative gain applied before (or after) the EQ, equal to or greater than the largest boost in the curve. With a +6 dB shelf, the preamp should be at least −6 dB. In the lab, turn off the automatic preamp, apply a large boost and watch the clipping indicator.
+
+Three practical notes:
+
+- **The preamp lowers the volume.** You have to compensate by raising the volume on the amplifier, which requires the source to have voltage to spare. With sensitive IEMs this is never a problem; with difficult headphones it can be.
+- **Cutting is better than boosting.** Instead of +4 dB in the bass and treble, consider −4 dB in the mids and compensating with volume: the resulting curve is the same, with no need for a preamp.
+- **Floating-point systems** (such as Equalizer APO and Web Audio) have internal margin but still clip at the output. The preamp remains necessary.
+
+<Callout type="chave">
+**Golden rule:** preamp ≤ −(largest boost in the curve). Equalizer APO, for example, shows the total curve and lets you adjust the preamp; many apps do this automatically. Inter-sample peaks (see [loudness](/digital/loudness-e-resampling)) can require up to 1 dB of extra margin on very loud music.
+</Callout>
+
+## Where to apply EQ
+
+- **In the operating system**: Equalizer APO on Windows (affects all audio), eqMac or SoundSource on macOS, Wavelet and others on Android.
+- **In the player**: many players (foobar2000, Roon, Poweramp) have parametric EQ.
+- **In hardware**: dongles and DAC/amps with internal DSP store the EQ in the device, useful for use with any source.
+- **In wireless headphones**: many have EQ in the manufacturer's app, applied by the internal DSP.
+
+The lab exports filters in Equalizer APO's text format, which is also accepted (or easily converted) by several other tools.
+
+## Common mistakes
+
+- **Equalizing to a measurement rather than your own ear**, especially above 6 kHz, where your anatomy changes everything.
+- **Correcting narrow dips** with large boosts: it wastes headroom and excursion, and the dip is often a cancellation that EQ can't fill.
+- **Ignoring volume** when comparing: the louder version seems better.
+- **Forgetting the preamp** and blaming the headphone for the roughness of clipping.
+
+What EQ can do, and what it fundamentally can't, is the subject of the next article: [the limits of EQ](/processamento/limites-da-eq).
+
+<References>
+  <Ref>Equalizer APO — documentation (equalizerapo.sourceforge.io).</Ref>
+  <Ref>Bristow-Johnson, R. <em>Cookbook formulae for audio EQ biquad filter coefficients</em>.</Ref>
+  <Ref>Katz, B. <em>Mastering Audio: The Art and the Science</em>. 3rd ed. Focal Press, 2015. Headroom, clipping and inter-sample peaks.</Ref>
+  <Ref>Pasanen, J. <em>AutoEq</em> — github.com/jaakkopasanen/AutoEq.</Ref>
+</References>

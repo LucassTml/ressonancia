@@ -1,0 +1,86 @@
+<Lead>
+Target curves describe what the average listener prefers, measured on an average ear. You aren't the average, and neither is your ear. The good news is that finding your own preference doesn't require expensive equipment. It requires method: a reliable starting point, a few well-chosen levers, honest comparisons and the patience to repeat.
+</Lead>
+
+<Callout type="simples">
+Start from a headphone close to a target, change one thing at a time (first the bass, then the treble) and compare at the same volume with music you know well. Do it again on another day. What stays the same is your taste, and you can apply it to any headphone using a free equalizer.
+</Callout>
+
+## Why it's worth it
+
+Knowing your curve changes how you buy and listen. Instead of relying on other people's adjectives (with other ears, other volumes, other music), you start reading graphs with a precise question: *how close is this headphone to my curve?* And since frequency response can be adjusted with equalization, you can bring any good headphone closer to your preference.
+
+## The starting point
+
+The preference you'll discover is **relative to the headphone you're using**. If you add +4 dB of bass to a headphone that already has too much, the result is a headphone with a lot of bass, but your "absolute" curve isn't the sum of what you don't know plus the adjustment. There are two ways to handle this:
+
+1. **Start from a known headphone close to a target.** If your IEM has a reliable measurement and is reasonably close to Harman IE (within 1–2 dB between 100 Hz and 5 kHz), your adjustments can be interpreted as deviations from Harman.
+2. **First equalize the headphone to the target.** Using the measurement of your model and an autoEQ tool (like the one in the [limits of EQ lab](/processamento/limites-da-eq) or the AutoEq project), apply the correction to Harman and only then make your adjustments on top. That way, the final result is "Harman + your preferences."
+
+Either way, remember that the measurement was made on a coupler, not in your ear: below ~5 kHz the approximation is good; above, it's indicative.
+
+## Before adjusting
+
+**Make sure of the seal.** Try eartips of different sizes and materials. Without a stable seal, you'll "discover" you like +8 dB of bass, when you actually just needed a larger eartip. See [seal and eartips](/iems/vedacao-e-ponteiras).
+
+**Pick a volume and stick to it.** Perceived balance changes with volume ([loudness and volume](/percepcao/sonoridade-e-volume)). Adjust at a comfortable level typical of your use, and hold it throughout the session.
+
+**Choose music you know very well.** Vary it: a male and a female voice, something acoustic (guitar, piano), something with electronic bass, something orchestral or with many simultaneous instruments. Avoid very badly recorded tracks as your main reference: you'd end up adjusting the headphone to correct the recording.
+
+**Use pink noise sparingly.** It's great for finding narrow peaks and dips and judging continuity between regions, but terrible for deciding how much bass you like. Pink noise with plenty of bass sounds "wrong" to almost everyone, even though the same curve is pleasant with music.
+
+## The method: few levers, one at a time
+
+Preference studies show that most of the variation between people lies in **two** dimensions: the amount of bass and the slope of the treble. Start with those.
+
+1. **Bass.** Use a broad *low shelf* at ~100 Hz. Vary it from −3 to +10 dB. The right point is where the bass has weight and impact, but the lower mids still sound clean and voices don't get "fat."
+2. **Presence (~3 kHz).** Small changes (±1 to ±3 dB, with a wide filter) move voices and instruments closer or farther away. If you raise it and the sound gets aggressive, back off.
+3. **Treble (~6 kHz and up).** A gentle *high shelf*. If cymbals and "s" sounds bother you, lower it; if the sound seems muffled, raise it. Do this with the earphone properly fitted: this region changes with insertion.
+4. **Lower mids and "air."** Refinements: a little less at 300 Hz to clear things up, a little more to add body; a touch at 12 kHz to open things up.
+
+Prefer **few, wide filters**. A set of four or five gentle filters captures almost anyone's preference. Ten narrow filters are usually correcting things that don't exist in your ear.
+
+<Lab id="preference" />
+
+### Compare fairly
+
+- **Switch quickly** between the version with and without the adjustment. Auditory memory for fine details lasts only a few seconds.
+- **Compensate the level.** A bass boost raises the total volume, and the louder one tends to seem better. The lab applies a fixed preamp on both sides to neutralize this.
+- **Use blind mode.** In it, you hear two options without knowing which is which and simply choose the one you prefer; the lab converges via an adaptive staircase (the difference between the options is halved at each reversal). It's slower, but avoids the bias of "I know I'm hearing +3 dB."
+
+### Repeat on another day
+
+Preferences measured once are fragile: mood, tiredness, music and first impressions all have an influence. Redo the process on two or three different days, with other music. The values that repeat are yours; those that vary a lot indicate you aren't very sensitive to that parameter, and that it doesn't matter much to you.
+
+## Interpreting the result
+
+A typical result might be something like "+3 dB of bass, −1.5 dB of presence, +1 dB of air." That says you like a Harman that's a bit warmer and less forward. With that summary:
+
+- When reading a candidate headphone's graph (in the same domain as the target), look for what's **within ~2 dB of your curve** in the broad regions.
+- When reading reviews, be wary of praise for traits you already know you don't prefer ("crystalline treble" if you like restrained treble).
+- When equalizing other headphones, use your curve as the target in place of Harman.
+
+## How much can a headphone be changed with EQ alone?
+
+A natural question: if EQ adjusts frequency response, why not buy any headphone and equalize it to your preferred curve? The short answer is that **EQ can change a lot, but not everything**:
+
+- **It can:** shift the balance of broad regions (bass, presence, treble) with great precision, correct resonance peaks and reduce sibilance, bring one headphone close to another in the range where both have clean response. Since most of a headphone is [minimum phase](/processamento/limites-da-eq), correcting magnitude also corrects the corresponding time behavior.
+- **It can with care:** large bass boosts (they require digital *headroom* and can make the driver distort), corrections above ~6 kHz (they depend on your ear, not the coupler).
+- **It can't:** fix seal, comfort or isolation; eliminate distortion; fill deep cancellation dips; correct individual differences you haven't measured; create extension the driver doesn't have.
+
+The details, with an autoEQ lab that brings a headphone close to a target and shows what's left, are in [what EQ can and can't fix](/processamento/limites-da-eq).
+
+## Tools to apply your curve
+
+- **Windows:** Equalizer APO (with the Peace interface). The lab exports filters in this format.
+- **Android:** Wavelet, Poweramp EQ, or the system EQ on some devices.
+- **macOS:** eqMac, SoundSource, or the EQ of players like Roon.
+- **iOS:** EQ inside compatible music apps; system options are limited.
+- **Hardware:** some dongles and DAC/amps have built-in parametric EQ, configurable by app, useful for taking the same curve to any device.
+
+<References>
+  <Ref>Olive, S.; Welti, T.; Khonsaripour, O. "Factors that influence listeners' preferred bass and treble balance in headphones." AES 145th Convention, 2018.</Ref>
+  <Ref>Olive, S. E.; Welti, T.; Khonsaripour, O. "The preferred low frequency response of in-ear headphones." AES International Conference on Headphone Technology, 2019.</Ref>
+  <Ref>Levitt, H. "Transformed up-down methods in psychoacoustics." <em>Journal of the Acoustical Society of America</em>, 49(2B), 467–477, 1971. Basis of adaptive staircase procedures.</Ref>
+  <Ref>Pasanen, J. <em>AutoEq</em>. github.com/jaakkopasanen/AutoEq.</Ref>
+</References>

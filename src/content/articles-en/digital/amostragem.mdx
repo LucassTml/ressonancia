@@ -1,0 +1,77 @@
+<Lead>
+How can 44,100 numbers per second perfectly represent a continuous wave, with infinite values between them? Intuition says something is lost between the samples. Mathematics says it isn't, provided one precise condition is met. This article shows what that condition is, why it works and what happens when it's violated.
+</Lead>
+
+<Callout type="simples">
+Digital audio records the height of the wave tens of thousands of times a second. As long as you take more than two measurements per cycle of the highest note, the original wave can be rebuilt exactly, not approximately. CD-quality audio does this for everything humans can hear.
+</Callout>
+
+## Sampling is measuring at regular instants
+
+<Diagram id="sampling-steps" />
+
+To **sample** a continuous signal $x(t)$ is to record its values at instants spaced $T_s$ seconds apart: $x[n] = x(nT_s)$. The **sampling rate** is $f_s = 1/T_s$. On CD, $f_s$ = 44.1 kHz: one measurement every 22.7 µs.
+
+The central question is whether those measurements alone uniquely determine the original signal. In general, they don't: infinitely many curves pass through the same points. But if we restrict the family of possible curves, the answer changes.
+
+## The Nyquist-Shannon theorem
+
+The **sampling theorem**, formulated by Harry Nyquist (1928), Vladimir Kotelnikov (1933) and Claude Shannon (1949), states:
+
+> If a signal contains no frequency component equal to or above $f_s/2$, it is **completely determined** by its samples taken at a rate $f_s$, and can be reconstructed **exactly**.
+
+The frequency $f_s/2$ is the **Nyquist frequency**. At 44.1 kHz, it's 22.05 kHz, above the limit of human hearing.
+
+The key word is **exactly**. This isn't a good approximation: for band-limited signals, reconstruction is mathematically perfect. The intuition that "something is lost between the samples" fails because a band-limited signal **can't** do anything arbitrary between samples: to change rapidly between two instants, it would need to contain high frequencies, which by hypothesis don't exist.
+
+## Reconstruction: adding sinc functions
+
+The Whittaker-Shannon reconstruction formula says how to recover the signal:
+
+<Formula say="Each sample contributes a smooth bump centered on its own instant, and adding all of them gives back the original wave.">
+
+$$
+x(t) = \sum_{n=-\infty}^{\infty} x[n]\;\text{sinc}\!\left(\frac{t - nT_s}{T_s}\right), \qquad \text{sinc}(u) = \frac{\sin(\pi u)}{\pi u}
+$$
+
+<Vars
+  items={[
+    ['x[n]', 'value of the nth sample'],
+    ['T_s', 'interval between samples (1/fs)'],
+    ['sinc', 'function equal to 1 at its own sample\'s instant, 0 at the instants of all other samples, and oscillating smoothly between them'],
+  ]}
+/>
+
+</Formula>
+
+Each sample contributes a sinc function centered on its instant, with a height equal to its value. Since each sinc is zero at the instants of the other samples, the sum passes exactly through all the points; and between them, the sum of the contributions produces the only band-limited curve compatible with those samples. Turn on "Show sinc functions" in the lab to see the individual contributions.
+
+<Lab id="sampling" />
+
+In a real DAC, this sum is implemented by a low-pass **reconstruction filter**; the impulse response of an ideal low-pass filter is precisely a sinc. The oversampling and digital filters of modern DACs are practical and very precise ways to approximate this operation (see [DACs and ADCs](/eletronica/dac-e-adc)).
+
+## Aliasing: when the condition is violated
+
+What if the signal has components above $f_s/2$? Then the samples can't distinguish that component from another, below $f_s/2$, that passes through the same points. A sine wave of frequency $f$ sampled at $f_s$ produces exactly the same samples as sine waves at $|f - k f_s|$ for any integer $k$. In reconstruction, the lowest-frequency one appears: the **alias**.
+
+With $f_s$ = 8 kHz, a 5 kHz tone becomes a 3 kHz tone; a 7 kHz one becomes 1 kHz. In the lab's sweep, the reconstructed frequency rises to 4 kHz and then **falls** while the original keeps rising: it's the spectrum "folding" around the Nyquist frequency.
+
+Aliasing is **irreversible**: once sampled, there's no way to know whether that 1 kHz was a true 1 kHz or a disguised 7 kHz. That's why every ADC has an **anti-aliasing filter** before the sampler, removing everything above the Nyquist frequency. In modern converters, this is also done with oversampling and digital filters.
+
+<Callout type="mito" title="&quot;With only two samples per cycle, treble becomes a triangle&quot;">
+A 20 kHz tone sampled at 44.1 kHz has ~2.2 samples per cycle. Connecting the dots with straight lines, the drawing looks crude. But nobody reconstructs by connecting dots with straight lines: the reconstruction filter produces the only 20 kHz sine wave compatible with those samples, perfectly smooth. The lab shows this: bring the frequency close to fs/2 and watch the reconstructed curve match the original.
+</Callout>
+
+## Why 44.1 and 48 kHz, and what higher rates do
+
+The choice of 44.1 kHz for CD combines the need to cover up to 20 kHz with a margin for the anti-aliasing filter (from 20 to 22.05 kHz) and historical reasons linked to the video recorders used to store digital audio in the 1970s. 48 kHz became the standard for video and many professional systems.
+
+Rates of **96 and 192 kHz** extend the representable range to 48 and 96 kHz. In production, they have practical advantages: gentler anti-aliasing filters, margin for nonlinear processing (which generates harmonics that, at a low rate, could alias) and lower latency in some systems. In **playback**, the question is whether content above 20 kHz and filtering differences are audible, the theme of [measurable vs audible](/ciencia/mensuravel-vs-audivel). Controlled evidence indicates that if any audible difference exists, it's small and hard to detect.
+
+<References>
+  <Ref>Nyquist, H. "Certain topics in telegraph transmission theory." <em>Transactions of the AIEE</em>, 47(2), 617–644, 1928.</Ref>
+  <Ref>Shannon, C. E. "Communication in the presence of noise." <em>Proceedings of the IRE</em>, 37(1), 10–21, 1949.</Ref>
+  <Ref>Kotelnikov, V. A. "On the transmission capacity of 'ether' and wire in electrocommunications." 1933 (English translation in <em>Physics-Uspekhi</em>, 49(7), 2006).</Ref>
+  <Ref>Oppenheim, A. V.; Schafer, R. W. <em>Discrete-Time Signal Processing</em>. 3rd ed. Pearson, 2010. Chapter 4.</Ref>
+  <Ref>Pohlmann, K. C. <em>Principles of Digital Audio</em>. 6th ed. McGraw-Hill, 2010.</Ref>
+</References>

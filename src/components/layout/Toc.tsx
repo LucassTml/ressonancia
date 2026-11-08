@@ -1,5 +1,6 @@
 import { useEffect, useState, type RefObject } from 'react';
 import { motion, useScroll, useSpring } from 'motion/react';
+import { tr } from '../../i18n';
 
 interface Heading {
   id: string;
@@ -46,8 +47,8 @@ export function Toc({ containerRef, deps }: { containerRef: RefObject<HTMLElemen
 
   if (headings.length < 2) return null;
   return (
-    <nav aria-label="Nesta página" className="text-[12.5px]">
-      <div className="text-[11px] uppercase tracking-[0.12em] font-semibold text-faint mb-3">Nesta página</div>
+    <nav aria-label={tr("Nesta página")} className="text-[12.5px]">
+      <div className="text-[11px] uppercase tracking-[0.12em] font-semibold text-faint mb-3">{tr("Nesta página")}</div>
       <ul className="space-y-0.5 border-l border-line">
         {headings.map((h) => {
           const isActive = h.id === active;

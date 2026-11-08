@@ -1,0 +1,144 @@
+<Lead>
+A transducer converts one form of energy into another. In a headphone, it turns an electrical current that varies over time into mechanical movement, and that movement into a variation in pressure. Behind dozens of technologies with marketing names, there are only a few physical principles, and understanding them says more about a headphone's sound than any driver count.
+</Lead>
+
+<Callout type="simples">
+A driver is a tiny motor that pushes air back and forth following the electrical signal. A surprise: in a sealed earphone, deep bass doesn't take a big movement, only a closed space. It's like pressing the plunger of a capped syringe. That's why a tiny IEM can reach 20 Hz, and why any air leak kills the bass.
+</Callout>
+
+## From current to force
+
+Most headphone drivers use **electromagnetism**. A conductor carrying a current $i$ in a magnetic field of density $B$ experiences a force perpendicular to both, the **Lorentz force**. For a wire of length $l$ perpendicular to the field:
+
+<Formula say="The force on the wire grows with the magnet's strength, the amount of wire in the field and the current. Double the current and you double the force.">
+
+$$
+F = B \cdot l \cdot i
+$$
+
+<Vars
+  items={[
+    ['F', 'force on the conductor, in newtons'],
+    ['B', 'magnetic flux density where the wire is, in tesla'],
+    ['l', 'length of wire in the field, in meters'],
+    ['i', 'current, in amperes'],
+  ]}
+/>
+
+</Formula>
+
+The product $Bl$ is the motor's **force factor**: how much force you get per ampere. Stronger magnets (neodymium) and more wire in the field increase $Bl$, improving sensitivity and control of the movement. The beauty of the equation is its **linearity**: doubling the current doubles the force. As long as $B$ and $l$ remain constant throughout the movement, the motor doesn't distort.
+
+**Dynamic** (moving-coil) and **planar magnetic** drivers use this force directly. **Balanced armatures** use a variant: the current magnetizes a piece of iron, which is attracted by magnets. **Electrostatics** swap magnetism for forces between electric charges, and **piezoelectrics** use materials that deform with voltage. Each principle has its own article in this module.
+
+## From force to movement: the mass-spring system
+
+The moving part of any driver (diaphragm, coil, membrane) has **mass** $m$. It's held by a suspension, which acts as a **spring** of stiffness $k$ (or, equivalently, compliance $C = 1/k$). And the movement suffers **losses** (internal friction of materials, resistance of air passing through openings) that act as a damper of mechanical resistance $R$. The equation of motion is that of a forced oscillator:
+
+<Formula say="The moving part behaves like a mass on a spring with a brake: three effects together resist the force applied.">
+
+$$
+m\,\ddot{x} + R\,\dot{x} + k\,x = F(t)
+$$
+
+</Formula>
+
+This system has a **resonant frequency**:
+
+<Formula say="A stiffer spring raises the resonant frequency; a heavier mass lowers it.">
+
+$$
+f_0 = \frac{1}{2\pi}\sqrt{\frac{k}{m}}
+$$
+
+</Formula>
+
+and a **Q factor** describing how pronounced the resonance is, $Q = \sqrt{km}/R$. High Q means little damping: a tall, narrow peak at the resonance and a slow decay. Low Q means heavy damping: a smooth response with no peak.
+
+The behavior changes radically depending on the frequency relative to $f_0$:
+
+- **Below $f_0$:** the spring dominates. Displacement is proportional to force and practically constant with frequency.
+- **Near $f_0$:** mass and spring exchange energy easily; movement is amplified by Q.
+- **Above $f_0$:** the mass dominates. Displacement falls 12 dB per octave, but **acceleration** remains constant.
+
+<Lab id="resonator" />
+
+## From movement to pressure: it depends on where the air is
+
+Here's the part that often surprises. The relationship between the diaphragm's movement and sound pressure depends on the **acoustic environment** it works in.
+
+### Free field: pressure proportional to acceleration
+
+A small membrane radiating into open space (a speaker in a room, from a distance) produces, at a distance, a pressure proportional to the diaphragm's **acceleration**. Since acceleration is constant above $f_0$, a speaker has a flat response **above** its resonance. That's why woofers are designed with low resonances (tens of hertz) and need to displace huge volumes of air to reproduce bass: to keep the pressure constant, each octave down requires four times the displacement.
+
+### Small sealed chamber: pressure proportional to displacement
+
+A well-sealed IEM forms, with the ear canal, a closed cavity of about 1–2 cm³. For frequencies whose wavelength is much larger than that cavity, all the bass and mids, the pressure inside it rises and falls uniformly, as in a capped syringe. By the gas law (adiabatic compression), the pressure change is proportional to the change in **volume**, that is, to the diaphragm's **displacement**:
+
+<Formula say="In a small sealed space, pressure simply follows how far the diaphragm moves, at every low frequency.">
+
+$$
+p \approx \frac{\gamma P_0}{V}\,\Delta V = \frac{\rho c^2}{V}\, S_d\, x
+$$
+
+<Vars
+  items={[
+    ['V', 'cavity volume (residual canal + front volume of the earphone)'],
+    ['S_d', 'effective diaphragm area'],
+    ['x', 'diaphragm displacement'],
+    ['ρc²', 'adiabatic bulk modulus of air (≈ 1.42 × 10⁵ Pa)'],
+  ]}
+/>
+
+</Formula>
+
+Since displacement is constant **below** the resonance, a driver in a sealed chamber has a flat response **below** its resonance, in principle down to arbitrarily low frequencies, as long as the seal holds. This inverts the logic of speakers: an IEM driver can have its resonance at several kilohertz and still reproduce 20 Hz with ease.
+
+It's worth doing the math. To produce 100 dB SPL (2 Pa RMS) in a 2 cm³ cavity with an 8 mm diaphragm (area ≈ 50 mm²), the displacement needed is on the order of
+
+<Formula say="For a loud 100 dB in an IEM, the diaphragm only needs to move about 0.6 micrometers, whether at 20 Hz or 200 Hz.">
+
+$$
+x \approx \frac{p\,V}{\rho c^2 S_d} = \frac{2 \cdot 2\times10^{-6}}{1.42\times10^{5} \cdot 5\times10^{-5}} \approx 0.6\ \mu\text{m}
+$$
+
+</Formula>
+
+Less than a micrometer, and that holds for 20 Hz as for 200 Hz. A 16 cm speaker in a room would need millimeters of excursion for the same level at 20 Hz. That's why tiny IEMs have deep bass, and why **any leak** destroys it: with an air outlet, the cavity stops being closed and low-frequency pressure escapes.
+
+<Callout type="chave" title="The physics of IEM bass">
+In sealed IEMs, bass doesn't depend on moving a lot of air but on **keeping the cavity closed**. An IEM's bass extension is limited mainly by the seal and venting, not by the size of the driver. A large dynamic driver helps generate bass with less distortion and more easily when there's venting, but it isn't why the bass exists.
+</Callout>
+
+## Above the resonance, and modes
+
+If an IEM is flat below the driver's resonance, why not make all of them with very high resonances? Because the real world complicates things:
+
+- **The cavity stops being "small"** above a few kilohertz: the canal starts having standing waves (see [pinna gain](/percepcao/pinna-gain)), and pressure is no longer uniform.
+- **The diaphragm stops being rigid.** At high frequencies, different parts of the diaphragm vibrate at different phases (**breakup modes**), creating peaks and dips.
+- **Tubes and internal cavities** have their own resonances.
+- **The headphone must produce presence gain** (the artificial pinna gain), which requires shaping the response, not just leaving it flat.
+
+That's why designing a headphone is always an **acoustic** project around the driver: chambers, tubes, vents, filters and sometimes several drivers with a crossover. That's the subject of [acoustic construction](/drivers/construcao-acustica) and [tuning](/iems/tuning).
+
+## Distortion: when linearity is lost
+
+Everything above assumes linearity. In practice, several things become nonlinear at large displacements:
+
+- **$Bl$ varies with position:** if the coil leaves the region of uniform field, force per ampere decreases.
+- **The suspension stiffens:** the spring stops being linear at large excursions.
+- **Compressed air isn't perfectly linear** at very high pressures (irrelevant at normal levels).
+- **Materials have hysteresis** and nonlinear behavior.
+
+These nonlinearities generate [harmonic and intermodulation distortion](/eletronica/medidas-de-desempenho), more pronounced in the bass (where displacement is largest, especially with venting) and at high levels. In well-designed IEMs, distortion at normal listening levels is usually very low, often below 1% even in the bass, and much lower in the mids.
+
+## Electrical impedance: the amplifier's side
+
+From the amplifier's point of view, the driver is an **electrical load** with an impedance that varies with frequency. In a dynamic driver, it's dominated by the resistance of the coil wire, with a peak at the mechanical resonance (the movement generates a back-electromotive force) and a gentle rise in the treble from inductance. In balanced armatures, inductance is much larger and impedance rises a lot with frequency. In IEMs with several drivers and a crossover, the impedance curve can vary hugely, making the sound sensitive to the source's [output impedance](/eletronica/potencia-e-sensibilidade).
+
+<References>
+  <Ref>Beranek, L. L.; Mellow, T. J. <em>Acoustics: Sound Fields and Transducers</em>. Academic Press, 2012.</Ref>
+  <Ref>Kinsler, L. E. et al. <em>Fundamentals of Acoustics</em>. 4th ed. Wiley, 2000. Chapter on oscillators and cavities.</Ref>
+  <Ref>Klippel, W. "Tutorial: loudspeaker nonlinearities — causes, parameters, symptoms." <em>Journal of the Audio Engineering Society</em>, 54(10), 907–939, 2006.</Ref>
+  <Ref>Poldy, C. A. "Headphones." In: Borwick, J. (ed.), <em>Loudspeaker and Headphone Handbook</em>. 3rd ed. Focal Press, 2001.</Ref>
+</References>

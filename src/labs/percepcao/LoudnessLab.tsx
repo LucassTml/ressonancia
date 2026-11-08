@@ -6,6 +6,7 @@ import { FreqPlot, Legend, type PlotCurve } from '../../viz/FreqPlot';
 import { ISO_F, ISO_THRESHOLD, iso226At, iso226Table, phonToSone } from '../../audio/iso226';
 import { firBuffer } from '../../audio/dsp';
 import { dbToGain } from '../../audio/engine';
+import { tr } from '../../i18n';
 
 const LEVELS = [20, 30, 40, 50, 60, 70, 80, 90];
 
@@ -42,11 +43,11 @@ export default function LoudnessLab() {
             width: 1,
             opacity: 0.7,
           })),
-          { id: 'thr', label: 'Limiar de audição', fn: (f: number) => iso226At(0, f, ISO_THRESHOLD), color: 'var(--c-diff)', width: 1.4, dash: '4 3' },
-          { id: 'sel', label: `${phon} fons`, fn: (f: number) => iso226At(phon, f, selTable), color: 'var(--c-a)', width: 2.4 },
+          { id: 'thr', label: tr("Limiar de audição"), fn: (f: number) => iso226At(0, f, ISO_THRESHOLD), color: 'var(--c-diff)', width: 1.4, dash: '4 3' },
+          { id: 'sel', label: tr("{0} fons", phon), fn: (f: number) => iso226At(phon, f, selTable), color: 'var(--c-a)', width: 2.4 },
         ]
       : [
-          { id: 'comp', label: 'Reforço necessário', fn: compDb, color: 'var(--c-a)', width: 2.2, fill: true },
+          { id: 'comp', label: tr("Reforço necessário"), fn: compDb, color: 'var(--c-a)', width: 2.2, fill: true },
         ];
 
   // Processamento: atenuação de volume + (opcional) compensação por FIR
@@ -88,8 +89,8 @@ export default function LoudnessLab() {
 
   return (
     <LabFrame
-      title="Curvas de igual sonoridade (ISO 226)"
-      description="Cada curva liga os níveis de pressão que soam igualmente altos em todas as frequências. Calculadas pelas equações da ISO 226:2003, de 20 Hz a 12,5 kHz."
+      title={tr("Curvas de igual sonoridade (ISO 226)")}
+      description={tr("Cada curva liga os níveis de pressão que soam igualmente altos em todas as frequências. Calculadas pelas equações da ISO 226:2003, de 20 Hz a 12,5 kHz.")}
       audio={tab === 'comp'}
       onReset={() => {
         setPhon(60);
@@ -106,8 +107,8 @@ export default function LoudnessLab() {
             setTab(v);
           }}
           options={[
-            { value: 'curves', label: 'Curvas' },
-            { value: 'comp', label: 'Volume e equilíbrio' },
+            { value: 'curves', label: tr("Curvas") },
+            { value: 'comp', label: tr("Volume e equilíbrio") },
           ]}
         />
       }
@@ -119,20 +120,20 @@ export default function LoudnessLab() {
         dbMax={tab === 'curves' ? 130 : 30}
         dbStep={tab === 'curves' ? 10 : 6}
         height={300}
-        yLabel={tab === 'curves' ? 'dB SPL' : 'dB'}
-        ariaLabel="Curvas de igual sonoridade"
+        yLabel={tab === 'curves' ? tr("dB SPL") : 'dB'}
+        ariaLabel={tr("Curvas de igual sonoridade")}
       />
       <div className="mt-2 mb-4">
         {tab === 'curves' ? (
-          <Legend items={[{ label: `Curva de ${phon} fons`, color: 'var(--c-a)' }, { label: 'Outras curvas (20 a 90 fons)', color: 'var(--fg-faint)' }, { label: 'Limiar de audição', color: 'var(--c-diff)', dash: true }]} />
+          <Legend items={[{ label: tr("Curva de {0} fons", phon), color: 'var(--c-a)' }, { label: tr("Outras curvas (20 a 90 fons)"), color: 'var(--fg-faint)' }, { label: tr("Limiar de audição"), color: 'var(--c-diff)', dash: true }]} />
         ) : (
-          <Legend items={[{ label: `Reforço para manter o equilíbrio de ${ref} fons ouvindo a ${listen} fons`, color: 'var(--c-a)' }]} />
+          <Legend items={[{ label: tr("Reforço para manter o equilíbrio de {0} fons ouvindo a {1} fons", ref, listen), color: 'var(--c-a)' }]} />
         )}
       </div>
       {tab === 'curves' ? (
         <>
           <Controls cols={2}>
-            <Slider label="Nível de sonoridade" value={phon} min={20} max={90} step={1} onChange={setPhon} unit="fons" />
+            <Slider label={tr("Nível de sonoridade")} value={phon} min={20} max={90} step={1} onChange={setPhon} unit={tr("fons")} />
           </Controls>
           <div className="mt-4">
             <Readout
@@ -140,38 +141,30 @@ export default function LoudnessLab() {
                 { label: '1 kHz', value: `${fmtNum(iso226At(phon, 1000, selTable), 1)} dB SPL` },
                 { label: '50 Hz', value: `${fmtNum(iso226At(phon, 50, selTable), 1)} dB SPL`, accent: true },
                 { label: '3,15 kHz', value: `${fmtNum(iso226At(phon, 3150, selTable), 1)} dB SPL` },
-                { label: 'Sonoridade', value: `${fmtNum(phonToSone(phon), 2)} sones` },
+                { label: tr("Sonoridade"), value: `${fmtNum(phonToSone(phon), 2)} sones` },
               ]}
             />
           </div>
-          <Note>
-            Em 50 Hz, a curva de 20 fons exige {fmtNum(iso226At(20, 50, tables[20]) - 20, 0)} dB a mais que em 1 kHz, mas a de 90 fons
-            exige só {fmtNum(iso226At(90, 50, tables[90]) - 90, 0)} dB: as curvas se aproximam nos graves. Por isso, poucos decibéis a mais
-            ou a menos de volume mudam muito a percepção dos graves. Frequências tabeladas: {ISO_F.length}, de 20 Hz a 12,5 kHz.
-          </Note>
+          <Note>{tr("Em 50 Hz, a curva de 20 fons exige")}{' '}{fmtNum(iso226At(20, 50, tables[20]) - 20, 0)}{' '}{tr("dB a mais que em 1 kHz, mas a de 90 fons exige só")}{' '}{fmtNum(iso226At(90, 50, tables[90]) - 90, 0)}{' '}{tr("dB: as curvas se aproximam nos graves. Por isso, poucos decibéis a mais ou a menos de volume mudam muito a percepção dos graves. Frequências tabeladas:")}{' '}{ISO_F.length}{tr(", de 20 Hz a 12,5 kHz.")}</Note>
         </>
       ) : (
         <>
           <Controls cols={2}>
-            <Slider label="Nível de referência (mixagem)" value={ref} min={60} max={90} step={1} onChange={setRef} unit="fons" hint="Estúdios costumam mixar entre ~79 e 85 dB SPL." />
-            <Slider label="Nível em que você ouve" value={listen} min={30} max={90} step={1} onChange={setListen} unit="fons" />
+            <Slider label={tr("Nível de referência (mixagem)")} value={ref} min={60} max={90} step={1} onChange={setRef} unit={tr("fons")} hint={tr("Estúdios costumam mixar entre ~79 e 85 dB SPL.")} />
+            <Slider label={tr("Nível em que você ouve")} value={listen} min={30} max={90} step={1} onChange={setListen} unit={tr("fons")} />
           </Controls>
           <div className="mt-4 mb-4">
             <Readout
               items={[
-                { label: 'Reforço necessário em 50 Hz', value: `${fmtNum(bass50, 1)} dB`, accent: true },
-                { label: 'Reforço necessário em 100 Hz', value: `${fmtNum(bass100, 1)} dB` },
-                { label: 'Diferença de volume', value: `${fmtNum(listen - ref, 0)} dB` },
+                { label: tr("Reforço necessário em 50 Hz"), value: `${fmtNum(bass50, 1)} dB`, accent: true },
+                { label: tr("Reforço necessário em 100 Hz"), value: `${fmtNum(bass100, 1)} dB` },
+                { label: tr("Diferença de volume"), value: `${fmtNum(listen - ref, 0)} dB` },
               ]}
             />
           </div>
-          <SourceBar player={player} extra={<Toggle checked={comp} onChange={setComp} label="Aplicar compensação" />} />
+          <SourceBar player={player} extra={<Toggle checked={comp} onChange={setComp} label={tr("Aplicar compensação")} />} />
           <div className="mt-3">
-            <Note>
-              O áudio é atenuado pela diferença entre os níveis escolhidos (o nível absoluto depende do seu equipamento). Com a
-              compensação ligada, um filtro FIR aplica a curva acima. Compare: em volume baixo, sem compensação, os graves parecem
-              sumir — não porque o fone mudou, mas porque a sua audição mudou.
-            </Note>
+            <Note>{tr("O áudio é atenuado pela diferença entre os níveis escolhidos (o nível absoluto depende do seu equipamento). Com a compensação ligada, um filtro FIR aplica a curva acima. Compare: em volume baixo, sem compensação, os graves parecem sumir — não porque o fone mudou, mas porque a sua audição mudou.")}</Note>
           </div>
         </>
       )}

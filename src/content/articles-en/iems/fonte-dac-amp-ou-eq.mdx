@@ -1,0 +1,70 @@
+<Lead>
+You have an IEM and some money to improve the sound. Buy a DAC/amp? A dongle? Or install a free equalizer? The three options solve different problems, and knowing which problem you have is what separates a real upgrade from money with no effect.
+</Lead>
+
+<Callout type="simples">
+An amplifier delivers the signal without changing it; EQ changes it the way you want. If your sound is clean but you don't love the balance, EQ is free and works. Only buy a DAC or amp if you have a specific problem, such as not enough volume, audible hiss or a source that changes your earphones' sound.
+</Callout>
+
+## What each option changes
+
+**A DAC/amp (or dongle)** replaces the conversion and amplification of your current source. It changes the sound **only if the current source has a limitation**:
+
+- insufficient voltage (low volume or distorted peaks);
+- high output impedance (which alters the response of IEMs with varying impedance);
+- audible noise floor (hiss with sensitive IEMs);
+- implementation flaws (interference, hum, digital volume issues).
+
+If the current source has none of those problems with your IEM, it's already **transparent** for it, and a more expensive DAC/amp has nothing to improve. DAC differences between competent devices are far below audibility thresholds (see [DACs](/eletronica/dac-e-adc) and [performance measures](/eletronica/medidas-de-desempenho)).
+
+**Equalization** changes the **frequency response**, the factor that most determines a headphone's sound. It transforms the tonal balance, corrects resonances and brings the headphone closer to your preference. It doesn't solve lack of voltage, noise or output impedance (and an EQ boost can even worsen lack of voltage).
+
+In other words: **the amplifier's job is to deliver the signal without altering it; EQ's job is to alter it the way you want.** They're complementary tools, not competitors.
+
+## Diagnosis: which problem do I have?
+
+| Symptom | Probable cause | Solution |
+| --- | --- | --- |
+| Low maximum volume, or distortion on peaks | Insufficient voltage | Source with more voltage (1–2 V dongle, balanced output) |
+| Hiss in silence or between tracks | Source noise + sensitive IEM | Quieter source, low-gain mode |
+| Different sound (darker/brighter) only on certain sources, with multi-BA IEM | High output impedance | Source with output impedance &lt; 1–2 Ω |
+| Hum, interference noise when charging the phone | Grounding/power issues | Other source, isolator, battery |
+| Too much/too little bass, aggressive treble, recessed voices | The IEM's frequency response | **EQ** (or another IEM) |
+| Bass disappears and returns, varies when chewing | Seal | **Eartips** |
+| Discomfort after 30 minutes | Comfort/fit | Eartips, another IEM |
+
+## When a simple dongle is enough
+
+Use the [power calculator](/eletronica/potencia-e-sensibilidade). For a typical IEM (100–125 dB/V), reaching 100 dB SPL at peak takes between 0.06 and 1 V. Practically any well-designed USB-C dongle delivers 1 to 2 V with output impedance below 1–2 Ω and low noise. For nearly all IEMs, a competent dongle is **all you need** in terms of a source, and many 3.5 mm outputs on phones and laptops work too.
+
+<Lab id="power" />
+
+## When something more makes sense
+
+- **Low-sensitivity IEMs** (some planars and dynamics below ~95 dB/V), if you listen loud or to very dynamic music.
+- **Very sensitive IEMs with noisy sources**: here, the upgrade is to a **quieter** source, not a more powerful one.
+- **Multi-BA IEMs with a high-output-impedance source**: the lab below shows the magnitude of the effect.
+- **High-impedance or low-sensitivity planar headphones**: the classic case for dedicated amplifiers.
+
+<Lab id="output-impedance" />
+
+## The order that gives the best results
+
+For most people with a reasonable IEM, the sequence of improvements with the greatest impact per cost is:
+
+1. **Eartips** that seal and are comfortable (low cost, huge impact on bass and consistency).
+2. **Equalization** to adjust the balance to your taste (zero cost, large impact on tonality). See [your preference curve](/resposta/sua-curva) and [the limits of EQ](/processamento/limites-da-eq).
+3. **A competent dongle**, if your current source has any of the limitations above (low to moderate cost).
+4. **Another IEM**, if the problem is comfort, isolation, distortion or a response very far from what you want (EQ solves a lot, but not everything).
+
+Expensive desktop DAC/amps, upgrade cables and "audiophile" sources rarely appear on this list for IEMs, not because they're bad, but because in most cases there's no problem for them to solve.
+
+<Callout type="nota" title="EQ in software or hardware?">
+Software EQ (Equalizer APO, Wavelet, etc.) is free and very flexible, but only applies on the device where it's installed. Dongles and DAC/amps with **built-in parametric EQ** store the curve in the device itself and apply it with any source (phone, laptop, console). In terms of quality, both are equivalent when well implemented; the difference is convenience.
+</Callout>
+
+<References>
+  <Ref>Self, D. <em>Audio Power Amplifier Design</em>. 6th ed. Focal Press, 2013.</Ref>
+  <Ref>Olive, S. E.; Welti, T.; McMullin, E. "A virtual headphone listening test methodology." AES 51st International Conference, 2013.</Ref>
+  <Ref>IEC 60268-7:2010. Headphones and earphones.</Ref>
+</References>

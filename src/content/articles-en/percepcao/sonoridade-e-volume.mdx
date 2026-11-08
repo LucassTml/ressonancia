@@ -1,0 +1,91 @@
+<Lead>
+Volume seems like the simplest thing in audio: a knob that makes everything louder or quieter. But hearing doesn't scale all frequencies equally. Changing the volume changes the tonal balance you perceive, changes what you can hear and, above all, changes what you judge. This article answers a question almost nobody asks and everyone should: how far does volume matter?
+</Lead>
+
+<Callout type="simples">
+At low volume we hear less bass, so the same music seems thinner. At a slightly higher volume, nearly everything seems better, which is why comparisons must be done at the same level. And past a certain point, more volume only brings fatigue and risk.
+</Callout>
+
+## Physical intensity and perceived loudness
+
+Sound pressure level (dB SPL) is a physical quantity. **Loudness** is the sensation of intensity, a perceptual quantity. The two are related, but not simply: loudness depends on frequency, bandwidth, the sound's duration and the state of the ear.
+
+In 1933, Harvey Fletcher and Wilden Munson, at Bell Labs, asked listeners to adjust the level of tones at various frequencies until they sounded as loud as a 1 kHz reference tone. Connecting the points of equal sensation, they got the first **equal-loudness contours**. They were refined by Robinson and Dadson in the 1950s and standardized in **ISO 226**, whose 2003 edition is based on a large international effort coordinated by Suzuki and Takeshima, with a minor revision in 2023.
+
+The unit of these curves is the **phon**: a sound has N phons if it sounds as loud as a 1 kHz tone at N dB SPL. By definition, the curves pass through N dB at 1 kHz. At other frequencies, they reveal how much more or less sensitive hearing is.
+
+<Lab id="loudness" />
+
+## What the curves show
+
+Three features stand out.
+
+**Hearing is very insensitive to bass.** On the 40-phon curve, a 50 Hz tone needs about 64 dB SPL to sound as loud as 40 dB at 1 kHz, 24 dB more. At 20 Hz, the difference exceeds 55 dB.
+
+**The 2 to 5 kHz region is the most sensitive.** The curves dip below the 1 kHz level in this region, reflecting [pinna gain](/percepcao/pinna-gain) and the efficiency of the middle ear. A small excess here is very audible.
+
+**The curves flatten at high levels.** This is the most important point for listening. The difference between sensitivity to bass and sensitivity at 1 kHz decreases as the level rises: the curves "bunch up" in the bass. In practice this means that in the bass, **a few decibels of physical difference correspond to a large difference in loudness**. If you turn the volume down by 20 dB, the mids lose 20 phons of loudness but the bass loses more, and seems to "vanish."
+
+### Phons and sones
+
+The phon handles the frequency dependence, but it doesn't say how much something sounds "twice as loud." For that, S. S. Stevens proposed the **sone**: 1 sone is the loudness of a 1 kHz tone at 40 dB SPL, and each increase of ~10 phons doubles the loudness in sones. A conversation (60 phons) is ~4 sones; a concert (100 phons), ~64. That relationship holds for moderate and high levels.
+
+### Loudness of complex sounds
+
+Broadband sounds are louder than pure tones of the same energy, because the energy spreads over more [auditory filters](/percepcao/mascaramento) and total loudness is approximately the sum of the loudness in each band. That's why loudness models such as Zwicker's (ISO 532-1) or Moore-Glasberg's (ISO 532-2) calculate loudness per critical band. Loudness meters for broadcast and streaming, such as **LUFS** from ITU-R BS.1770, use a simpler approximation, a K-weighting filter and an energy average, good enough to normalize music (see [loudness and resampling](/digital/loudness-e-resampling)).
+
+## How far does volume matter?
+
+Now we can answer precisely. Volume matters in five distinct ways, each with a different limit.
+
+### 1. It changes the perceived tonal balance
+
+Music is mixed and mastered in a studio, typically between 79 and 85 dB SPL. When you listen much quieter, equal-loudness contours predict that the bass (and, to a lesser extent, the extreme treble) will sound relatively weaker than what the engineer heard. Use the lab's "Volume and balance" tab: listening 25 dB below the reference level, ISO 226 predicts you'd need to boost the bass by several decibels at 50 Hz to keep the same perceived balance.
+
+Practical consequence: **a headphone's "right" bass balance depends on the volume you listen at**. The curves predict that those who listen quietly need more bass to get the same perceived balance, one of several plausible reasons for the wide spread of bass preferences seen in headphone studies (which also depend on age, experience and taste). Some players and systems offer *loudness compensation*, an EQ that adjusts automatically with volume, as the lab demonstrates. It's technically well founded, though uncommon in headphones.
+
+### 2. It changes what you judge: "louder seems better"
+
+This is the most treacherous effect. When two identical sounds are presented with a small level difference, the louder one tends to be described as more detailed, fuller, clearer, with more bass and more "presence," and rarely as "louder." Differences of 0.5 to 1 dB, below what many people would consciously identify as a volume difference, are enough to bias comparisons.
+
+That's why recommendations for listening tests of small differences, such as ITU-R BS.1116, require careful level matching, and practice in equipment testing is to match levels to within **0.1–0.2 dB**. Any comparison between headphones, DACs or amplifiers without that care mainly measures the volume difference. See [comparing IEMs honestly](/iems/comparando-iems).
+
+### 3. It determines which details rise above the threshold
+
+A recording contains information at very low levels: room reverberation, note decay, breathing, fingers on strings. If the volume is too low, that information falls below the hearing threshold or is masked by ambient noise. Raising the volume brings it above the threshold, and that's legitimately perceived as "more detail." It's one of the reasons IEMs with good isolation seem more detailed on the bus: they reduce the masking noise without requiring high volume.
+
+### 4. Past a certain point, it worsens what you hear
+
+The gain in detail from volume doesn't go on indefinitely. At high levels:
+
+- **Masking spreads** further to frequencies above the masker; intense bass hides more of the mids.
+- The **acoustic reflex** starts acting above ~80–90 dB SPL, variably attenuating bass.
+- **Transducer distortion** grows, especially in bass with large excursion.
+- **Listening fatigue** and **temporary threshold shift** (TTS) reduce sensitivity after a while; you raise the volume to compensate, and the cycle repeats.
+
+So there's an optimal range: loud enough that details rise above noise and threshold, quiet enough not to compress perception or tire you out. For most people in a quiet environment, that's around 65 to 80 dB SPL average level.
+
+### 5. It determines the risk to your hearing
+
+Exposure dose depends on level and time, with a 3 dB exchange rule: every +3 dB halves the safe time. Listening at 94 dB(A) for one hour equals, in dose, 85 dB(A) for eight hours. This topic has its own article in [hearing health](/percepcao/saude-auditiva).
+
+<Callout type="chave" title="Practical summary">
+- When **comparing** headphones or equipment, match the volume to within ~0.1–0.2 dB by measuring. Don't trust your ear.
+- When **choosing** the amount of bass in a headphone, consider the volume you usually listen at: those who listen quietly generally prefer more bass.
+- When **listening**, prefer the lowest level at which the music sounds complete. More isolation (a better seal) allows lower volumes.
+- Once levels are matched and within a comfortable range, small volume variations stop being the dominant factor, and what remains are the real differences between systems.
+</Callout>
+
+## Digital and analog volume and loss of resolution
+
+A common worry is whether lowering the volume on the computer (digitally) "loses bits." In systems that process in floating point or at 24/32 bits, the rule today, a 30 dB digital attenuation still leaves the signal with far more resolution than needed; what limits effective dynamic range is the noise of the DAC and amplifier, not the arithmetic. The real problem appears in 16-bit chains with large attenuations and no [dither](/digital/quantizacao-e-dither), or when an amplifier with too much gain forces you to use digital volume near minimum, bringing the noise floor up relative to the signal. With very sensitive IEMs, that's a legitimate reason to prefer low-gain sources, as we'll see in [performance measures](/eletronica/medidas-de-desempenho).
+
+<References>
+  <Ref>Fletcher, H.; Munson, W. A. "Loudness, its definition, measurement and calculation." <em>Journal of the Acoustical Society of America</em>, 5(2), 82–108, 1933.</Ref>
+  <Ref>Suzuki, Y.; Takeshima, H. "Equal-loudness-level contours for pure tones." <em>Journal of the Acoustical Society of America</em>, 116(2), 918–933, 2004.</Ref>
+  <Ref>ISO 226:2003 and ISO 226:2023. <em>Acoustics — Normal equal-loudness-level contours</em>.</Ref>
+  <Ref>ISO 532-1:2017 (Zwicker method) and ISO 532-2:2017 (Moore-Glasberg method). <em>Acoustics — Methods for calculating loudness</em>.</Ref>
+  <Ref>ITU-R BS.1116-3 (2015). <em>Methods for the subjective assessment of small impairments in audio systems</em>.</Ref>
+  <Ref>ITU-R BS.1770-5 (2023). <em>Algorithms to measure audio programme loudness and true-peak audio level</em>.</Ref>
+  <Ref>Olive, S.; Welti, T.; Khonsaripour, O. "Factors that influence listeners' preferred bass and treble balance in headphones." AES 145th Convention, 2018.</Ref>
+</References>

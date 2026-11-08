@@ -1,0 +1,129 @@
+<Lead>
+A violin, a flute and a voice singing the same note, at the same volume, are unmistakable. The difference isn't in the frequency of the note or the intensity: it's in how the energy is distributed across many frequencies and how that distribution evolves over time. That's the territory of timbre, and it's exactly what a headphone alters when it changes the frequency response.
+</Lead>
+
+<Callout type="simples">
+Every musical note is really a stack of notes: the main one plus fainter multiples called harmonics. The recipe of that stack, and how it changes over the life of the note, is what makes a guitar sound like a guitar. A headphone changes the recipe when it boosts or cuts a region.
+</Callout>
+
+## Fourier: every sound is a sum of sine waves
+
+In 1807, Joseph Fourier, studying heat conduction, proposed an idea that would become one of the most powerful in science: any periodic function can be written as a sum of sine waves whose frequencies are integer multiples of the repetition frequency. For a signal of period $T$ (fundamental frequency $f_0 = 1/T$):
+
+<Formula say="Any repeating sound can be built by adding simple waves at one, two, three, four… times the main frequency, each at its own strength.">
+
+$$
+x(t) = \sum_{n=1}^{\infty} A_n \sin(2\pi n f_0 t + \varphi_n)
+$$
+
+<Vars
+  items={[
+    ['n', 'harmonic number (1 = fundamental, 2 = second harmonic…)'],
+    ['n·f₀', 'frequency of the nth harmonic'],
+    ['Aₙ', 'amplitude of harmonic n'],
+    ['φₙ', 'phase of harmonic n'],
+  ]}
+/>
+
+</Formula>
+
+The set of amplitudes $A_n$ is the sound's **spectrum**. For signals that don't repeat, like a click, speech or an entire song, the same idea generalizes into the Fourier transform, where the frequencies stop being discrete and form a continuum. On computers, we calculate spectra of short stretches of digital audio with the **FFT** (*Fast Fourier Transform*), the algorithm behind the spectrum analyzers on this site.
+
+Fourier's idea isn't only a mathematical tool; it corresponds to something the cochlea physically does. The basilar membrane responds to different frequencies at different places, making it a mechanical spectrum analyzer in its own right, as we'll see in [anatomy of the ear](/percepcao/anatomia-do-ouvido).
+
+## Why instruments produce harmonics
+
+<Diagram id="string-harmonics" />
+
+A string fixed at both ends can only vibrate in patterns that have "nodes" (still points) at the ends. The possible patterns are those where a whole number of half wavelengths fits into the string's length: half a wave (the fundamental), a whole wave (twice the frequency), one and a half waves (three times)… When plucked or bowed, the string vibrates in all those modes at once, with strengths that depend on where and how it was excited. The result is the **harmonic series**: $f_0, 2f_0, 3f_0, 4f_0\ldots$
+
+The same goes for the air column of a flute (tube open at both ends: all harmonics) and a clarinet (cylindrical tube closed at one end: odd harmonics predominate in the low register, which gives the clarinet its characteristic "hollow" sound).
+
+Some terms are often confused:
+
+- **Harmonic:** a component at an integer multiple of the fundamental. The fundamental is the 1st harmonic.
+- **Overtone:** any component above the fundamental. The 1st overtone is the 2nd harmonic.
+- **Partial:** any sinusoidal component of a sound, harmonic or not.
+
+Not every sound has harmonic partials. In a piano, string stiffness pushes upper partials slightly above exact multiples (**inharmonicity**), which is why tuners "stretch" the octaves. Bells, cymbals and drums have inharmonic vibration modes, which gives them an indefinite or ambiguous pitch.
+
+## Classic waveforms
+
+Some simple waveforms correspond to simple spectral recipes, and help build intuition:
+
+| Waveform | Harmonics present | Amplitude of the nth | Character |
+| --- | --- | --- | --- |
+| Sine | fundamental only | — | pure, a "whistle" |
+| Square | odd | 1/n | hollow, electronic |
+| Sawtooth | all | 1/n | bright, harsh |
+| Triangle | odd (alternating signs) | 1/n² | soft, almost sinusoidal |
+
+Try the synthesizer below: the presets apply those recipes, and you can drag the bars to create others. The sound you hear is generated exactly from the spectrum drawn.
+
+<Lab id="harmonics" />
+
+Something surprising the lab lets you verify: the **waveform** depends a lot on the phases of the harmonics, but for sustained sounds **timbre** depends almost only on the amplitudes. Two waves with completely different shapes on an oscilloscope can sound practically the same if they have the same amplitude spectrum. This observation, formulated by Georg Ohm and studied by Hermann von Helmholtz in the 19th century, is an approximation (phase has audible effects under certain conditions), but it's good enough to explain why **magnitude response** is the most important aspect of a headphone.
+
+<Callout type="mito" title="&quot;The shape of the wave on an oscilloscope shows sound quality&quot;">
+A sawtooth signal passing through an all-pass filter (which only changes phases) ends up with an unrecognizable waveform without changing the sound much at all. Conversely, a waveform that looks "perfect" can hide an audible spectral difference. Waveforms are useful for seeing clipping, asymmetries and transients; to assess timbre, look at the spectrum.
+</Callout>
+
+## What makes up timbre
+
+<Diagram id="timbre-bars" />
+
+The spectrum of a sustained sound is only part of the story. Timbre, the "color" that identifies a source, depends on at least four things.
+
+### 1. The spectral envelope and formants
+
+More than the amplitude of each harmonic in isolation, what matters is the **contour** that the amplitudes trace across frequency. The human voice is the perfect example of the **source-filter** model: the vocal folds generate a periodic signal rich in harmonics (the source), and the vocal tract (throat, mouth, lips, nasal cavity) acts as a set of resonators that reinforce some regions of the spectrum (the filter). Those reinforced regions are **formants**.
+
+When you change a vowel from "ah" to "ee" without changing the note, the fundamental and harmonics stay at the same frequencies; what moves are the formants. An "ah" has its first two formants around 800 and 1,200 Hz; an "ee," around 300 and 2,300 Hz. Instruments also have fixed formants given by their body: the body of a violin resonates in specific regions, and that's partly what distinguishes an exceptional instrument from an average one.
+
+This is the direct bridge to headphones: **a frequency response is, to the listener, an additional formant applied to everything**. A 5 dB peak at 3 kHz boosts the harmonics of every voice and instrument that falls there, changing the timbre of all of them at once. A wide dip at 1–2 kHz pushes back the "nasal" quality and the presence of voices. The headphone doesn't know what a violin is; it just applies its curve to every harmonic that passes through it.
+
+### 2. The time envelope
+
+An instrument's sound is born, sustains and dies, and each phase has its signature. The amplitude envelope is commonly described in four stages: **attack**, **decay**, **sustain** and **release** (ADSR). A piano has an almost instantaneous attack and long decay; a bowed violin grows gradually; an organ starts and stops abruptly.
+
+Attack is surprisingly important. Classic experiments, such as Saldanha and Corso (1964), showed that removing the first moments of instrument recordings makes them much harder to identify: a trumpet without its attack can be confused with other winds. Use the lab's "Play note" button with different envelopes and the same spectrum: the change in identity is evident.
+
+### 3. Spectral evolution
+
+In real instruments, different harmonics are born and die at different moments. In a piano, the high harmonics decay much faster than the fundamental; in a brass instrument, the treble grows as the player blows harder, so the sound gets brighter as it gets louder. That coherence between loudness and brightness is a cue the brain uses to estimate the player's effort, which is why simply turning up a piano recorded softly doesn't sound like a piano played hard.
+
+### 4. Noise and irregularities
+
+The breath in a flute, the friction of a bow on a violin, the initial hiss of a consonant, the small pitch fluctuations of vibrato: non-periodic components are an essential part of sonic identity. They're often the very things that make us feel an instrument is "real."
+
+## Reading a spectrum in practice
+
+FFT-based spectrum analyzers divide the frequency axis into fixed-width *bins*. For a block of $N$ samples at a sampling rate $f_s$, the resolution is
+
+<Formula say="The longer the piece of audio you analyze, the finer the frequency detail you get.">
+
+$$
+\Delta f = \frac{f_s}{N}
+$$
+
+</Formula>
+
+With $f_s$ = 48 kHz and N = 8,192 samples, each bin is ~5.9 Hz wide and the block lasts 171 ms. There's an inevitable trade-off (the same time-frequency relationship seen in [frequency and amplitude](/fundamentos/frequencia-e-amplitude)): more frequency resolution requires longer blocks and therefore worse time resolution. That's why analyzers use windows (Hann, Blackman…) and logarithmic scales that group bins into fractions of an octave.
+
+## Why this matters for headphones
+
+Three connections are worth keeping:
+
+1. **Frequency response is a transformation of timbre.** There's no "change in bass" without a change in the timbre of every instrument with harmonics in the bass. A headphone with excessive mid-bass "thickens" voices and guitars, blurring the perception of the harmonics that distinguish them (see [regions and flaws](/resposta/regioes-e-defeitos)).
+2. **Distortion is the creation of harmonics that weren't there.** A nonlinear system turns a pure sine wave into a fundamental plus harmonics. [Total harmonic distortion](/eletronica/medidas-de-desempenho) measures precisely how much of those new harmonics appear, and the type (even, odd, high order) greatly changes how audible and annoying they are.
+3. **Telling instruments apart is telling spectral and temporal patterns apart.** The brain groups harmonics that start together, keep integer frequency relationships and vary together. A headphone that preserves those patterns, with balanced response and little distortion, makes that job easier. That's the subject of [separation and resolution](/iems/separacao-e-resolucao).
+
+In the next article, we look at the whole audible spectrum as a map: [from sub-bass to "air"](/fundamentos/espectro-audivel).
+
+<References>
+  <Ref>Helmholtz, H. von. <em>On the Sensations of Tone</em> (trans. A. J. Ellis). Dover, 1954 (original 1863).</Ref>
+  <Ref>Saldanha, E. L.; Corso, J. F. "Timbre cues and the identification of musical instruments." <em>Journal of the Acoustical Society of America</em>, 36(11), 2021–2026, 1964.</Ref>
+  <Ref>Fletcher, N. H.; Rossing, T. D. <em>The Physics of Musical Instruments</em>. 2nd ed. Springer, 1998.</Ref>
+  <Ref>Fant, G. <em>Acoustic Theory of Speech Production</em>. Mouton, 1960. The source-filter model of the voice.</Ref>
+  <Ref>Peterson, G. E.; Barney, H. L. "Control methods used in a study of the vowels." <em>Journal of the Acoustical Society of America</em>, 24(2), 175–184, 1952. Formant frequencies of vowels.</Ref>
+</References>

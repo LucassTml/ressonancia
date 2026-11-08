@@ -4,28 +4,23 @@ import { AnimatePresence, motion } from 'motion/react';
 import { articleById } from '../content/manifest';
 import { useFavorites } from '../lib/prefs';
 import { IconBookmarkFilled, IconClose } from '../components/ui/controls';
+import { tr } from '../i18n';
 
 export function FavoritesPage() {
   const { favorites, toggle } = useFavorites();
   useEffect(() => {
-    document.title = 'Favoritos — Ressonância';
+    document.title = tr("Favoritos — Ressonância");
   }, []);
   const items = favorites.map((id) => articleById.get(id)).filter(Boolean);
   return (
     <div className="mx-auto max-w-[760px] px-4 sm:px-6 pt-12 sm:pt-16 pb-24">
-      <h1 className="text-[clamp(2.1rem,4.6vw,3.1rem)] leading-[1.06] font-semibold tracking-[-0.034em]">Favoritos</h1>
-      <p className="mt-4 text-[1.08rem] text-muted font-serif">
-        Artigos que você salvou. Ficam guardados apenas neste navegador.
-      </p>
+      <h1 className="text-[clamp(2.1rem,4.6vw,3.1rem)] leading-[1.06] font-semibold tracking-[-0.034em]">{tr("Favoritos")}</h1>
+      <p className="mt-4 text-[1.08rem] text-muted font-serif">{tr("Artigos que você salvou. Ficam guardados apenas neste navegador.")}</p>
       {items.length === 0 ? (
         <div className="mt-12 rounded-2xl border border-dashed border-line-strong px-6 py-12 text-center">
           <IconBookmarkFilled size={22} className="mx-auto text-faint" />
-          <p className="mt-3 text-muted text-[14.5px]">
-            Nenhum artigo salvo ainda. Use “Salvar nos favoritos” no topo de qualquer artigo.
-          </p>
-          <Link to="/artigos" className="mt-4 inline-block text-accent text-[14px] hover:underline">
-            Ver todos os artigos
-          </Link>
+          <p className="mt-3 text-muted text-[14.5px]">{tr("Nenhum artigo salvo ainda. Use “Salvar nos favoritos” no topo de qualquer artigo.")}</p>
+          <Link to="/artigos" className="mt-4 inline-block text-accent text-[14px] hover:underline">{tr("Ver todos os artigos")}</Link>
         </div>
       ) : (
         <ul className="mt-10 border-t border-line">
@@ -47,7 +42,7 @@ export function FavoritesPage() {
                 <button
                   onClick={() => toggle(a!.id)}
                   className="mt-4 h-8 w-8 grid place-items-center rounded-lg text-faint hover:text-fg hover:bg-sunken"
-                  aria-label={`Remover ${a!.title} dos favoritos`}
+                  aria-label={tr("Remover {0} dos favoritos", a!.title)}
                 >
                   <IconClose size={15} />
                 </button>

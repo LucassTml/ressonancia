@@ -1,3 +1,5 @@
+import { tr } from '../i18n';
+
 /**
  * Sumário da enciclopédia. Cada artigo vive em
  * `src/content/articles/<módulo>/<slug>.mdx` e é carregado sob demanda.
@@ -25,7 +27,24 @@ export interface ModuleEntry {
   articles: ArticleEntry[];
 }
 
-export const modules: ModuleEntry[] = [
+const rawModules: ModuleEntry[] = [
+  {
+    id: 'inicio',
+    number: '00',
+    title: 'Comece aqui',
+    short: 'Comece aqui',
+    description: 'O essencial, sem matemática: o que é som, o que são hertz, oitavas e decibéis, como ler um gráfico de fone e como escolher o primeiro IEM.',
+    articles: [
+      { slug: 'som-em-5-minutos', title: 'O som em cinco minutos', summary: 'O que é som, como ele chega até você e por que quase tudo em áudio se resume a duas perguntas: quão rápido e quão forte.', labs: ['wave'], related: ['inicio/hertz-graves-e-agudos', 'fundamentos/o-que-e-som'] },
+      { slug: 'hertz-graves-e-agudos', title: 'Hertz, graves e agudos', summary: 'O que significa “20 Hz” ou “3 kHz”, onde ficam graves, médios e agudos, e como ouvir cada região.', labs: ['spectrum-map'], related: ['inicio/o-que-e-uma-oitava', 'fundamentos/espectro-audivel'] },
+      { slug: 'o-que-e-uma-oitava', title: 'O que é uma oitava', summary: 'O conceito mais citado e menos explicado do áudio: dobrar a frequência, ouvir “a mesma nota” e entender por que os gráficos têm aquela escala estranha.', labs: ['octave'], related: ['inicio/decibel-sem-matematica', 'fundamentos/melodia-e-harmonia'], featured: true },
+      { slug: 'decibel-sem-matematica', title: 'Decibel sem matemática', summary: 'O que um número em dB quer dizer na prática, quanto é uma diferença de 1, 3 ou 10 dB e como isso aparece nos fones.', labs: ['db'], related: ['inicio/ler-um-grafico', 'fundamentos/decibeis'] },
+      { slug: 'por-que-instrumentos-soam-diferentes', title: 'Por que instrumentos soam diferentes', summary: 'Harmônicos e timbre em linguagem simples: a mesma nota num violão e numa flauta, e o que isso tem a ver com fones.', labs: ['harmonics'], related: ['fundamentos/harmonicos-e-timbre', 'inicio/ler-um-grafico'] },
+      { slug: 'ler-um-grafico', title: 'Como ler um gráfico de fone', summary: 'Em cinco passos: o que são os eixos, o que procurar e o que ignorar num gráfico de resposta em frequência.', labs: ['signatures'], related: ['resposta/lendo-graficos', 'inicio/caminho-do-som'], featured: true },
+      { slug: 'caminho-do-som', title: 'O caminho do som: do arquivo ao ouvido', summary: 'Para que servem DAC, amplificador e driver, explicado como uma linha de montagem. E onde vale gastar.', related: ['eletronica/dac-e-adc', 'iems/fonte-dac-amp-ou-eq'] },
+      { slug: 'seu-primeiro-iem', title: 'Seu primeiro IEM', summary: 'O que realmente importa na primeira compra, os erros mais comuns e um roteiro curto para acertar.', labs: ['fit'], related: ['iems/guia-de-compra', 'famosos/como-ler-a-galeria'], featured: true },
+    ],
+  },
   {
     id: 'fundamentos',
     number: '01',
@@ -592,7 +611,30 @@ export const modules: ModuleEntry[] = [
       },
     ],
   },
+  {
+    id: 'famosos',
+    number: '10',
+    title: 'IEMs famosos e suas curvas',
+    short: 'IEMs famosos',
+    description: 'Vinte e nove modelos conhecidos, de US$ 20 a mais de US$ 2.000, com medições reais e as escolhas de afinação por trás de cada um.',
+    articles: [
+      { slug: 'como-ler-a-galeria', title: 'Como ler esta galeria', summary: 'De onde vêm as medições, o que elas podem dizer e o que o preço compra, com um explorador para comparar todos os modelos.', labs: ['iems', 'iem-price'], related: ['resposta/como-se-mede', 'iems/guia-de-compra'], featured: true },
+      { slug: 'ate-60', title: 'Até US$ 60: a era dos baratos bem afinados', summary: 'Como IEMs de US$ 20 chegaram perto do alvo, e os híbridos baratos que mostram por que driver não é sinônimo de qualidade.', labs: [], related: ['famosos/60-a-300', 'drivers/multi-driver-e-crossovers'] },
+      { slug: '60-a-300', title: 'US$ 60 a 300: onde está o melhor custo-benefício', summary: 'A faixa em que afinação, construção e escolhas de caráter convivem: do neutro ao quente, do dinâmico ao planar.', labs: [], related: ['famosos/300-a-999', 'resposta/assinaturas-sonoras'] },
+      { slug: '300-a-999', title: 'US$ 300 a 999: filosofias diferentes de afinação', summary: 'Campo difuso, Harman, palco e tribrids: aqui as diferenças deixam de ser sobre acertar e passam a ser sobre o que se quer.', labs: [], related: ['famosos/acima-de-1000', 'resposta/targets-e-harman'] },
+      { slug: 'acima-de-1000', title: 'Acima de US$ 1.000: o que se compra no topo', summary: 'Referências de palco e de estúdio, drivers únicos e configurações extremas, medidos no mesmo equipamento dos de US$ 20.', labs: [], related: ['ciencia/mensuravel-vs-audivel', 'famosos/como-ler-a-galeria'] },
+    ],
+  },
 ];
+
+/** Títulos e resumos no idioma atual. */
+export const modules: ModuleEntry[] = rawModules.map((m) => ({
+  ...m,
+  title: tr(m.title),
+  short: tr(m.short),
+  description: tr(m.description),
+  articles: m.articles.map((a) => ({ ...a, title: tr(a.title), summary: tr(a.summary) })),
+}));
 
 export interface FlatArticle extends ArticleEntry {
   id: string; // modulo/slug

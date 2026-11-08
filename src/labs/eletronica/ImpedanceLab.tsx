@@ -3,6 +3,7 @@ import { LabFrame, Controls, Readout, Note } from '../../components/ui/LabFrame'
 import { Segmented, Slider, fmtHz, fmtNum } from '../../components/ui/controls';
 import { FreqPlot, Legend } from '../../viz/FreqPlot';
 import { Cap, L, PHONES, R, cabs, cadd } from '../../audio/impedance';
+import { tr } from '../../i18n';
 
 const ohm = (db: number) => {
   const v = Math.pow(10, db / 20);
@@ -32,8 +33,8 @@ export default function ImpedanceLab() {
 
   return (
     <LabFrame
-      title="Impedância em função da frequência"
-      description="Resistores dissipam energia igualmente em qualquer frequência; indutores e capacitores armazenam e devolvem energia, e sua oposição à corrente (reatância) muda com a frequência. Fones combinam os três."
+      title={tr("Impedância em função da frequência")}
+      description={tr("Resistores dissipam energia igualmente em qualquer frequência; indutores e capacitores armazenam e devolvem energia, e sua oposição à corrente (reatância) muda com a frequência. Fones combinam os três.")}
       onReset={() => {
         setR(16);
         setL(1);
@@ -46,12 +47,12 @@ export default function ImpedanceLab() {
           value={tab}
           onChange={setTab}
           options={[
-            { value: 'phones', label: 'Fones' },
+            { value: 'phones', label: tr("Fones") },
             { value: 'parts', label: 'R, L e C' },
           ]}
         />
       }
-      footer="Modelos elétricos representativos (não correspondem a produtos específicos). A escala vertical é logarítmica em ohms."
+      footer={tr("Modelos elétricos representativos (não correspondem a produtos específicos). A escala vertical é logarítmica em ohms.")}
     >
       {tab === 'phones' ? (
         <>
@@ -76,15 +77,15 @@ export default function ImpedanceLab() {
             yFormat={ohm}
             curves={PHONES.map((p, i) => ({ p, i })).filter(({ p }) => shown.includes(p.id)).map(({ p, i }) => ({ id: p.id, label: p.name, fn: (f: number) => toDb(cabs(p.z(f))), color: colors[i], width: 2 }))}
             overlay={(sc) => <line x1={sc.x(probe)} x2={sc.x(probe)} y1={sc.top} y2={sc.top + sc.innerH} stroke="var(--fg-faint)" strokeDasharray="3 3" />}
-            ariaLabel="Curvas de impedância de fones"
+            ariaLabel={tr("Curvas de impedância de fones")}
           />
           <div className="mt-4">
             <Controls cols={2}>
-              <Slider label="Frequência de leitura" value={probe} min={20} max={20000} log onChange={(v) => setProbe(Math.round(v))} format={fmtHz} />
+              <Slider label={tr("Frequência de leitura")} value={probe} min={20} max={20000} log onChange={(v) => setProbe(Math.round(v))} format={fmtHz} />
             </Controls>
           </div>
           <div className="mt-4">
-            <Readout items={PHONES.filter((p) => shown.includes(p.id)).map((p) => ({ label: `${p.name} (nominal ${p.nominal} Ω)`, value: `${fmtNum(cabs(p.z(probe)), 1)} Ω` }))} />
+            <Readout items={PHONES.filter((p) => shown.includes(p.id)).map((p) => ({ label: tr("{0} (nominal {1} Ω)", p.name, p.nominal), value: `${fmtNum(cabs(p.z(probe)), 1)} Ω` }))} />
           </div>
           <div className="mt-3 space-y-1">
             {PHONES.filter((p) => shown.includes(p.id)).map((p) => (
@@ -104,35 +105,31 @@ export default function ImpedanceLab() {
             yLabel="Ω"
             yFormat={ohm}
             curves={[
-              { id: 'r', label: `Resistor ${r} Ω`, fn: parts.r, color: 'var(--fg-muted)', width: 1.5 },
-              { id: 'xl', label: `Indutor ${l} mH`, fn: parts.xl, color: 'var(--c-b)', width: 1.8 },
-              { id: 'xc', label: `Capacitor ${c} µF`, fn: parts.xc, color: 'var(--c-target)', width: 1.8 },
-              { id: 's', label: 'R + L + C em série', fn: parts.series, color: 'var(--c-a)', width: 2.6 },
+              { id: 'r', label: tr("Resistor {0} Ω", r), fn: parts.r, color: 'var(--fg-muted)', width: 1.5 },
+              { id: 'xl', label: tr("Indutor {0} mH", l), fn: parts.xl, color: 'var(--c-b)', width: 1.8 },
+              { id: 'xc', label: tr("Capacitor {0} µF", c), fn: parts.xc, color: 'var(--c-target)', width: 1.8 },
+              { id: 's', label: tr("R + L + C em série"), fn: parts.series, color: 'var(--c-a)', width: 2.6 },
             ]}
-            ariaLabel="Reatâncias de componentes"
+            ariaLabel={tr("Reatâncias de componentes")}
           />
           <div className="mt-2 mb-4">
-            <Legend items={[{ label: 'R', color: 'var(--fg-muted)' }, { label: 'X_L = 2πfL', color: 'var(--c-b)' }, { label: 'X_C = 1/(2πfC)', color: 'var(--c-target)' }, { label: 'Série RLC', color: 'var(--c-a)' }]} />
+            <Legend items={[{ label: 'R', color: 'var(--fg-muted)' }, { label: tr("X_L = 2πfL"), color: 'var(--c-b)' }, { label: tr("X_C = 1/(2πfC)"), color: 'var(--c-target)' }, { label: tr("Série RLC"), color: 'var(--c-a)' }]} />
           </div>
           <Controls cols={3}>
-            <Slider label="Resistência" value={r} min={1} max={300} log onChange={(v) => setR(Math.round(v))} unit="Ω" />
-            <Slider label="Indutância" value={l} min={0.01} max={10} log onChange={(v) => setL(Number(v.toPrecision(2)))} unit="mH" />
-            <Slider label="Capacitância" value={c} min={0.1} max={1000} log onChange={(v) => setC(Number(v.toPrecision(2)))} unit="µF" />
+            <Slider label={tr("Resistência")} value={r} min={1} max={300} log onChange={(v) => setR(Math.round(v))} unit="Ω" />
+            <Slider label={tr("Indutância")} value={l} min={0.01} max={10} log onChange={(v) => setL(Number(v.toPrecision(2)))} unit={tr("mH")} />
+            <Slider label={tr("Capacitância")} value={c} min={0.1} max={1000} log onChange={(v) => setC(Number(v.toPrecision(2)))} unit="µF" />
           </Controls>
           <div className="mt-4">
             <Readout
               items={[
-                { label: 'Ressonância série  f = 1/(2π√LC)', value: fmtHz(f0), accent: true },
-                { label: 'Impedância mínima (= R)', value: `${r} Ω` },
+                { label: tr("Ressonância série  f = 1/(2π√LC)"), value: fmtHz(f0), accent: true },
+                { label: tr("Impedância mínima (= R)"), value: `${r} Ω` },
               ]}
             />
           </div>
           <div className="mt-3">
-            <Note>
-              A reatância do indutor cresce com a frequência (ele “resiste” a variações rápidas de corrente); a do capacitor diminui (ele deixa
-              passar variações rápidas e bloqueia a corrente contínua). Por isso um capacitor em série com um tweeter é o crossover passa-altas
-              mais simples que existe.
-            </Note>
+            <Note>{tr("A reatância do indutor cresce com a frequência (ele “resiste” a variações rápidas de corrente); a do capacitor diminui (ele deixa passar variações rápidas e bloqueia a corrente contínua). Por isso um capacitor em série com um tweeter é o crossover passa-altas mais simples que existe.")}</Note>
           </div>
         </>
       )}

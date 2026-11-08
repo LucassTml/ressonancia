@@ -3,6 +3,7 @@ import { LabFrame, Controls, Note } from '../../components/ui/LabFrame';
 import { Segmented, Slider, Toggle, fmtHz, fmtNum } from '../../components/ui/controls';
 import { useElementSize } from '../../lib/hooks';
 import { biquadCoefs } from '../../audio/dsp';
+import { tr } from '../../i18n';
 
 const FS = 44100;
 const sinc = (x: number) => (Math.abs(x) < 1e-9 ? 1 : Math.sin(Math.PI * x) / (Math.PI * x));
@@ -98,18 +99,18 @@ export default function DACLab() {
 
   return (
     <LabFrame
-      title="Por dentro de um DAC"
-      description="As amostras digitais são números em instantes discretos (pontos). Um DAC simples segura cada valor até o próximo (degraus); um filtro de reconstrução remove as imagens espectrais criadas por esses degraus e devolve o sinal contínuo original."
+      title={tr("Por dentro de um DAC")}
+      description={tr("As amostras digitais são números em instantes discretos (pontos). Um DAC simples segura cada valor até o próximo (degraus); um filtro de reconstrução remove as imagens espectrais criadas por esses degraus e devolve o sinal contínuo original.")}
       onReset={() => {
         setF(5000);
         setOs(1);
         setFilter('ideal');
       }}
-      footer="A curva cinza é o sinal analógico original. Com o filtro ideal, a reconstrução coincide com ela — exatamente, não aproximadamente — sempre que a frequência estiver abaixo de metade da taxa de amostragem."
+      footer={tr("A curva cinza é o sinal analógico original. Com o filtro ideal, a reconstrução coincide com ela — exatamente, não aproximadamente — sempre que a frequência estiver abaixo de metade da taxa de amostragem.")}
     >
       <div ref={wrap}>
         {width > 0 && (
-          <svg width={width} height={H} className="block rounded-xl bg-sunken" role="img" aria-label="Amostras, degraus e sinal reconstruído">
+          <svg width={width} height={H} className="block rounded-xl bg-sunken" role="img" aria-label={tr("Amostras, degraus e sinal reconstruído")}>
             <line x1={pad} x2={width - pad} y1={H / 2} y2={H / 2} stroke="var(--c-grid-strong)" />
             <path d={line(contPts)} fill="none" stroke="var(--fg-faint)" strokeWidth={4} opacity={0.5} />
             <path d={line(data.stairs.filter((_, i) => i % 2 === 0))} fill="none" stroke="var(--c-b)" strokeWidth={1.4} opacity={filter === 'none' ? 1 : 0.45} />
@@ -125,16 +126,16 @@ export default function DACLab() {
         )}
       </div>
       <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11.5px] text-muted mt-2">
-        <span className="inline-flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-[var(--fg)]" /> amostras (44,1 kHz)</span>
-        <span className="inline-flex items-center gap-1.5"><span className="w-4 h-[2px] bg-[var(--c-b)]" /> saída com retenção (degraus){os > 1 ? ` após sobreamostragem ×${os}` : ''}</span>
-        <span className="inline-flex items-center gap-1.5"><span className="w-4 h-[2px] bg-[var(--c-a)]" /> após o filtro de reconstrução</span>
-        <span className="inline-flex items-center gap-1.5"><span className="w-4 h-[3px] bg-[var(--fg-faint)]" /> sinal original</span>
+        <span className="inline-flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-[var(--fg)]" />{' '}{tr("amostras (44,1 kHz)")}</span>
+        <span className="inline-flex items-center gap-1.5"><span className="w-4 h-[2px] bg-[var(--c-b)]" />{' '}{tr("saída com retenção (degraus)")}{os > 1 ? tr(" após sobreamostragem ×{0}", os) : ''}</span>
+        <span className="inline-flex items-center gap-1.5"><span className="w-4 h-[2px] bg-[var(--c-a)]" />{' '}{tr("após o filtro de reconstrução")}</span>
+        <span className="inline-flex items-center gap-1.5"><span className="w-4 h-[3px] bg-[var(--fg-faint)]" />{' '}{tr("sinal original")}</span>
       </div>
 
       <div className="mt-5">
-        <div className="text-[11px] uppercase tracking-[0.1em] text-faint font-medium mb-1">Espectro da saída (0 a 4 × 44,1 kHz)</div>
+        <div className="text-[11px] uppercase tracking-[0.1em] text-faint font-medium mb-1">{tr("Espectro da saída (0 a 4 × 44,1 kHz)")}</div>
         {width > 0 && (
-          <svg width={width} height={SH} className="block" role="img" aria-label="Espectro com imagens">
+          <svg width={width} height={SH} className="block" role="img" aria-label={tr("Espectro com imagens")}>
             {[0, -20, -40, -60].map((d) => (
               <g key={d}>
                 <line x1={pad} x2={width - pad} y1={sy(d)} y2={sy(d)} stroke="var(--c-grid)" />
@@ -145,10 +146,10 @@ export default function DACLab() {
             {[1, 2, 3, 4].map((k) => (
               <g key={k}>
                 <line x1={sx(k * FS)} x2={sx(k * FS)} y1={8} y2={SH - 22} stroke="var(--c-grid-strong)" strokeDasharray="2 3" />
-                <text x={sx(k * FS)} y={SH - 8} textAnchor="middle" className="fill-[var(--fg-muted)] text-[10px]">{k}·fs</text>
+                <text x={sx(k * FS)} y={SH - 8} textAnchor="middle" className="fill-[var(--fg-muted)] text-[10px]">{k}{tr("·fs")}</text>
               </g>
             ))}
-            <text x={sx(10000)} y={SH - 8} textAnchor="middle" className="fill-[var(--accent)] text-[10px]">audível</text>
+            <text x={sx(10000)} y={SH - 8} textAnchor="middle" className="fill-[var(--accent)] text-[10px]">{tr("audível")}</text>
             {spectrum.map((c, i) => (
               <line key={i} x1={sx(c.fr)} x2={sx(c.fr)} y1={SH - 22} y2={sy(c.db)} stroke={c.kind === 'sinal' ? 'var(--c-a)' : 'var(--c-b)'} strokeWidth={2.5} strokeLinecap="round" opacity={c.db < -59 ? 0.25 : 1} />
             ))}
@@ -157,19 +158,15 @@ export default function DACLab() {
       </div>
 
       <div className="flex flex-wrap gap-3 mt-4 mb-4">
-        <Segmented size="sm" value={filter} onChange={setFilter} options={[{ value: 'none', label: 'Sem filtro' }, { value: 'gentle', label: 'Filtro analógico suave' }, { value: 'ideal', label: 'Reconstrução ideal' }]} />
-        <Segmented size="sm" value={String(os)} onChange={(v) => setOs(Number(v))} options={[{ value: '1', label: 'Sem sobreamostragem' }, { value: '4', label: '×4' }, { value: '8', label: '×8' }]} />
-        <Toggle checked={showSamples} onChange={setShowSamples} label="Mostrar amostras" />
+        <Segmented size="sm" value={filter} onChange={setFilter} options={[{ value: 'none', label: tr("Sem filtro") }, { value: 'gentle', label: tr("Filtro analógico suave") }, { value: 'ideal', label: tr("Reconstrução ideal") }]} />
+        <Segmented size="sm" value={String(os)} onChange={(v) => setOs(Number(v))} options={[{ value: '1', label: tr("Sem sobreamostragem") }, { value: '4', label: '×4' }, { value: '8', label: '×8' }]} />
+        <Toggle checked={showSamples} onChange={setShowSamples} label={tr("Mostrar amostras")} />
       </div>
       <Controls cols={2}>
-        <Slider label="Frequência do sinal" value={f} min={200} max={21000} log onChange={(v) => setF(Math.round(v))} format={fmtHz} hint={`${fmtNum(FS / f, 1)} amostras por ciclo`} />
+        <Slider label={tr("Frequência do sinal")} value={f} min={200} max={21000} log onChange={(v) => setF(Math.round(v))} format={fmtHz} hint={tr("{0} amostras por ciclo", fmtNum(FS / f, 1))} />
       </Controls>
       <div className="mt-3">
-        <Note>
-          Os degraus não são “o som digital”: são o efeito de um DAC que retém cada valor. Eles equivalem ao sinal original mais imagens
-          acima de 22 kHz (barras laranjas). Imagem mais forte agora: {imageLevel < -100 ? 'nenhuma' : `${fmtNum(imageLevel, 0)} dB`}. Com sobreamostragem,
-          as imagens se afastam para múltiplos de {os}·fs e um filtro analógico simples basta para removê-las — é o que DACs modernos fazem.
-        </Note>
+        <Note>{tr("Os degraus não são “o som digital”: são o efeito de um DAC que retém cada valor. Eles equivalem ao sinal original mais imagens acima de 22 kHz (barras laranjas). Imagem mais forte agora:")}{' '}{imageLevel < -100 ? 'nenhuma' : `${fmtNum(imageLevel, 0)} dB`}{tr(". Com sobreamostragem, as imagens se afastam para múltiplos de")}{' '}{os}{tr("·fs e um filtro analógico simples basta para removê-las — é o que DACs modernos fazem.")}</Note>
       </div>
     </LabFrame>
   );

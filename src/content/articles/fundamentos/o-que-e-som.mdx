@@ -2,6 +2,10 @@
 Antes de existir música, fone ou ouvido, existe uma perturbação mecânica: algo empurra o ar, o ar empurra o ar vizinho, e essa sequência de empurrões atravessa o espaço. Tudo o que você vai ler nesta enciclopédia — da curva Harman ao funcionamento de um DAC — é, no fim, uma forma de controlar, medir ou interpretar essa perturbação.
 </Lead>
 
+<Callout type="simples">
+Som é uma corrente de pequenos empurrões atravessando o ar. O ar em si fica onde está, apenas tremendo no lugar. O seu tímpano sente essas mudanças de pressão, e é só isso que ele recebe. Se você está começando, [O som em cinco minutos](/inicio/som-em-5-minutos) é uma entrada mais suave.
+</Callout>
+
 ## Uma perturbação que viaja, não ar que viaja
 
 O ar ao seu redor é um gás: cerca de 25 bilhões de bilhões de moléculas (2,5 × 10²⁵) em cada metro cúbico, movendo-se em todas as direções a velocidades térmicas da ordem de 500 m/s e colidindo entre si bilhões de vezes por segundo. Uma molécula percorre em média apenas uns 70 nanômetros entre uma colisão e outra. Esse caos é o estado de repouso do ar — e, curiosamente, é ele que torna o som possível.
@@ -20,6 +24,8 @@ Não há um fluxo de ar saindo do fone em direção ao tímpano. Num tom de 1 kH
 </Callout>
 
 ## Compressões e rarefações
+
+<Diagram id="air-molecules" />
 
 O simulador abaixo mostra uma janela de dois metros de ar em câmera lenta. Os pontos representam moléculas (na verdade, pequenas porções de ar — desenhar 10²⁵ pontos não seria prático). Acompanhe os pontos vermelhos: eles vão e voltam sem sair do lugar, enquanto a região escura — a compressão — atravessa a tela.
 
@@ -47,6 +53,8 @@ Desenhar o som como uma senoide subindo e descendo é extremamente útil, mas po
 
 Se o som é uma cadeia de empurrões, sua velocidade depende de quão “dura” é a mola (o quanto o meio resiste à compressão) e de quão pesada é a massa (sua densidade). Para qualquer fluido:
 
+<Formula say="Quanto mais rígido o meio, mais rápido o som viaja. Quanto mais denso, mais devagar.">
+
 $$
 c = \sqrt{\frac{K}{\rho}}
 $$
@@ -59,9 +67,13 @@ $$
   ]}
 />
 
+</Formula>
+
 Meios mais rígidos transmitem mais rápido; meios mais densos, mais devagar. É por isso que o som viaja a cerca de 1 480 m/s na água e a quase 6 000 m/s no aço: a densidade aumenta muito, mas a rigidez aumenta muito mais.
 
 Para um gás, há uma sutileza histórica. Isaac Newton calculou a velocidade do som supondo que a temperatura do ar permanece constante durante as compressões e obteve cerca de 280 m/s — quase 20% abaixo do valor medido. A correção veio de Pierre-Simon Laplace no início do século XIX: as compressões e rarefações são rápidas demais e espaçadas demais para que o calor flua entre elas. O ar comprimido esquenta um pouco, o rarefeito esfria um pouco, e esse aquecimento torna a mola mais rígida. O processo é **adiabático**, e o módulo de compressibilidade efetivo é $K = \gamma P$:
+
+<Formula say="No ar, a velocidade do som depende da temperatura, e não da pressão: cerca de 343 m/s a 20 °C.">
 
 $$
 c = \sqrt{\frac{\gamma P}{\rho}} = \sqrt{\frac{\gamma R T}{M}}
@@ -77,6 +89,8 @@ $$
   ]}
 />
 
+</Formula>
+
 Com T = 293,15 K (20 °C), o resultado é **343 m/s**. A segunda forma da equação revela algo contraintuitivo: a velocidade do som num gás ideal **não depende da pressão**. Se você aumentar a pressão, a densidade aumenta na mesma proporção e os efeitos se cancelam. O que importa é a temperatura — ela governa a velocidade média das moléculas, e o som não pode viajar mais rápido do que as moléculas conseguem “passar o recado” adiante. Uma aproximação prática é $c \approx 331{,}3 + 0{,}606\,T$ (com T em °C). A umidade aumenta ligeiramente a velocidade, porque o vapor d’água é mais leve que o ar seco que ele substitui.
 
 ### Por que isso importa para fones
@@ -87,17 +101,25 @@ A velocidade do som transforma tempo em distância e vice-versa. Um milissegundo
 
 Numa onda plana (frentes de onda paralelas, longe da fonte), a pressão acústica $p$ e a velocidade com que as partículas oscilam, $u$, são proporcionais:
 
+<Formula say="Pressão e velocidade das partículas sobem juntas. A razão entre elas é uma propriedade do meio.">
+
 $$
 p = \rho\, c \; u
 $$
+
+</Formula>
 
 O produto $\rho c$ é a **impedância acústica característica** do meio — cerca de 413 Pa·s/m para o ar a 20 °C. Ela diz quanta pressão é necessária para pôr o meio em movimento a uma dada velocidade. O conceito de impedância, que reaparecerá na [eletrônica](/eletronica/corrente-alternada-e-impedancia) e na física do [ouvido médio](/percepcao/anatomia-do-ouvido), é central para entender transferência de energia: quando uma onda passa de um meio para outro com impedância muito diferente, quase toda a energia é refletida. A impedância da água é cerca de 3 600 vezes a do ar, e por isso você mal ouve vozes da superfície quando mergulha — e por isso o ouvido médio precisa de um mecanismo de casamento de impedância entre o ar e o líquido da cóclea.
 
 A energia transportada por unidade de área e de tempo é a **intensidade**:
 
+<Formula say="A energia cresce com o quadrado da pressão: dobre a pressão e você terá quatro vezes a energia.">
+
 $$
 I = \frac{p_{\text{rms}}^2}{\rho\, c}
 $$
+
+</Formula>
 
 Ela cresce com o **quadrado** da pressão. Dobrar a pressão quadruplica a intensidade. Essa relação é o motivo pelo qual decibéis de pressão usam o fator 20, e decibéis de potência usam o fator 10 — o que veremos em detalhe no artigo sobre [decibéis](/fundamentos/decibeis).
 
